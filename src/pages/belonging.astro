@@ -1,0 +1,354 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const facets = [
+  {
+    title: 'A need, not a luxury',
+    text: 'Belonging is a universal, evolutionarily rooted drive to form and keep meaningful connections. In Maslow’s hierarchy, it comes right after food, water and safety. It is felt as being accepted, valued and understood.',
+    cite: 'Baumeister & Leary, 1995; Allen, 2020',
+  },
+  {
+    title: 'A process, not a state',
+    text: 'Belonging is never fixed. It flickers, depends on context, and is renegotiated all the time. It is shaped by autonomy, choice and commitment, so it can’t be imposed.',
+    cite: 'Allen, 2020',
+  },
+  {
+    title: 'Built in small acts',
+    text: 'Sharing a thought or a memory, listening, affirming, moving in time with someone. And reframing shared struggles as normal, so that difficulty doesn’t read as proof that you don’t fit in.',
+    cite: 'Walton & Cohen, 2011',
+  },
+  {
+    title: 'Quality over quantity',
+    text: 'What matters is frequent, warm, stable contact within real mutual care. Going from no close relationships to two changes everything; going from twenty to twenty-two changes very little.',
+    cite: 'Baumeister & Leary, 1995',
+  },
+  {
+    title: 'Embodied and placed',
+    text: 'Belonging lives in the body and attaches to places, objects, sounds, smells and textures. Think of a place where you belong and every sense comes back at once.',
+    cite: 'Allen, 2020',
+  },
+];
+
+const practices = [
+  {
+    title: 'Practising together',
+    text: 'Compared with meditating alone, studies of group practice report a deeper experience that is easier to sustain. It is also linked with more care for others, empathy and co-regulation of mood.',
+  },
+  {
+    title: 'Sharing afterwards',
+    text: 'A sharing round after a practice normalises experience. People discover that what they felt was not theirs alone, and they are listened to without judgement.',
+    cite: 'Fagioli et al., 2023; Wyatt et al., 2014',
+  },
+  {
+    title: 'Listening in pairs',
+    text: 'Contemplative dyads — one speaks, one listens, then swap — increased perceived social connectedness over months of training.',
+    cite: 'Kok & Singer, 2017',
+  },
+];
+
+const questions = [
+  'How do you feel that you belong without feeling that you are being controlled?',
+  'What is the difference between having control and playing a role?',
+  'Can a room of strangers become a “we” in half an hour — and should it?',
+  'Can we belong to weather? To a sky, a cloud, a season?',
+  'How do you design for connection that is felt, not performed?',
+  'What trace can a one-off encounter leave, so that people might meet again?',
+  'When everyone breathes together, where does my breath end?',
+];
+---
+
+<Base title="Belonging" description="Belonging as a need, a process and an embodied experience — and why we think art and research-creation are good places to explore it.">
+  <PageHeader
+    eyebrow="The theme"
+    ink="small"
+    title="Belonging"
+    lede="We started by asking whether art and technology could help people find a moment of peace. We kept arriving at the same answer: peace is rarely something we find alone."
+  />
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <blockquote class="big-quote reveal">
+        <p>“Our need to belong is like our need for water.”</p>
+        <cite>Kelly-Ann Allen, <em>The Psychology of Belonging</em> (2020)</cite>
+      </blockquote>
+      <div class="reveal">
+        <p class="lede">
+          Belonging is the felt sense of being accepted, included, understood, welcomed, liked and appreciated.
+        </p>
+        <p>
+          Psychology describes it as “a pervasive drive to form and maintain at least a minimum quantity of lasting,
+          positive, and significant interpersonal relationships” (Baumeister &amp; Leary, 1995). But reading the
+          research as artists, what struck us was how much belonging depends on things a space can hold: small
+          rituals, shared attention, the texture of a room, the warmth of light, the chance to be heard.
+        </p>
+        <p>That makes it a subject for art as much as for science.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Five facets</p>
+        <h2>What we mean when we say belonging</h2>
+      </div>
+      <ol class="facets">
+        {
+          facets.map((f, i) => (
+            <li class="facet reveal">
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{f.title}</h3>
+              <p>{f.text}</p>
+              <p class="cite">{f.cite}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section dark interbeing">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">Beyond people</p>
+        <h2>Interbeing: there is a cloud in your tea</h2>
+        <p>
+          Thich Nhat Hanh often pointed to a cup of tea and saw a cloud in it. The cloud has not died: it became
+          rain, then a river, then this tea. Nothing is only itself. It <em>inter-is</em> with everything that made it
+          possible.
+        </p>
+        <p>
+          Where belonging is warm, social and fragile, interbeing is quiet and continuous. It never really goes
+          away. Our project lives between the two. It invites people to feel connected to each other, and also to
+          something larger that was here before them and will continue after: weather, water, sky.
+        </p>
+        <p>
+          Belonging in ourselves, with others, and with our environment are always connected. In this work, we lean
+          towards the environment, and let the others follow.
+        </p>
+      </div>
+      <figure class="circles reveal" aria-label="Three overlapping circles: ourselves, others, environment">
+        <svg viewBox="0 0 320 300" role="img" aria-hidden="true">
+          <circle cx="120" cy="115" r="82" class="c1"></circle>
+          <circle cx="200" cy="115" r="82" class="c2"></circle>
+          <circle cx="160" cy="185" r="96" class="c3"></circle>
+          <text x="88" y="98" text-anchor="middle">ourselves</text>
+          <text x="232" y="98" text-anchor="middle">others</text>
+          <text x="160" y="240" text-anchor="middle">environment</text>
+        </svg>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Where mindfulness meets belonging</p>
+        <h2>Practices that make room for each other</h2>
+        <p class="lede measure">
+          Our project began in contemplative practice. The literature suggests that some of its most powerful
+          effects are social.
+        </p>
+      </div>
+      <div class="grid-3">
+        {
+          practices.map((p) => (
+            <article class="practice reveal">
+              <h3>{p.title}</h3>
+              <p>{p.text}</p>
+              {p.cite && <p class="cite">{p.cite}</p>}
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section why">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">Why art, why research-creation</p>
+        <h2>Belonging can’t be streamed</h2>
+      </div>
+      <div class="reveal">
+        <p>
+          You can read about belonging, but you can’t download it. It happens between bodies in a shared place and a
+          shared time. That is exactly what installations, rituals and performances are good at: they gather people,
+          suspend ordinary rules for a while, and give attention something to rest on together.
+        </p>
+        <p>
+          Research-creation lets us do both at once. We make something, invite people into it, and listen carefully
+          to what they experience: through questionnaires, physiology and, above all, their own words. The artwork
+          becomes a way of asking a question, and the question keeps reshaping the artwork.
+        </p>
+        <p>
+          We think belonging deserves far more attention from artists and researchers, especially now, when so many
+          people feel alone in crowded places.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section questions dark">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">An open invitation</p>
+        <h2>Questions we are living with</h2>
+        <p class="lede measure">
+          We don’t have answers to these. If any of them pull at you, take them into your own practice, and tell us
+          what you find.
+        </p>
+      </div>
+      <ul class="q-list">
+        {questions.map((q) => <li class="reveal">{q}</li>)}
+      </ul>
+      <div class="actions reveal">
+        <a class="button" href="/installation/">See how we approached them</a>
+        <a class="button" href="/toolkit/">Use the belonging checklist</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .big-quote {
+    margin: 0;
+    font-family: var(--font-display);
+  }
+  .big-quote p {
+    font-size: clamp(2rem, 1.4rem + 2.6vw, 3.6rem);
+    line-height: 1.1;
+    font-weight: 300;
+    margin-bottom: 1.2rem;
+  }
+  .big-quote cite {
+    font-family: var(--font-body);
+    font-style: normal;
+    font-size: 0.9rem;
+    color: var(--ink-faint);
+  }
+  .section-head {
+    margin-bottom: 3rem;
+    max-width: 44rem;
+  }
+  .facets {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .facet {
+    background: var(--paper);
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    grid-column: span 2;
+  }
+  .facet:nth-child(n + 4) {
+    grid-column: span 3;
+  }
+  @media (max-width: 900px) {
+    .facet,
+    .facet:nth-child(n + 4) {
+      grid-column: span 3;
+    }
+    .facet:last-child {
+      grid-column: span 6;
+    }
+  }
+  @media (max-width: 600px) {
+    .facet,
+    .facet:nth-child(n + 4) {
+      grid-column: span 6;
+    }
+  }
+  .num {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--dusk);
+    margin-bottom: 1.5rem;
+  }
+  .facet p {
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+  }
+  .cite {
+    font-size: 0.8rem !important;
+    color: var(--ink-faint) !important;
+    margin: 0;
+  }
+  .interbeing {
+    background: radial-gradient(ellipse at 80% 30%, #344589, var(--night) 70%);
+  }
+  .interbeing p {
+    color: var(--ink-soft);
+  }
+  .circles {
+    margin: 0;
+    display: grid;
+    place-items: center;
+  }
+  .circles svg {
+    width: min(100%, 26rem);
+  }
+  .circles circle {
+    fill-opacity: 0.18;
+    stroke-width: 1;
+    stroke-opacity: 0.6;
+    mix-blend-mode: screen;
+  }
+  .c1 {
+    fill: #f8a98c;
+    stroke: #f8a98c;
+  }
+  .c2 {
+    fill: #9a9dea;
+    stroke: #9a9dea;
+  }
+  .c3 {
+    fill: #f9c77c;
+    stroke: #f9c77c;
+    fill-opacity: 0.28 !important;
+  }
+  .circles text {
+    fill: #f1f2fc;
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-style: italic;
+  }
+  .practice {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--ink);
+  }
+  .practice p {
+    color: var(--ink-soft);
+  }
+  .questions {
+    background: linear-gradient(180deg, var(--night) 0%, #3a3478 100%);
+  }
+  .q-list {
+    list-style: none;
+    margin: 0 0 3rem;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .q-list li {
+    font-family: var(--font-display);
+    font-size: clamp(1.3rem, 1rem + 1.2vw, 2rem);
+    font-weight: 300;
+    line-height: 1.3;
+    padding-block: 1.2rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+</style>

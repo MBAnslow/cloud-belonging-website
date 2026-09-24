@@ -1,0 +1,165 @@
+---
+import Cloud3D from './Cloud3D.astro';
+import { phases } from '../data/phases';
+const first = phases[0];
+---
+
+<section
+  class="sky-phases"
+  data-sky-phases
+  data-dark={String(first.dark)}
+  style={`--sky-top:${first.sky[0]};--sky-bottom:${first.sky[1]}`}
+  aria-labelledby="phases-title">
+  <div class="sky-track" aria-hidden="true">
+    <div class="sky">
+      <Cloud3D mode="controlled" initial={first.cloud} place={[0.62, 0.18, 0.5]} placeNarrow={[0, 0.58, 0.28]} />
+    </div>
+  </div>
+
+  <div class="panels wrap">
+    <header class="intro">
+      <p class="eyebrow">The score · draft of July 2026</p>
+      <h2 id="phases-title">One night under a cloud</h2>
+      <p class="lede">
+        We imagine the installation as a compressed day: a group lies beneath the cloud from dusk to sunrise. This is
+        our current score — it will keep changing as we test it with people.
+      </p>
+    </header>
+    {
+      phases.map((p) => (
+        <article
+          class="phase"
+          data-phase-panel={p.id}
+          data-cloud={p.cloud}
+          data-dark={String(p.dark)}
+          data-top={p.sky[0]}
+          data-bottom={p.sky[1]}>
+          <div class="card">
+            <p class="numeral">{p.numeral}</p>
+            <h3>{p.title}</h3>
+            <p>{p.text}</p>
+            <ul>
+              {p.notes.map((n) => (
+                <li>{n}</li>
+              ))}
+            </ul>
+          </div>
+        </article>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-sky-phases]').forEach((root) => {
+    const cloud = root.querySelector<HTMLElement>('[data-cloud3d]');
+    const panels = root.querySelectorAll<HTMLElement>('[data-phase-panel]');
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (!e.isIntersecting) continue;
+          const el = e.target as HTMLElement;
+          root.dataset.dark = el.dataset.dark;
+          root.style.setProperty('--sky-top', el.dataset.top!);
+          root.style.setProperty('--sky-bottom', el.dataset.bottom!);
+          panels.forEach((p) => p.classList.toggle('current', p === el));
+          cloud?.dispatchEvent(new CustomEvent('cloud:state', { detail: el.dataset.cloud }));
+        }
+      },
+      { rootMargin: '-45% 0px -45% 0px' },
+    );
+    panels.forEach((p) => io.observe(p));
+  });
+</script>
+
+<style>
+  .sky-phases {
+    position: relative;
+    color: var(--ink);
+    transition: color 1.2s ease;
+  }
+  .sky-phases[data-dark='true'] {
+    color: #f1f2fc;
+  }
+
+  .sky-track {
+    position: absolute;
+    inset: 0;
+  }
+  .sky {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .sky :global(.cloud3d) {
+    background: linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
+    transition: background 1.5s ease;
+  }
+
+  .panels {
+    position: relative;
+    padding-block: 18vh 10vh;
+  }
+  .intro {
+    max-width: 36rem;
+    min-height: 70vh;
+  }
+  .intro .lede {
+    color: inherit;
+    opacity: 0.85;
+  }
+  .intro .eyebrow {
+    color: inherit;
+    opacity: 0.6;
+  }
+  .phase {
+    min-height: 95vh;
+    display: flex;
+    align-items: center;
+  }
+  .card {
+    max-width: 30rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    border-radius: calc(var(--radius) * 1.2);
+    background: rgb(248 247 244 / 0.55);
+    border: 1px solid rgb(255 255 255 / 0.5);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    opacity: 0.45;
+    transition: opacity 0.8s ease, background 1.2s ease, border-color 1.2s ease;
+  }
+  .sky-phases[data-dark='true'] .card {
+    background: rgb(27 34 80 / 0.35);
+    border-color: rgb(255 255 255 / 0.14);
+  }
+  .phase.current .card {
+    opacity: 1;
+  }
+  .numeral {
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    letter-spacing: 0.2em;
+    opacity: 0.6;
+    margin-bottom: 0.5rem;
+  }
+  .card h3 {
+    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+    font-weight: 300;
+  }
+  .card ul {
+    list-style: none;
+    padding: 0;
+    margin: 1.25rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .card li {
+    font-size: 0.78rem;
+    padding: 0.3em 0.8em;
+    border-radius: 999px;
+    border: 1px solid currentColor;
+    opacity: 0.7;
+  }
+</style>

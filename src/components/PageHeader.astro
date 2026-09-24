@@ -1,0 +1,76 @@
+---
+import InkCloud from './InkCloud.astro';
+import Swatches from './Swatches.astro';
+
+interface Props {
+  eyebrow: string;
+  title: string;
+  lede?: string;
+  ink?: 'cumulus' | 'small' | 'swirl';
+}
+
+const { eyebrow, title, lede, ink = 'cumulus' } = Astro.props;
+---
+
+<header class="page-header">
+  <div class="wrap inner">
+    <div class="text">
+      <div class="eyebrow-row">
+        <Swatches />
+        <p class="eyebrow">{eyebrow}</p>
+      </div>
+      <h1>{title}</h1>
+      {lede && <p class="lede">{lede}</p>}
+      <slot />
+    </div>
+    <InkCloud variant={ink} class="ink" />
+  </div>
+</header>
+
+<style>
+  .page-header {
+    padding-block: clamp(4rem, 12vw, 9rem) clamp(3rem, 6vw, 5rem);
+    background:
+      radial-gradient(ellipse 45% 55% at 88% 12%, rgb(249 199 124 / 0.32), transparent 65%),
+      radial-gradient(ellipse 35% 45% at 70% 30%, rgb(248 169 140 / 0.22), transparent 65%),
+      radial-gradient(ellipse 50% 60% at 5% 0%, rgb(154 157 234 / 0.28), transparent 65%);
+  }
+  .inner {
+    position: relative;
+  }
+  .text {
+    position: relative;
+    z-index: 1;
+  }
+  .eyebrow-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+  .eyebrow-row .eyebrow {
+    margin: 0;
+  }
+  h1 {
+    max-width: 14ch;
+  }
+  .lede {
+    max-width: 40rem;
+  }
+  :global(.page-header .ink) {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    width: min(30vw, 22rem);
+    transform: translateY(-60%);
+    opacity: 0.9;
+  }
+  @media (max-width: 900px) {
+    :global(.page-header .ink) {
+      position: static;
+      width: 10rem;
+      transform: none;
+      margin-top: 2rem;
+    }
+  }
+</style>

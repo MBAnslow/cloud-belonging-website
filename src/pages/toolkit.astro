@@ -1,0 +1,235 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Checklist from '../components/Checklist.astro';
+
+const movements = [
+  {
+    name: 'Arrive',
+    time: '20 min',
+    text: 'Cross a threshold. Shoes off, phones away. A short inward question: how are you arriving today? A few minutes of breathing together, with nothing to achieve.',
+  },
+  {
+    name: 'Sense',
+    time: '30 min',
+    text: 'Experience a small version of the cloud: lie under tulle and light, breathe with a sensor, notice what happens in you and around you. Then notice the room, the others, the weather outside.',
+  },
+  {
+    name: 'Make',
+    time: '60 min',
+    text: 'In small groups, tinker with the materials we used — tulle, mesh, LEDs, breath sensors, sound — to build a tiny space for belonging. Many entry points: some will sew, some will code, some will write a ritual.',
+  },
+  {
+    name: 'Share',
+    time: '30 min',
+    text: 'Visit each other’s spaces. Then a sharing circle: each person speaks once about what they experienced, and is listened to without reply.',
+  },
+];
+
+const circleRules = [
+  'Speak from your own experience, in the first person.',
+  'Listen without replying, advising or comparing.',
+  'Silence is welcome. You can always pass.',
+  'What is shared in the circle stays in the circle.',
+];
+
+const prompts = [
+  'The next time you see a cloud, take three breaths with it. Where was this water yesterday?',
+  'Notice a moment today when someone made you feel you belonged. What exactly did they do?',
+  'Think of a place where you belong. Which sense brings it back first — a sound, a smell, a texture?',
+  'Offer someone five minutes of listening without replying.',
+];
+---
+
+<Base title="Toolkit" description="A belonging checklist for artists and researchers, and the outline of a workshop on designing spaces for belonging.">
+  <PageHeader
+    eyebrow="For you"
+    ink="small"
+    title="A toolkit for belonging"
+    lede="One thing we wanted this project to leave behind is something other people can use. Here is what we have so far: a checklist, a workshop in development, and a few prompts to carry with you."
+  />
+
+  <section class="section" id="checklist">
+    <div class="wrap">
+      <div class="grid-2 head">
+        <div class="reveal">
+          <p class="eyebrow">The belonging checklist · draft 1</p>
+          <h2>Designing a space where people can belong</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            A set of prompts for anyone designing an installation, ritual, workshop or gathering. It isn’t a recipe, and
+            you don’t need to tick every box. Use it to see which parts of the design space you are working in, and
+            which you might be missing.
+          </p>
+          <p class="small">
+            Compiled (with AI assistance) from our literature notes on belonging, group mindfulness and ritual media
+            (Malaver Turbay, 2022), then edited by us. Your ticks are saved only in this browser.
+          </p>
+        </div>
+      </div>
+      <Checklist />
+    </div>
+  </section>
+
+  <section class="section dark workshop" id="workshop">
+    <div class="wrap">
+      <div class="grid-2 head">
+        <div class="reveal">
+          <p class="eyebrow">Workshop · in development</p>
+          <h2>Making spaces for belonging</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            We are developing a hands-on workshop for artists, designers, researchers, students and communities. It
+            draws on the <em>arriving, exploring, sharing</em> structure of performative scores in museums (Løppenthin
+            et al., 2022). It also borrows from tinkering and constructionist practice: design an <em>adjacent
+            possible</em> that people can lean into, with many ways in.
+          </p>
+          <p class="small">A possible format, about 2½ hours. We will adapt it to every group and place.</p>
+        </div>
+      </div>
+
+      <ol class="movements">
+        {
+          movements.map((m, i) => (
+            <li class="movement reveal">
+              <span class="m-num">{i + 1}</span>
+              <h3>{m.name}</h3>
+              <p class="m-time">{m.time}</p>
+              <p>{m.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="grid-2 extra">
+        <div class="circle reveal">
+          <h3>Guidelines for a sharing circle</h3>
+          <p class="small">Inspired by Dharma sharing in the Plum Village tradition.</p>
+          <ul>{circleRules.map((r) => <li>{r}</li>)}</ul>
+        </div>
+        <div class="host reveal">
+          <h3>Host it with us</h3>
+          <p>
+            Would you like to try this workshop at your school, lab, festival or community space, or help us shape it?
+            We are looking for first groups to try it with.
+          </p>
+          <a class="button" href="/about/#contact">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section prompts">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow">To take with you</p>
+        <h2>Four small practices</h2>
+      </div>
+      <ol class="prompt-list">
+        {prompts.map((p) => <li class="reveal">{p}</li>)}
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head {
+    margin-bottom: 3rem;
+  }
+  .small {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+  .workshop p {
+    color: var(--ink-soft);
+  }
+  .movements {
+    list-style: none;
+    margin: 0 0 4rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1.5rem;
+  }
+  .movement {
+    padding: 1.75rem;
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.05);
+    border: 1px solid var(--line);
+  }
+  .m-num {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    border: 1px solid rgb(249 199 124 / 0.7);
+    color: var(--dawn);
+    font-family: var(--font-display);
+    margin-bottom: 1.5rem;
+  }
+  .movement h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.2rem;
+  }
+  .m-time {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint) !important;
+  }
+  .circle,
+  .host {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .circle ul {
+    padding-left: 1.1em;
+    color: var(--ink-soft);
+    display: grid;
+    gap: 0.5rem;
+  }
+  .circle li::marker {
+    color: var(--dawn);
+  }
+  .prompt-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1.5rem;
+    counter-reset: p;
+  }
+  .prompt-list li {
+    counter-increment: p;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1.35;
+    font-weight: 330;
+    padding: 1.75rem;
+    border-radius: var(--radius);
+    background: linear-gradient(160deg, rgb(154 157 234 / 0.28), rgb(220 167 211 / 0.22) 50%, rgb(249 199 124 / 0.32));
+  }
+  .prompt-list li::before {
+    content: counter(p);
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    margin-bottom: 1rem;
+  }
+
+  @media print {
+    :global(.site-header),
+    :global(.site-footer),
+    :global(.page-header),
+    .workshop,
+    .prompts,
+    .head {
+      display: none !important;
+    }
+  }
+</style>

@@ -1,0 +1,170 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { site } from '../data/site';
+import { references } from '../data/references';
+
+const themes = [...new Set(references.map((r) => r.theme))];
+---
+
+<Base title="About" description="The people, context and sources behind A Space in Us, a research-creation project on belonging.">
+  <PageHeader
+    eyebrow="About"
+    title="Who, where, and with whose help"
+    lede="A Space in Us began as a research-creation internship in 2026. It sits where cognitive science, contemplative practice, art and creative technology meet."
+  />
+
+  <section class="section">
+    <div class="wrap">
+      <p class="eyebrow reveal">Team</p>
+      <div class="team">
+        {
+          site.team.map((person) => (
+            <article class="person reveal">
+              <h2>{person.name}</h2>
+              <p class="role">{person.role}</p>
+              <p>{person.bio}</p>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">Context</p>
+        <h2>Research-creation</h2>
+      </div>
+      <div class="reveal">
+        <p>
+          In research-creation, making the work and studying it happen together. We build something, invite people in,
+          and listen carefully, through first-person accounts as much as measurements. What we learn goes back into the
+          work.
+        </p>
+        <p>
+          The project grew out of Zéphir’s research-creation proposal <em>A Space For You</em> and the <em>Réespiration</em>
+          pilot study Zéphir has been running. It was developed during an internship at <a href="https://csl.sony.fr/">Sony CSL Paris</a>,
+          alongside <a href="https://csl.sony.fr/projects/funiki/">Funiki</a>, a project on dynamic light and sound atmospheres.
+        </p>
+        <p>
+          With thanks to everyone who shared their time and ideas along the way, including Amos Blanton, Joanna, Alice
+          and Ben.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section contact dark" id="contact">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">Contact</p>
+        <h2>Host it, try it, think with us</h2>
+      </div>
+      <div class="reveal">
+        <p class="lede">
+          We’d love to hear from venues interested in hosting the installation, groups who would like to try the
+          workshop, and artists and researchers exploring belonging in their own work.
+        </p>
+        {
+          site.contactEmail ? (
+            <a class="button" href={`mailto:${site.contactEmail}`}>
+              {site.contactEmail}
+            </a>
+          ) : (
+            <p class="pending">Contact details coming soon.</p>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="references">
+    <div class="wrap">
+      <div class="refs-head reveal">
+        <p class="eyebrow">Sources</p>
+        <h2>What we read</h2>
+        <p class="measure">
+          A selection from our literature review. These readings shaped our thinking about belonging, group practice,
+          ritual and interactive experience.
+        </p>
+      </div>
+      <div class="refs">
+        {
+          themes.map((theme) => (
+            <div class="theme reveal">
+              <h3>{theme}</h3>
+              <ul>
+                {references
+                  .filter((r) => r.theme === theme)
+                  .map((r) => (
+                    <li>
+                      {r.url ? <a href={r.url}>{r.citation}</a> : r.citation}
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .team {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+  .person {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--ink);
+  }
+  .person h2 {
+    margin-bottom: 0.3rem;
+  }
+  .role {
+    font-size: 0.9rem;
+    color: var(--dusk);
+    font-weight: 500;
+  }
+  .person p:last-child {
+    color: var(--ink-soft);
+  }
+  .contact .pending {
+    color: var(--ink-faint);
+    font-style: italic;
+  }
+  .refs-head {
+    margin-bottom: 3rem;
+  }
+  .refs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: 3rem;
+  }
+  .theme h3 {
+    font-size: 1.35rem;
+    padding-bottom: 0.8rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .theme ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .theme li {
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    padding-block: 0.7rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .theme a {
+    text-decoration: none;
+  }
+  .theme a:hover {
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,202 @@
+---
+import tests from '../data/breath-tests.json';
+
+const W = 1000;
+const H = 260;
+const PAD = 12;
+
+const all = tests.flatMap((t) => t.values);
+const lo = Math.min(...all);
+const hi = Math.max(...all);
+const maxLen = Math.max(...tests.map((t) => t.values.length));
+
+const series = tests.map((t) => {
+  const pts = t.values.map((v, i) => {
+    const x = (i / (maxLen - 1)) * W;
+    const y = PAD + (1 - (v - lo) / (hi - lo)) * (H - 2 * PAD);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  });
+  const min = Math.min(...t.values);
+  const max = Math.max(...t.values);
+  return { ...t, d: `M${pts.join('L')}`, range: max - min, samples: t.values.length };
+});
+
+const defaultIndex = series.findIndex((s) => s.id.startsWith('20cm-wide-4cm'));
+---
+
+<div class="breath-chart" data-breath-chart>
+  <div class="tabs" role="tablist" aria-label="Sensor configuration">
+    {
+      series.map((s, i) => (
+        <button
+          role="tab"
+          type="button"
+          id={`tab-${s.id}`}
+          aria-controls={`panel-${s.id}`}
+          aria-selected={i === defaultIndex ? 'true' : 'false'}
+          tabindex={i === defaultIndex ? 0 : -1}
+          data-index={i}>
+          {s.band}
+          <small>{s.stretch}</small>
+        </button>
+      ))
+    }
+  </div>
+
+  <div class="plot">
+    <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true">
+      {[0.25, 0.5, 0.75].map((f) => <line x1="0" x2={W} y1={H * f} y2={H * f} class="grid" />)}
+      {series.map((s, i) => <path d={s.d} class:list={['trace', { active: i === defaultIndex }]} pathLength="1" data-trace={i} />)}
+    </svg>
+    <span class="axis y-hi">{hi}</span>
+    <span class="axis y-lo">{lo}</span>
+    <span class="axis x">samples →</span>
+  </div>
+
+  {
+    series.map((s, i) => (
+      <div role="tabpanel" id={`panel-${s.id}`} aria-labelledby={`tab-${s.id}`} hidden={i !== defaultIndex} class="panel">
+        <p>
+          <strong>{s.band}, {s.stretch}.</strong> {s.samples} raw readings, spanning a range of <strong>{s.range}</strong> units.
+          {s.range < 20 && ' The breath barely registers above the noise.'}
+          {s.range >= 20 && s.range < 70 && ' Breathing is visible, but the swing is small.'}
+          {s.range >= 70 && ' Each breath is a clear, readable wave.'}
+        </p>
+      </div>
+    ))
+  }
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-breath-chart]').forEach((root) => {
+    const tabs = Array.from(root.querySelectorAll<HTMLButtonElement>('[role="tab"]'));
+    const traces = Array.from(root.querySelectorAll<SVGPathElement>('[data-trace]'));
+    const panels = Array.from(root.querySelectorAll<HTMLElement>('[role="tabpanel"]'));
+    const select = (i: number) => {
+      tabs.forEach((t, j) => {
+        t.setAttribute('aria-selected', String(i === j));
+        t.tabIndex = i === j ? 0 : -1;
+      });
+      panels.forEach((p, j) => (p.hidden = i !== j));
+      traces.forEach((p, j) => {
+        p.classList.remove('active');
+        if (i === j) {
+          void p.getBoundingClientRect();
+          p.classList.add('active');
+        }
+      });
+    };
+    tabs.forEach((tab, i) => {
+      tab.addEventListener('click', () => select(i));
+      tab.addEventListener('keydown', (e) => {
+        const dir = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0;
+        if (!dir) return;
+        const next = (i + dir + tabs.length) % tabs.length;
+        tabs[next].focus();
+        select(next);
+      });
+    });
+  });
+</script>
+
+<style>
+  .breath-chart {
+    background: var(--night);
+    color: #f1f2fc;
+    border-radius: calc(var(--radius) * 1.2);
+    padding: clamp(1.25rem, 3vw, 2rem);
+  }
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+  [role='tab'] {
+    appearance: none;
+    font: inherit;
+    font-size: 0.85rem;
+    color: inherit;
+    background: transparent;
+    border: 1px solid rgb(255 255 255 / 0.2);
+    border-radius: 999px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    display: inline-flex;
+    gap: 0.5em;
+    align-items: baseline;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  [role='tab'] small {
+    opacity: 0.6;
+  }
+  [role='tab'][aria-selected='true'] {
+    background: rgb(249 199 124 / 0.16);
+    border-color: var(--dawn);
+  }
+  .plot {
+    position: relative;
+    padding-left: 2.8rem;
+  }
+  svg {
+    width: 100%;
+    height: clamp(10rem, 28vw, 16rem);
+    overflow: visible;
+  }
+  .grid {
+    stroke: rgb(255 255 255 / 0.07);
+    stroke-width: 1;
+    vector-effect: non-scaling-stroke;
+  }
+  .trace {
+    fill: none;
+    stroke: rgb(255 255 255 / 0.08);
+    stroke-width: 1.2;
+    vector-effect: non-scaling-stroke;
+    stroke-linejoin: round;
+  }
+  .trace.active {
+    stroke: var(--dawn);
+    stroke-width: 2;
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: draw 3.5s ease-out forwards;
+  }
+  @keyframes draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .trace.active {
+      animation: none;
+      stroke-dashoffset: 0;
+    }
+  }
+  .axis {
+    position: absolute;
+    font-size: 0.7rem;
+    color: rgb(255 255 255 / 0.45);
+    font-variant-numeric: tabular-nums;
+  }
+  .y-hi {
+    left: 0;
+    top: 0;
+  }
+  .y-lo {
+    left: 0;
+    bottom: 0;
+  }
+  .x {
+    right: 0;
+    bottom: -1.4rem;
+  }
+  .panel {
+    margin-top: 2rem;
+    font-size: 0.95rem;
+    color: #c9c6da;
+  }
+  .panel p {
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,404 @@
+---
+import Base from '../layouts/Base.astro';
+import Figure from '../components/Figure.astro';
+import JournalCard from '../components/JournalCard.astro';
+import Cloud3D from '../components/Cloud3D.astro';
+import VideoClip from '../components/VideoClip.astro';
+import { getJournal } from '../lib/journal';
+import { site } from '../data/site';
+
+import tulleRaised from '../assets/photos/tulle-raised.jpg';
+import cloudPurple from '../assets/photos/cloud-bottom-purple.jpg';
+import meshFolds from '../assets/photos/mesh-folds.jpg';
+import tulleLight from '../assets/photos/tulle-light-1.jpg';
+import tulleLight4 from '../assets/photos/tulle-light-4.jpg';
+import meshTeam from '../assets/photos/mesh-team.jpg';
+
+const latest = (await getJournal()).slice(0, 3);
+
+const doors = [
+  {
+    href: '/belonging/',
+    eyebrow: 'The theme',
+    title: 'Belonging',
+    text: 'A need almost as basic as water — and a process, renewed in small acts. Why we think art is a good place to explore it.',
+    image: meshTeam,
+    alt: 'Michael and Zéphir smiling in the studio, holding up a sheet of green mesh.',
+  },
+  {
+    href: '/installation/',
+    eyebrow: 'The work',
+    title: 'The Cloud',
+    text: 'A cloud that listens to a group breathing. One night compressed into half an hour, from dusk to sunrise.',
+    image: tulleLight,
+    alt: 'A tulle cloud lit in pale blue from below, hanging near a ceiling.',
+  },
+  {
+    href: '/toolkit/',
+    eyebrow: 'For you',
+    title: 'Toolkit',
+    text: 'A belonging checklist for artists and researchers, and the outline of a workshop we are developing.',
+    image: tulleRaised,
+    alt: 'Zéphir holding a bunch of white tulle up towards the ceiling like a small cloud.',
+  },
+];
+
+const tried = [
+  { image: meshFolds, alt: 'A hand holding folded green plastic mesh.', caption: 'Plastic mesh and zip ties' },
+  { image: tulleRaised, alt: 'Tulle held up like a cloud.', caption: 'A single layer of tulle' },
+  { image: cloudPurple, alt: 'Fibre glowing purple from LEDs inside.', caption: 'LEDs inside the cloud' },
+  { image: tulleLight4, alt: 'A tulle cloud lit green and blue from below.', caption: 'A projector as the sun' },
+];
+---
+
+<Base overlayHeader>
+  <section class="hero" data-cloud-tone="global" data-tone="dark">
+    <Cloud3D
+      mode="cycle"
+      initial="golden"
+      cycle={['golden', 'dusk', 'moon', 'dawn', 'day']}
+      place={[0.68, 0.12, 0.56]}
+      placeNarrow={[0, 0.58, 0.3]}
+    />
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="wrap hero-content">
+      <p class="eyebrow">Research-creation · 2026 — ongoing</p>
+      <h1>{site.title}</h1>
+      <p class="hero-lede">
+        A cloud installation about belonging — to ourselves, to each other, and to the sky we all live under.
+      </p>
+      <div class="hero-actions">
+        <a class="button solid-light" href="/belonging/">Explore belonging</a>
+        <a class="button" href="/process/">Follow the process</a>
+      </div>
+    </div>
+    <a class="scroll-hint" href="#invitation" aria-label="Scroll to introduction">
+      <span></span>
+    </a>
+  </section>
+
+  <section id="invitation" class="section">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">An invitation</p>
+        <h2 class="statement">
+          Belonging isn’t something we have. It is something that happens — between people, and between people and
+          the places they share.
+        </h2>
+      </div>
+      <div class="reveal intro-text">
+        <p class="lede">
+          We are an artist-researcher and a creative technologist building a cloud that a group of strangers breathes
+          beneath, together, through one night.
+        </p>
+        <p>This site documents that work as it unfolds. It holds three things:</p>
+        <ol class="three">
+          <li><strong>An exploration of belonging</strong> as a theme for art and research-creation — and a call to others to explore it too.</li>
+          <li><strong>The story of the installation</strong>: what we imagined, what we tried, what failed, and how we reasoned our way through it.</li>
+          <li><strong>A toolkit</strong> that we hope becomes a workshop, so others can make their own spaces for belonging.</li>
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <section class="section doors-section">
+    <div class="wrap">
+      <div class="doors">
+        {
+          doors.map((d) => (
+            <a class="door reveal" href={d.href}>
+              <Figure src={d.image} alt={d.alt} ratio="4 / 5" widths={[400, 700, 900]} sizes="(min-width: 60rem) 24rem, 100vw" />
+              <p class="eyebrow">{d.eyebrow}</p>
+              <h3>{d.title} <span aria-hidden="true">→</span></h3>
+              <p>{d.text}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section tried dark">
+    <div class="wrap">
+      <div class="tried-head">
+        <div class="reveal">
+          <p class="eyebrow">What we have tried so far</p>
+          <h2>From a crumpled sheet of mesh to a cloud full of light</h2>
+          <p class="tried-lede">
+            The cloud above is a simulation. This one is real: fibre and LEDs on a studio desk, one of our first lit
+            prototypes (June 2026).
+          </p>
+        </div>
+        <VideoClip name="cloud-dusk" caption="A lit cloud prototype, June 2026." class="reveal" />
+      </div>
+      <div class="strip">
+        {
+          tried.map((t) => (
+            <Figure src={t.image} alt={t.alt} caption={t.caption} ratio="3 / 4" widths={[360, 600]} sizes="(min-width: 60rem) 18rem, 70vw" class="reveal" />
+          ))
+        }
+      </div>
+      <a class="button" href="/installation/#making">See how it is made</a>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="latest-head reveal">
+        <div>
+          <p class="eyebrow">From the process journal</p>
+          <h2>Latest notes</h2>
+        </div>
+        <a class="button" href="/process/">All entries</a>
+      </div>
+      <div class="grid-3">
+        {latest.map((entry) => <JournalCard entry={entry} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section unfolding">
+    <div class="wrap measure reveal">
+      <p class="eyebrow">Still unfolding</p>
+      <h2>The cloud isn’t finished — and neither is this site.</h2>
+      <p class="lede">
+        We’re documenting the final installation as it takes shape. If you want to host it, try it, or bring the
+        workshop to your community, we’d love to hear from you.
+      </p>
+      <a class="button solid" href="/about/#contact">Get in touch</a>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .hero {
+    --hero-fg: #fbfaff;
+    --hero-fg-soft: rgb(251 250 255 / 0.82);
+    --hero-shade: rgb(27 34 80 / 0.55);
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    align-items: flex-end;
+    overflow: hidden;
+    color: var(--hero-fg);
+    transition: color 2s ease;
+  }
+  .hero[data-tone='light'] {
+    --hero-fg: #1f2650;
+    --hero-fg-soft: rgb(31 38 80 / 0.78);
+    --hero-shade: rgb(248 247 244 / 0.55);
+  }
+  .hero-shade {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 60% at 10% 90%, var(--hero-shade), transparent 70%);
+    transition: background 2s ease;
+    pointer-events: none;
+  }
+  .hero-content {
+    position: relative;
+    padding-block: 10rem clamp(5rem, 12vh, 8rem);
+  }
+  .hero .eyebrow {
+    color: var(--hero-fg-soft);
+    transition: color 2s ease;
+  }
+  .hero h1 {
+    max-width: 12ch;
+    color: var(--hero-fg);
+    margin-bottom: 1.5rem;
+    transition: color 2s ease;
+  }
+  .hero-lede {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1rem + 1vw, 1.8rem);
+    line-height: 1.35;
+    font-weight: 300;
+    max-width: 30ch;
+    color: var(--hero-fg-soft);
+    transition: color 2s ease;
+  }
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 2rem;
+  }
+  .hero .button {
+    transition: background 0.25s, color 2s, border-color 2s;
+  }
+  .hero .button:hover {
+    background: var(--hero-fg);
+    color: var(--night);
+  }
+  .hero[data-tone='light'] .button:hover {
+    color: var(--paper);
+  }
+  .button.solid-light {
+    background: var(--hero-fg);
+    color: var(--night);
+    border-color: var(--hero-fg);
+  }
+  .hero[data-tone='light'] .button.solid-light {
+    color: var(--paper);
+  }
+  .button.solid-light:hover {
+    background: var(--amber) !important;
+    border-color: var(--amber);
+    color: var(--night) !important;
+  }
+  .scroll-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 1.5rem;
+    width: 1.5rem;
+    height: 2.4rem;
+    margin-left: -0.75rem;
+    border: 1px solid currentColor;
+    opacity: 0.6;
+    border-radius: 999px;
+  }
+  .scroll-hint span {
+    position: absolute;
+    left: 50%;
+    top: 0.45rem;
+    width: 3px;
+    height: 0.5rem;
+    margin-left: -1.5px;
+    background: currentColor;
+    border-radius: 2px;
+    animation: hint 2.4s ease-in-out infinite;
+  }
+  @keyframes hint {
+    0% {
+      opacity: 0;
+      transform: translateY(0);
+    }
+    30% {
+      opacity: 1;
+    }
+    80% {
+      opacity: 0;
+      transform: translateY(0.8rem);
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @media (max-width: 760px) {
+    .scroll-hint {
+      display: none;
+    }
+  }
+
+  .statement {
+    font-size: clamp(1.9rem, 1.3rem + 2.4vw, 3.3rem);
+    font-weight: 300;
+  }
+  .intro-text {
+    padding-top: 2.2rem;
+  }
+  .three {
+    padding-left: 1.2em;
+    display: grid;
+    gap: 0.8rem;
+    color: var(--ink-soft);
+  }
+  .three li::marker {
+    font-family: var(--font-display);
+    color: var(--dusk);
+  }
+
+  .doors-section {
+    padding-top: 0;
+    border-top: 0 !important;
+  }
+  .doors {
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 3rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  }
+  .door {
+    text-decoration: none;
+    display: block;
+  }
+  .door :global(figure) {
+    margin-bottom: 1.25rem;
+    overflow: hidden;
+    border-radius: var(--radius);
+  }
+  .door :global(img) {
+    transition: transform 1.2s ease;
+  }
+  .door:hover :global(img) {
+    transform: scale(1.04);
+  }
+  .door .eyebrow {
+    margin-bottom: 0.4rem;
+  }
+  .door h3 {
+    font-size: 2rem;
+  }
+  .door h3 span {
+    display: inline-block;
+    transition: transform 0.3s;
+  }
+  .door:hover h3 span {
+    transform: translateX(0.3rem);
+  }
+  .door p:last-child {
+    color: var(--ink-soft);
+  }
+
+  .tried-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+    margin-bottom: 3rem;
+  }
+  .tried-lede {
+    color: var(--ink-soft);
+  }
+  @media (max-width: 860px) {
+    .tried-head {
+      grid-template-columns: 1fr;
+    }
+  }
+  .strip {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(14rem, 1fr);
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+    margin-bottom: 2.5rem;
+  }
+  .strip :global(figure) {
+    scroll-snap-align: start;
+  }
+  .strip :global(figcaption) {
+    color: var(--ink-soft);
+  }
+
+  .latest-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+  }
+  .latest-head h2 {
+    margin: 0;
+  }
+
+  .unfolding {
+    text-align: center;
+    background: linear-gradient(180deg, var(--paper), var(--cream));
+  }
+  .unfolding .measure {
+    margin-inline: auto;
+  }
+</style>

@@ -1,0 +1,376 @@
+---
+---
+
+<div class="breath-sync" data-breath-sync>
+  <canvas aria-hidden="true"></canvas>
+  <div class="overlay">
+    <p class="status" aria-live="polite" data-status>Hold the button as you breathe in, let go as you breathe out. Slowly — the other clouds are listening.</p>
+    <div class="controls">
+      <button class="hold" data-hold type="button">
+        <span data-hold-label>Hold to breathe in</span>
+      </button>
+      <div class="meter" role="meter" aria-label="Room synchrony" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-meter>
+        <span class="meter-label">Room synchrony</span>
+        <span class="meter-track"><span class="meter-fill" data-meter-fill></span></span>
+      </div>
+      <button class="reset" data-reset type="button" hidden>Begin the night again</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  type Puff = { dx: number; dy: number; r: number };
+  type Cloud = {
+    x: number;
+    y: number;
+    size: number;
+    hue: [number, number, number];
+    puffs: Puff[];
+    phase: number;
+    omega: number;
+    b: number;
+    drift: number;
+  };
+
+  const TAU = Math.PI * 2;
+
+  function makePuffs(seed: number): Puff[] {
+    let s = seed;
+    const rand = () => ((s = (s * 16807) % 2147483647) / 2147483647);
+    const puffs: Puff[] = [];
+    const n = 7;
+    for (let i = 0; i < n; i++) {
+      const t = i / (n - 1);
+      puffs.push({ dx: (t - 0.5) * 1.9, dy: -Math.sin(t * Math.PI) * (0.35 + rand() * 0.25), r: 0.38 + Math.sin(t * Math.PI) * 0.32 + rand() * 0.1 });
+    }
+    for (let i = 0; i < 3; i++) puffs.push({ dx: (rand() - 0.5) * 1.2, dy: 0.12 + rand() * 0.1, r: 0.34 + rand() * 0.1 });
+    return puffs;
+  }
+
+  function lerp(a: number, b: number, t: number) {
+    return a + (b - a) * t;
+  }
+  function mix(c1: number[], c2: number[], t: number) {
+    return c1.map((v, i) => Math.round(lerp(v, c2[i], t)));
+  }
+  const rgb = (c: number[], a = 1) => `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+
+  function init(root: HTMLElement) {
+    const canvas = root.querySelector('canvas')!;
+    const ctx = canvas.getContext('2d')!;
+    const holdBtn = root.querySelector<HTMLButtonElement>('[data-hold]')!;
+    const holdLabel = root.querySelector<HTMLElement>('[data-hold-label]')!;
+    const status = root.querySelector<HTMLElement>('[data-status]')!;
+    const meter = root.querySelector<HTMLElement>('[data-meter]')!;
+    const meterFill = root.querySelector<HTMLElement>('[data-meter-fill]')!;
+    const resetBtn = root.querySelector<HTMLButtonElement>('[data-reset]')!;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let w = 0;
+    let h = 0;
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = canvas.getBoundingClientRect();
+      w = rect.width;
+      h = rect.height;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(h * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    };
+    new ResizeObserver(resize).observe(canvas);
+    resize();
+
+    const stars = Array.from({ length: 70 }, () => ({ x: Math.random(), y: Math.random() * 0.7, r: Math.random() * 1.2 + 0.3, tw: Math.random() * TAU }));
+
+    const you: Cloud = { x: 0.5, y: 0.46, size: 0.16, hue: [244, 243, 252], puffs: makePuffs(7), phase: 0, omega: 0, b: 0, drift: 0 };
+    const companions: Cloud[] = [
+      { x: 0.2, y: 0.3, size: 0.085, hue: [248, 169, 140], puffs: makePuffs(11), phase: 1.2, omega: TAU / 8.5, b: 0, drift: 0.3 },
+      { x: 0.8, y: 0.28, size: 0.095, hue: [154, 157, 234], puffs: makePuffs(23), phase: 3.6, omega: TAU / 11, b: 0, drift: 1.7 },
+      { x: 0.74, y: 0.66, size: 0.075, hue: [249, 199, 124], puffs: makePuffs(41), phase: 5.1, omega: TAU / 9.5, b: 0, drift: 2.9 },
+      { x: 0.26, y: 0.68, size: 0.07, hue: [220, 167, 211], puffs: makePuffs(59), phase: 0.4, omega: TAU / 12, b: 0, drift: 4.1 },
+    ];
+
+    let pressed = false;
+    let lastInput = -Infinity;
+    let sync = 0;
+    let engage = 0;
+    let dawn = 0;
+    let risen = false;
+    let influence = 1;
+    let t = 0;
+    let last = performance.now();
+    let running = false;
+    let raf = 0;
+
+    const setPressed = (p: boolean) => {
+      if (risen && influence < 0.05) return;
+      pressed = p;
+      lastInput = t;
+      holdBtn.classList.toggle('active', p);
+      holdLabel.textContent = p ? 'Breathing in… let go to breathe out' : 'Hold to breathe in';
+    };
+
+    holdBtn.addEventListener('pointerdown', (e) => {
+      e.preventDefault();
+      holdBtn.setPointerCapture(e.pointerId);
+      setPressed(true);
+    });
+    holdBtn.addEventListener('pointerup', () => setPressed(false));
+    holdBtn.addEventListener('pointercancel', () => setPressed(false));
+    holdBtn.addEventListener('keydown', (e) => {
+      if ((e.key === ' ' || e.key === 'Enter') && !e.repeat) {
+        e.preventDefault();
+        setPressed(true);
+      }
+    });
+    holdBtn.addEventListener('keyup', (e) => {
+      if (e.key === ' ' || e.key === 'Enter') setPressed(false);
+    });
+    holdBtn.addEventListener('blur', () => pressed && setPressed(false));
+
+    resetBtn.addEventListener('click', () => {
+      dawn = 0;
+      sync = 0;
+      engage = 0;
+      risen = false;
+      influence = 1;
+      resetBtn.hidden = true;
+      holdBtn.hidden = false;
+      status.textContent = 'Night again. Hold as you breathe in, let go as you breathe out.';
+      holdBtn.focus();
+    });
+
+    function drawCloud(c: Cloud, glow: number, alpha = 1) {
+      const scale = Math.min(w, h * 1.6) * c.size * (1 + 0.09 * c.b);
+      const driftX = reduceMotion ? 0 : Math.sin(t * 0.07 + c.drift) * w * 0.012;
+      const driftY = reduceMotion ? 0 : Math.cos(t * 0.05 + c.drift) * h * 0.01;
+      const cx = c.x * w + driftX;
+      const cy = c.y * h + driftY;
+      const night = [60, 66, 120];
+      const base = mix(night, c.hue, 0.35 + 0.65 * Math.max(glow, dawn));
+
+      ctx.save();
+      ctx.globalAlpha = alpha;
+      if (glow > 0.02) {
+        const halo = ctx.createRadialGradient(cx, cy, scale * 0.2, cx, cy, scale * 2.4);
+        halo.addColorStop(0, rgb(c.hue, 0.35 * glow));
+        halo.addColorStop(1, rgb(c.hue, 0));
+        ctx.fillStyle = halo;
+        ctx.fillRect(cx - scale * 2.6, cy - scale * 2.6, scale * 5.2, scale * 5.2);
+      }
+      const shade = mix(base, [20, 24, 50], 0.35);
+      const light = mix(base, [255, 255, 255], 0.3 + 0.45 * glow);
+      const layers: [number[], number][] = [
+        [shade, 0.1],
+        [light, -0.04],
+      ];
+      for (const [col, lift] of layers) {
+        for (const p of c.puffs) {
+          const px = cx + p.dx * scale;
+          const py = cy + p.dy * scale + lift * scale;
+          const r = p.r * scale;
+          const g = ctx.createRadialGradient(px, py, 0, px, py, r);
+          g.addColorStop(0, rgb(col));
+          g.addColorStop(0.62, rgb(col));
+          g.addColorStop(1, rgb(col, 0));
+          ctx.fillStyle = g;
+          ctx.beginPath();
+          ctx.arc(px, py, r, 0, TAU);
+          ctx.fill();
+        }
+      }
+      ctx.restore();
+    }
+
+    function frame(now: number) {
+      const dt = Math.min((now - last) / 1000, 0.05);
+      last = now;
+      t += dt;
+
+      const active = t - lastInput < 14 && influence > 0.05;
+
+      // Your breath follows the button with a lung-like lag.
+      const target = pressed ? 1 : 0;
+      const k = pressed ? 0.9 : 0.6;
+      you.b += (target - you.b) * (1 - Math.exp(-k * dt * 1.6));
+      const ac = Math.acos(Math.max(-1, Math.min(1, 1 - 2 * you.b)));
+      you.phase = pressed ? ac : TAU - ac;
+
+      if (risen) influence = Math.max(0, influence - dt * 0.08);
+
+      // Companions: Kuramoto-style coupling towards you and each other. K must stay below the
+      // companions' natural frequency (~0.5–0.75 rad/s) or they freeze whenever you pause.
+      engage = active ? Math.min(1, engage + dt / 40) : Math.max(0, engage - dt / 10);
+      const K = 0.2 * engage * influence;
+      for (const c of companions) {
+        let pull = K * Math.sin(you.phase - c.phase);
+        let peer = 0;
+        for (const o of companions) if (o !== c) peer += Math.sin(o.phase - c.phase);
+        pull += 0.05 * peer;
+        c.phase = (c.phase + (c.omega + pull) * dt + TAU) % TAU;
+        c.b = (1 - Math.cos(c.phase)) / 2;
+      }
+
+      // Room synchrony: Kuramoto order parameter across everyone breathing.
+      const everyone = active ? [you, ...companions] : companions;
+      let sx = 0;
+      let sy = 0;
+      for (const c of everyone) {
+        sx += Math.cos(c.phase);
+        sy += Math.sin(c.phase);
+      }
+      const R = Math.hypot(sx, sy) / everyone.length;
+      const displayR = active ? R : R * 0.4;
+      sync += (displayR - sync) * (1 - Math.exp(-dt * 1.5));
+
+      if (!risen) {
+        if (active && sync > 0.85) dawn = Math.min(1, dawn + dt / 40);
+        else dawn = Math.max(0, dawn - dt / 120);
+        if (dawn >= 1) {
+          risen = true;
+          pressed = false;
+          holdBtn.classList.remove('active');
+          holdBtn.hidden = true;
+          resetBtn.hidden = false;
+          status.textContent = 'Sunrise. The sky slowly takes your breath back — nothing more is asked of you.';
+        }
+      }
+
+      const pct = Math.round(sync * 100);
+      meterFill.style.width = `${pct}%`;
+      meter.setAttribute('aria-valuenow', String(pct));
+
+      // Sky
+      const top = mix(mix([17, 23, 57], [95, 101, 163], dawn * 0.8), [248, 169, 140], Math.max(0, dawn - 0.6) / 0.4);
+      const bottom = mix(mix([40, 54, 111], [135, 124, 190], dawn), [250, 231, 198], Math.max(0, dawn - 0.5) / 0.5);
+      const sky = ctx.createLinearGradient(0, 0, 0, h);
+      sky.addColorStop(0, rgb(top));
+      sky.addColorStop(1, rgb(bottom));
+      ctx.fillStyle = sky;
+      ctx.fillRect(0, 0, w, h);
+
+      for (const s of stars) {
+        const a = (1 - dawn) * (0.5 + 0.5 * Math.sin(t * 1.3 + s.tw));
+        ctx.fillStyle = `rgba(255,255,255,${a * 0.8})`;
+        ctx.beginPath();
+        ctx.arc(s.x * w, s.y * h, s.r, 0, TAU);
+        ctx.fill();
+      }
+
+      if (dawn > 0.35) {
+        const rise = (dawn - 0.35) / 0.65;
+        const sunY = h * (1.15 - rise * 0.35);
+        const sun = ctx.createRadialGradient(w * 0.5, sunY, 0, w * 0.5, sunY, h * 0.5);
+        sun.addColorStop(0, `rgba(255,236,200,${0.95 * rise})`);
+        sun.addColorStop(0.18, `rgba(255,214,160,${0.7 * rise})`);
+        sun.addColorStop(1, 'rgba(255,200,150,0)');
+        ctx.fillStyle = sun;
+        ctx.fillRect(0, 0, w, h);
+      }
+
+      for (const c of companions) drawCloud(c, c.b * 0.9);
+      drawCloud(you, you.b * influence + (1 - influence) * 0.3);
+
+      if (running) raf = requestAnimationFrame(frame);
+    }
+
+    const io = new IntersectionObserver(([entry]) => {
+      if (entry.isIntersecting && !running) {
+        running = true;
+        last = performance.now();
+        raf = requestAnimationFrame(frame);
+      } else if (!entry.isIntersecting && running) {
+        running = false;
+        cancelAnimationFrame(raf);
+      }
+    });
+    io.observe(root);
+  }
+
+  document.querySelectorAll<HTMLElement>('[data-breath-sync]').forEach(init);
+</script>
+
+<style>
+  .breath-sync {
+    position: relative;
+    border-radius: calc(var(--radius) * 1.4);
+    overflow: hidden;
+    background: #111739;
+    min-height: 32rem;
+    isolation: isolate;
+  }
+  canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+  }
+  .overlay {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: clamp(1.25rem, 3vw, 2rem);
+    background: linear-gradient(to top, rgb(17 23 57 / 0.7), transparent);
+    color: #f1f2fc;
+  }
+  .status {
+    max-width: 34rem;
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    line-height: 1.45;
+    margin-bottom: 1rem;
+  }
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 2rem;
+  }
+  .hold,
+  .reset {
+    appearance: none;
+    border: 1px solid rgb(255 255 255 / 0.6);
+    background: rgb(255 255 255 / 0.08);
+    color: inherit;
+    font: inherit;
+    font-size: 0.95rem;
+    padding: 0.9em 1.6em;
+    border-radius: 999px;
+    cursor: pointer;
+    touch-action: none;
+    user-select: none;
+    -webkit-user-select: none;
+    transition: background 0.4s, transform 0.4s, box-shadow 0.6s;
+  }
+  .hold.active {
+    background: rgb(255 255 255 / 0.22);
+    transform: scale(1.04);
+    box-shadow: 0 0 40px rgb(220 167 211 / 0.45);
+  }
+  .meter {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 12rem;
+    flex: 1;
+    max-width: 20rem;
+  }
+  .meter-label {
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    opacity: 0.75;
+  }
+  .meter-track {
+    height: 4px;
+    border-radius: 4px;
+    background: rgb(255 255 255 / 0.15);
+    overflow: hidden;
+  }
+  .meter-fill {
+    display: block;
+    height: 100%;
+    width: 0;
+    background: linear-gradient(90deg, #9a9dea, #dca7d3, #f8a98c, #f9c77c);
+    border-radius: inherit;
+  }
+</style>

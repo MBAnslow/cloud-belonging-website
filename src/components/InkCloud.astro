@@ -1,0 +1,61 @@
+---
+interface Props {
+  variant?: 'cumulus' | 'small' | 'swirl';
+  class?: string;
+}
+
+const { variant = 'cumulus', class: className } = Astro.props;
+
+const drawings = {
+  cumulus: {
+    viewBox: '0 0 240 140',
+    outline:
+      'M34 110C20 110 14 94 28 87C22 67 44 55 60 63C63 39 96 31 112 47C121 23 162 22 170 50C188 42 211 56 205 77C223 79 227 104 208 110',
+    details: [
+      'M70 88C76 74 96 72 104 84',
+      'M120 72C130 60 150 62 154 76',
+      'M150 94C160 86 176 88 180 98',
+      'M52 98C56 92 64 91 70 95',
+    ],
+    hatch: [
+      [18, 110, 222],
+      [40, 118, 200],
+      [70, 125, 186],
+      [100, 131, 158],
+    ],
+  },
+  small: {
+    viewBox: '0 0 160 90',
+    outline: 'M24 70C12 70 10 56 22 52C20 38 36 32 46 40C50 22 78 18 88 34C98 24 120 28 120 44C134 44 140 64 128 70',
+    details: ['M56 56C60 48 72 48 76 56', 'M92 50C98 44 108 46 110 54'],
+    hatch: [
+      [14, 70, 142],
+      [36, 77, 124],
+      [60, 83, 100],
+    ],
+  },
+  swirl: {
+    viewBox: '0 0 160 90',
+    outline: 'M20 60C40 58 60 50 62 36C64 22 48 18 42 28C36 38 50 46 60 40',
+    details: ['M70 64C96 62 120 54 130 40', 'M84 74C104 73 124 69 140 60'],
+    hatch: [],
+  },
+} as const;
+
+const d = drawings[variant];
+---
+
+<svg class:list={['ink-cloud', className]} viewBox={d.viewBox} fill="none" aria-hidden="true">
+  <g stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+    <path d={d.outline} stroke-width="1.6"></path>
+    <path d={d.outline} stroke-width="0.8" opacity="0.45" transform="translate(1.6 -1.2) rotate(0.6)"></path>
+    {d.details.map((p) => <path d={p} stroke-width="1.1" opacity="0.8" />)}
+    {d.hatch.map(([x1, y, x2]) => <path d={`M${x1} ${y}H${x2}`} stroke-width="1.1" opacity="0.75" />)}
+  </g>
+</svg>
+
+<style>
+  .ink-cloud {
+    color: var(--ultramarine);
+  }
+</style>

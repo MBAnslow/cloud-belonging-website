@@ -1,0 +1,68 @@
+---
+interface Props {
+  name: string;
+  caption?: string;
+  orientation?: 'landscape' | 'portrait';
+  ratio?: string;
+  class?: string;
+}
+
+const { name, caption, orientation = 'landscape', ratio, class: className } = Astro.props;
+---
+
+<figure class:list={['clip', orientation, className]} style={ratio ? `--ratio: ${ratio}` : undefined}>
+  <video
+    src={`/video/${name}.mp4`}
+    poster={`/video/${name}.jpg`}
+    muted
+    loop
+    playsinline
+    preload="none"
+    data-autoplay
+    aria-label={caption}></video>
+  {caption && <figcaption>{caption}</figcaption>}
+</figure>
+
+<script>
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const videos = document.querySelectorAll<HTMLVideoElement>('video[data-autoplay]');
+  if (reduce) {
+    videos.forEach((v) => (v.controls = true));
+  } else {
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const { target, isIntersecting } of entries) {
+          const v = target as HTMLVideoElement;
+          if (isIntersecting) v.play().catch(() => (v.controls = true));
+          else v.pause();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    videos.forEach((v) => io.observe(v));
+  }
+</script>
+
+<style>
+  .clip {
+    margin: 0;
+  }
+  video {
+    width: 100%;
+    border-radius: var(--radius);
+    background: var(--night-2);
+    object-fit: cover;
+  }
+  .landscape video {
+    aspect-ratio: var(--ratio, 16 / 9);
+  }
+  .portrait video {
+    aspect-ratio: var(--ratio, 9 / 16);
+    max-height: 80vh;
+  }
+  figcaption {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+    margin-top: 0.7rem;
+  }
+</style>

@@ -1,0 +1,155 @@
+---
+import Base from '../../layouts/Base.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import JournalCard from '../../components/JournalCard.astro';
+import { getJournal } from '../../lib/journal';
+
+const entries = await getJournal();
+const stages = ['Proposal', 'Exploration', 'Making', 'Sharing'] as const;
+
+const byMonth = new Map<string, typeof entries>();
+for (const entry of entries) {
+  const key = entry.data.date.toLocaleDateString('en-GB', { month: 'long', year: 'numeric', timeZone: 'UTC' });
+  byMonth.set(key, [...(byMonth.get(key) ?? []), entry]);
+}
+---
+
+<Base title="Process" description="A process journal documenting how a cloud installation about belonging was imagined, tested and built over time.">
+  <PageHeader
+    eyebrow="Process journal"
+    ink="swirl"
+    title="How it came together"
+    lede="Notes from our meetings, material tests, visits and conversations, in the order they happened. The false starts are here too, because they shaped the work as much as what stayed."
+  >
+    <div class="filters" role="group" aria-label="Filter by stage">
+      <button type="button" aria-pressed="true" data-filter="all">All</button>
+      {stages.map((s) => <button type="button" aria-pressed="false" data-filter={s}>{s}</button>)}
+    </div>
+  </PageHeader>
+
+  <section class="section timeline-section">
+    <div class="wrap">
+      <div class="next reveal">
+        <span class="pulse" aria-hidden="true"></span>
+        <div>
+          <p class="eyebrow">Next chapter</p>
+          <p class="next-text">
+            The full-scale cloud, its first participants, and what they tell us. We’ll add it here as it happens.
+          </p>
+        </div>
+      </div>
+      {
+        [...byMonth].map(([month, items]) => (
+          <section class="month" data-month>
+            <h2 class="month-label">{month}</h2>
+            <div class="grid-3">
+              {items.map((entry) => (
+                <div data-entry-stage={entry.data.stage}>
+                  <JournalCard entry={entry} />
+                </div>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+    </div>
+  </section>
+</Base>
+
+<script>
+  const buttons = document.querySelectorAll<HTMLButtonElement>('[data-filter]');
+  const items = document.querySelectorAll<HTMLElement>('[data-entry-stage]');
+  const months = document.querySelectorAll<HTMLElement>('[data-month]');
+  buttons.forEach((btn) =>
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.filter;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      items.forEach((el) => (el.hidden = f !== 'all' && el.dataset.entryStage !== f));
+      months.forEach((m) => (m.hidden = !m.querySelector('[data-entry-stage]:not([hidden])')));
+    }),
+  );
+</script>
+
+<style>
+  .filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 2rem;
+  }
+  .filters button {
+    appearance: none;
+    font: inherit;
+    font-size: 0.88rem;
+    color: var(--ink);
+    background: rgb(255 255 255 / 0.5);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.5em 1.1em;
+    cursor: pointer;
+  }
+  .filters button[aria-pressed='true'] {
+    background: var(--ink);
+    color: var(--paper);
+    border-color: var(--ink);
+  }
+  .timeline-section {
+    padding-top: 2rem;
+  }
+  .next {
+    display: flex;
+    gap: 1.25rem;
+    align-items: flex-start;
+    padding: 1.75rem;
+    border: 1px dashed rgb(59 82 180 / 0.35);
+    border-radius: var(--radius);
+    margin-bottom: 4rem;
+  }
+  .next .eyebrow {
+    margin-bottom: 0.3rem;
+  }
+  .next-text {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    margin: 0;
+  }
+  .pulse {
+    flex: none;
+    width: 0.8rem;
+    height: 0.8rem;
+    margin-top: 0.3rem;
+    border-radius: 50%;
+    background: var(--rose);
+    box-shadow: 0 0 0 0 rgb(248 169 140 / 0.6);
+    animation: ring 2.4s infinite;
+  }
+  @keyframes ring {
+    70% {
+      box-shadow: 0 0 0 14px rgb(248 169 140 / 0);
+    }
+    100% {
+      box-shadow: 0 0 0 0 rgb(248 169 140 / 0);
+    }
+  }
+  .month {
+    display: grid;
+    grid-template-columns: 10rem 1fr;
+    gap: 2rem;
+    padding-block: 3rem;
+    border-top: 1px solid var(--line);
+  }
+  .month-label {
+    font-size: 1.3rem;
+    position: sticky;
+    top: 6rem;
+    align-self: start;
+  }
+  @media (max-width: 760px) {
+    .month {
+      grid-template-columns: 1fr;
+    }
+    .month-label {
+      position: static;
+    }
+  }
+</style>

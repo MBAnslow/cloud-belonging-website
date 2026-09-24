@@ -1,0 +1,504 @@
+---
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SkyPhases from '../components/SkyPhases.astro';
+import BreathSync from '../components/BreathSync.astro';
+import BreathChart from '../components/BreathChart.astro';
+import VideoClip from '../components/VideoClip.astro';
+import Figure from '../components/Figure.astro';
+
+import meshZephir from '../assets/photos/mesh-zephir.jpg';
+import tulleAssembly from '../assets/photos/tulle-assembly.jpg';
+import tulleLight2 from '../assets/photos/tulle-light-2.jpg';
+import beltSketch from '../assets/photos/belt-sketch.jpg';
+import printFrame from '../assets/photos/print-frame-1.jpg';
+import visitCeiling from '../assets/photos/visit-cloud-ceiling.jpg';
+import visitFire from '../assets/photos/visit-tv-fire.jpg';
+import visitStars from '../assets/photos/visit-stars.jpg';
+
+const whyCloud = [
+  { title: 'It is above everyone', text: 'Nobody has a better seat. A cloud offers a shared perspective without a stage.' },
+  { title: 'It gives light a body', text: 'A cloud is a volume for light to live in — glowing, flashing, catching the sun.' },
+  { title: 'It is always changing', text: 'Clouds are impermanence made visible. They form, drift, rain and form again.' },
+  { title: 'It is water, and so are we', text: 'The water cycle is continuity and unity: the same water in vapour, rain, river, tea, and us.' },
+  { title: 'It follows you home', text: 'Everyone sees clouds. We hope the next one you see brings a little of this back.' },
+  { title: 'It is forgiving', text: 'Dim, diffuse light feels primal and hides the imperfections of whatever room we are in.' },
+];
+
+const decisions = [
+  {
+    choice: 'Breath as the interface',
+    why: 'Breath is both voluntary and involuntary, and everyone has it. Breathing together is one of the simplest forms of co-regulation. It also builds on what Zéphir learned from Réespiration.',
+  },
+  {
+    choice: 'Synchrony instead of individual control',
+    why: 'We want people to feel that they belong, not that they are in charge. The group moves time forward only together, and once dawn comes the system takes the breath back. Participants play a role; they don’t steer.',
+  },
+  {
+    choice: 'One cloud per person, then one sky',
+    why: 'A single shared output makes it hard to see your own contribution, which was a lesson from Réespiration. Individual clouds make each breath visible, and they merge into one sky as the group aligns.',
+  },
+  {
+    choice: 'A storm before the calm',
+    why: 'People arrive carrying their day. A burst of lightning and thunder works as a palate cleanser: it pulls attention into the room and primes a more primal, awe-filled relationship with weather.',
+  },
+  {
+    choice: 'Lying down, shoes off',
+    why: 'Posture changes the role you play. Lying on the floor under a sky turns a visitor into an inhabitant, and the small ritual of preparation already begins the shared experience.',
+  },
+  {
+    choice: 'No instructions about feelings',
+    why: 'Being told to feel connected is the fastest way not to be. The space offers conditions and a little mystery, and leaves the story to the people in it.',
+  },
+  {
+    choice: 'Ending with tea and a sharing circle',
+    why: 'Rituals end by returning to the group. Sharing after a practice normalises experience, and being listened to without judgement is itself an act of belonging.',
+  },
+];
+
+const openQuestions = [
+  'How do we invite people to breathe together without instructing them?',
+  'Will a group understand that their shared rhythm is what brings the dawn — and does it matter if they don’t?',
+  'Should there be a goal (“save a cloud”) or only an invitation?',
+  'Where should it live: a gallery, a public space, a train carriage, a boat?',
+  'How do strangers find each other again afterwards?',
+];
+---
+
+<Base title="The Cloud" description="The concept, score and construction of a breathing cloud installation: why a cloud, the phases of the experience, and what we tried.">
+  <PageHeader
+    eyebrow="The work"
+    title="A cloud that listens"
+    lede="A cloud hangs above a group of people lying on the floor, and it listens to them breathing. In half an hour the room passes through one night. When the group breathes together, the sun comes up.">
+    <p class="status">
+      <span class="dot" aria-hidden="true"></span>
+      <span>
+        Working title <em>A Space in Us</em>. This is our design as of summer 2026. The final installation is still
+        being built and tested.
+      </span>
+    </p>
+  </PageHeader>
+
+  <section class="section">
+    <div class="wrap why-cloud">
+      <div class="why-text">
+        <p class="eyebrow reveal">Why a cloud</p>
+        <h2 class="reveal">Something we all live under</h2>
+        <div class="why-grid">
+          {
+            whyCloud.map((w) => (
+              <div class="why reveal">
+                <h3>{w.title}</h3>
+                <p>{w.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <VideoClip
+        name="tulle-projector"
+        orientation="portrait"
+        caption="A tulle cloud test, lit from below by a projector (June 2026)."
+        class="reveal why-video"
+      />
+    </div>
+  </section>
+
+  <SkyPhases />
+
+  <section class="section dark sim">
+    <div class="wrap">
+      <div class="grid-2 sim-head">
+        <div class="reveal">
+          <p class="eyebrow">Simulating before building</p>
+          <h2>Walking through the night in 3D</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            Before building at full scale, we built a simulation of the room. Each person lies on a mat with their own
+            cloud overhead. Each breath is a wave with its own rate, depth and phase. A <em>room synchrony</em> measure
+            rises as breaths align. The storm can be tuned for frequency and intensity. When synchrony peaks, the
+            clouds turn white and daylight rises.
+          </p>
+        </div>
+      </div>
+      <VideoClip name="simulation" ratio="1280 / 636" caption="Screen recording of the simulation: entry, breathing and daylight rising." class="reveal" />
+    </div>
+  </section>
+
+  <section class="section try">
+    <div class="wrap">
+      <div class="grid-2 try-head">
+        <div class="reveal">
+          <p class="eyebrow">Try it</p>
+          <h2>A small version of the fourth phase</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            Your breath is the large cloud. The four smaller clouds are other people in the room, each with their own
+            rhythm. As you breathe slowly and steadily, they gradually fall into step with you, and with each other.
+            Hold the rhythm together long enough and dawn comes. Then, as in the installation, your influence fades and
+            the sky carries on without you.
+          </p>
+          <p class="small">
+            The companions are modelled as coupled oscillators (a Kuramoto model) — the same maths often used to
+            describe fireflies flashing in unison.
+          </p>
+        </div>
+      </div>
+      <div class="reveal">
+        <BreathSync />
+      </div>
+    </div>
+  </section>
+
+  <section class="section decisions">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">How we reasoned</p>
+        <h2>Why it is the way it is</h2>
+        <p class="lede measure">
+          Every element of the installation answers a question about belonging. These are the decisions we have made
+          so far, and our reasons for them.
+        </p>
+      </div>
+      <dl class="decision-list">
+        {
+          decisions.map((d) => (
+            <div class="decision reveal">
+              <dt>{d.choice}</dt>
+              <dd>{d.why}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section making" id="making">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Making</p>
+        <h2>How a cloud gets built</h2>
+        <p class="lede measure">
+          What we tried, what surprised us, and what we are still working out.
+        </p>
+      </div>
+
+      <article class="make">
+        <div class="make-text reveal">
+          <p class="make-num">01 · Body</p>
+          <h3>From chicken mesh to tulle</h3>
+          <p>
+            Our first cloud was plastic chicken mesh, crumpled into folds and held with zip ties. It was easy to cut
+            and shape, but heavy-looking and opaque. Then we tried tulle. A single layer is almost transparent, very
+            light, and catches light beautifully. Bunched and layered, it became our cloud.
+          </p>
+          <p><a href="/process/2026-05-21-mesh-and-tulle/">Read the journal entry →</a></p>
+        </div>
+        <div class="make-media two">
+          <Figure src={meshZephir} alt="Zéphir shaping green plastic mesh on the studio floor." caption="Shaping mesh, May 2026." ratio="4 / 5" class="reveal" />
+          <Figure src={tulleAssembly} alt="Zéphir fixing layers of tulle to a stand." caption="Assembling tulle, June 2026." ratio="4 / 5" class="reveal" />
+        </div>
+      </article>
+
+      <article class="make">
+        <div class="make-text reveal">
+          <p class="make-num">02 · Light</p>
+          <h3>A glow inside, a sun below</h3>
+          <p>
+            LEDs inside the cloud make it glow from within. An addressable LED matrix could create gradients, travelling
+            light and lightning. Lit from the floor by a projector, the tulle throws beams and casts its shadow onto the
+            ceiling. That gave us the idea that the audience might be the sun.
+          </p>
+          <p><a href="/process/2026-06-24-breath-as-sound/">Read about being the sun →</a></p>
+        </div>
+        <div class="make-media three">
+          <VideoClip name="cloud-led" orientation="portrait" caption="LEDs inside the cloud." class="reveal" />
+          <VideoClip name="led-matrix" orientation="portrait" caption="LED matrix test." class="reveal" />
+          <Figure src={tulleLight2} alt="The tulle cloud lit blue and green near the ceiling." caption="Projected light through tulle." ratio="9 / 16" class="reveal" />
+        </div>
+      </article>
+
+      <article class="make" id="breath">
+        <div class="make-text reveal">
+          <p class="make-num">03 · Breath</p>
+          <h3>A belt that listens</h3>
+          <p>
+            Each participant wears a light belt with a stretch sensor. A tiny ESP32-C3 board sends the reading
+            wirelessly as OSC messages to TouchDesigner, which detects the start of each in- and out-breath. Below are
+            real recordings from our tests with different band widths and amounts of stretch, all on the same scale.
+          </p>
+          <p><a href="/process/2026-06-12-a-belt-that-listens/">Read about the belt →</a></p>
+        </div>
+        <div class="make-media">
+          <Figure src={beltSketch} alt="Sketch of a vest with a breathing sensor band around the torso." caption="Early design sketch for the breathing vest." class="reveal" />
+        </div>
+      </article>
+      <div class="reveal chart">
+        <BreathChart />
+      </div>
+
+      <article class="make">
+        <div class="make-text reveal">
+          <p class="make-num">04 · Sound</p>
+          <h3>Wind that turns into chimes</h3>
+          <p>
+            We imagine the soundscape moving from field recordings (wind in bare trees, a distant dawn chorus)
+            towards something more musical as the group comes together. Each out-breath becomes a sound object that drifts up
+            and plays the cloud. Notes arriving together form chords, and held chords swell into drones. Thunder
+            answers lightning.
+          </p>
+          <p>
+            One idea we are exploring is generative audio morphs. A generative audio model partially denoises a nature
+            recording towards a prompt like “wind chimes”, and we pre-render a continuum of steps between the two to
+            crossfade as the room synchronises.
+          </p>
+        </div>
+        <div class="make-media sound-card reveal">
+          <p class="eyebrow">Listening list</p>
+          <ul>
+            <li>Varandas — <em>Slow Down the Wind, the Clouds Need a Break</em></li>
+            <li>Timothy Garrett — <em>Divergent Paths</em></li>
+            <li>World of White Ice — <em>Frost</em></li>
+            <li>Luke Kokoszka</li>
+            <li>Field recordings: wind, bare trees, dawn chorus</li>
+          </ul>
+        </div>
+      </article>
+
+      <article class="make">
+        <div class="make-text reveal">
+          <p class="make-num">05 · Structure</p>
+          <h3>A skeleton for something soft</h3>
+          <p>
+            Tulle won’t hold a shape on its own. We are 3D-printing parts of a frame, and working out a metal structure
+            for hanging, with elastic lines so the cloud can move and still keep its approximate shape.
+          </p>
+          <p><a href="/process/2026-07-17-printing-a-frame/">Read about the frame →</a></p>
+        </div>
+        <div class="make-media">
+          <Figure src={printFrame} alt="A 3D printer printing a white frame part." caption="Printing frame parts, July 2026." ratio="4 / 3" class="reveal" />
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section visits">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Looking at how others do it</p>
+        <h2>Field visits</h2>
+        <p class="measure">
+          We visited immersive theatre in Paris to study thresholds, hosts and atmosphere: <em>Le Grand Hôtel des
+          Rêves</em>, and Moir’s immersive personality test <em>TOI</em>. Other touchstones include Fujiko Nakaya’s fog
+          sculptures and Olafur Eliasson’s <em>Beauty</em>.
+        </p>
+      </div>
+      <div class="grid-3">
+        <Figure src={visitCeiling} alt="A dark control room with swirling clouds projected across the ceiling." caption="A projected sky of clouds, Le Grand Hôtel des Rêves." ratio="3 / 4" class="reveal" />
+        <Figure src={visitStars} alt="A deep blue room with a starry ceiling." caption="A starry room — should our night have stars?" ratio="3 / 4" class="reveal" />
+        <Figure src={visitFire} alt="An old television showing a fireplace." caption="A fireplace on an old TV. For a while, a glowing hearth at the centre of the room was part of our design." ratio="3 / 4" class="reveal" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section open dark">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">Still open</p>
+        <h2>What we are still figuring out</h2>
+        <p class="lede">The installation is unfinished on purpose. These are the questions we will answer by building it and trying it with people.</p>
+      </div>
+      <ul class="open-list reveal">
+        {openQuestions.map((q) => <li>{q}</li>)}
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .status {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-top: 1.5rem;
+    padding: 0.7rem 1.1rem;
+    border-radius: 1.2rem;
+    background: rgb(255 255 255 / 0.6);
+    border: 1px solid var(--line);
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+  }
+  .dot {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: var(--rose);
+    flex: none;
+    animation: pulse 3s ease-in-out infinite;
+    transform: translateY(0.05rem);
+  }
+  @keyframes pulse {
+    50% {
+      opacity: 0.3;
+    }
+  }
+  .section-head {
+    margin-bottom: 3rem;
+    max-width: 44rem;
+  }
+  .why-cloud {
+    display: grid;
+    grid-template-columns: 1fr minmax(14rem, 22rem);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 2rem 2.5rem;
+    margin-top: 2.5rem;
+  }
+  .why h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+  }
+  .why p {
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+    margin: 0;
+  }
+  :global(.why-video) {
+    position: sticky;
+    top: 6rem;
+  }
+  @media (max-width: 860px) {
+    .why-cloud {
+      grid-template-columns: 1fr;
+    }
+    :global(.why-video) {
+      position: static;
+      max-width: 22rem;
+    }
+  }
+
+  .sim-head,
+  .try-head {
+    margin-bottom: 3rem;
+  }
+  .sim p {
+    color: var(--ink-soft);
+  }
+  .small {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+
+  .decision-list {
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .decision {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1fr) 2fr;
+    gap: 1rem 3rem;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .decision dt {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.65rem);
+    line-height: 1.2;
+  }
+  .decision dd {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 700px) {
+    .decision {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .make {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--line);
+  }
+  .make-num {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dusk);
+  }
+  .make-text p {
+    color: var(--ink-soft);
+  }
+  .make-text a {
+    color: var(--ink);
+  }
+  .make-media.two {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+  .make-media.three {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.8rem;
+    align-items: start;
+  }
+  .chart {
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+  }
+  .sound-card {
+    background: var(--paper-deep);
+    border-radius: var(--radius);
+    padding: 2rem;
+  }
+  .sound-card ul {
+    margin: 0;
+    padding-left: 1.1em;
+    display: grid;
+    gap: 0.5rem;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 860px) {
+    .make {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .open {
+    background: linear-gradient(180deg, #344589, var(--night));
+  }
+  .open-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: q;
+  }
+  .open-list li {
+    counter-increment: q;
+    position: relative;
+    padding: 1.1rem 0 1.1rem 2.6rem;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    line-height: 1.35;
+  }
+  .open-list li::before {
+    content: counter(q, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 1.35rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+  }
+</style>

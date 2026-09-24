@@ -1,0 +1,219 @@
+---
+import { checklist } from '../data/checklist';
+const total = checklist.reduce((n, s) => n + s.items.length, 0);
+---
+
+<div class="checklist" data-checklist>
+  <div class="toolbar">
+    <p class="progress" aria-live="polite"><strong data-count>0</strong> of {total} considered</p>
+    <div class="actions">
+      <button type="button" data-print>Print or save as PDF</button>
+      <button type="button" data-clear>Clear</button>
+    </div>
+  </div>
+  <div class="sections">
+    {
+      checklist.map((section) => (
+        <fieldset class="block">
+          <legend>
+            <span class="title">{section.title}</span>
+            <span class="intro">{section.intro}</span>
+          </legend>
+          <ul>
+            {section.items.map((item, i) => {
+              const id = `${section.id}-${i}`;
+              return (
+                <li>
+                  <input type="checkbox" id={id} data-key={id} />
+                  <label for={id}>
+                    <span class="label">{item.label}</span>
+                    <span class="detail">{item.detail}</span>
+                  </label>
+                </li>
+              );
+            })}
+          </ul>
+        </fieldset>
+      ))
+    }
+  </div>
+</div>
+
+<script>
+  const KEY = 'belonging-checklist-v1';
+  document.querySelectorAll<HTMLElement>('[data-checklist]').forEach((root) => {
+    const boxes = Array.from(root.querySelectorAll<HTMLInputElement>('input[type="checkbox"]'));
+    const count = root.querySelector<HTMLElement>('[data-count]')!;
+    let saved: Record<string, boolean> = {};
+    try {
+      saved = JSON.parse(localStorage.getItem(KEY) ?? '{}');
+    } catch {}
+    const update = () => {
+      count.textContent = String(boxes.filter((b) => b.checked).length);
+      const state = Object.fromEntries(boxes.map((b) => [b.dataset.key!, b.checked]));
+      try {
+        localStorage.setItem(KEY, JSON.stringify(state));
+      } catch {}
+    };
+    boxes.forEach((b) => {
+      b.checked = !!saved[b.dataset.key!];
+      b.addEventListener('change', update);
+    });
+    count.textContent = String(boxes.filter((b) => b.checked).length);
+    root.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+    root.querySelector('[data-clear]')?.addEventListener('click', () => {
+      boxes.forEach((b) => (b.checked = false));
+      update();
+    });
+  });
+</script>
+
+<style>
+  .toolbar {
+    position: sticky;
+    top: 4.5rem;
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 1.2rem;
+    margin-bottom: 2rem;
+    border-radius: 999px;
+    background: rgb(248 247 244 / 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid var(--line);
+  }
+  .progress {
+    margin: 0;
+    font-size: 0.92rem;
+  }
+  .actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .actions button {
+    appearance: none;
+    font: inherit;
+    font-size: 0.85rem;
+    background: transparent;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.4em 1em;
+    cursor: pointer;
+    color: var(--ink);
+  }
+  .actions button:hover {
+    border-color: var(--ink);
+  }
+  .sections {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+    gap: 1.5rem;
+  }
+  .block {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.5rem 1.5rem 0.75rem;
+    margin: 0;
+    background: rgb(255 255 255 / 0.4);
+  }
+  legend {
+    float: left;
+    width: 100%;
+    padding: 0;
+    margin-bottom: 1rem;
+  }
+  legend + ul {
+    clear: both;
+  }
+  .title {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 1.45rem;
+    line-height: 1.2;
+  }
+  .intro {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--ink-faint);
+    margin-top: 0.2rem;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.8rem;
+    padding-block: 0.8rem;
+    border-top: 1px solid var(--line);
+  }
+  input {
+    appearance: none;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin: 0.15rem 0 0;
+    border: 1.5px solid var(--ink-faint);
+    border-radius: 50%;
+    cursor: pointer;
+    display: grid;
+    place-items: center;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  input::after {
+    content: '';
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 50%;
+    background: var(--paper);
+    transform: scale(0);
+    transition: transform 0.2s;
+  }
+  input:checked {
+    background: var(--dusk);
+    border-color: var(--dusk);
+  }
+  input:checked::after {
+    transform: scale(1);
+  }
+  label {
+    cursor: pointer;
+  }
+  .label {
+    display: block;
+    font-weight: 500;
+    line-height: 1.35;
+  }
+  .detail {
+    display: block;
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    margin-top: 0.2rem;
+  }
+  input:checked + label .label {
+    color: var(--dusk);
+  }
+
+  @media print {
+    .toolbar {
+      display: none;
+    }
+    .sections {
+      display: block;
+    }
+    .block {
+      break-inside: avoid;
+      margin-bottom: 1rem;
+      background: none;
+    }
+    input {
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }
+</style>
