@@ -28,19 +28,19 @@ const whyCloud = [
 const decisions = [
   {
     choice: 'Breath as the interface',
-    why: 'Breath is both voluntary and involuntary, and everyone has it. Breathing together is one of the simplest forms of co-regulation. It also builds on what Zéphir learned from Réespiration.',
+    why: 'Breath is both voluntary and involuntary, and everyone has it. Breathing in rhythm with something is one of the simplest forms of co-regulation. It also builds on what Zéphir learned from Réespiration.',
   },
   {
-    choice: 'Synchrony instead of individual control',
-    why: 'We want people to feel that they belong, not that they are in charge. The group moves time forward only together, and once dawn comes the system takes the breath back. Participants play a role; they don’t steer.',
+    choice: 'Breathing with the cloud, not controlling it',
+    why: 'We want people to feel that they belong with the cloud, not that they are in charge of it. Its light follows the rise and fall of your respiration, like a companion keeping time with you, rather than obeying commands.',
   },
   {
-    choice: 'One cloud per person, then one sky',
-    why: 'A single shared output makes it hard to see your own contribution, which was a lesson from Réespiration. Individual clouds make each breath visible, and they merge into one sky as the group aligns.',
+    choice: 'Lightning at dusk',
+    why: 'People arrive carrying their day. As the sun sets, the first lightning pulls attention into the room and towards weather: nature as vast, a little wild, and very present.',
   },
   {
-    choice: 'A storm before the calm',
-    why: 'People arrive carrying their day. A burst of lightning and thunder works as a palate cleanser: it pulls attention into the room and primes a more primal, awe-filled relationship with weather.',
+    choice: 'A magical twilight before the breath',
+    why: 'The twilight turns the experience into a story. As its light intensifies and strange, image-like forms flash through the cloud, the cloud gains a presence and a character. By the time it begins to breathe with you, a bond is already there.',
   },
   {
     choice: 'Lying down, shoes off',
@@ -50,18 +50,14 @@ const decisions = [
     choice: 'No instructions about feelings',
     why: 'Being told to feel connected is the fastest way not to be. The space offers conditions and a little mystery, and leaves the story to the people in it.',
   },
-  {
-    choice: 'Ending with tea and a sharing circle',
-    why: 'Rituals end by returning to the group. Sharing after a practice normalises experience, and being listened to without judgement is itself an act of belonging.',
-  },
 ];
 
 const openQuestions = [
-  'How do we invite people to breathe together without instructing them?',
-  'Will a group understand that their shared rhythm is what brings the dawn — and does it matter if they don’t?',
+  'How do we invite someone to breathe with the cloud without instructing them?',
+  'How much of the twilight’s story should be told, and how much left to the imagination?',
   'Should there be a goal (“save a cloud”) or only an invitation?',
   'Where should it live: a gallery, a public space, a train carriage, a boat?',
-  'How do strangers find each other again afterwards?',
+  'How does the bond with the cloud carry on after you leave?',
 ];
 ---
 
@@ -69,12 +65,11 @@ const openQuestions = [
   <PageHeader
     eyebrow="The work"
     title="A cloud that listens"
-    lede="A cloud hangs above a group of people lying on the floor, and it listens to them breathing. In half an hour the room passes through one night. When the group breathes together, the sun comes up.">
+    lede="A cloud hangs above you. The sun sets, lightning begins, and a strange twilight builds around it. Then the cloud begins to breathe with you.">
     <p class="status">
       <span class="dot" aria-hidden="true"></span>
       <span>
-        Working title <em>A Space in Us</em>. This is our design as of summer 2026. The final installation is still
-        being built and tested.
+        Working title <em>A Space in Us</em>. Three stages: dusk, magical twilight, breath synchrony.
       </span>
     </p>
   </PageHeader>
@@ -111,18 +106,21 @@ const openQuestions = [
       <div class="grid-2 sim-head">
         <div class="reveal">
           <p class="eyebrow">Simulating before building</p>
-          <h2>Walking through the night in 3D</h2>
+          <h2>An early walk-through in 3D</h2>
         </div>
         <div class="reveal">
           <p>
-            Before building at full scale, we built a simulation of the room. Each person lies on a mat with their own
-            cloud overhead. Each breath is a wave with its own rate, depth and phase. A <em>room synchrony</em> measure
-            rises as breaths align. The storm can be tuned for frequency and intensity. When synchrony peaks, the
-            clouds turn white and daylight rises.
+            Before building at full scale, we made a simulation of the room to think through the experience. Breaths
+            are shown as waves with their own rate, depth and phase, and a <em>synchrony</em> measure rises as they
+            align. Lightning can be tuned for frequency and intensity.
+          </p>
+          <p class="small">
+            This recording is from July 2026, when the score still ended at sunrise. The final score is the three stages
+            above.
           </p>
         </div>
       </div>
-      <VideoClip name="simulation" ratio="1280 / 636" caption="Screen recording of the simulation: entry, breathing and daylight rising." class="reveal" />
+      <VideoClip name="simulation" ratio="1280 / 636" caption="Screen recording of the July 2026 simulation." class="reveal" />
     </div>
   </section>
 
@@ -131,18 +129,18 @@ const openQuestions = [
       <div class="grid-2 try-head">
         <div class="reveal">
           <p class="eyebrow">Try it</p>
-          <h2>A small version of the fourth phase</h2>
+          <h2>Breath synchrony, in your browser</h2>
         </div>
         <div class="reveal">
           <p>
-            Your breath is the large cloud. The four smaller clouds are other people in the room, each with their own
-            rhythm. As you breathe slowly and steadily, they gradually fall into step with you, and with each other.
-            Hold the rhythm together long enough and dawn comes. Then, as in the installation, your influence fades and
-            the sky carries on without you.
+            In the installation, a sensor follows your real breathing. Here, a button stands in for it. Your breath is
+            the large cloud, which swells and glows as you breathe in. The smaller clouds drift at their own rhythms,
+            and as you breathe slowly and steadily they gradually fall into step with you. Hold the rhythm long enough
+            and the sky brightens.
           </p>
           <p class="small">
-            The companions are modelled as coupled oscillators (a Kuramoto model) — the same maths often used to
-            describe fireflies flashing in unison.
+            This playful web version extends the idea beyond the installation. The small clouds are modelled as coupled
+            oscillators (a Kuramoto model), the same maths often used to describe fireflies flashing in unison.
           </p>
         </div>
       </div>
@@ -245,7 +243,7 @@ const openQuestions = [
           <h3>Wind that turns into chimes</h3>
           <p>
             We imagine the soundscape moving from field recordings (wind in bare trees, a distant dawn chorus)
-            towards something more musical as the group comes together. Each out-breath becomes a sound object that drifts up
+            towards something more musical as the experience builds. Each out-breath becomes a sound object that drifts up
             and plays the cloud. Notes arriving together form chords, and held chords swell into drones. Thunder
             answers lightning.
           </p>

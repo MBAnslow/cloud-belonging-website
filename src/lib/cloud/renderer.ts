@@ -27,6 +27,9 @@ uniform float uDisc;
 uniform vec3 uDiscCol;
 uniform vec3 uFlashPos;
 uniform float uFlash;
+uniform vec3 uFlashCol;
+uniform float uFlashPattern;
+uniform float uFlashSeed;
 uniform vec3 uPlace;
 uniform float uExposure;
 
@@ -140,13 +143,14 @@ void main() {
     float sq = sqrt(disc);
     float t = max(-b - sq, 0.0);
     float t1 = -b + sq;
-    float stepLen = (t1 - t) / 48.0;
-    t += stepLen * hash13(vec3(gl_FragCoord.xy, 3.0));
+    float stepLen = (t1 - t) / 56.0;
+    // Interleaved gradient noise: a less visible dither than white noise at low light.
+    t += stepLen * fract(52.9829189 * fract(dot(gl_FragCoord.xy, vec2(0.06711056, 0.00583715))));
     float phase = mix(hg(mu, 0.6), hg(mu, -0.2), 0.35) * 10.0;
     vec3 w = wind();
-    float lightJitter = 0.6 + 0.8 * hash13(vec3(gl_FragCoord.xy, 11.0));
+    float lightJitter = 0.8 + 0.4 * fract(52.9829189 * fract(dot(gl_FragCoord.xy + 17.0, vec2(0.00583715, 0.06711056))));
 
-    for (int i = 0; i < 72; i++) {
+    for (int i = 0; i < 80; i++) {
       if (t > t1 || T < 0.02) break;
       vec3 p = lro + rd * t;
       float coarse = shape(p);
@@ -173,7 +177,15 @@ void main() {
         vec3 S = uSunCol * light * phase + amb * (0.35 + 0.65 * exp(-ld * 1.2));
         vec3 gp = p - vec3(0.0, -0.02, 0.0);
         S += uGlowCol * uGlow * exp(-dot(gp, gp) * 3.0);
-        S += vec3(0.85, 0.88, 1.0) * uFlash * exp(-length(p - uFlashPos) * 3.2) * 7.0;
+        if (uFlash > 0.001) {
+          // Patterned flashes light up only parts of the volume, so forms seem to appear inside the cloud.
+          vec3 fq = p * 3.2 + uFlashSeed;
+          float ridge = 1.0 - abs(noise(fq) * 2.0 - 1.0);
+          float ridge2 = 1.0 - abs(noise(fq * 2.3 + 5.1) * 2.0 - 1.0);
+          float forms = pow(ridge, 10.0) * 3.2 + pow(ridge2, 14.0) * 1.8 + 0.06;
+          float lit = mix(1.0, forms, uFlashPattern);
+          S += uFlashCol * uFlash * lit * exp(-length(p - uFlashPos) * mix(3.2, 2.2, uFlashPattern)) * 7.0;
+        }
         float Ts = exp(-d * 16.0 * stepLen);
         col += T * S * (1.0 - Ts);
         T *= Ts;
@@ -205,6 +217,7 @@ export type GLState = {
   stars: number;
   disc: number;
   storm: number;
+  flashPattern: number;
   exposure: number;
 };
 
@@ -233,6 +246,7 @@ function toGL(s: CloudState): GLState {
     stars: s.stars,
     disc: s.disc,
     storm: s.storm,
+    flashPattern: s.flashPattern,
     exposure: s.exposure,
   };
 }
@@ -272,6 +286,9 @@ export class CloudRenderer {
   private frameTimes: number[] = [];
   private flash = 0;
   private flashPos: Vec3 = [0, 0, 0];
+  private flashColor: Vec3 = [1, 1, 1];
+  private flashSeed = 0;
+  private flashPalette: Vec3[] = [];
   private nextFlash = 0;
   private dirty = true;
 
@@ -294,6 +311,7 @@ export class CloudRenderer {
     this.gl = gl;
     this.program = this.compile();
     this.from = this.to = this.current = toGL(initial);
+    this.flashPalette = initial.flashColors.map((c) => lin(hex(c)));
     new ResizeObserver(() => this.resize()).observe(canvas);
     this.resize();
   }
@@ -323,7 +341,8 @@ export class CloudRenderer {
 
     for (const name of [
       'uRes', 'uTime', 'uSunDir', 'uSunCol', 'uSkyTop', 'uSkyHor', 'uAmbTop', 'uAmbBot', 'uGlowCol', 'uGlow',
-      'uDensity', 'uStars', 'uDisc', 'uDiscCol', 'uFlashPos', 'uFlash', 'uPlace', 'uExposure',
+      'uDensity', 'uStars', 'uDisc', 'uDiscCol', 'uFlashPos', 'uFlash', 'uFlashCol', 'uFlashPattern', 'uFlashSeed',
+      'uPlace', 'uExposure',
     ]) {
       this.uniforms[name] = gl.getUniformLocation(prog, name);
     }
@@ -346,6 +365,7 @@ export class CloudRenderer {
   setState(state: CloudState, duration = 2500) {
     this.from = this.current;
     this.to = toGL(state);
+    this.flashPalette = state.flashColors.map((c) => lin(hex(c)));
     this.transitionStart = performance.now();
     this.transitionDuration = Math.max(1, duration);
     this.dirty = true;
@@ -398,13 +418,17 @@ export class CloudRenderer {
     if (s.storm > 0.3 && now > this.nextFlash) {
       this.flash = 1;
       this.flashPos = [(Math.random() - 0.5) * 1.3, -0.15 + Math.random() * 0.45, (Math.random() - 0.5) * 0.5];
-      this.nextFlash = now + 1800 + Math.random() * 5200 / s.storm;
+      this.flashColor = this.flashPalette[Math.floor(Math.random() * this.flashPalette.length)] ?? [1, 1, 1];
+      this.flashSeed = Math.random() * 100;
+      this.nextFlash = now + 900 + (Math.random() * 4200) / s.storm;
     }
     const flicker = this.flash > 0.55 && this.flash < 0.7 ? 0.25 : 1;
     this.flash = Math.max(0, this.flash - 0.06);
 
-    const breath = 0.5 - 0.5 * Math.cos(((time % 10) / 10) * Math.PI * 2);
-    const glow = s.glow * (1 - s.pulse + s.pulse * (0.35 + 0.65 * breath));
+    // Respiration-like rhythm: ~4 s in, ~6 s out.
+    const cycle = (time % 10) / 10;
+    const breath = cycle < 0.4 ? 0.5 - 0.5 * Math.cos((cycle / 0.4) * Math.PI) : 0.5 + 0.5 * Math.cos(((cycle - 0.4) / 0.6) * Math.PI);
+    const glow = s.glow * (1 - s.pulse + s.pulse * (0.3 + 0.7 * breath));
 
     const gl = this.gl;
     const u = this.uniforms;
@@ -424,8 +448,11 @@ export class CloudRenderer {
     gl.uniform1f(u.uDisc, s.disc);
     gl.uniform3fv(u.uDiscCol, s.discColor);
     gl.uniform3fv(u.uFlashPos, this.flashPos);
-    gl.uniform1f(u.uFlash, this.flash * s.storm * flicker);
-    gl.uniform3f(u.uPlace, place.x, place.y, place.scale);
+    gl.uniform1f(u.uFlash, this.flash * Math.min(1, s.storm) * flicker);
+    gl.uniform3fv(u.uFlashCol, this.flashColor);
+    gl.uniform1f(u.uFlashPattern, s.flashPattern);
+    gl.uniform1f(u.uFlashSeed, this.flashSeed);
+    gl.uniform3f(u.uPlace, place.x, place.y, place.scale * (1 + 0.035 * s.pulse * breath));
     gl.uniform1f(u.uExposure, s.exposure);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 

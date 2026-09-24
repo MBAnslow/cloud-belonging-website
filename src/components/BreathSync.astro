@@ -13,7 +13,7 @@
         <span class="meter-label">Room synchrony</span>
         <span class="meter-track"><span class="meter-fill" data-meter-fill></span></span>
       </div>
-      <button class="reset" data-reset type="button" hidden>Begin the night again</button>
+      <button class="reset" data-reset type="button" hidden>Begin again</button>
     </div>
   </div>
 </div>
@@ -136,7 +136,7 @@
       influence = 1;
       resetBtn.hidden = true;
       holdBtn.hidden = false;
-      status.textContent = 'Night again. Hold as you breathe in, let go as you breathe out.';
+      status.textContent = 'Again. Hold as you breathe in, let go as you breathe out.';
       holdBtn.focus();
     });
 
@@ -232,7 +232,7 @@
           holdBtn.classList.remove('active');
           holdBtn.hidden = true;
           resetBtn.hidden = false;
-          status.textContent = 'Sunrise. The sky slowly takes your breath back — nothing more is asked of you.';
+          status.textContent = 'The sky brightens around you. Keep breathing, or simply watch — nothing more is asked of you.';
         }
       }
 

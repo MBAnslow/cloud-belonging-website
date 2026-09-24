@@ -19,8 +19,12 @@ export type CloudState = {
   /** Visibility of the sun or moon disc and its halo. */
   disc: number;
   discColor: string;
-  /** 0–1: probability weight for lightning flashes inside the cloud. */
+  /** Flash frequency inside the cloud; 0 disables flashes, higher is more frequent. */
   storm: number;
+  /** Each flash picks one of these colours. */
+  flashColors: string[];
+  /** 0 = plain lightning, 1 = flashes reveal strange, image-like forms inside the cloud. */
+  flashPattern: number;
   exposure: number;
 };
 
@@ -41,6 +45,8 @@ const base: CloudState = {
   disc: 0,
   discColor: '#fff1d6',
   storm: 0,
+  flashColors: ['#e6ebff'],
+  flashPattern: 0,
   exposure: 1.1,
 };
 
@@ -93,18 +99,40 @@ export const cloudStates = {
     disc: 0.7,
     discColor: '#ffc48a',
   },
+  /** The sun sets and the first lightning begins. */
   dusk: {
     ...base,
-    skyTop: '#5f65a3',
+    skyTop: '#4a4f8e',
     skyHorizon: '#f8a98c',
     sunDir: [-0.6, -0.05, -0.8],
     sunColor: '#ff8f6a',
-    sunIntensity: 3.2,
+    sunIntensity: 3,
     ambientTop: '#877cbe',
     ambientBottom: '#3a3f7a',
     ambientIntensity: 0.45,
     disc: 0.5,
     discColor: '#ffab80',
+    storm: 0.45,
+    flashColors: ['#e6ebff', '#f3e9ff'],
+  },
+  /** Light intensifies instead of fading; strange image-like forms flash through the cloud. */
+  twilight: {
+    ...base,
+    skyTop: '#28366f',
+    skyHorizon: '#dca7d3',
+    sunDir: [0.5, -0.25, 0.5],
+    sunColor: '#f8a98c',
+    sunIntensity: 2.4,
+    ambientTop: '#6f75b0',
+    ambientBottom: '#877cbe',
+    ambientIntensity: 0.35,
+    glowColor: '#f9c77c',
+    glow: 0.45,
+    stars: 0.5,
+    storm: 1.6,
+    flashColors: ['#dca7d3', '#f9c77c', '#9a9dea', '#f8a98c', '#ffffff'],
+    flashPattern: 1,
+    exposure: 1.1,
   },
   storm: {
     ...base,
@@ -136,6 +164,7 @@ export const cloudStates = {
     discColor: '#dfe6ff',
     exposure: 1.4,
   },
+  /** The cloud's light swells and settles with the participant's respiration. */
   breath: {
     ...base,
     skyTop: '#1b2250',
