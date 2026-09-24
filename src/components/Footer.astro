@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import { nav, site } from '../data/site';
 import Swatches from './Swatches.astro';
 const year = new Date().getFullYear();
@@ -15,7 +16,7 @@ const year = new Date().getFullYear();
     </div>
     <nav aria-label="Footer">
       <ul>
-        {nav.map((item) => <li><a href={item.href}>{item.label}</a></li>)}
+        {nav.map((item) => <li><a href={url(item.href)}>{item.label}</a></li>)}
       </ul>
     </nav>
   </div>

@@ -1,4 +1,5 @@
 ---
+import { url } from '../../lib/url';
 import { render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
@@ -23,7 +24,7 @@ const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
   <article>
     <header class="entry-header">
       <div class="wrap narrow">
-        <a class="back" href="/process/">← Process journal</a>
+        <a class="back" href={url("/process/")}>← Process journal</a>
         <div class="meta">
           <span class="tag" data-stage={stage}>{stage}</span>
           <time datetime={date.toISOString()}>{formatDate(date)}</time>
@@ -73,7 +74,7 @@ const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
   <nav class="pager wrap narrow" aria-label="More entries">
     {
       older ? (
-        <a href={`/process/${older.id}/`} class="prev">
+        <a href={url(`/process/${older.id}/`)} class="prev">
           <span>← Earlier</span>
           {older.data.title}
         </a>
@@ -83,7 +84,7 @@ const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
     }
     {
       newer && (
-        <a href={`/process/${newer.id}/`} class="next">
+        <a href={url(`/process/${newer.id}/`)} class="next">
           <span>Later →</span>
           {newer.data.title}
         </a>

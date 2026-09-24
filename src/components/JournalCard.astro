@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { formatDate } from '../lib/journal';
@@ -12,13 +13,13 @@ const { title, date, summary, stage, cover, coverAlt, video } = entry.data;
 ---
 
 <article class="card reveal">
-  <a href={`/process/${entry.id}/`} class="link">
+  <a href={url(`/process/${entry.id}/`)} class="link">
     <div class="media">
       {
         cover ? (
           <Image src={cover} alt={coverAlt ?? ''} widths={[400, 700]} sizes="(min-width: 60rem) 22rem, 100vw" />
         ) : video ? (
-          <img src={`/video/${video}.jpg`} alt="" loading="lazy" decoding="async" />
+          <img src={url(`/video/${video}.jpg`)} alt="" loading="lazy" decoding="async" />
         ) : (
           <div class="placeholder" aria-hidden="true">
             <svg viewBox="0 0 40 24">

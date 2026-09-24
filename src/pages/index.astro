@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import Figure from '../components/Figure.astro';
 import JournalCard from '../components/JournalCard.astro';
@@ -68,8 +69,8 @@ const tried = [
         A cloud installation about belonging — to ourselves, to each other, and to the sky we all live under.
       </p>
       <div class="hero-actions">
-        <a class="button solid-light" href="/belonging/">Explore belonging</a>
-        <a class="button" href="/process/">Follow the process</a>
+        <a class="button solid-light" href={url("/belonging/")}>Explore belonging</a>
+        <a class="button" href={url("/process/")}>Follow the process</a>
       </div>
     </div>
     <a class="scroll-hint" href="#invitation" aria-label="Scroll to introduction">
@@ -106,7 +107,7 @@ const tried = [
       <div class="doors">
         {
           doors.map((d) => (
-            <a class="door reveal" href={d.href}>
+            <a class="door reveal" href={url(d.href)}>
               <Figure src={d.image} alt={d.alt} ratio="4 / 5" widths={[400, 700, 900]} sizes="(min-width: 60rem) 24rem, 100vw" />
               <p class="eyebrow">{d.eyebrow}</p>
               <h3>{d.title} <span aria-hidden="true">→</span></h3>
@@ -138,7 +139,7 @@ const tried = [
           ))
         }
       </div>
-      <a class="button" href="/installation/#making">See how it is made</a>
+      <a class="button" href={url("/installation/#making")}>See how it is made</a>
     </div>
   </section>
 
@@ -149,7 +150,7 @@ const tried = [
           <p class="eyebrow">From the process journal</p>
           <h2>Latest notes</h2>
         </div>
-        <a class="button" href="/process/">All entries</a>
+        <a class="button" href={url("/process/")}>All entries</a>
       </div>
       <div class="grid-3">
         {latest.map((entry) => <JournalCard entry={entry} />)}
@@ -165,7 +166,7 @@ const tried = [
         We’re documenting the final installation as it takes shape. If you want to host it, try it, or bring the
         workshop to your community, we’d love to hear from you.
       </p>
-      <a class="button solid" href="/about/#contact">Get in touch</a>
+      <a class="button solid" href={url("/about/#contact")}>Get in touch</a>
     </div>
   </section>
 </Base>

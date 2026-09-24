@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 interface Props {
   name: string;
   caption?: string;
@@ -12,8 +13,8 @@ const { name, caption, orientation = 'landscape', ratio, class: className } = As
 
 <figure class:list={['clip', orientation, className]} style={ratio ? `--ratio: ${ratio}` : undefined}>
   <video
-    src={`/video/${name}.mp4`}
-    poster={`/video/${name}.jpg`}
+    src={url(`/video/${name}.mp4`)}
+    poster={url(`/video/${name}.jpg`)}
     muted
     loop
     playsinline

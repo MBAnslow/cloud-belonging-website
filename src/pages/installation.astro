@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SkyPhases from '../components/SkyPhases.astro';
@@ -192,7 +193,7 @@ const openQuestions = [
             and shape, but heavy-looking and opaque. Then we tried tulle. A single layer is almost transparent, very
             light, and catches light beautifully. Bunched and layered, it became our cloud.
           </p>
-          <p><a href="/process/2026-05-21-mesh-and-tulle/">Read the journal entry →</a></p>
+          <p><a href={url("/process/2026-05-21-mesh-and-tulle/")}>Read the journal entry →</a></p>
         </div>
         <div class="make-media two">
           <Figure src={meshZephir} alt="Zéphir shaping green plastic mesh on the studio floor." caption="Shaping mesh, May 2026." ratio="4 / 5" class="reveal" />
@@ -209,7 +210,7 @@ const openQuestions = [
             light and lightning. Lit from the floor by a projector, the tulle throws beams and casts its shadow onto the
             ceiling. That gave us the idea that the audience might be the sun.
           </p>
-          <p><a href="/process/2026-06-24-breath-as-sound/">Read about being the sun →</a></p>
+          <p><a href={url("/process/2026-06-24-breath-as-sound/")}>Read about being the sun →</a></p>
         </div>
         <div class="make-media three">
           <VideoClip name="cloud-led" orientation="portrait" caption="LEDs inside the cloud." class="reveal" />
@@ -227,7 +228,7 @@ const openQuestions = [
             wirelessly as OSC messages to TouchDesigner, which detects the start of each in- and out-breath. Below are
             real recordings from our tests with different band widths and amounts of stretch, all on the same scale.
           </p>
-          <p><a href="/process/2026-06-12-a-belt-that-listens/">Read about the belt →</a></p>
+          <p><a href={url("/process/2026-06-12-a-belt-that-listens/")}>Read about the belt →</a></p>
         </div>
         <div class="make-media">
           <Figure src={beltSketch} alt="Sketch of a vest with a breathing sensor band around the torso." caption="Early design sketch for the breathing vest." class="reveal" />
@@ -273,7 +274,7 @@ const openQuestions = [
             Tulle won’t hold a shape on its own. We are 3D-printing parts of a frame, and working out a metal structure
             for hanging, with elastic lines so the cloud can move and still keep its approximate shape.
           </p>
-          <p><a href="/process/2026-07-17-printing-a-frame/">Read about the frame →</a></p>
+          <p><a href={url("/process/2026-07-17-printing-a-frame/")}>Read about the frame →</a></p>
         </div>
         <div class="make-media">
           <Figure src={printFrame} alt="A 3D printer printing a white frame part." caption="Printing frame parts, July 2026." ratio="4 / 3" class="reveal" />

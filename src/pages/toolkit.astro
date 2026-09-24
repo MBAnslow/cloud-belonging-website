@@ -1,4 +1,5 @@
 ---
+import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Checklist from '../components/Checklist.astro';
@@ -115,7 +116,7 @@ const prompts = [
             Would you like to try this workshop at your school, lab, festival or community space, or help us shape it?
             We are looking for first groups to try it with.
           </p>
-          <a class="button" href="/about/#contact">Get in touch</a>
+          <a class="button" href={url("/about/#contact")}>Get in touch</a>
         </div>
       </div>
     </div>

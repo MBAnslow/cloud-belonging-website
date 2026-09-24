@@ -20,6 +20,6 @@ The firmware went through a few simple stages: printing one analogue value over 
 
 ## Which band hears a breath?
 
-We recorded raw readings while breathing with bands of different widths (two 5 cm bands, one 10 cm, one 20 cm) under 1 cm and 4 cm of pre-stretch. The results are on the [installation page](/installation/#breath). The narrow bands barely registered a breath above the noise. The **20 cm band** gave a clear, readable wave.
+We recorded raw readings while breathing with bands of different widths (two 5 cm bands, one 10 cm, one 20 cm) under 1 cm and 4 cm of pre-stretch. The results are on the [installation page](../../installation/#breath). The narrow bands barely registered a breath above the noise. The **20 cm band** gave a clear, readable wave.
 
 Next steps on our roadmap: fix the sensors into belts, get the battery-powered versions working, and test breathing while moving as well as seated.

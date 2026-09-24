@@ -18,4 +18,4 @@ That same day we decided that **a checklist for belonging** would be a worthwhil
 
 Zéphir compiled a first draft from our literature on belonging, mindfulness in groups, and ritual media (Malaver Turbay, 2022). It covers purpose and framing, ritual structure, relational dynamics, the cognitive and emotional layer, embodied and sensory design, interactivity, space, and how to listen afterwards.
 
-It lives on this site as the [belonging checklist](/toolkit/).
+It lives on this site as the [belonging checklist](../../toolkit/).
