@@ -60,7 +60,10 @@ const {
     const wide = parse(el.dataset.place);
     const narrow = parse(el.dataset.placeNarrow);
     const toneTarget = el.closest<HTMLElement>('[data-cloud-tone]');
+    const global = toneTarget?.dataset.cloudTone === 'global';
     let tone = '';
+    let headerTone = '';
+    const pick = (l: number, prev: string) => (l > 0.62 ? 'light' : l < 0.55 ? 'dark' : prev);
 
     let renderer: CloudRenderer;
     try {
@@ -73,12 +76,17 @@ const {
         },
         onFrame: (s) => {
           if (!toneTarget) return;
-          const l = luma(s.skyHorizon.map((v, i) => v * 0.7 + s.skyTop[i] * 0.3));
-          const next = l > 0.62 ? 'light' : l < 0.55 ? 'dark' : tone;
+          // Hero text sits low, near the horizon; the header sits at the very top, where the sky is almost pure skyTop.
+          const next = pick(luma(s.skyHorizon.map((v, i) => v * 0.7 + s.skyTop[i] * 0.3)), tone);
           if (next && next !== tone) {
             tone = next;
             toneTarget.dataset.tone = tone;
-            if (toneTarget.dataset.cloudTone === 'global') document.documentElement.dataset.heroTone = tone;
+          }
+          if (!global) return;
+          const nextHeader = pick(luma(s.skyTop), headerTone);
+          if (nextHeader && nextHeader !== headerTone) {
+            headerTone = nextHeader;
+            document.documentElement.dataset.heroTone = headerTone;
           }
         },
       });
