@@ -1,6 +1,6 @@
 export const site = {
   title: 'Cloudfulness',
-  tagline: 'A cloud installation exploring belonging',
+  tagline: 'A cloud installation and a call for belonging',
   description:
     'A research-creation project documenting the concept, process and construction of a breathing cloud installation — and an invitation to explore belonging through art.',
   // Leave empty until the team agrees on a public contact address.
