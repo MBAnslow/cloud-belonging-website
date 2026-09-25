@@ -16,6 +16,41 @@ import printFrame from '../assets/photos/print-frame-1.jpg';
 import visitCeiling from '../assets/photos/visit-cloud-ceiling.jpg';
 import visitFire from '../assets/photos/visit-tv-fire.jpg';
 import visitStars from '../assets/photos/visit-stars.jpg';
+import alphaLyingUnder from '../assets/photos/alpha-lying-under.jpg';
+import alphaCloudRoom from '../assets/photos/alpha-cloud-room.jpg';
+import alphaMagenta from '../assets/photos/alpha-magenta.jpg';
+import alphaTeaRitual from '../assets/photos/alpha-tea-ritual.jpg';
+import alphaControl from '../assets/photos/alpha-control.jpg';
+import alphaAmber from '../assets/photos/alpha-amber.jpg';
+import buildDowels from '../assets/photos/build-dowels.jpg';
+import buildFrameAssembly from '../assets/photos/build-frame-assembly.jpg';
+import buildPyramidCourtyard from '../assets/photos/build-pyramid-courtyard.jpg';
+import buildLedCloud from '../assets/photos/build-led-cloud.jpg';
+import buildSkewersMesh from '../assets/photos/build-skewers-mesh.jpg';
+import buildShell from '../assets/photos/build-shell.jpg';
+import buildThermal from '../assets/photos/build-thermal.jpg';
+import buildStuffing from '../assets/photos/build-stuffing.jpg';
+import buildSkewers from '../assets/photos/build-skewers.jpg';
+
+const alphaMosaic = [
+  { src: alphaLyingUnder, wide: true, alt: 'A person lies on white sheets beneath the glowing fibre cloud, in front of a blue backdrop.' },
+  { src: alphaCloudRoom, wide: false, alt: 'The cloud glowing pale pink above white sheets, with a teapot on a small pedestal below.' },
+  { src: alphaMagenta, wide: false, alt: 'The cloud glowing magenta and violet, seen from a beanbag on the floor.' },
+  { src: alphaTeaRitual, wide: true, alt: 'Pouring tea beneath the cloud, lit blue, while someone watches from a beanbag.' },
+  { src: alphaControl, wide: true, alt: 'The cloud glowing magenta, with breath waveforms in TouchDesigner on a laptop in the foreground.' },
+  { src: alphaAmber, wide: false, alt: 'A smiling selfie, pointing up at the cloud glowing warm amber.' },
+];
+
+const buildSteps = [
+  { src: buildDowels, date: '21 Jul', caption: 'Dowels and printed joints', alt: 'Wooden dowels and 3D-printed joints laid out on the workshop floor.' },
+  { src: buildFrameAssembly, date: '21 Jul', caption: 'LED pixels tied to a mesh pyramid', alt: 'Looking up through a mesh-wrapped wooden frame with LED pixels tied along it.' },
+  { src: buildPyramidCourtyard, date: '22 Jul', caption: 'Painted white in the courtyard', alt: 'The painted pyramid drying on cardboard in a narrow courtyard.' },
+  { src: buildLedCloud, date: '24 Jul', caption: 'First fibre over the lights', alt: 'A mound of fibre glowing violet on top of a frame of LED pixels.' },
+  { src: buildSkewersMesh, date: '24 Jul', caption: 'Fibre pinned with bamboo skewers', alt: 'Close-up of fibre on hexagonal mesh, held by bamboo skewers.' },
+  { src: buildThermal, date: '28 Jul', caption: 'Checking for heat', alt: 'A thermal camera reading 27.4 °C, pointed at wiring on the floor.' },
+  { src: buildShell, date: '28 Jul', caption: 'Judging the shape of the shell', alt: 'Holding the fibre and mesh shell overhead in the workshop.' },
+  { src: buildStuffing, date: '29 Jul', caption: 'Final shaping, from below', alt: 'Lying beneath the lit cloud, pushing a skewer up into the fibre.' },
+];
 
 const whyCloud = [
   { title: 'It is above everyone', text: 'Nobody has a better seat. A cloud offers a shared perspective without a stage.' },
@@ -70,7 +105,8 @@ const openQuestions = [
     <p class="status">
       <span class="dot" aria-hidden="true"></span>
       <span>
-        Working title <em>A Space in Us</em>. Three stages: dusk, magical twilight, breath synchrony.
+        Working title <em>A Space in Us</em>. Three stages: dusk, magical twilight, breath synchrony. First alpha
+        built and tested in July 2026.
       </span>
     </p>
   </PageHeader>
@@ -101,6 +137,68 @@ const openQuestions = [
   </section>
 
   <SkyPhases />
+
+  <section class="section dark alpha" id="alpha">
+    <div class="wrap">
+      <div class="grid-2 alpha-head">
+        <div class="reveal">
+          <p class="eyebrow">The alpha · 29–30 July 2026</p>
+          <h2>A cloud you can lie under</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            At the end of July we built the first full cloud: loose polyester fibre pinned over a mesh shell, with a
+            pyramid of LED pixels glowing inside. We closed off a corner of the studio with a blue backdrop and black
+            panels, laid white sheets on the floor, and kept a pot of tea warm under the cloud.
+          </p>
+          <p>
+            Over two days, people lay and sat beneath it while it moved through amber, violet, magenta and blue, lightning
+            flickered through the fibre, and the breath belts streamed into TouchDesigner.
+          </p>
+          <p><a href={url('/process/2026-07-30-the-alpha-cloud/')}>Read the full story of the alpha →</a></p>
+        </div>
+      </div>
+
+      <div class="alpha-clips">
+        <VideoClip name="alpha-dusk" caption="Lightning and a warm, setting light (30 July)." class="reveal" />
+        <VideoClip name="alpha-twilight" caption="Violet, magenta and green (29 July)." class="reveal" />
+      </div>
+
+      <div class="mosaic">
+        {
+          alphaMosaic.map((m) => (
+            <Figure
+              src={m.src}
+              alt={m.alt}
+              class:list={['reveal', { wide: m.wide }]}
+              widths={m.wide ? [600, 900, 1400] : [400, 700]}
+              sizes={m.wide ? '(min-width: 60rem) 48rem, 100vw' : '(min-width: 60rem) 24rem, 100vw'}
+            />
+          ))
+        }
+      </div>
+
+      <div class="build-head reveal">
+        <p class="eyebrow">Ten days of building</p>
+        <p class="small">From printed joints to a cloud on the ceiling, 20–29 July 2026. Scroll sideways.</p>
+      </div>
+      <div class="build-strip">
+        {
+          buildSteps.map((b) => (
+            <Figure
+              src={b.src}
+              alt={b.alt}
+              caption={`${b.date} · ${b.caption}`}
+              ratio="3 / 4"
+              widths={[360, 600]}
+              sizes="(min-width: 60rem) 16rem, 60vw"
+              class="reveal"
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
   <section class="section dark sim">
     <div class="wrap">
@@ -187,17 +285,27 @@ const openQuestions = [
       <article class="make">
         <div class="make-text reveal">
           <p class="make-num">01 · Body</p>
-          <h3>From chicken mesh to tulle</h3>
+          <h3>From chicken mesh to tulle to fibre</h3>
           <p>
             Our first cloud was plastic chicken mesh, crumpled into folds and held with zip ties. It was easy to cut
             and shape, but heavy-looking and opaque. Then we tried tulle. A single layer is almost transparent, very
-            light, and catches light beautifully. Bunched and layered, it became our cloud.
+            light, and catches light beautifully.
           </p>
-          <p><a href={url("/process/2026-05-21-mesh-and-tulle/")}>Read the journal entry →</a></p>
+          <p>
+            For the alpha we returned to the loose polyester fibre of our first lit cloud bottom, the kind used to stuff
+            cushions. Layered over a white hexagonal mesh and pinned in place with bamboo skewers, it hides the individual
+            lights and turns them into a soft glow with darker folds.
+          </p>
+          <p>
+            <a href={url("/process/2026-05-21-mesh-and-tulle/")}>Mesh and tulle →</a>
+            <br />
+            <a href={url("/process/2026-07-30-the-alpha-cloud/")}>Fibre and skewers →</a>
+          </p>
         </div>
-        <div class="make-media two">
-          <Figure src={meshZephir} alt="Zéphir shaping green plastic mesh on the studio floor." caption="Shaping mesh, May 2026." ratio="4 / 5" class="reveal" />
-          <Figure src={tulleAssembly} alt="Zéphir fixing layers of tulle to a stand." caption="Assembling tulle, June 2026." ratio="4 / 5" class="reveal" />
+        <div class="make-media three">
+          <Figure src={meshZephir} alt="Zéphir shaping green plastic mesh on the studio floor." caption="Mesh, May 2026." ratio="3 / 4" class="reveal" />
+          <Figure src={tulleAssembly} alt="Zéphir fixing layers of tulle to a stand." caption="Tulle, June 2026." ratio="3 / 4" class="reveal" />
+          <Figure src={buildSkewers} alt="Hands pinning fibre into hexagonal mesh with a bamboo skewer." caption="Fibre, July 2026." ratio="3 / 4" class="reveal" />
         </div>
       </article>
 
@@ -209,6 +317,10 @@ const openQuestions = [
             LEDs inside the cloud make it glow from within. An addressable LED matrix could create gradients, travelling
             light and lightning. Lit from the floor by a projector, the tulle throws beams and casts its shadow onto the
             ceiling. That gave us the idea that the audience might be the sun.
+          </p>
+          <p>
+            In the alpha, rows of addressable LED pixels are tied across a pyramid inside the fibre, driven by an ESP32
+            controller. Before anyone lay underneath, we checked the wiring with a thermal camera.
           </p>
           <p><a href={url("/process/2026-06-24-breath-as-sound/")}>Read about being the sun →</a></p>
         </div>
@@ -271,13 +383,15 @@ const openQuestions = [
           <p class="make-num">05 · Structure</p>
           <h3>A skeleton for something soft</h3>
           <p>
-            Tulle won’t hold a shape on its own. We are 3D-printing parts of a frame, and working out a metal structure
-            for hanging, with elastic lines so the cloud can move and still keep its approximate shape.
+            Soft materials won’t hold a shape on their own. We 3D-printed joints, slotted wooden dowels into them to make a
+            low pyramid, wrapped it in the same green mesh as our first cloud, and spray-painted the whole thing white so
+            it wouldn’t tint the light. It carries the LEDs, and the fibre shell hangs around it.
           </p>
-          <p><a href={url("/process/2026-07-17-printing-a-frame/")}>Read about the frame →</a></p>
+          <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>Read about the frame →</a></p>
         </div>
-        <div class="make-media">
-          <Figure src={printFrame} alt="A 3D printer printing a white frame part." caption="Printing frame parts, July 2026." ratio="4 / 3" class="reveal" />
+        <div class="make-media two">
+          <Figure src={printFrame} alt="A 3D printer printing a white frame part." caption="Printing joints, July 2026." ratio="4 / 5" class="reveal" />
+          <Figure src={buildFrameAssembly} alt="Looking up through a mesh-wrapped wooden frame with LED pixels tied along it." caption="The pyramid, strung with LEDs." ratio="4 / 5" class="reveal" />
         </div>
       </article>
     </div>
@@ -383,8 +497,79 @@ const openQuestions = [
   }
 
   .sim-head,
-  .try-head {
+  .try-head,
+  .alpha-head {
     margin-bottom: 3rem;
+  }
+  .alpha {
+    background: linear-gradient(180deg, var(--night), #141a3d 60%, var(--night));
+  }
+  .alpha p {
+    color: var(--ink-soft);
+  }
+  .alpha a {
+    color: #eceefb;
+  }
+  .alpha-clips {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: clamp(14rem, 28vw, 24rem);
+    gap: 1.25rem;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .mosaic :global(figure) {
+    height: 100%;
+  }
+  .mosaic :global(figure.wide) {
+    grid-column: span 2;
+  }
+  .mosaic :global(img) {
+    height: 100%;
+    object-fit: cover;
+  }
+  @media (max-width: 700px) {
+    .mosaic {
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+    }
+    .mosaic :global(figure.wide) {
+      grid-column: auto;
+    }
+    .mosaic :global(img) {
+      aspect-ratio: 4 / 3;
+    }
+  }
+  .build-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .build-head .eyebrow {
+    margin: 0;
+  }
+  .build-strip {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(13rem, 16rem);
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+  }
+  .build-strip :global(figure) {
+    scroll-snap-align: start;
+  }
+  .build-strip :global(figcaption) {
+    color: var(--ink-soft);
   }
   .sim p {
     color: var(--ink-soft);

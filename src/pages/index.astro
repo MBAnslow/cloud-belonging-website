@@ -14,6 +14,10 @@ import meshFolds from '../assets/photos/mesh-folds.jpg';
 import tulleLight from '../assets/photos/tulle-light-1.jpg';
 import tulleLight4 from '../assets/photos/tulle-light-4.jpg';
 import meshTeam from '../assets/photos/mesh-team.jpg';
+import alphaCloudRoom from '../assets/photos/alpha-cloud-room.jpg';
+import alphaMagenta from '../assets/photos/alpha-magenta.jpg';
+import buildSkewers from '../assets/photos/build-skewers.jpg';
+import buildFrameAssembly from '../assets/photos/build-frame-assembly.jpg';
 
 const latest = (await getJournal()).slice(0, 3);
 
@@ -31,8 +35,8 @@ const doors = [
     eyebrow: 'The work',
     title: 'The Cloud',
     text: 'A cloud that sets with the sun, flares through a magical twilight, then breathes with you.',
-    image: tulleLight,
-    alt: 'A tulle cloud lit in pale blue from below, hanging near a ceiling.',
+    image: alphaCloudRoom,
+    alt: 'The alpha cloud of white fibre glowing pale pink above white sheets, with a teapot on a small pedestal below.',
   },
   {
     href: '/toolkit/',
@@ -46,9 +50,12 @@ const doors = [
 
 const tried = [
   { image: meshFolds, alt: 'A hand holding folded green plastic mesh.', caption: 'Plastic mesh and zip ties' },
-  { image: tulleRaised, alt: 'Tulle held up like a cloud.', caption: 'A single layer of tulle' },
+  { image: tulleLight, alt: 'A tulle cloud lit in pale blue from below, hanging near a ceiling.', caption: 'Layers of tulle' },
   { image: cloudPurple, alt: 'Fibre glowing purple from LEDs inside.', caption: 'LEDs inside the cloud' },
   { image: tulleLight4, alt: 'A tulle cloud lit green and blue from below.', caption: 'A projector as the sun' },
+  { image: buildFrameAssembly, alt: 'A mesh-wrapped wooden frame strung with LED pixels.', caption: 'A pyramid of LED pixels' },
+  { image: buildSkewers, alt: 'Hands pinning fibre into hexagonal mesh with a bamboo skewer.', caption: 'Fibre pinned with skewers' },
+  { image: alphaMagenta, alt: 'The alpha cloud glowing magenta, seen from a beanbag.', caption: 'The alpha, July 2026' },
 ];
 ---
 
@@ -126,11 +133,11 @@ const tried = [
           <p class="eyebrow">What we have tried so far</p>
           <h2>From a crumpled sheet of mesh to a cloud full of light</h2>
           <p class="tried-lede">
-            The cloud above is a simulation. This one is real: fibre and LEDs on a studio desk, one of our first lit
-            prototypes (June 2026).
+            The cloud above is a simulation. This one is real: our alpha, built at the end of July 2026 from polyester
+            fibre, bamboo skewers and a pyramid of LED pixels, with lightning flickering through it.
           </p>
         </div>
-        <VideoClip name="cloud-dusk" caption="A lit cloud prototype, June 2026." class="reveal" />
+        <VideoClip name="alpha-dusk" caption="The alpha cloud in the studio, 30 July 2026." class="reveal" />
       </div>
       <div class="strip">
         {
@@ -163,8 +170,8 @@ const tried = [
       <p class="eyebrow">Still unfolding</p>
       <h2>The cloud isn’t finished — and neither is this site.</h2>
       <p class="lede">
-        We’re documenting the final installation as it takes shape. If you want to host it, try it, or bring the
-        workshop to your community, we’d love to hear from you.
+        We built and tested a first alpha of the cloud in July 2026, and we’re documenting what comes next as it takes
+        shape. If you want to host it, try it, or bring the workshop to your community, we’d love to hear from you.
       </p>
       <a class="button solid" href={url("/about/#contact")}>Get in touch</a>
     </div>

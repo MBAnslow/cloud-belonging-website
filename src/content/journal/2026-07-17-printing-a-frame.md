@@ -15,3 +15,5 @@ We modelled a **pyramid-like frame** and split it into printable parts, labelled
 ![A 3D printer mid-print, its nozzle laying down a white frame piece](../../assets/photos/print-frame-2.jpg)
 
 What we're working out next is how the printed parts, a metal frame for hanging, and elastic lines come together, so the tulle can move and still keep its approximate shape.
+
+*Update:* a few days later the printed parts became joints for a wooden pyramid that carries the lights. See [A pyramid of light](../2026-07-22-a-pyramid-of-light/).

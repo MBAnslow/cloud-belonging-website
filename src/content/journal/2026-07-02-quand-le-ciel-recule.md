@@ -3,10 +3,14 @@ title: 'A research notebook at “Quand le ciel recule”'
 date: 2026-07-02
 stage: Sharing
 summary: 'First public sharing of the work in progress, at an art–science day on atmosphere at the Académie du Climat in Paris.'
+cover: ../../assets/photos/talk-slide.jpg
+coverAlt: 'Zéphir presenting in a wood-panelled room at the Académie du Climat, beside a slide mapping belonging to design choices.'
 tags: [talk, Réespiration, research-creation]
 ---
 
 Zéphir presented *A Space in Us — carnet de recherche* at [Quand le ciel recule](https://www.academieduclimat.paris/evenements/quand-le-ciel-recule-journee-de-couplage-art-science/), a day pairing art and science around the atmosphere, at the Académie du Climat in Paris.
+
+![The audience on red chairs in a high-ceilinged room with a chandelier, facing the screen](../../assets/photos/talk-audience.jpg)
 
 The talk opened the notebook rather than presenting a finished work. Drawing on cognitive science, it explored how to design and measure lived experience, and it followed two projects inviting contemplation and a more sensitive perception of our interdependence: *Réespiration* and *A Space in Us*.
 
@@ -21,3 +25,10 @@ The preliminary results of the pilot study (20 participants, clearly flagged as 
 ## A Space in Us, as presented
 
 The installation was framed around three words: *impermanence*, *letting go*, and *interbeing*, with belonging (*appartenance*) at its centre. Around it: evolving scenarios, collective biofeedback, shared experience, a multisensory space, and a journey through it. And a future in both public and specialised spaces.
+
+One slide traced the path from concept, through the literature, to implementation. Each quality of belonging found in the research became a design choice:
+
+- being **embodied and anchored** → a multisensory space;
+- belonging as a **journey** → evolving scenarios;
+- belonging as **dynamic** → collective biofeedback;
+- the **quality of connections** → a shared experience.
