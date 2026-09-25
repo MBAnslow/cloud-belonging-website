@@ -28,8 +28,13 @@ uniform vec3 uDiscCol;
 uniform vec3 uFlashPos;
 uniform float uFlash;
 uniform vec3 uFlashCol;
-uniform float uFlashPattern;
-uniform float uFlashSeed;
+uniform float uBloom;
+uniform vec3 uBloomPos;
+uniform vec3 uBloomA;
+uniform vec3 uBloomB;
+uniform vec3 uBloomC;
+uniform vec3 uBloomD;
+uniform float uBloomSeed;
 uniform vec3 uPlace;
 uniform float uExposure;
 
@@ -178,13 +183,16 @@ void main() {
         vec3 gp = p - vec3(0.0, -0.02, 0.0);
         S += uGlowCol * uGlow * exp(-dot(gp, gp) * 3.0);
         if (uFlash > 0.001) {
-          // Patterned flashes light up only parts of the volume, so forms seem to appear inside the cloud.
-          vec3 fq = p * 3.2 + uFlashSeed;
-          float ridge = 1.0 - abs(noise(fq) * 2.0 - 1.0);
-          float ridge2 = 1.0 - abs(noise(fq * 2.3 + 5.1) * 2.0 - 1.0);
-          float forms = pow(ridge, 10.0) * 3.2 + pow(ridge2, 14.0) * 1.8 + 0.06;
-          float lit = mix(1.0, forms, uFlashPattern);
-          S += uFlashCol * uFlash * lit * exp(-length(p - uFlashPos) * mix(3.2, 2.2, uFlashPattern)) * 7.0;
+          S += uFlashCol * uFlash * exp(-length(p - uFlashPos) * 3.2) * 7.0;
+        }
+        if (uBloom > 0.001) {
+          // The whole cloud lights up at once: a hot core fading out through the palette to its edges.
+          float bd = length((p - uBloomPos) * vec3(1.0, 1.3, 1.2)) + (noise(p * 2.2 + uBloomSeed) - 0.5) * 0.6;
+          float bt = clamp(bd / 1.25, 0.0, 1.0);
+          vec3 bc = mix(uBloomA, uBloomB, smoothstep(0.0, 0.3, bt));
+          bc = mix(bc, uBloomC, smoothstep(0.28, 0.62, bt));
+          bc = mix(bc, uBloomD, smoothstep(0.6, 1.0, bt));
+          S += bc * uBloom * (1.1 + 2.2 * exp(-bd * bd * 3.5));
         }
         float Ts = exp(-d * 16.0 * stepLen);
         col += T * S * (1.0 - Ts);
@@ -217,7 +225,7 @@ export type GLState = {
   stars: number;
   disc: number;
   storm: number;
-  flashPattern: number;
+  bloom: number;
   exposure: number;
 };
 
@@ -246,7 +254,7 @@ function toGL(s: CloudState): GLState {
     stars: s.stars,
     disc: s.disc,
     storm: s.storm,
-    flashPattern: s.flashPattern,
+    bloom: s.bloom,
     exposure: s.exposure,
   };
 }
@@ -287,9 +295,14 @@ export class CloudRenderer {
   private flash = 0;
   private flashPos: Vec3 = [0, 0, 0];
   private flashColor: Vec3 = [1, 1, 1];
-  private flashSeed = 0;
   private flashPalette: Vec3[] = [];
   private nextFlash = 0;
+  private bloomPalettes: Vec3[][] = [];
+  private bloomColors: Vec3[] = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
+  private bloomPos: Vec3 = [0, 0, 0];
+  private bloomSeed = 0;
+  private bloomStart = -1e9;
+  private nextBloom = 0;
   private dirty = true;
 
   static supported(): boolean {
@@ -311,7 +324,7 @@ export class CloudRenderer {
     this.gl = gl;
     this.program = this.compile();
     this.from = this.to = this.current = toGL(initial);
-    this.flashPalette = initial.flashColors.map((c) => lin(hex(c)));
+    this.setPalettes(initial);
     new ResizeObserver(() => this.resize()).observe(canvas);
     this.resize();
   }
@@ -341,8 +354,8 @@ export class CloudRenderer {
 
     for (const name of [
       'uRes', 'uTime', 'uSunDir', 'uSunCol', 'uSkyTop', 'uSkyHor', 'uAmbTop', 'uAmbBot', 'uGlowCol', 'uGlow',
-      'uDensity', 'uStars', 'uDisc', 'uDiscCol', 'uFlashPos', 'uFlash', 'uFlashCol', 'uFlashPattern', 'uFlashSeed',
-      'uPlace', 'uExposure',
+      'uDensity', 'uStars', 'uDisc', 'uDiscCol', 'uFlashPos', 'uFlash', 'uFlashCol', 'uBloom', 'uBloomPos',
+      'uBloomA', 'uBloomB', 'uBloomC', 'uBloomD', 'uBloomSeed', 'uPlace', 'uExposure',
     ]) {
       this.uniforms[name] = gl.getUniformLocation(prog, name);
     }
@@ -365,11 +378,16 @@ export class CloudRenderer {
   setState(state: CloudState, duration = 2500) {
     this.from = this.current;
     this.to = toGL(state);
-    this.flashPalette = state.flashColors.map((c) => lin(hex(c)));
+    this.setPalettes(state);
     this.transitionStart = performance.now();
     this.transitionDuration = Math.max(1, duration);
     this.dirty = true;
     if (!this.running) this.draw(performance.now());
+  }
+
+  private setPalettes(state: CloudState) {
+    this.flashPalette = state.flashColors.map((c) => lin(hex(c)));
+    this.bloomPalettes = state.bloomPalettes.map((p) => p.map((c) => lin(hex(c))));
   }
 
   start() {
@@ -408,7 +426,16 @@ export class CloudRenderer {
   private draw(now: number) {
     const k = Math.min(1, (now - this.transitionStart) / this.transitionDuration);
     const transitioning = k < 1;
-    if (!transitioning && !this.dirty && !this.options.animate && this.flash <= 0.001 && this.to.storm < 0.01 && this.to.pulse < 0.01) return;
+    if (
+      !transitioning &&
+      !this.dirty &&
+      !this.options.animate &&
+      this.flash <= 0.001 &&
+      this.to.storm < 0.01 &&
+      this.to.pulse < 0.01 &&
+      this.to.bloom < 0.01
+    )
+      return;
     this.current = transitioning ? mixGL(this.from, this.to, ease(k)) : this.to;
     this.dirty = false;
     const s = this.current;
@@ -419,11 +446,21 @@ export class CloudRenderer {
       this.flash = 1;
       this.flashPos = [(Math.random() - 0.5) * 1.3, -0.15 + Math.random() * 0.45, (Math.random() - 0.5) * 0.5];
       this.flashColor = this.flashPalette[Math.floor(Math.random() * this.flashPalette.length)] ?? [1, 1, 1];
-      this.flashSeed = Math.random() * 100;
       this.nextFlash = now + 900 + (Math.random() * 4200) / s.storm;
     }
     const flicker = this.flash > 0.55 && this.flash < 0.7 ? 0.25 : 1;
     this.flash = Math.max(0, this.flash - 0.06);
+
+    // Colour blooms: the whole cloud flares up in a new palette, then slowly lets it go.
+    if (s.bloom > 0.3 && this.bloomPalettes.length && now > this.nextBloom) {
+      this.bloomStart = now;
+      this.bloomColors = this.bloomPalettes[Math.floor(Math.random() * this.bloomPalettes.length)];
+      this.bloomPos = [(Math.random() - 0.5) * 0.9, -0.05 + Math.random() * 0.35, 0.1 + Math.random() * 0.2];
+      this.bloomSeed = Math.random() * 100;
+      this.nextBloom = now + 2600 + (Math.random() * 3200) / s.bloom;
+    }
+    const sinceBloom = (now - this.bloomStart) / 1000;
+    const bloomEnv = sinceBloom < 0.35 ? Math.sin((sinceBloom / 0.35) * Math.PI * 0.5) : Math.exp(-(sinceBloom - 0.35) / 1.1);
 
     // Respiration-like rhythm: ~4 s in, ~6 s out.
     const cycle = (time % 10) / 10;
@@ -450,8 +487,13 @@ export class CloudRenderer {
     gl.uniform3fv(u.uFlashPos, this.flashPos);
     gl.uniform1f(u.uFlash, this.flash * Math.min(1, s.storm) * flicker);
     gl.uniform3fv(u.uFlashCol, this.flashColor);
-    gl.uniform1f(u.uFlashPattern, s.flashPattern);
-    gl.uniform1f(u.uFlashSeed, this.flashSeed);
+    gl.uniform1f(u.uBloom, bloomEnv * Math.min(1, s.bloom));
+    gl.uniform3fv(u.uBloomPos, this.bloomPos);
+    gl.uniform3fv(u.uBloomA, this.bloomColors[0]);
+    gl.uniform3fv(u.uBloomB, this.bloomColors[1]);
+    gl.uniform3fv(u.uBloomC, this.bloomColors[2]);
+    gl.uniform3fv(u.uBloomD, this.bloomColors[3]);
+    gl.uniform1f(u.uBloomSeed, this.bloomSeed);
     gl.uniform3f(u.uPlace, place.x, place.y, place.scale * (1 + 0.035 * s.pulse * breath));
     gl.uniform1f(u.uExposure, s.exposure);
     gl.drawArrays(gl.TRIANGLES, 0, 3);

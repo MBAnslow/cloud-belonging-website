@@ -23,8 +23,10 @@ export type CloudState = {
   storm: number;
   /** Each flash picks one of these colours. */
   flashColors: string[];
-  /** 0 = plain lightning, 1 = flashes reveal strange, image-like forms inside the cloud. */
-  flashPattern: number;
+  /** Colour blooms that light the whole cloud at once; 0 disables them, higher is more frequent. */
+  bloom: number;
+  /** Each bloom picks one palette, ordered from its hot core to the cloud's edges (four colours). */
+  bloomPalettes: string[][];
   exposure: number;
 };
 
@@ -46,7 +48,8 @@ const base: CloudState = {
   discColor: '#fff1d6',
   storm: 0,
   flashColors: ['#e6ebff'],
-  flashPattern: 0,
+  bloom: 0,
+  bloomPalettes: [],
   exposure: 1.1,
 };
 
@@ -115,23 +118,27 @@ export const cloudStates = {
     storm: 0.45,
     flashColors: ['#e6ebff', '#f3e9ff'],
   },
-  /** Light intensifies instead of fading; strange image-like forms flash through the cloud. */
+  /** Light intensifies instead of fading; the whole cloud blooms with colour, warm at the core, violet at the edges. */
   twilight: {
     ...base,
     skyTop: '#28366f',
     skyHorizon: '#dca7d3',
     sunDir: [0.5, -0.25, 0.5],
-    sunColor: '#f8a98c',
-    sunIntensity: 2.4,
+    sunColor: '#c9a7d9',
+    sunIntensity: 0.7,
     ambientTop: '#6f75b0',
     ambientBottom: '#877cbe',
-    ambientIntensity: 0.35,
-    glowColor: '#f9c77c',
-    glow: 0.45,
+    ambientIntensity: 0.22,
+    glowColor: '#f9a86c',
+    glow: 0.35,
     stars: 0.5,
-    storm: 1.6,
-    flashColors: ['#dca7d3', '#f9c77c', '#9a9dea', '#f8a98c', '#ffffff'],
-    flashPattern: 1,
+    bloom: 1,
+    bloomPalettes: [
+      ['#ffd86b', '#ff8a3d', '#e2548f', '#8a5cff'],
+      ['#fff0a0', '#ffa24d', '#ff5f7a', '#b45ce8'],
+      ['#ffb45e', '#f06a8a', '#b35cf0', '#5a6cff'],
+      ['#ffcf7a', '#ff9a52', '#f0609a', '#7a5cff'],
+    ],
     exposure: 1.1,
   },
   storm: {

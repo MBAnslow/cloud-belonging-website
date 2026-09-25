@@ -32,8 +32,8 @@ export const phases: Phase[] = [
     cloud: 'twilight',
     sky: ['#28366f', '#dca7d3'],
     dark: true,
-    text: 'Instead of fading, the light intensifies. Strange, image-like forms flash through the cloud like lightning. The evening turns into a story, and this is where you bond with the cloud.',
-    notes: ['A narrative turn', 'Rising intensity', 'Bonding with the cloud'],
+    text: 'Instead of fading, the light intensifies. Unlike lightning, colours flare up through the whole cloud at once, amber at its heart and pink and violet at its edges, then slowly let go. The evening turns into a story, and this is where you bond with the cloud.',
+    notes: ['A narrative turn', 'Colour blooms', 'Bonding with the cloud'],
   },
   {
     id: 'breath',

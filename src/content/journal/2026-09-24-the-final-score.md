@@ -14,7 +14,7 @@ The sun sets behind the cloud. As the light drains away, lightning begins to fli
 
 ## II · Magical twilight
 
-This is where the experience becomes a story. Instead of fading into night, the light **intensifies**, and strange, image-like forms flash through the cloud like lightning. It adds intensity before the breath stage, and it is where the participant **bonds with the cloud**. The cloud stops being an object overhead and becomes a presence with a character of its own.
+This is where the experience becomes a story. Instead of fading into night, the light **intensifies**, and colours flare up through the whole cloud at once: amber at its heart, orange and pink around it, violet at its edges. Unlike lightning, which strikes one spot, these blooms fill the cloud and then slowly let go. It adds intensity before the breath stage, and it is where the participant **bonds with the cloud**. The cloud stops being an object overhead and becomes a presence with a character of its own.
 
 ## III · Breath synchrony
 
