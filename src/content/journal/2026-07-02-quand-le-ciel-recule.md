@@ -8,7 +8,7 @@ coverAlt: 'Zéphir presenting in a wood-panelled room at the Académie du Climat
 tags: [talk, Réespiration, research-creation]
 ---
 
-Zéphir presented *A Space in Us — carnet de recherche* at [Quand le ciel recule](https://www.academieduclimat.paris/evenements/quand-le-ciel-recule-journee-de-couplage-art-science/), a day pairing art and science around the atmosphere, at the Académie du Climat in Paris.
+Zéphir presented *A Space in Us — carnet de recherche* at [Quand le ciel recule](https://www.academieduclimat.paris/evenements/quand-le-ciel-recule-journee-de-couplage-art-science/), a day pairing art and science around the atmosphere, at the Académie du Climat in Paris. (*A Space in Us* was the installation's working title at the time. It is now *Cloudfulness*.)
 
 ![The audience on red chairs in a high-ceilinged room with a chandelier, facing the screen](../../assets/photos/talk-audience.jpg)
 
@@ -16,7 +16,7 @@ The talk opened the notebook rather than presenting a finished work. Drawing on 
 
 ## Lessons carried over from Réespiration
 
-The preliminary results of the pilot study (20 participants, clearly flagged as not representative of the full study) showed great diversity of responses. They ranged from deep relaxation and an altered perception of self, to boredom, in both conditions, and more markedly in the dynamic one. The team's conclusions pointed to exactly what *A Space in Us* is trying:
+The preliminary results of the pilot study (20 participants, clearly flagged as not representative of the full study) showed great diversity of responses. They ranged from deep relaxation and an altered perception of self, to boredom, in both conditions, and more markedly in the dynamic one. The team's conclusions pointed to exactly what *Cloudfulness* is trying:
 
 - **priming, guidance and suggestion** — how people are welcomed shapes what they experience;
 - **more robust biofeedback** — imperfect synchronisation was a technical limit;

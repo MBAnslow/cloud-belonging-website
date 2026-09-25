@@ -1,4 +1,4 @@
-# A Space in Us — website
+# Cloudfulness — website
 
 Documentation site for a research-creation project on belonging: the concept, the process journal, and the construction of a breathing cloud installation. Built with [Astro](https://astro.build) as a static site.
 

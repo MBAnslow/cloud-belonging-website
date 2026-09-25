@@ -1,5 +1,5 @@
 export const site = {
-  title: 'A Space in Us',
+  title: 'Cloudfulness',
   tagline: 'A cloud installation exploring belonging',
   description:
     'A research-creation project documenting the concept, process and construction of a breathing cloud installation — and an invitation to explore belonging through art.',
