@@ -19,6 +19,13 @@ import buildSkewers from '../assets/photos/build-skewers.jpg';
 
 import cloudMaterials from '../assets/photos/cloud-materials.jpg';
 import ledLightingDiagram from '../assets/photos/led-lighting-diagram.jpg';
+import swSimulator from '../assets/software/simulator.png';
+import swMapping from '../assets/software/mapping.png';
+import swSkyTimeline from '../assets/software/simulator-sky-timeline.png';
+import swLightning from '../assets/software/simulator-lightning.png';
+import swDrones from '../assets/software/drones.png';
+import swSamples from '../assets/software/samples.png';
+import swPads from '../assets/software/pads.png';
 
 const outerLayers = [
   {
@@ -94,34 +101,73 @@ const whyCloud = [
   { title: 'It is forgiving', text: 'Dim, diffuse light feels primal and hides the imperfections of whatever room we are in.' },
 ];
 
-const software = [
+const tour = [
   {
-    name: 'A digital twin of the cloud',
-    text: 'A 3D simulation of the cloud with each LED placed on its surface. It shows exactly what the physical cloud will do before anything is switched on.',
+    kicker: 'LED mapping',
+    title: 'Placing 344 lights on a lumpy cloud',
+    img: swMapping,
+    alt: 'The LED mapping page: a wireframe model of the pyramid-shaped cloud on a grid, with numbered blue dots for each LED and control panels on both sides.',
+    caption: 'The mapping page. Each numbered dot is a physical LED, placed in strand order.',
+    body: [
+      'We modelled the cloud’s shape in Blender and loaded it into the mapping page. Then we placed the LEDs on it one by one, in the order they run along the physical strand, lighting each real LED to check it was in the right spot.',
+      'A smooth model is not a cloud, so we added 48 soft “domes” over the surface where the real cloud billows. They lift nearby LEDs and change how light reaches them, so a pixel tucked in a fold sits in shadow and one on a crest catches the light. A movable test light, which can stream straight to the cloud, let us check the mapping by eye.',
+    ],
   },
   {
-    name: 'Light from a sky',
-    text: 'A 24-hour sky clock moves a sun and moon around the cloud, with editable colour timelines for each. Every LED is shaded by how much of that light would reach it through the cloud’s body.',
+    kicker: 'Colour',
+    title: 'Choosing colours on a 24-hour sky',
+    img: swSkyTimeline,
+    wide: true,
+    alt: 'The sky timeline: a row of day periods (magical night, dawn, day, dusk, night) above tracks for lightning, breath, and gradient tracks of colour stops for the sun, moon and ambient light.',
+    caption: 'The sky timeline. Periods across the top, then colour stops for sun, moon and ambient light.',
+    body: [
+      'The day is split into periods: magical night, dawn, day, dusk and night. Below them sit three colour tracks, for the sun, the moon and the ambient sky, each with its own draggable colour stops. The sun and moon move on physically plausible arcs, and their colours blend smoothly between stops.',
+      'We chose the colours by eye, not by formula. We dragged a stop, watched the real cloud change, and kept what felt like a sky: the violets and ambers of our palette, deep blues at night, and hue-preserving brightness so sunset oranges don’t bleach to white.',
+    ],
   },
   {
-    name: 'Mapping the real cloud',
-    text: 'A mapping tool matches each physical LED to its place on a model of the real, lumpy cloud. It uses soft Gaussian bumps to follow the billows, so the light lands where it should.',
+    kicker: 'Lightning',
+    title: 'Bolts, strikes and sprites',
+    img: swLightning,
+    alt: 'The lightning panel: a storm intensity curve keyframed across dusk, night, magical night and dawn, three colour gradient tracks for the bolts, rate and shape sliders, and a library of thunder and sprite sounds and images.',
+    caption: 'The lightning panel. Storm intensity across the night, bolt colours, shape, and a library of thunder sounds.',
+    body: [
+      'Lightning is simulated as branching bolts that crawl through the cloud’s 3D volume, lighting the LEDs they pass. There are in-cloud flashes, ground strikes, and image “sprites”: pictures projected through the cloud in a short strobe, which became the strange flashes of the magical twilight.',
+      'Storm intensity is keyframed across the night, building from dusk into the magical twilight. Each bolt takes its colours from three gradient tracks, so a flash can move from pale gold to magenta to green. Every flash also picks a thunder recording that matches its length and intensity, arriving a moment later like real thunder.',
+    ],
   },
   {
-    name: 'Lightning and twilight flashes',
-    text: 'Branching bolts crawl through the cloud, as in-cloud flashes or ground strikes, each with its own colour palette. Image “sprites” can flare across the LEDs for the magical twilight.',
+    kicker: 'Sound · drones',
+    title: 'A score written across the day',
+    img: swDrones,
+    alt: 'The drones page: a piano roll spanning 24 hours with a few long blue notes, and controls for oscillator waveform, an ADSR envelope, tremolo and distortion.',
+    caption: 'Drones on a 24-hour piano roll, with oscillator, envelope and tremolo.',
+    body: [
+      'The soundscape is composed on the same 24-hour clock as the light. A drone synth and a warm pad synth each have a piano roll that spans the whole day, so a note might hold for hours of sky time, from dusk into night.',
+      'Drones are built from slow, layered sine tones, with a tiny drift that dissolves beating between close intervals into a soft chorus.',
+    ],
   },
   {
-    name: 'Breath in, light out',
-    text: 'Breath signals from the belts arrive from TouchDesigner as OSC messages. Each out-breath sends a soft wave of light travelling from the participant up into the cloud.',
+    kicker: 'Sound · pads',
+    title: 'Warm chords that change with the light',
+    img: swPads,
+    alt: 'The pads page: a piano roll across the 24-hour day with chord notes, and synth controls with keyframe curves for each parameter.',
+    caption: 'The pad synth, with its own piano roll and parameters keyframed across the day.',
+    body: [
+      'Above the drones sits a warm pad synth: several detuned voices per note, spread across the stereo field, then through saturation, chorus, reverb and delay.',
+      'Its chords are written on the same day clock, clustered through the night and early morning. Any parameter can be keyframed across the day. Here the filter cutoff rises and falls, so the pads open up and soften again as the light on the cloud changes.',
+    ],
   },
   {
-    name: 'A generative soundscape',
-    text: 'Drones, warm pads and field-recording samples respond to the time of day and to breath. Each lightning flash picks a thunder sample that matches its length and intensity.',
-  },
-  {
-    name: 'Streaming to the LEDs',
-    text: 'A small Node relay forwards each frame over the network to a WLED controller using the DDP protocol, so the physical cloud mirrors the screen in real time.',
+    kicker: 'Sound · samples',
+    title: 'Birdsong, bells and the breath of the room',
+    img: swSamples,
+    alt: 'The samples page: a library of sound files with waveforms on the left, arranged as orange clips on lanes across a 24-hour timeline, with automation curves for volume and effects.',
+    caption: 'Samples arranged on lanes across the day, with automation for volume, pan, filter, reverb and delay.',
+    body: [
+      'Recorded sounds are dragged from a library onto lanes on the day timeline: morning birdsong, dusk ambience, gentle and reversed bells, chimes. Each lane has its own curves for volume, pan, filter, reverb and delay.',
+      'Breath plays its part too. Each out-breath can trigger a soft sound, and how much of the cloud is lit by breath feeds back into the mix. The room hears itself breathing with the cloud.',
+    ],
   },
 ];
 
@@ -423,12 +469,20 @@ const contents = [
       <article class="make software" id="software">
         <div class="make-text reveal">
           <p class="make-num">06 · Software</p>
-          <h3>A sky that runs in a browser</h3>
+          <h3>A vibe-coded instrument and a digital twin</h3>
           <p>
-            The cloud is driven by a custom web app written in TypeScript with React and three.js. It holds a 3D model
-            of the cloud with every LED placed where it really sits. Each frame it works out how a sun, a moon, lightning
-            and the participants’ breath light each pixel. The same colours shown on screen are streamed live to the
-            physical LEDs.
+            There was no off-the-shelf tool for lighting a cloud, so we made one. The software was
+            <em>vibe coded</em>: written in conversation with AI coding assistants, one idea at a time. We described
+            what we wanted to see or hear, tried it on the real cloud, and asked for the next change. What grew out of
+            that is less an app than an instrument, built in TypeScript with React and three.js.
+          </p>
+          <p>
+            At its centre is a <strong>digital twin</strong>: a 3D model of the cloud with every one of its 344 LEDs
+            placed where it really sits. Five pages share one 24-hour sky clock, so light, lightning, breath and sound
+            all follow the same day. Whatever the twin shows is streamed live to the physical LEDs.
+          </p>
+          <p class="pipeline">
+            TouchDesigner (breath) → relay → browser (simulation and audio) → relay → WLED controller (LEDs)
           </p>
           <p>
             <a class="button" href="https://github.com/MBAnslow/cloud-point-cloud-led" target="_blank" rel="noopener">
@@ -436,16 +490,14 @@ const contents = [
             </a>
           </p>
         </div>
-        <ul class="software-list reveal">
-          {
-            software.map((s) => (
-              <li>
-                <strong>{s.name}</strong>
-                <p>{s.text}</p>
-              </li>
-            ))
-          }
-        </ul>
+        <Figure
+          src={swSimulator}
+          alt="The simulator: a dark 3D view of the cloud model dotted with glowing LED hemispheres, a 24-hour sky timeline with colour stops across the top, and panels for LED view, breath, lightning and sound."
+          caption="The simulator. The cloud’s digital twin, with the sky timeline above."
+          widths={[800, 1400, 2000]}
+          sizes="(min-width: 72rem) 40rem, 100vw"
+          class="reveal"
+        />
       </article>
 
       <div class="twin reveal" id="led-lighting">
@@ -487,6 +539,21 @@ const contents = [
           widths={[600, 1024]}
           sizes="(min-width: 72rem) 64rem, 100vw"
         />
+      </div>
+
+      <div class="tour">
+        {
+          tour.map((t) => (
+            <div class:list={['tour-row reveal', { wide: t.wide }]}>
+              <div class="tour-text">
+                <p class="make-num">{t.kicker}</p>
+                <h3>{t.title}</h3>
+                {t.body.map((p) => <p>{p}</p>)}
+              </div>
+              <Figure src={t.img} alt={t.alt} caption={t.caption} widths={[800, 1400, 2000]} sizes="(min-width: 72rem) 44rem, 100vw" />
+            </div>
+          ))
+        }
       </div>
     </div>
   </section>
@@ -781,31 +848,51 @@ const contents = [
   .make.software {
     align-items: start;
   }
-  .software-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-    gap: 1rem;
-  }
-  .software-list li {
-    padding: 1.25rem 1.35rem;
-    border-radius: var(--radius);
+  .pipeline {
+    font-size: 0.85rem;
+    padding: 0.8rem 1rem;
+    border-radius: 0.8rem;
     background: rgb(255 255 255 / 0.7);
     border: 1px solid var(--line);
   }
-  .software-list strong {
-    display: block;
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: 1.15rem;
-    margin-bottom: 0.3rem;
+  .tour-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--line);
   }
-  .software-list p {
-    margin: 0;
-    font-size: 0.9rem;
+  .tour-row:nth-child(even) .tour-text {
+    order: 2;
+  }
+  .tour-row.wide {
+    grid-template-columns: 1fr;
+  }
+  .tour-row.wide .tour-text {
+    order: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 0 3rem;
+  }
+  .tour-row.wide .make-num,
+  .tour-row.wide h3 {
+    grid-column: 1 / -1;
+  }
+  .tour-text p:not(.make-num) {
     color: var(--ink-soft);
+  }
+  .tour-row :global(img) {
+    border-radius: 0.8rem;
+    box-shadow: 0 20px 40px -20px rgb(27 34 84 / 0.45);
+  }
+  @media (max-width: 900px) {
+    .tour-row {
+      grid-template-columns: 1fr;
+    }
+    .tour-row:nth-child(even) .tour-text {
+      order: 0;
+    }
   }
   .twin {
     display: grid;
