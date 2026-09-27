@@ -1,7 +1,6 @@
 ---
 import { url } from '../lib/url';
 import { nav, site } from '../data/site';
-import Swatches from './Swatches.astro';
 const year = new Date().getFullYear();
 ---
 
@@ -10,8 +9,8 @@ const year = new Date().getFullYear();
     <div class="about">
       <p class="title">{site.title}</p>
       <p>
-        A research-creation project on belonging, breath and weather, begun in 2026 during a research-creation
-        internship at Sony CSL Paris. This site grows as the work does.
+        A research-creation installation about belonging to nature, made in 2026 during a research-creation internship
+        at Sony CSL Paris. An invitation to explore belonging further.
       </p>
     </div>
     <nav aria-label="Footer">
@@ -19,10 +18,6 @@ const year = new Date().getFullYear();
         {nav.map((item) => <li><a href={url(item.href)}>{item.label}</a></li>)}
       </ul>
     </nav>
-  </div>
-  <div class="wrap palette">
-    <p class="palette-title">The palette · a sky lit by different amounts of light</p>
-    <Swatches set="full" labels />
   </div>
   <div class="wrap small">
     <span>© {year} {site.team.map((t) => t.name).join(' & ')}</span>
@@ -66,20 +61,6 @@ const year = new Date().getFullYear();
   }
   a:hover {
     color: #fff;
-  }
-  .palette {
-    padding-block: 2rem;
-    border-bottom: 1px solid var(--line);
-  }
-  .palette-title {
-    font-size: 0.75rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    margin-bottom: 1rem;
-  }
-  .palette :global(.name) {
-    color: var(--ink-soft);
   }
   .small {
     display: flex;

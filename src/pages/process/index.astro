@@ -3,9 +3,128 @@ import Base from '../../layouts/Base.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import JournalCard from '../../components/JournalCard.astro';
 import { getJournal } from '../../lib/journal';
+import { url } from '../../lib/url';
+import VideoClip from '../../components/VideoClip.astro';
+import Figure from '../../components/Figure.astro';
+import BreathSync from '../../components/BreathSync.astro';
+import alphaLyingUnder from '../../assets/photos/alpha-lying-under.jpg';
+import alphaCloudRoom from '../../assets/photos/alpha-cloud-room.jpg';
+import alphaMagenta from '../../assets/photos/alpha-magenta.jpg';
+import alphaTeaRitual from '../../assets/photos/alpha-tea-ritual.jpg';
+import alphaControl from '../../assets/photos/alpha-control.jpg';
+import alphaAmber from '../../assets/photos/alpha-amber.jpg';
+import buildDowels from '../../assets/photos/build-dowels.jpg';
+import buildFrameAssembly from '../../assets/photos/build-frame-assembly.jpg';
+import buildPyramidCourtyard from '../../assets/photos/build-pyramid-courtyard.jpg';
+import buildLedCloud from '../../assets/photos/build-led-cloud.jpg';
+import buildSkewersMesh from '../../assets/photos/build-skewers-mesh.jpg';
+import buildShell from '../../assets/photos/build-shell.jpg';
+import buildThermal from '../../assets/photos/build-thermal.jpg';
+import buildStuffing from '../../assets/photos/build-stuffing.jpg';
+import visitCeiling from '../../assets/photos/visit-cloud-ceiling.jpg';
+import visitFire from '../../assets/photos/visit-tv-fire.jpg';
+import visitStars from '../../assets/photos/visit-stars.jpg';
 
 const entries = await getJournal();
 const stages = ['Proposal', 'Exploration', 'Making', 'Sharing'] as const;
+
+const lessons = [
+  {
+    title: 'Never tell people what to feel',
+    text: 'Being told to feel connected is the fastest way not to. Small rituals and room for people’s own stories work better.',
+    href: '/process/2026-05-19-rituals-not-instructions/',
+  },
+  {
+    title: 'Belonging is not control',
+    text: 'Interactive work usually rewards control. We wanted people to play a role alongside the cloud, breathing with it rather than steering it.',
+    href: '/process/2026-06-10-belonging-not-control/',
+  },
+  {
+    title: 'Make it travel home',
+    text: 'Asking the experience to carry into everyday life kept it minimal. The next cloud you see should bring a little of it back.',
+    href: '/process/2026-05-13-something-you-take-home/',
+  },
+  {
+    title: 'How people are welcomed shapes what they feel',
+    text: 'Réespiration showed a wide range of responses, from deep relaxation to boredom. Priming, guidance and a robust signal matter as much as the artwork.',
+    href: '/process/2026-07-02-quand-le-ciel-recule/',
+  },
+  {
+    title: 'A breath sensor has to really hear a breath',
+    text: 'Narrow stretch bands barely registered above the noise. A 20 cm band gave a clear, readable wave.',
+    href: '/process/2026-06-12-a-belt-that-listens/',
+  },
+  {
+    title: 'The material has to hide the technology',
+    text: 'Mesh was too opaque and tulle wouldn’t hold a shape. Layers of soft fibre over a mesh shell finally turned hundreds of LEDs into one glow.',
+    href: '/process/2026-07-30-the-alpha-cloud/',
+  },
+  {
+    title: 'A bond before the breath',
+    text: 'Six planned movements became three. The magical twilight gives the cloud a character, so breathing with it means more.',
+    href: '/process/2026-09-24-the-final-score/',
+  },
+  {
+    title: 'Design an adjacent possible',
+    text: 'Offer something people can discover, lean into and make their own, with many ways in.',
+    href: '/process/2026-06-26-conversation-with-amos-blanton/',
+  },
+];
+
+const alphaMosaic = [
+  { src: alphaLyingUnder, wide: true, alt: 'A person lies on white sheets beneath the glowing fibre cloud, in front of a blue backdrop.' },
+  { src: alphaCloudRoom, wide: false, alt: 'The cloud glowing pale pink above white sheets, with a teapot on a small pedestal below.' },
+  { src: alphaMagenta, wide: false, alt: 'The cloud glowing magenta and violet, seen from a beanbag on the floor.' },
+  { src: alphaTeaRitual, wide: true, alt: 'Pouring tea beneath the cloud, lit blue, while someone watches from a beanbag.' },
+  { src: alphaControl, wide: true, alt: 'The cloud glowing magenta, with breath waveforms in TouchDesigner on a laptop in the foreground.' },
+  { src: alphaAmber, wide: false, alt: 'A smiling selfie, pointing up at the cloud glowing warm amber.' },
+];
+
+const buildSteps = [
+  { src: buildDowels, date: '21 Jul', caption: 'Dowels and printed joints', alt: 'Wooden dowels and 3D-printed joints laid out on the workshop floor.' },
+  { src: buildFrameAssembly, date: '21 Jul', caption: 'LED pixels tied to a mesh pyramid', alt: 'Looking up through a mesh-wrapped wooden frame with LED pixels tied along it.' },
+  { src: buildPyramidCourtyard, date: '22 Jul', caption: 'Painted white in the courtyard', alt: 'The painted pyramid drying on cardboard in a narrow courtyard.' },
+  { src: buildLedCloud, date: '24 Jul', caption: 'First fibre over the lights', alt: 'A mound of fibre glowing violet on top of a frame of LED pixels.' },
+  { src: buildSkewersMesh, date: '24 Jul', caption: 'Fibre pinned with bamboo skewers', alt: 'Close-up of fibre on hexagonal mesh, held by bamboo skewers.' },
+  { src: buildThermal, date: '28 Jul', caption: 'Checking for heat', alt: 'A thermal camera reading 27.4 °C, pointed at wiring on the floor.' },
+  { src: buildShell, date: '28 Jul', caption: 'Judging the shape of the shell', alt: 'Holding the fibre and mesh shell overhead in the workshop.' },
+  { src: buildStuffing, date: '29 Jul', caption: 'Final shaping, from below', alt: 'Lying beneath the lit cloud, pushing a skewer up into the fibre.' },
+];
+
+const decisions = [
+  {
+    choice: 'Breath as the interface',
+    why: 'Breath is both voluntary and involuntary, and everyone has it. Breathing in rhythm with something is one of the simplest forms of co-regulation. It also builds on what Zéphir learned from Réespiration.',
+  },
+  {
+    choice: 'Breathing with the cloud, not controlling it',
+    why: 'We want people to feel that they belong with the cloud, not that they are in charge of it. Its light follows the rise and fall of your respiration, like a companion keeping time with you, rather than obeying commands.',
+  },
+  {
+    choice: 'Lightning at dusk',
+    why: 'People arrive carrying their day. As the sun sets, the first lightning pulls attention into the room and towards weather: nature as vast, a little wild, and very present.',
+  },
+  {
+    choice: 'A magical twilight before the breath',
+    why: 'The twilight turns the experience into a story. As its light intensifies and colours flare up through the whole cloud at once, the cloud gains a presence and a character. By the time it begins to breathe with you, a bond is already there.',
+  },
+  {
+    choice: 'Lying down, shoes off',
+    why: 'Posture changes the role you play. Lying on the floor under a sky turns a visitor into an inhabitant, and the small ritual of preparation already begins the shared experience.',
+  },
+  {
+    choice: 'No instructions about feelings',
+    why: 'Being told to feel connected is the fastest way not to be. The space offers conditions and a little mystery, and leaves the story to the people in it.',
+  },
+];
+
+const openQuestions = [
+  'How do we invite someone to breathe with the cloud without instructing them?',
+  'How much of the twilight’s story should be told, and how much left to the imagination?',
+  'How does the bond with the cloud carry on after you leave?',
+  'Where could it live next: a gallery, a public space, a train carriage, a boat?',
+  'What would a space for belonging to each other, or to ourselves, look like?',
+];
 
 const byMonth = new Map<string, typeof entries>();
 for (const entry of entries) {
@@ -17,24 +136,51 @@ for (const entry of entries) {
 <Base title="Process" description="A process journal documenting how a cloud installation about belonging was imagined, tested and built over time.">
   <PageHeader
     eyebrow="Process journal"
-    ink="swirl"
+    image={buildStuffing}
+    imageAlt="Lying on a pillow beneath the lit cloud, pushing a bamboo skewer up into the fibre."
     title="How it came together"
-    lede="Notes from our meetings, material tests, visits and conversations, in the order they happened. The false starts are here too, because they shaped the work as much as what stayed."
-  >
-    <div class="filters" role="group" aria-label="Filter by stage">
-      <button type="button" aria-pressed="true" data-filter="all">All</button>
-      {stages.map((s) => <button type="button" aria-pressed="false" data-filter={s}>{s}</button>)}
+    lede="Research-creation, as it happened: notes from our meetings, material tests, visits and conversations, in the order they happened. The false starts are here too, because they shaped the work as much as what stayed."
+  />
+
+  <section class="section lessons" id="lessons">
+    <div class="wrap">
+      <div class="lessons-head reveal">
+        <p class="eyebrow">Lessons learned along the way</p>
+        <h2>What the process taught us</h2>
+      </div>
+      <ol class="lesson-list">
+        {
+          lessons.map((l) => (
+            <li class="reveal">
+              <h3>{l.title}</h3>
+              <p>{l.text}</p>
+              <a href={url(l.href)}>Read the entry →</a>
+            </li>
+          ))
+        }
+      </ol>
     </div>
-  </PageHeader>
+  </section>
 
   <section class="section timeline-section">
     <div class="wrap">
+      <div class="journal-head reveal">
+        <div>
+          <p class="eyebrow">The journal</p>
+          <h2>Month by month</h2>
+        </div>
+        <div class="filters" role="group" aria-label="Filter by stage">
+          <button type="button" aria-pressed="true" data-filter="all">All</button>
+          {stages.map((s) => <button type="button" aria-pressed="false" data-filter={s}>{s}</button>)}
+        </div>
+      </div>
       <div class="next reveal">
         <span class="pulse" aria-hidden="true"></span>
         <div>
-          <p class="eyebrow">Next chapter</p>
+          <p class="eyebrow">What comes next</p>
           <p class="next-text">
-            The full-scale cloud, its first participants, and what they tell us. We’ll add it here as it happens.
+            Taking the cloud to new people and places, and trying the belonging workshop. We’ll add it here as it
+            happens.
           </p>
         </div>
       </div>
@@ -54,6 +200,175 @@ for (const entry of entries) {
       }
     </div>
   </section>
+  <section class="section dark alpha" id="alpha">
+    <div class="wrap">
+      <div class="grid-2 alpha-head">
+        <div class="reveal">
+          <p class="eyebrow">The alpha · 29–30 July 2026</p>
+          <h2>A cloud you can lie under</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            At the end of July we built the first full cloud: loose polyester fibre pinned over a mesh shell, with a
+            pyramid of LED pixels glowing inside. We closed off a corner of the studio with a blue backdrop and black
+            panels, laid white sheets on the floor, and kept a pot of tea warm under the cloud.
+          </p>
+          <p>
+            Over two days, people lay and sat beneath it while it moved through amber, violet, magenta and blue, lightning
+            flickered through the fibre, and the breath belts streamed into TouchDesigner.
+          </p>
+          <p><a href={url('/process/2026-07-30-the-alpha-cloud/')}>Read the full story of the alpha →</a></p>
+        </div>
+      </div>
+
+      <div class="alpha-clips">
+        <VideoClip name="alpha-dusk" caption="Lightning and a warm, setting light (30 July)." class="reveal" />
+        <VideoClip name="alpha-twilight" caption="Violet, magenta and green (29 July)." class="reveal" />
+      </div>
+
+      <div class="mosaic">
+        {
+          alphaMosaic.map((m) => (
+            <Figure
+              src={m.src}
+              alt={m.alt}
+              class:list={['reveal', { wide: m.wide }]}
+              widths={m.wide ? [600, 900, 1400] : [400, 700]}
+              sizes={m.wide ? '(min-width: 60rem) 48rem, 100vw' : '(min-width: 60rem) 24rem, 100vw'}
+            />
+          ))
+        }
+      </div>
+
+      <div class="build-head reveal">
+        <p class="eyebrow">Ten days of building</p>
+        <p class="small">From printed joints to a cloud on the ceiling, 20–29 July 2026. Scroll sideways.</p>
+      </div>
+      <div class="build-strip">
+        {
+          buildSteps.map((b) => (
+            <Figure
+              src={b.src}
+              alt={b.alt}
+              caption={`${b.date} · ${b.caption}`}
+              ratio="3 / 4"
+              widths={[360, 600]}
+              sizes="(min-width: 60rem) 16rem, 60vw"
+              class="reveal"
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section dark sim">
+    <div class="wrap">
+      <div class="grid-2 sim-head">
+        <div class="reveal">
+          <p class="eyebrow">Simulating before building</p>
+          <h2>An early walk-through in 3D</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            Before building at full scale, we made a simulation of the room to think through the experience. Breaths
+            are shown as waves with their own rate, depth and phase, and a <em>synchrony</em> measure rises as they
+            align. Lightning can be tuned for frequency and intensity.
+          </p>
+          <p class="small">
+            This recording is from July 2026, when the score still ended at sunrise. The final score has
+            <a href={url('/installation/#narrative')}>three stages</a>.
+          </p>
+        </div>
+      </div>
+      <VideoClip name="simulation" ratio="1280 / 636" caption="Screen recording of the July 2026 simulation." class="reveal" />
+    </div>
+  </section>
+
+  <section class="section try" id="try">
+    <div class="wrap">
+      <div class="grid-2 try-head">
+        <div class="reveal">
+          <p class="eyebrow">Try it</p>
+          <h2>Breath synchrony, in your browser</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            In the installation, a sensor follows your real breathing. Here, a button stands in for it. Your breath is
+            the large cloud, which swells and glows as you breathe in. The smaller clouds drift at their own rhythms,
+            and as you breathe slowly and steadily they gradually fall into step with you. Hold the rhythm long enough
+            and the sky brightens.
+          </p>
+          <p class="small">
+            This playful web version extends the idea beyond the installation. The small clouds are modelled as coupled
+            oscillators (a Kuramoto model), the same maths often used to describe fireflies flashing in unison.
+          </p>
+        </div>
+      </div>
+      <div class="reveal">
+        <BreathSync />
+      </div>
+    </div>
+  </section>
+
+  <section class="section decisions" id="decisions">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">How we reasoned</p>
+        <h2>Why it is the way it is</h2>
+        <p class="lede measure">
+          Every element of the installation answers a question about belonging. These are the decisions we made, and
+          our reasons for them.
+        </p>
+      </div>
+      <dl class="decision-list">
+        {
+          decisions.map((d) => (
+            <div class="decision reveal">
+              <dt>{d.choice}</dt>
+              <dd>{d.why}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section visits" id="visits">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Looking at how others do it</p>
+        <h2>Field visits</h2>
+        <p class="measure">
+          We visited immersive theatre in Paris to study thresholds, hosts and atmosphere: <em>Le Grand Hôtel des
+          Rêves</em>, and Moir’s immersive personality test <em>TOI</em>. Other touchstones include Fujiko Nakaya’s fog
+          sculptures and Olafur Eliasson’s <em>Beauty</em>.
+        </p>
+      </div>
+      <div class="grid-3">
+        <Figure src={visitCeiling} alt="A dark control room with swirling clouds projected across the ceiling." caption="A projected sky of clouds, Le Grand Hôtel des Rêves." ratio="3 / 4" class="reveal" />
+        <Figure src={visitStars} alt="A deep blue room with a starry ceiling." caption="A starry room — should our night have stars?" ratio="3 / 4" class="reveal" />
+        <Figure src={visitFire} alt="An old television showing a fireplace." caption="A fireplace on an old TV. For a while, a glowing hearth at the centre of the room was part of our design." ratio="3 / 4" class="reveal" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section open dark">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">Still open</p>
+        <h2>Questions we would take further</h2>
+        <p class="lede">
+          Building the cloud answered some questions and raised others. These are the ones we would explore next, and
+          ones we hope others will take up.
+        </p>
+        <p><a class="button" href={url('/toolkit/')}>Use the belonging checklist</a></p>
+      </div>
+      <ul class="open-list reveal">
+        {openQuestions.map((q) => <li>{q}</li>)}
+      </ul>
+    </div>
+  </section>
 </Base>
 
 <script>
@@ -71,11 +386,21 @@ for (const entry of entries) {
 </script>
 
 <style>
+  .journal-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: end;
+    gap: 1rem 2rem;
+    margin-bottom: 2.5rem;
+  }
+  .journal-head h2 {
+    margin: 0;
+  }
   .filters {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-top: 2rem;
   }
   .filters button {
     appearance: none;
@@ -93,8 +418,49 @@ for (const entry of entries) {
     color: var(--paper);
     border-color: var(--ink);
   }
-  .timeline-section {
-    padding-top: 2rem;
+  .lessons {
+    background: linear-gradient(180deg, var(--paper), var(--paper-deep));
+    padding-top: 3rem;
+  }
+  .lessons-head {
+    margin-bottom: 2.5rem;
+  }
+  .lesson-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1.25rem;
+    counter-reset: lesson;
+  }
+  .lesson-list li {
+    counter-increment: lesson;
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.7);
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+  }
+  .lesson-list li::before {
+    content: counter(lesson, decimal-leading-zero);
+    font-family: var(--font-display);
+    color: var(--dusk);
+    margin-bottom: 0.8rem;
+  }
+  .lesson-list h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.4rem;
+  }
+  .lesson-list p {
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    flex: 1;
+  }
+  .lesson-list a {
+    color: var(--ink);
+    font-size: 0.88rem;
   }
   .next {
     display: flex;
@@ -151,5 +517,145 @@ for (const entry of entries) {
     .month-label {
       position: static;
     }
+  }
+  .section-head {
+    margin-bottom: 3rem;
+    max-width: 44rem;
+  }
+  .sim-head,
+  .try-head,
+  .alpha-head {
+    margin-bottom: 3rem;
+  }
+  .alpha {
+    background: linear-gradient(180deg, var(--night), #141a3d 60%, var(--night));
+  }
+  .alpha p {
+    color: var(--ink-soft);
+  }
+  .alpha a {
+    color: #eceefb;
+  }
+  .alpha-clips {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1.25rem;
+    margin-bottom: 1.25rem;
+  }
+  .mosaic {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-auto-rows: clamp(14rem, 28vw, 24rem);
+    gap: 1.25rem;
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .mosaic :global(figure) {
+    height: 100%;
+  }
+  .mosaic :global(figure.wide) {
+    grid-column: span 2;
+  }
+  .mosaic :global(img) {
+    height: 100%;
+    object-fit: cover;
+  }
+  @media (max-width: 700px) {
+    .mosaic {
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
+    }
+    .mosaic :global(figure.wide) {
+      grid-column: auto;
+    }
+    .mosaic :global(img) {
+      aspect-ratio: 4 / 3;
+    }
+  }
+  .build-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .build-head .eyebrow {
+    margin: 0;
+  }
+  .build-strip {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(13rem, 16rem);
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+  }
+  .build-strip :global(figure) {
+    scroll-snap-align: start;
+  }
+  .build-strip :global(figcaption) {
+    color: var(--ink-soft);
+  }
+  .sim p {
+    color: var(--ink-soft);
+  }
+  .small {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+
+  .decision-list {
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .decision {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1fr) 2fr;
+    gap: 1rem 3rem;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .decision dt {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.65rem);
+    line-height: 1.2;
+  }
+  .decision dd {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 700px) {
+    .decision {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .open {
+    background: linear-gradient(180deg, #344589, var(--night));
+  }
+  .open-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: q;
+  }
+  .open-list li {
+    counter-increment: q;
+    position: relative;
+    padding: 1.1rem 0 1.1rem 2.6rem;
+    border-bottom: 1px solid var(--line);
+    font-family: var(--font-display);
+    font-size: 1.2rem;
+    line-height: 1.35;
+  }
+  .open-list li::before {
+    content: counter(q, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 1.35rem;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
   }
 </style>

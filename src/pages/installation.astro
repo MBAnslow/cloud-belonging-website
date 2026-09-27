@@ -3,7 +3,6 @@ import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SkyPhases from '../components/SkyPhases.astro';
-import BreathSync from '../components/BreathSync.astro';
 import BreathChart from '../components/BreathChart.astro';
 import VideoClip from '../components/VideoClip.astro';
 import Figure from '../components/Figure.astro';
@@ -13,27 +12,13 @@ import tulleAssembly from '../assets/photos/tulle-assembly.jpg';
 import tulleLight2 from '../assets/photos/tulle-light-2.jpg';
 import beltSketch from '../assets/photos/belt-sketch.jpg';
 import printFrame from '../assets/photos/print-frame-1.jpg';
-import visitCeiling from '../assets/photos/visit-cloud-ceiling.jpg';
-import visitFire from '../assets/photos/visit-tv-fire.jpg';
-import visitStars from '../assets/photos/visit-stars.jpg';
-import alphaLyingUnder from '../assets/photos/alpha-lying-under.jpg';
-import alphaCloudRoom from '../assets/photos/alpha-cloud-room.jpg';
-import alphaMagenta from '../assets/photos/alpha-magenta.jpg';
-import alphaTeaRitual from '../assets/photos/alpha-tea-ritual.jpg';
-import alphaControl from '../assets/photos/alpha-control.jpg';
-import alphaAmber from '../assets/photos/alpha-amber.jpg';
 import alphaWarm from '../assets/photos/alpha-warm.jpg';
-import buildDowels from '../assets/photos/build-dowels.jpg';
+import alphaLyingBlue from '../assets/photos/alpha-lying-blue.jpg';
 import buildFrameAssembly from '../assets/photos/build-frame-assembly.jpg';
-import buildPyramidCourtyard from '../assets/photos/build-pyramid-courtyard.jpg';
-import buildLedCloud from '../assets/photos/build-led-cloud.jpg';
-import buildSkewersMesh from '../assets/photos/build-skewers-mesh.jpg';
-import buildShell from '../assets/photos/build-shell.jpg';
-import buildThermal from '../assets/photos/build-thermal.jpg';
-import buildStuffing from '../assets/photos/build-stuffing.jpg';
 import buildSkewers from '../assets/photos/build-skewers.jpg';
 
 import cloudMaterials from '../assets/photos/cloud-materials.jpg';
+import ledLightingDiagram from '../assets/photos/led-lighting-diagram.jpg';
 
 const outerLayers = [
   {
@@ -77,24 +62,27 @@ const innerLayers = [
   },
 ];
 
-const alphaMosaic = [
-  { src: alphaLyingUnder, wide: true, alt: 'A person lies on white sheets beneath the glowing fibre cloud, in front of a blue backdrop.' },
-  { src: alphaCloudRoom, wide: false, alt: 'The cloud glowing pale pink above white sheets, with a teapot on a small pedestal below.' },
-  { src: alphaMagenta, wide: false, alt: 'The cloud glowing magenta and violet, seen from a beanbag on the floor.' },
-  { src: alphaTeaRitual, wide: true, alt: 'Pouring tea beneath the cloud, lit blue, while someone watches from a beanbag.' },
-  { src: alphaControl, wide: true, alt: 'The cloud glowing magenta, with breath waveforms in TouchDesigner on a laptop in the foreground.' },
-  { src: alphaAmber, wide: false, alt: 'A smiling selfie, pointing up at the cloud glowing warm amber.' },
-];
-
-const buildSteps = [
-  { src: buildDowels, date: '21 Jul', caption: 'Dowels and printed joints', alt: 'Wooden dowels and 3D-printed joints laid out on the workshop floor.' },
-  { src: buildFrameAssembly, date: '21 Jul', caption: 'LED pixels tied to a mesh pyramid', alt: 'Looking up through a mesh-wrapped wooden frame with LED pixels tied along it.' },
-  { src: buildPyramidCourtyard, date: '22 Jul', caption: 'Painted white in the courtyard', alt: 'The painted pyramid drying on cardboard in a narrow courtyard.' },
-  { src: buildLedCloud, date: '24 Jul', caption: 'First fibre over the lights', alt: 'A mound of fibre glowing violet on top of a frame of LED pixels.' },
-  { src: buildSkewersMesh, date: '24 Jul', caption: 'Fibre pinned with bamboo skewers', alt: 'Close-up of fibre on hexagonal mesh, held by bamboo skewers.' },
-  { src: buildThermal, date: '28 Jul', caption: 'Checking for heat', alt: 'A thermal camera reading 27.4 °C, pointed at wiring on the floor.' },
-  { src: buildShell, date: '28 Jul', caption: 'Judging the shape of the shell', alt: 'Holding the fibre and mesh shell overhead in the workshop.' },
-  { src: buildStuffing, date: '29 Jul', caption: 'Final shaping, from below', alt: 'Lying beneath the lit cloud, pushing a skewer up into the fibre.' },
+const belongingMap = [
+  {
+    quality: 'Belonging is embodied and anchored',
+    choice: 'A multisensory space.',
+    how: ' You take off your shoes and lie down beneath the cloud, among soft fabric, warm light and a glass of tea.',
+  },
+  {
+    quality: 'Belonging is a journey',
+    choice: 'An evolving score.',
+    how: ' Dusk, a magical twilight, then breath synchrony: the experience moves, and you move with it.',
+  },
+  {
+    quality: 'Belonging is dynamic',
+    choice: 'Biofeedback.',
+    how: ' A sensor follows your breathing, and the cloud’s light rises and settles with it. You breathe with the cloud rather than control it.',
+  },
+  {
+    quality: 'Belonging depends on the quality of connections',
+    choice: 'A shared experience.',
+    how: ' One sky over everyone in the room, with nobody in a better seat.',
+  },
 ];
 
 const whyCloud = [
@@ -106,45 +94,58 @@ const whyCloud = [
   { title: 'It is forgiving', text: 'Dim, diffuse light feels primal and hides the imperfections of whatever room we are in.' },
 ];
 
-const decisions = [
+const software = [
   {
-    choice: 'Breath as the interface',
-    why: 'Breath is both voluntary and involuntary, and everyone has it. Breathing in rhythm with something is one of the simplest forms of co-regulation. It also builds on what Zéphir learned from Réespiration.',
+    name: 'A digital twin of the cloud',
+    text: 'A 3D simulation of the cloud with each LED placed on its surface. It shows exactly what the physical cloud will do before anything is switched on.',
   },
   {
-    choice: 'Breathing with the cloud, not controlling it',
-    why: 'We want people to feel that they belong with the cloud, not that they are in charge of it. Its light follows the rise and fall of your respiration, like a companion keeping time with you, rather than obeying commands.',
+    name: 'Light from a sky',
+    text: 'A 24-hour sky clock moves a sun and moon around the cloud, with editable colour timelines for each. Every LED is shaded by how much of that light would reach it through the cloud’s body.',
   },
   {
-    choice: 'Lightning at dusk',
-    why: 'People arrive carrying their day. As the sun sets, the first lightning pulls attention into the room and towards weather: nature as vast, a little wild, and very present.',
+    name: 'Mapping the real cloud',
+    text: 'A mapping tool matches each physical LED to its place on a model of the real, lumpy cloud. It uses soft Gaussian bumps to follow the billows, so the light lands where it should.',
   },
   {
-    choice: 'A magical twilight before the breath',
-    why: 'The twilight turns the experience into a story. As its light intensifies and colours flare up through the whole cloud at once, the cloud gains a presence and a character. By the time it begins to breathe with you, a bond is already there.',
+    name: 'Lightning and twilight flashes',
+    text: 'Branching bolts crawl through the cloud, as in-cloud flashes or ground strikes, each with its own colour palette. Image “sprites” can flare across the LEDs for the magical twilight.',
   },
   {
-    choice: 'Lying down, shoes off',
-    why: 'Posture changes the role you play. Lying on the floor under a sky turns a visitor into an inhabitant, and the small ritual of preparation already begins the shared experience.',
+    name: 'Breath in, light out',
+    text: 'Breath signals from the belts arrive from TouchDesigner as OSC messages. Each out-breath sends a soft wave of light travelling from the participant up into the cloud.',
   },
   {
-    choice: 'No instructions about feelings',
-    why: 'Being told to feel connected is the fastest way not to be. The space offers conditions and a little mystery, and leaves the story to the people in it.',
+    name: 'A generative soundscape',
+    text: 'Drones, warm pads and field-recording samples respond to the time of day and to breath. Each lightning flash picks a thunder sample that matches its length and intensity.',
+  },
+  {
+    name: 'Streaming to the LEDs',
+    text: 'A small Node relay forwards each frame over the network to a WLED controller using the DDP protocol, so the physical cloud mirrors the screen in real time.',
   },
 ];
 
-const openQuestions = [
-  'How do we invite someone to breathe with the cloud without instructing them?',
-  'How much of the twilight’s story should be told, and how much left to the imagination?',
-  'Should there be a goal (“save a cloud”) or only an invitation?',
-  'Where should it live: a gallery, a public space, a train carriage, a boat?',
-  'How does the bond with the cloud carry on after you leave?',
+const glow = 'stroke="url(#toc-glow)"';
+const icons = {
+  concept: `<path d="M13 34h22a7 7 0 0 0 .5-14A10 10 0 0 0 17 18a8 8 0 0 0-4 16Z"/><path ${glow} d="M17 27c5-4 10 3 15-1"/><path ${glow} fill="#f6b89c" stroke="none" d="M31 9l1.2 3.3L35.5 13.5l-3.3 1.2L31 18l-1.2-3.3-3.3-1.2 3.3-1.2Z"/>`,
+  narrative: `<path d="M6 34h36"/><path ${glow} d="M14 34a10 10 0 0 1 20 0"/><path d="M30 12a7 7 0 1 0 6 10 6 6 0 0 1-6-10Z"/><path ${glow} d="M10 40h8M22 40h16"/>`,
+  fabrication: `<path d="M24 8 40 16 24 24 8 16Z"/><path ${glow} d="M8 23l16 8 16-8"/><path d="M8 30l16 8 16-8"/>`,
+  making: `<path d="M6 30c4 0 4-10 8-10s4 14 8 14 4-18 8-18 4 12 8 12 3-4 4-4"/><circle cx="22" cy="34" r="2.2" fill="#c3b6f0" stroke="none"/><circle cx="30" cy="16" r="2.2" fill="#f6b89c" stroke="none"/><path ${glow} d="M6 40h36"/>`,
+};
+
+const contents = [
+  { id: 'concept', label: 'Concept', desc: 'Belonging to nature, and why a cloud' },
+  { id: 'narrative', label: 'Narrative', desc: 'Dusk, magical twilight, breath synchrony' },
+  { id: 'fabrication', label: 'Fabrication', desc: 'The final cloud, layer by layer' },
+  { id: 'making', label: 'Technical details', desc: 'Materials, light, breath sensing, frame, software' },
 ];
 ---
 
-<Base title="The Cloud" description="The concept, score and construction of a breathing cloud installation: why a cloud, the phases of the experience, and what we tried.">
+<Base title="Installation" description="Cloudfulness, a breathing cloud installation about belonging to nature: the concept, the narrative, fabrication and technical details.">
   <PageHeader
-    eyebrow="The work"
+    eyebrow="The installation"
+    image={alphaLyingBlue}
+    imageAlt="People lying on the floor beneath the glowing cloud, lit blue."
     title="A cloud that listens"
     lede="A cloud hangs above you. The sun sets, lightning begins, and then the whole cloud starts to bloom with colour. Then the cloud begins to breathe with you.">
     <p class="status">
@@ -155,6 +156,65 @@ const openQuestions = [
       </span>
     </p>
   </PageHeader>
+
+  <nav class="contents" aria-label="On this page">
+    <div class="wrap">
+      <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+        <linearGradient id="toc-glow" x1="0" x2="1">
+          <stop offset="0" stop-color="#b3a4ee"></stop>
+          <stop offset="1" stop-color="#f6a98a"></stop>
+        </linearGradient>
+      </svg>
+      <p class="eyebrow ruled">On this page</p>
+      <ol>
+        {
+          contents.map((c, i) => (
+            <li>
+              <a href={`#${c.id}`}>
+                <svg class="icon" viewBox="0 0 48 48" aria-hidden="true">
+                  <Fragment set:html={icons[c.id as keyof typeof icons]} />
+                </svg>
+                <span class="num">{String(i + 1).padStart(2, '0')}</span>
+                <span class="label">{c.label}</span>
+                <span class="desc">{c.desc}</span>
+                <span class="arrow" aria-hidden="true">↓</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </nav>
+
+  <section class="section built-in" id="concept">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">An example of belonging</p>
+        <h2>Belonging to nature, built into a room</h2>
+        <p>
+          Belonging to ourselves, to each other and to nature are always connected. <em>Cloudfulness</em> leans towards
+          nature: a shared sky, weather and water, something larger that was here before us and will continue after.
+        </p>
+        <p>
+          We started from what the research says belonging is, and turned each quality into a design choice.{' '}
+          <a href={url('/belonging/')}>More on belonging →</a>
+        </p>
+      </div>
+      <dl class="mapping reveal">
+        {
+          belongingMap.map((m) => (
+            <div>
+              <dt>{m.quality}</dt>
+              <dd>
+                <strong>{m.choice}</strong>
+                {m.how}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
 
   <section class="section">
     <div class="wrap why-cloud">
@@ -185,140 +245,6 @@ const openQuestions = [
   </section>
 
   <SkyPhases />
-
-  <section class="section dark alpha" id="alpha">
-    <div class="wrap">
-      <div class="grid-2 alpha-head">
-        <div class="reveal">
-          <p class="eyebrow">The alpha · 29–30 July 2026</p>
-          <h2>A cloud you can lie under</h2>
-        </div>
-        <div class="reveal">
-          <p>
-            At the end of July we built the first full cloud: loose polyester fibre pinned over a mesh shell, with a
-            pyramid of LED pixels glowing inside. We closed off a corner of the studio with a blue backdrop and black
-            panels, laid white sheets on the floor, and kept a pot of tea warm under the cloud.
-          </p>
-          <p>
-            Over two days, people lay and sat beneath it while it moved through amber, violet, magenta and blue, lightning
-            flickered through the fibre, and the breath belts streamed into TouchDesigner.
-          </p>
-          <p><a href={url('/process/2026-07-30-the-alpha-cloud/')}>Read the full story of the alpha →</a></p>
-        </div>
-      </div>
-
-      <div class="alpha-clips">
-        <VideoClip name="alpha-dusk" caption="Lightning and a warm, setting light (30 July)." class="reveal" />
-        <VideoClip name="alpha-twilight" caption="Violet, magenta and green (29 July)." class="reveal" />
-      </div>
-
-      <div class="mosaic">
-        {
-          alphaMosaic.map((m) => (
-            <Figure
-              src={m.src}
-              alt={m.alt}
-              class:list={['reveal', { wide: m.wide }]}
-              widths={m.wide ? [600, 900, 1400] : [400, 700]}
-              sizes={m.wide ? '(min-width: 60rem) 48rem, 100vw' : '(min-width: 60rem) 24rem, 100vw'}
-            />
-          ))
-        }
-      </div>
-
-      <div class="build-head reveal">
-        <p class="eyebrow">Ten days of building</p>
-        <p class="small">From printed joints to a cloud on the ceiling, 20–29 July 2026. Scroll sideways.</p>
-      </div>
-      <div class="build-strip">
-        {
-          buildSteps.map((b) => (
-            <Figure
-              src={b.src}
-              alt={b.alt}
-              caption={`${b.date} · ${b.caption}`}
-              ratio="3 / 4"
-              widths={[360, 600]}
-              sizes="(min-width: 60rem) 16rem, 60vw"
-              class="reveal"
-            />
-          ))
-        }
-      </div>
-    </div>
-  </section>
-
-  <section class="section dark sim">
-    <div class="wrap">
-      <div class="grid-2 sim-head">
-        <div class="reveal">
-          <p class="eyebrow">Simulating before building</p>
-          <h2>An early walk-through in 3D</h2>
-        </div>
-        <div class="reveal">
-          <p>
-            Before building at full scale, we made a simulation of the room to think through the experience. Breaths
-            are shown as waves with their own rate, depth and phase, and a <em>synchrony</em> measure rises as they
-            align. Lightning can be tuned for frequency and intensity.
-          </p>
-          <p class="small">
-            This recording is from July 2026, when the score still ended at sunrise. The final score is the three stages
-            above.
-          </p>
-        </div>
-      </div>
-      <VideoClip name="simulation" ratio="1280 / 636" caption="Screen recording of the July 2026 simulation." class="reveal" />
-    </div>
-  </section>
-
-  <section class="section try">
-    <div class="wrap">
-      <div class="grid-2 try-head">
-        <div class="reveal">
-          <p class="eyebrow">Try it</p>
-          <h2>Breath synchrony, in your browser</h2>
-        </div>
-        <div class="reveal">
-          <p>
-            In the installation, a sensor follows your real breathing. Here, a button stands in for it. Your breath is
-            the large cloud, which swells and glows as you breathe in. The smaller clouds drift at their own rhythms,
-            and as you breathe slowly and steadily they gradually fall into step with you. Hold the rhythm long enough
-            and the sky brightens.
-          </p>
-          <p class="small">
-            This playful web version extends the idea beyond the installation. The small clouds are modelled as coupled
-            oscillators (a Kuramoto model), the same maths often used to describe fireflies flashing in unison.
-          </p>
-        </div>
-      </div>
-      <div class="reveal">
-        <BreathSync />
-      </div>
-    </div>
-  </section>
-
-  <section class="section decisions">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">How we reasoned</p>
-        <h2>Why it is the way it is</h2>
-        <p class="lede measure">
-          Every element of the installation answers a question about belonging. These are the decisions we have made
-          so far, and our reasons for them.
-        </p>
-      </div>
-      <dl class="decision-list">
-        {
-          decisions.map((d) => (
-            <div class="decision reveal">
-              <dt>{d.choice}</dt>
-              <dd>{d.why}</dd>
-            </div>
-          ))
-        }
-      </dl>
-    </div>
-  </section>
 
   <section class="section fabrication" id="fabrication">
     <div class="wrap">
@@ -377,7 +303,7 @@ const openQuestions = [
         <p class="eyebrow">Making</p>
         <h2>How a cloud gets built</h2>
         <p class="lede measure">
-          How we got to the final cloud: what we tried, what surprised us, and what we are still working out.
+          How we got to the final cloud: what we tried, what surprised us, and what we learned.
         </p>
       </div>
 
@@ -493,43 +419,190 @@ const openQuestions = [
           <Figure src={buildFrameAssembly} alt="Looking up through a mesh-wrapped wooden frame with LED pixels tied along it." caption="The pyramid, strung with LEDs." ratio="4 / 5" class="reveal" />
         </div>
       </article>
+
+      <article class="make software" id="software">
+        <div class="make-text reveal">
+          <p class="make-num">06 · Software</p>
+          <h3>A sky that runs in a browser</h3>
+          <p>
+            The cloud is driven by a custom web app written in TypeScript with React and three.js. It holds a 3D model
+            of the cloud with every LED placed where it really sits. Each frame it works out how a sun, a moon, lightning
+            and the participants’ breath light each pixel. The same colours shown on screen are streamed live to the
+            physical LEDs.
+          </p>
+          <p>
+            <a class="button" href="https://github.com/MBAnslow/cloud-point-cloud-led" target="_blank" rel="noopener">
+              View the code on GitHub ↗
+            </a>
+          </p>
+        </div>
+        <ul class="software-list reveal">
+          {
+            software.map((s) => (
+              <li>
+                <strong>{s.name}</strong>
+                <p>{s.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </article>
+
+      <div class="twin reveal" id="led-lighting">
+        <div class="twin-text">
+          <p class="make-num">How each LED gets its colour</p>
+          <h3>Light probes on a virtual cloud</h3>
+          <ol class="twin-steps">
+            <li>
+              <strong>A virtual surface.</strong> In the digital twin, a smooth 3D mesh is placed over the pyramid frame
+              to approximate the cloud’s shape. It is used only for the lighting calculations.
+            </li>
+            <li>
+              <strong>Probes sample the sky.</strong> At each <em>light probe</em> on that surface, we average the light
+              arriving over a hemisphere of directions from the sun, moon and sky. Directions blocked by the cloud’s own
+              surface are left out.
+            </li>
+            <li>
+              <strong>Many probes, many values.</strong> Probes are spread across the whole surface. Those on top, open to
+              the sky, receive more light. Those in crevices receive less, shaded by the cloud itself.
+            </li>
+            <li>
+              <strong>A value for every probe.</strong> Each probe stores a brightness and colour, giving a map of light
+              over the whole cloud.
+            </li>
+            <li>
+              <strong>Probes to LEDs.</strong> Each physical LED inside the cloud takes the value of its nearest probe, or
+              a blend of nearby probes, which carries the calculated lighting onto the real lights.
+            </li>
+            <li>
+              <strong>The cloud lights up.</strong> Driven by those values, the LEDs reproduce the highlights and shadows
+              across the surface, so a simple frame of lights reads as one bumpy, volumetric cloud.
+            </li>
+          </ol>
+        </div>
+        <Figure
+          src={ledLightingDiagram}
+          alt="Diagram in six steps. 1: a smooth virtual mesh over the pyramid frame, dotted with light probes. 2: a probe averages incoming light over a hemisphere, ignoring directions blocked by the cloud surface. 3: many probes across the cloud; those on top get more light, those in crevices less. 4: each probe stores a lighting value, shown as a heat map from bright to dark. 5: each LED inside the pyramid takes the value of its nearest probe or an interpolation of nearby ones. 6: the result, a cloud glowing with realistic highlights and shadows."
+          caption="How the digital twin lights each LED, from virtual surface to physical lights."
+          widths={[600, 1024]}
+          sizes="(min-width: 72rem) 64rem, 100vw"
+        />
+      </div>
     </div>
   </section>
 
-  <section class="section visits">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">Looking at how others do it</p>
-        <h2>Field visits</h2>
-        <p class="measure">
-          We visited immersive theatre in Paris to study thresholds, hosts and atmosphere: <em>Le Grand Hôtel des
-          Rêves</em>, and Moir’s immersive personality test <em>TOI</em>. Other touchstones include Fujiko Nakaya’s fog
-          sculptures and Olafur Eliasson’s <em>Beauty</em>.
-        </p>
-      </div>
-      <div class="grid-3">
-        <Figure src={visitCeiling} alt="A dark control room with swirling clouds projected across the ceiling." caption="A projected sky of clouds, Le Grand Hôtel des Rêves." ratio="3 / 4" class="reveal" />
-        <Figure src={visitStars} alt="A deep blue room with a starry ceiling." caption="A starry room — should our night have stars?" ratio="3 / 4" class="reveal" />
-        <Figure src={visitFire} alt="An old television showing a fireplace." caption="A fireplace on an old TV. For a while, a glowing hearth at the centre of the room was part of our design." ratio="3 / 4" class="reveal" />
-      </div>
-    </div>
-  </section>
-
-  <section class="section open dark">
-    <div class="wrap grid-2">
-      <div class="reveal">
-        <p class="eyebrow">Still open</p>
-        <h2>What we are still figuring out</h2>
-        <p class="lede">The installation is unfinished on purpose. These are the questions we will answer by building it and trying it with people.</p>
-      </div>
-      <ul class="open-list reveal">
-        {openQuestions.map((q) => <li>{q}</li>)}
-      </ul>
-    </div>
-  </section>
 </Base>
 
 <style>
+  .contents {
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    background:
+      radial-gradient(ellipse 40% 80% at 0% 100%, rgb(179 164 238 / 0.18), transparent 70%),
+      radial-gradient(ellipse 40% 80% at 100% 0%, rgb(246 169 138 / 0.16), transparent 70%),
+      var(--paper-deep);
+  }
+  .contents ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 1rem;
+  }
+  .contents a {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.5rem 1.5rem 1.4rem;
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.75);
+    border: 1px solid rgb(255 255 255 / 0.9);
+    box-shadow: 0 1px 2px rgb(27 34 84 / 0.04), 0 10px 30px -12px rgb(27 34 84 / 0.12);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .contents a:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 2px 4px rgb(27 34 84 / 0.05), 0 22px 40px -16px rgb(91 76 180 / 0.3);
+  }
+  .contents .icon {
+    width: 3.75rem;
+    height: 3.75rem;
+    padding: 0.55rem;
+    margin-bottom: 1.25rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff, rgb(179 164 238 / 0.28) 70%, rgb(246 169 138 / 0.3));
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .contents .num {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--ink-faint);
+  }
+  .contents .label {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin-bottom: 0.35rem;
+  }
+  .contents .desc {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    flex: 1;
+  }
+  .contents .arrow {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--dusk);
+    transition: transform 0.35s ease;
+  }
+  .contents a:hover .arrow {
+    transform: translateY(3px);
+  }
+  :global(main [id]) {
+    scroll-margin-top: 4.5rem;
+  }
+  .built-in p {
+    color: var(--ink-soft);
+  }
+  .built-in a {
+    color: var(--ink);
+  }
+  .mapping {
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .mapping div {
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .mapping dt {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dusk);
+    margin-bottom: 0.35rem;
+  }
+  .mapping dd {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+  .mapping strong {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--ink);
+  }
   .status {
     display: inline-flex;
     align-items: baseline;
@@ -592,115 +665,6 @@ const openQuestions = [
     :global(.why-video) {
       position: static;
       max-width: 22rem;
-    }
-  }
-
-  .sim-head,
-  .try-head,
-  .alpha-head {
-    margin-bottom: 3rem;
-  }
-  .alpha {
-    background: linear-gradient(180deg, var(--night), #141a3d 60%, var(--night));
-  }
-  .alpha p {
-    color: var(--ink-soft);
-  }
-  .alpha a {
-    color: #eceefb;
-  }
-  .alpha-clips {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
-    gap: 1.25rem;
-    margin-bottom: 1.25rem;
-  }
-  .mosaic {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-auto-rows: clamp(14rem, 28vw, 24rem);
-    gap: 1.25rem;
-    margin-bottom: clamp(3rem, 6vw, 5rem);
-  }
-  .mosaic :global(figure) {
-    height: 100%;
-  }
-  .mosaic :global(figure.wide) {
-    grid-column: span 2;
-  }
-  .mosaic :global(img) {
-    height: 100%;
-    object-fit: cover;
-  }
-  @media (max-width: 700px) {
-    .mosaic {
-      grid-template-columns: 1fr;
-      grid-auto-rows: auto;
-    }
-    .mosaic :global(figure.wide) {
-      grid-column: auto;
-    }
-    .mosaic :global(img) {
-      aspect-ratio: 4 / 3;
-    }
-  }
-  .build-head {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 0.5rem 2rem;
-    margin-bottom: 1.5rem;
-  }
-  .build-head .eyebrow {
-    margin: 0;
-  }
-  .build-strip {
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: minmax(13rem, 16rem);
-    gap: 1.25rem;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding-bottom: 1rem;
-  }
-  .build-strip :global(figure) {
-    scroll-snap-align: start;
-  }
-  .build-strip :global(figcaption) {
-    color: var(--ink-soft);
-  }
-  .sim p {
-    color: var(--ink-soft);
-  }
-  .small {
-    font-size: 0.85rem;
-    color: var(--ink-faint);
-  }
-
-  .decision-list {
-    margin: 0;
-    border-top: 1px solid var(--line);
-  }
-  .decision {
-    display: grid;
-    grid-template-columns: minmax(12rem, 1fr) 2fr;
-    gap: 1rem 3rem;
-    padding-block: 1.6rem;
-    border-bottom: 1px solid var(--line);
-  }
-  .decision dt {
-    font-family: var(--font-display);
-    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.65rem);
-    line-height: 1.2;
-  }
-  .decision dd {
-    margin: 0;
-    color: var(--ink-soft);
-  }
-  @media (max-width: 700px) {
-    .decision {
-      grid-template-columns: 1fr;
     }
   }
 
@@ -814,6 +778,56 @@ const openQuestions = [
     gap: 0.8rem;
     align-items: start;
   }
+  .make.software {
+    align-items: start;
+  }
+  .software-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1rem;
+  }
+  .software-list li {
+    padding: 1.25rem 1.35rem;
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.7);
+    border: 1px solid var(--line);
+  }
+  .software-list strong {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.15rem;
+    margin-bottom: 0.3rem;
+  }
+  .software-list p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+  }
+  .twin {
+    display: grid;
+    gap: 2rem;
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    border-top: 1px solid var(--line);
+  }
+  .twin :global(figure) {
+    max-width: 64rem;
+  }
+  .twin-steps {
+    margin: 0 0 1.25rem;
+    padding-left: 1.2em;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
+    gap: 0.9rem 2.5rem;
+    color: var(--ink-soft);
+  }
+  .twin-steps strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
   .chart {
     margin-bottom: clamp(2.5rem, 5vw, 4rem);
   }
@@ -835,31 +849,4 @@ const openQuestions = [
     }
   }
 
-  .open {
-    background: linear-gradient(180deg, #344589, var(--night));
-  }
-  .open-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    counter-reset: q;
-  }
-  .open-list li {
-    counter-increment: q;
-    position: relative;
-    padding: 1.1rem 0 1.1rem 2.6rem;
-    border-bottom: 1px solid var(--line);
-    font-family: var(--font-display);
-    font-size: 1.2rem;
-    line-height: 1.35;
-  }
-  .open-list li::before {
-    content: counter(q, decimal-leading-zero);
-    position: absolute;
-    left: 0;
-    top: 1.35rem;
-    font-family: var(--font-body);
-    font-size: 0.75rem;
-    color: var(--ink-faint);
-  }
 </style>

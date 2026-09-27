@@ -20,9 +20,9 @@ export const site = {
 };
 
 export const nav = [
+  { href: '/installation/', label: 'Installation' },
   { href: '/belonging/', label: 'Belonging' },
-  { href: '/installation/', label: 'The Cloud' },
   { href: '/process/', label: 'Process' },
-  { href: '/toolkit/', label: 'Toolkit' },
+  { href: '/toolkit/', label: 'Checklist' },
   { href: '/about/', label: 'About' },
 ];

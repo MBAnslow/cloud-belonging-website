@@ -2,6 +2,7 @@
 import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
+import alphaTeam from '../assets/photos/alpha-team.jpg';
 
 const facets = [
   {
@@ -62,7 +63,8 @@ const questions = [
 <Base title="Belonging" description="Belonging as a need, a process and an embodied experience — and why we think art and research-creation are good places to explore it.">
   <PageHeader
     eyebrow="The theme"
-    ink="small"
+    image={alphaTeam}
+    imageAlt="Two of the team grinning beside the cloud, lit pink."
     title="Belonging"
     lede="We started by asking whether art and technology could help people find a moment of peace. We kept arriving at the same answer: peace is rarely something we find alone."
   />
@@ -127,6 +129,9 @@ const questions = [
         <p>
           Belonging in ourselves, with others, and with our environment are always connected. In this work, we lean
           towards the environment, and let the others follow.
+        </p>
+        <p>
+          <a class="button" href={url('/installation/')}>See how the installation puts this into practice</a>
         </p>
       </div>
       <figure class="circles reveal" aria-label="Three overlapping circles: ourselves, others, environment">
@@ -197,16 +202,17 @@ const questions = [
         <p class="eyebrow">An open invitation</p>
         <h2>Questions we are living with</h2>
         <p class="lede measure">
-          We don’t have answers to these. If any of them pull at you, take them into your own practice, and tell us
-          what you find.
+          We explored belonging to nature. Belonging to ourselves, to each other, to places and to communities are
+          waiting to be explored too. We don’t have answers to these questions. If any of them pull at you, take them
+          into your own practice, and tell us what you find.
         </p>
       </div>
       <ul class="q-list">
         {questions.map((q) => <li class="reveal">{q}</li>)}
       </ul>
       <div class="actions reveal">
-        <a class="button" href={url("/installation/")}>See how we approached them</a>
         <a class="button" href={url("/toolkit/")}>Use the belonging checklist</a>
+        <a class="button" href={url("/process/#lessons")}>Read what we learned</a>
       </div>
     </div>
   </section>

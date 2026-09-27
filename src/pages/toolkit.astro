@@ -3,6 +3,7 @@ import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import Checklist from '../components/Checklist.astro';
+import alphaTeaRitual from '../assets/photos/alpha-tea-ritual.jpg';
 
 const movements = [
   {
@@ -13,12 +14,12 @@ const movements = [
   {
     name: 'Sense',
     time: '30 min',
-    text: 'Experience a small version of the cloud: lie under tulle and light, breathe with a sensor, notice what happens in you and around you. Then notice the room, the others, the weather outside.',
+    text: 'Experience a small version of the cloud: lie under a small cloud of cotton and light, breathe with a sensor, notice what happens in you and around you. Then notice the room, the others, the weather outside.',
   },
   {
     name: 'Make',
     time: '60 min',
-    text: 'In small groups, tinker with the materials we used — tulle, mesh, LEDs, breath sensors, sound — to build a tiny space for belonging. Many entry points: some will sew, some will code, some will write a ritual.',
+    text: 'In small groups, tinker with the materials we used (cotton, wadding, mesh, LEDs, breath sensors, sound) to build a tiny space for belonging. Many entry points: some will sew, some will code, some will write a ritual.',
   },
   {
     name: 'Share',
@@ -42,19 +43,20 @@ const prompts = [
 ];
 ---
 
-<Base title="Toolkit" description="A belonging checklist for artists and researchers, and the outline of a workshop on designing spaces for belonging.">
+<Base title="Belonging checklist" description="A tentative checklist of things to consider when designing for belonging, plus a workshop in development and small practices to carry with you.">
   <PageHeader
     eyebrow="For you"
-    ink="small"
-    title="A toolkit for belonging"
-    lede="One thing we wanted this project to leave behind is something other people can use. Here is what we have so far: a checklist, a workshop in development, and a few prompts to carry with you."
+    image={alphaTeaRitual}
+    imageAlt="Pouring tea beneath the cloud, lit blue, while someone watches from a beanbag."
+    title="A belonging checklist"
+    lede="We wanted this project to leave behind something other people can use. This is a tentative checklist of things to consider in any work about belonging, whether it’s an installation, a ritual, a workshop or a gathering. Below it: a workshop we are developing, and a few small practices."
   />
 
   <section class="section" id="checklist">
     <div class="wrap">
       <div class="grid-2 head">
         <div class="reveal">
-          <p class="eyebrow">The belonging checklist · draft 1</p>
+          <p class="eyebrow">The belonging checklist · tentative, draft 1</p>
           <h2>Designing a space where people can belong</h2>
         </div>
         <div class="reveal">

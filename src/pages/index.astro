@@ -18,33 +18,60 @@ import alphaCloudRoom from '../assets/photos/alpha-cloud-room.jpg';
 import alphaMagenta from '../assets/photos/alpha-magenta.jpg';
 import buildSkewers from '../assets/photos/build-skewers.jpg';
 import buildFrameAssembly from '../assets/photos/build-frame-assembly.jpg';
+import buildShell from '../assets/photos/build-shell.jpg';
 
 const latest = (await getJournal()).slice(0, 3);
 
 const doors = [
   {
-    href: '/belonging/',
-    eyebrow: 'The theme',
-    title: 'Belonging',
-    text: 'A need almost as basic as water — and a process, renewed in small acts. Why we think art is a good place to explore it.',
-    image: meshTeam,
-    alt: 'Michael and Zéphir smiling in the studio, holding up a sheet of green mesh.',
-  },
-  {
     href: '/installation/',
-    eyebrow: 'The work',
-    title: 'The Cloud',
-    text: 'A cloud that sets with the sun, flares through a magical twilight, then breathes with you.',
+    eyebrow: '1 · The work',
+    title: 'Installation',
+    text: 'A cloud that sets with the sun, blooms with colour through a magical twilight, then breathes with you. How it works and how it was made.',
     image: alphaCloudRoom,
     alt: 'The alpha cloud of white fibre glowing pale pink above white sheets, with a teapot on a small pedestal below.',
   },
   {
+    href: '/belonging/',
+    eyebrow: '2 · The theme',
+    title: 'Belonging',
+    text: 'A need almost as basic as water, renewed in small acts. Why it matters, and why art is a good place to explore it.',
+    image: meshTeam,
+    alt: 'Michael and Zéphir smiling in the studio, holding up a sheet of green mesh.',
+  },
+  {
+    href: '/process/',
+    eyebrow: '3 · How we worked',
+    title: 'Process',
+    text: 'Research-creation as it happened: material tests, conversations, the alpha, and the lessons we learned along the way.',
+    image: buildShell,
+    alt: 'Holding a shell of white fibre and hexagonal mesh overhead in the workshop.',
+  },
+  {
     href: '/toolkit/',
-    eyebrow: 'For you',
-    title: 'Toolkit',
-    text: 'A belonging checklist for artists and researchers, and the outline of a workshop we are developing.',
+    eyebrow: '4 · For you',
+    title: 'Checklist',
+    text: 'A tentative checklist of things to consider when designing for belonging, and a workshop in development.',
     image: tulleRaised,
     alt: 'Zéphir holding a bunch of white tulle up towards the ceiling like a small cloud.',
+  },
+];
+
+const method = [
+  {
+    step: 'Read',
+    text: 'We started from the research on belonging, group contemplative practice and ritual, and from the lessons of the Réespiration study.',
+    link: { href: '/belonging/', label: 'What we mean by belonging' },
+  },
+  {
+    step: 'Make',
+    text: 'We turned those ideas into materials, light, sensors and a score, building and testing the cloud piece by piece in the studio.',
+    link: { href: '/installation/#fabrication', label: 'How the cloud is made' },
+  },
+  {
+    step: 'Listen',
+    text: 'We lay under it with other people, shared it in public, and let what we noticed reshape the work, then wrote down what we learned.',
+    link: { href: '/process/#lessons', label: 'Lessons learned' },
   },
 ];
 
@@ -70,15 +97,15 @@ const tried = [
     />
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="wrap hero-content">
-      <p class="eyebrow">Research-creation · 2026 — ongoing</p>
+      <p class="eyebrow">A research-creation installation<br />Paris, 2026</p>
       <h1>{site.title}</h1>
       <p class="hero-lede">
         A cloud installation and a call for belonging. To ourselves, each other and nature. Under the sky we all live
         under and look up to.
       </p>
       <div class="hero-actions">
-        <a class="button solid-light" href={url("/belonging/")}>Explore belonging</a>
-        <a class="button" href={url("/process/")}>Follow the process</a>
+        <a class="button solid-light" href={url("/installation/")}>See the installation</a>
+        <a class="button" href={url("/belonging/")}>Why belonging</a>
       </div>
     </div>
     <a class="scroll-hint" href="#invitation" aria-label="Scroll to introduction">
@@ -97,32 +124,22 @@ const tried = [
       </div>
       <div class="reveal intro-text">
         <p class="lede">
-          We are an artist-researcher and a creative technologist building a cloud that watches the sun set with you,
-          lights up through a strange twilight, and then begins to breathe with you.
+          In 2026 we made <em>Cloudfulness</em>: a cloud you lie beneath. It watches the sun set with you, blooms with
+          colour through a magical twilight, and then breathes with you.
         </p>
-        <p>This site documents that work as it unfolds. It holds three things:</p>
+        <p>
+          The installation is our example of one kind of belonging: belonging to nature, to the weather, water and sky we
+          all share. We made it as research-creation, an artist-researcher and a creative technologist learning by
+          reading, building and trying it with people.
+        </p>
+        <p>This site holds:</p>
         <ol class="three">
-          <li><strong>An exploration of belonging</strong> as a theme for art and research-creation — and a call to others to explore it too.</li>
-          <li><strong>The story of the installation</strong>: what we imagined, what we tried, what failed, and how we reasoned our way through it.</li>
-          <li><strong>A toolkit</strong> that we hope becomes a workshop, so others can make their own spaces for belonging.</li>
+          <li><strong>The installation</strong>: how the cloud works, why it is the way it is, and how it was made.</li>
+          <li><strong>Belonging</strong>: why we think it matters, and how the cloud puts it into practice.</li>
+          <li><strong>Our process</strong>: a journal of what we tried, the false starts, and the lessons we learned.</li>
+          <li><strong>A checklist</strong>: a tentative list of things to consider when designing for belonging.</li>
+          <li><strong>An invitation</strong> to take belonging further in your own art and research.</li>
         </ol>
-      </div>
-    </div>
-  </section>
-
-  <section class="section doors-section">
-    <div class="wrap">
-      <div class="doors">
-        {
-          doors.map((d) => (
-            <a class="door reveal" href={url(d.href)}>
-              <Figure src={d.image} alt={d.alt} ratio="4 / 5" widths={[400, 700, 900]} sizes="(min-width: 60rem) 24rem, 100vw" />
-              <p class="eyebrow">{d.eyebrow}</p>
-              <h3>{d.title} <span aria-hidden="true">→</span></h3>
-              <p>{d.text}</p>
-            </a>
-          ))
-        }
       </div>
     </div>
   </section>
@@ -131,7 +148,7 @@ const tried = [
     <div class="wrap">
       <div class="tried-head">
         <div class="reveal">
-          <p class="eyebrow">What we have tried so far</p>
+          <p class="eyebrow">The installation</p>
           <h2>From a crumpled sheet of mesh to a cloud full of light</h2>
           <p class="tried-lede">
             The cloud above is a simulation. This one is real: our alpha, built at the end of July 2026 from polyester
@@ -151,6 +168,54 @@ const tried = [
     </div>
   </section>
 
+  <section class="section doors-section">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Explore the project</p>
+        <h2>Four ways in</h2>
+      </div>
+      <div class="doors">
+        {
+          doors.map((d) => (
+            <a class="door reveal" href={url(d.href)}>
+              <Figure src={d.image} alt={d.alt} ratio="4 / 5" widths={[400, 700, 900]} sizes="(min-width: 60rem) 18rem, 100vw" />
+              <p class="eyebrow">{d.eyebrow}</p>
+              <h3>{d.title} <span aria-hidden="true">→</span></h3>
+              <p>{d.text}</p>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section method">
+    <div class="wrap">
+      <div class="grid-2 method-head">
+        <div class="reveal">
+          <p class="eyebrow">Research-creation</p>
+          <h2>Making the work was how we asked the question</h2>
+        </div>
+        <p class="reveal lede">
+          In research-creation, making and studying happen together. The cloud wasn’t only the result of our research
+          on belonging. It was the way we did it.
+        </p>
+      </div>
+      <ol class="method-steps">
+        {
+          method.map((m, i) => (
+            <li class="reveal">
+              <span class="m-num">{i + 1}</span>
+              <h3>{m.step}</h3>
+              <p>{m.text}</p>
+              <a href={url(m.link.href)}>{m.link.label} →</a>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
   <section class="section">
     <div class="wrap">
       <div class="latest-head reveal">
@@ -166,15 +231,21 @@ const tried = [
     </div>
   </section>
 
-  <section class="section unfolding">
+  <section class="section call">
     <div class="wrap measure reveal">
-      <p class="eyebrow">Still unfolding</p>
-      <h2>The cloud isn’t finished — and neither is this site.</h2>
+      <p class="eyebrow">A call for belonging</p>
+      <h2>We explored one kind of belonging. There are many more.</h2>
       <p class="lede">
-        We built and tested a first alpha of the cloud in July 2026, and we’re documenting what comes next as it takes
-        shape. If you want to host it, try it, or bring the workshop to your community, we’d love to hear from you.
+        <em>Cloudfulness</em> looked at belonging to nature: to weather, water and the sky above us. Belonging to
+        ourselves, to each other, to places and to communities need artists and researchers just as much.
       </p>
-      <a class="button solid" href={url("/about/#contact")}>Get in touch</a>
+      <p class="lede">
+        Take the checklist, borrow our process, make your own work, and tell us what you find.
+      </p>
+      <div class="call-actions">
+        <a class="button solid" href={url("/toolkit/")}>Use the belonging checklist</a>
+        <a class="button" href={url("/about/#contact")}>Get in touch</a>
+      </div>
     </div>
   </section>
 </Base>
@@ -213,17 +284,17 @@ const tried = [
     transition: color 2s ease;
   }
   .hero h1 {
-    max-width: 12ch;
+    font-size: clamp(3.2rem, 1.8rem + 6vw, 7rem);
     color: var(--hero-fg);
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
     transition: color 2s ease;
   }
   .hero-lede {
     font-family: var(--font-display);
-    font-size: clamp(1.25rem, 1rem + 1vw, 1.8rem);
-    line-height: 1.35;
+    font-size: clamp(1.3rem, 1.05rem + 0.9vw, 1.75rem);
+    line-height: 1.38;
     font-weight: 300;
-    max-width: 30ch;
+    max-width: 24ch;
     color: var(--hero-fg-soft);
     transition: color 2s ease;
   }
@@ -318,14 +389,55 @@ const tried = [
     color: var(--dusk);
   }
 
-  .doors-section {
-    padding-top: 0;
-    border-top: 0 !important;
+  .section-head {
+    margin-bottom: 2.5rem;
   }
   .doors {
     display: grid;
+    gap: clamp(1.25rem, 2.5vw, 2.25rem);
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+  }
+  .method {
+    background: linear-gradient(180deg, var(--paper), var(--paper-deep));
+  }
+  .method-head {
+    margin-bottom: 3rem;
+    align-items: end;
+  }
+  .method-head .lede {
+    margin: 0;
+  }
+  .method-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
     gap: clamp(1.5rem, 3vw, 3rem);
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  }
+  .method-steps li {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--ink);
+  }
+  .method-steps p {
+    color: var(--ink-soft);
+  }
+  .method-steps a {
+    color: var(--ink);
+    font-size: 0.92rem;
+  }
+  .m-num {
+    display: block;
+    font-family: var(--font-display);
+    color: var(--dusk);
+    margin-bottom: 0.8rem;
+  }
+  .call-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    margin-top: 1rem;
   }
   .door {
     text-decoration: none;
@@ -346,7 +458,7 @@ const tried = [
     margin-bottom: 0.4rem;
   }
   .door h3 {
-    font-size: 2rem;
+    font-size: 1.75rem;
   }
   .door h3 span {
     display: inline-block;
@@ -403,11 +515,11 @@ const tried = [
     margin: 0;
   }
 
-  .unfolding {
+  .call {
     text-align: center;
     background: linear-gradient(180deg, var(--paper), var(--cream));
   }
-  .unfolding .measure {
+  .call .measure {
     margin-inline: auto;
   }
 </style>

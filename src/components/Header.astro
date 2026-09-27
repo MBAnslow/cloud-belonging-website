@@ -14,12 +14,30 @@ const isActive = (href: string) => path.startsWith(url(href));
 <header class:list={['site-header', { overlay }]} data-header>
   <div class="bar">
     <a href={url("/")} class="brand" aria-label={`${site.title} — home`}>
-      <svg viewBox="0 0 40 24" aria-hidden="true" class="mark">
-        <path
-          d="M10 21h21a7 7 0 0 0 .6-13.97A9 9 0 0 0 14.3 5.4 6.5 6.5 0 0 0 10 21Z"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.4"></path>
+      <svg viewBox="80 290 900 480" aria-hidden="true" class="mark">
+        <defs>
+          <linearGradient id="mark-glow" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0" stop-color="#c3b6f0"></stop>
+            <stop offset="1" stop-color="#f6b89c"></stop>
+          </linearGradient>
+        </defs>
+        <g fill="none" stroke-linecap="round">
+          <path
+            stroke="currentColor"
+            stroke-width="26"
+            d="M870 745C640 650 420 760 190 735C90 720 80 560 250 528C265 470 330 440 410 452C460 300 720 290 780 515C900 470 1000 610 850 705"
+          ></path>
+          <path stroke="currentColor" stroke-width="12" opacity="0.7" d="M270 535C320 545 360 570 390 605"></path>
+          <g stroke="url(#mark-glow)" stroke-width="12">
+            <path d="M270 495C420 470 560 640 720 625C850 615 905 560 880 525"></path>
+            <path d="M155 575C130 640 250 700 435 680"></path>
+            <path d="M725 348C820 350 905 420 855 495"></path>
+          </g>
+        </g>
+        <circle cx="840" cy="387" r="17" fill="#c3b6f0"></circle>
+        <circle cx="173" cy="648" r="17" fill="#f6b89c"></circle>
+        <circle cx="890" cy="583" r="9" fill="#f6b89c"></circle>
+        <path fill="#f6c3b0" d="M716 410Q722 440 750 445Q722 450 716 480Q710 450 682 445Q710 440 716 410Z"></path>
       </svg>
       <span>{site.title}</span>
     </a>
@@ -109,7 +127,7 @@ const isActive = (href: string) => path.startsWith(url(href));
     letter-spacing: -0.01em;
   }
   .mark {
-    width: 2rem;
+    width: 2.6rem;
     height: auto;
   }
   nav ul {
