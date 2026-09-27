@@ -33,6 +33,50 @@ import buildThermal from '../assets/photos/build-thermal.jpg';
 import buildStuffing from '../assets/photos/build-stuffing.jpg';
 import buildSkewers from '../assets/photos/build-skewers.jpg';
 
+import cloudMaterials from '../assets/photos/cloud-materials.jpg';
+
+const outerLayers = [
+  {
+    name: 'Cotton',
+    text: 'The outermost layer and the one you see. Pulled into tufts, it gives the cloud its billowing, cumulus surface.',
+  },
+  {
+    name: 'Polyester fleece wadding',
+    text: 'A thicker layer of wadding under the cotton. It gives the cloud its body and softens the light again on its way out.',
+  },
+  {
+    name: 'White mesh',
+    text: 'A white plastic mesh with hexagonal cells, shaped into the cloud’s outline. It is the shell that holds the soft layers in place.',
+  },
+  {
+    name: 'Nylon diffuser fabric',
+    text: 'The first thing the light meets. It spreads each point of light out before it reaches the wadding, so no single LED shows through as a hot spot.',
+  },
+];
+
+const innerLayers = [
+  {
+    name: 'Inner mesh frame',
+    text: 'A square-grid mesh that forms the core of the cloud and carries the lights.',
+  },
+  {
+    name: 'Addressable LEDs',
+    text: 'Individually controllable LED pixels (for example WS2811), fixed across the frame. Each can take its own colour and brightness, which makes gradients, lightning, colour blooms and breathing light possible.',
+  },
+  {
+    name: 'Directionality cylinders',
+    text: 'A short card tube around each LED aims its light outwards, so each pixel lights its own patch of the cloud instead of washing into its neighbours.',
+  },
+  {
+    name: 'Support struts',
+    text: 'Tubes of rolled mesh, rising from the frame, hold the outer layers at a distance from the lights.',
+  },
+  {
+    name: 'Black fabric layer',
+    text: 'Underneath the frame, a black fabric stops light escaping backwards, so it only leaves through the diffusing layers.',
+  },
+];
+
 const alphaMosaic = [
   { src: alphaLyingUnder, wide: true, alt: 'A person lies on white sheets beneath the glowing fibre cloud, in front of a blue backdrop.' },
   { src: alphaCloudRoom, wide: false, alt: 'The cloud glowing pale pink above white sheets, with a teapot on a small pedestal below.' },
@@ -276,13 +320,64 @@ const openQuestions = [
     </div>
   </section>
 
+  <section class="section fabrication" id="fabrication">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Fabrication</p>
+        <h2>The final cloud, layer by layer</h2>
+        <p class="lede measure">
+          After months of trying mesh, tulle and fibre, this is how the finished cloud is made: a glowing core of light,
+          wrapped in four soft layers that turn hundreds of points of light into one diffuse glow.
+        </p>
+      </div>
+
+      <Figure
+        src={cloudMaterials}
+        alt="Diagram of the cloud's layers. Left: the outer layers, from outside to inside, are cotton, polyester fleece wadding, white hexagonal mesh and nylon diffuser fabric. Right: the inner layer, with addressable LEDs set in card directionality cylinders on an inner mesh frame, a rolled-mesh support strut, and a black fabric layer underneath."
+        caption="The materials and layers of the final cloud."
+        widths={[600, 1024]}
+        sizes="(min-width: 72rem) 64rem, 100vw"
+        class="reveal fab-diagram"
+      />
+
+      <div class="fab-layers">
+        <div class="reveal">
+          <h3>Outer layers <span>outside → inside</span></h3>
+          <ol class="layer-list">
+            {
+              outerLayers.map((l) => (
+                <li>
+                  <strong>{l.name}</strong>
+                  <p>{l.text}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+        <div class="reveal">
+          <h3>Inner layer <span>the core of light</span></h3>
+          <ul class="layer-list">
+            {
+              innerLayers.map((l) => (
+                <li>
+                  <strong>{l.name}</strong>
+                  <p>{l.text}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section making" id="making">
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow">Making</p>
         <h2>How a cloud gets built</h2>
         <p class="lede measure">
-          What we tried, what surprised us, and what we are still working out.
+          How we got to the final cloud: what we tried, what surprised us, and what we are still working out.
         </p>
       </div>
 
@@ -607,6 +702,84 @@ const openQuestions = [
     .decision {
       grid-template-columns: 1fr;
     }
+  }
+
+  .fabrication {
+    background: linear-gradient(180deg, var(--paper), var(--paper-deep));
+  }
+  :global(.fab-diagram) {
+    max-width: 64rem;
+  }
+  .fab-layers {
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: clamp(2rem, 5vw, 5rem);
+  }
+  .fab-layers h3 {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.3rem 0.8rem;
+    margin-bottom: 1rem;
+  }
+  .fab-layers h3 span {
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dusk);
+  }
+  .layer-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+    counter-reset: layer;
+  }
+  .layer-list li {
+    position: relative;
+    padding: 1rem 0 1rem 2.4rem;
+    border-bottom: 1px solid var(--line);
+  }
+  ol.layer-list li {
+    counter-increment: layer;
+  }
+  ol.layer-list li::before {
+    content: counter(layer);
+    position: absolute;
+    left: 0;
+    top: 1.05rem;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    display: grid;
+    place-items: center;
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+  }
+  ul.layer-list li::before {
+    content: '';
+    position: absolute;
+    left: 0.45rem;
+    top: 1.45rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: radial-gradient(circle, #fff 0 20%, var(--periwinkle) 45%, transparent 75%);
+    box-shadow: 0 0 0.6rem var(--periwinkle);
+  }
+  .layer-list strong {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.2rem;
+  }
+  .layer-list p {
+    margin: 0.2rem 0 0;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
   }
 
   .make {
