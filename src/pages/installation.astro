@@ -169,6 +169,17 @@ const tour = [
       'Breath plays its part too. Each out-breath can trigger a soft sound, and how much of the cloud is lit by breath feeds back into the mix. The room hears itself breathing with the cloud.',
     ],
   },
+  {
+    kicker: 'Sound · breath modulation',
+    title: 'The mix breathes with the room',
+    video: 'audio-breath-modulation',
+    alt: 'Screen recording: breath waves sweep through the digital cloud as green spheres, lighting its LEDs, while the drone, pad and sample sliders in the master volume panel rise and fall with them.',
+    caption: 'Breath modulating the sound, with audio. Watch the drone, pad and sample controls move as each breath passes through the cloud.',
+    body: [
+      'As each out-breath travels up into the cloud, the software measures how much of the cloud it lights. That single value then drives the mix. Each slider in the master panel sets where a parameter lands when the cloud is fully lit by breath, plus an offset for where it rests between breaths. The live value glides between the two.',
+      'It moves the volume, saturation, tremolo and filters of the drones, the volume, saturation, spread and filters of the pads, and the volume and filters of the samples. The soundscape swells and opens as a breath washes through the cloud, then settles as it fades. Turn the sound on to hear it.',
+    ],
+  },
 ];
 
 const glow = 'stroke="url(#toc-glow)"';
@@ -500,58 +511,74 @@ const contents = [
         />
       </article>
 
-      <div class="twin reveal" id="led-lighting">
-        <div class="twin-text">
-          <p class="make-num">How each LED gets its colour</p>
-          <h3>Light probes on a virtual cloud</h3>
-          <ol class="twin-steps">
-            <li>
-              <strong>A virtual surface.</strong> In the digital twin, a smooth 3D mesh is placed over the pyramid frame
-              to approximate the cloud’s shape. It is used only for the lighting calculations.
-            </li>
-            <li>
-              <strong>Probes sample the sky.</strong> At each <em>light probe</em> on that surface, we average the light
-              arriving over a hemisphere of directions from the sun, moon and sky. Directions blocked by the cloud’s own
-              surface are left out.
-            </li>
-            <li>
-              <strong>Many probes, many values.</strong> Probes are spread across the whole surface. Those on top, open to
-              the sky, receive more light. Those in crevices receive less, shaded by the cloud itself.
-            </li>
-            <li>
-              <strong>A value for every probe.</strong> Each probe stores a brightness and colour, giving a map of light
-              over the whole cloud.
-            </li>
-            <li>
-              <strong>Probes to LEDs.</strong> Each physical LED inside the cloud takes the value of its nearest probe, or
-              a blend of nearby probes, which carries the calculated lighting onto the real lights.
-            </li>
-            <li>
-              <strong>The cloud lights up.</strong> Driven by those values, the LEDs reproduce the highlights and shadows
-              across the surface, so a simple frame of lights reads as one bumpy, volumetric cloud.
-            </li>
-          </ol>
-        </div>
-        <Figure
-          src={ledLightingDiagram}
-          alt="Diagram in six steps. 1: a smooth virtual mesh over the pyramid frame, dotted with light probes. 2: a probe averages incoming light over a hemisphere, ignoring directions blocked by the cloud surface. 3: many probes across the cloud; those on top get more light, those in crevices less. 4: each probe stores a lighting value, shown as a heat map from bright to dark. 5: each LED inside the pyramid takes the value of its nearest probe or an interpolation of nearby ones. 6: the result, a cloud glowing with realistic highlights and shadows."
-          caption="How the digital twin lights each LED, from virtual surface to physical lights."
-          widths={[600, 1024]}
-          sizes="(min-width: 72rem) 64rem, 100vw"
-        />
-      </div>
-
-      <div class="tour">
+<div class="tour">
         {
-          tour.map((t) => (
-            <div class:list={['tour-row reveal', { wide: t.wide }]}>
+          tour.map((t, i) => (
+            <>
+            <div class:list={['tour-row reveal', { wide: t.wide, flip: i % 2 === 1 }]}>
               <div class="tour-text">
                 <p class="make-num">{t.kicker}</p>
                 <h3>{t.title}</h3>
                 {t.body.map((p) => <p>{p}</p>)}
               </div>
-              <Figure src={t.img} alt={t.alt} caption={t.caption} widths={[800, 1400, 2000]} sizes="(min-width: 72rem) 44rem, 100vw" />
+              {t.video ? (
+                <figure class="tour-video">
+                  <video
+                    src={url(`/video/${t.video}.mp4`)}
+                    poster={url(`/video/${t.video}.jpg`)}
+                    controls
+                    playsinline
+                    preload="none"
+                    aria-label={t.alt}></video>
+                  <figcaption>{t.caption}</figcaption>
+                </figure>
+              ) : (
+                <Figure src={t.img} alt={t.alt} caption={t.caption} widths={[800, 1400, 2000]} sizes="(min-width: 72rem) 44rem, 100vw" />
+              )}
             </div>
+            {t.kicker === 'LED mapping' && (
+            <div class="twin reveal" id="led-lighting">
+              <div class="twin-text">
+                <p class="make-num">How each LED gets its colour</p>
+                <h3>Light probes on a virtual cloud</h3>
+                <ol class="twin-steps">
+                  <li>
+                    <strong>A virtual surface.</strong> In the digital twin, a smooth 3D mesh is placed over the pyramid frame
+                    to approximate the cloud’s shape. It is used only for the lighting calculations.
+                  </li>
+                  <li>
+                    <strong>Probes sample the sky.</strong> At each <em>light probe</em> on that surface, we average the light
+                    arriving over a hemisphere of directions from the sun, moon and sky. Directions blocked by the cloud’s own
+                    surface are left out.
+                  </li>
+                  <li>
+                    <strong>Many probes, many values.</strong> Probes are spread across the whole surface. Those on top, open to
+                    the sky, receive more light. Those in crevices receive less, shaded by the cloud itself.
+                  </li>
+                  <li>
+                    <strong>A value for every probe.</strong> Each probe stores a brightness and colour, giving a map of light
+                    over the whole cloud.
+                  </li>
+                  <li>
+                    <strong>Probes to LEDs.</strong> Each physical LED inside the cloud takes the value of its nearest probe, or
+                    a blend of nearby probes, which carries the calculated lighting onto the real lights.
+                  </li>
+                  <li>
+                    <strong>The cloud lights up.</strong> Driven by those values, the LEDs reproduce the highlights and shadows
+                    across the surface, so a simple frame of lights reads as one bumpy, volumetric cloud.
+                  </li>
+                </ol>
+              </div>
+              <Figure
+                src={ledLightingDiagram}
+                alt="Diagram in six steps. 1: a smooth virtual mesh over the pyramid frame, dotted with light probes. 2: a probe averages incoming light over a hemisphere, ignoring directions blocked by the cloud surface. 3: many probes across the cloud; those on top get more light, those in crevices less. 4: each probe stores a lighting value, shown as a heat map from bright to dark. 5: each LED inside the pyramid takes the value of its nearest probe or an interpolation of nearby ones. 6: the result, a cloud glowing with realistic highlights and shadows."
+                caption="How the digital twin lights each LED, from virtual surface to physical lights."
+                widths={[600, 1024]}
+                sizes="(min-width: 72rem) 64rem, 100vw"
+              />
+            </div>
+            )}
+            </>
           ))
         }
       </div>
@@ -863,7 +890,7 @@ const contents = [
     padding-block: clamp(2.5rem, 5vw, 4rem);
     border-top: 1px solid var(--line);
   }
-  .tour-row:nth-child(even) .tour-text {
+  .tour-row.flip .tour-text {
     order: 2;
   }
   .tour-row.wide {
@@ -882,6 +909,24 @@ const contents = [
   .tour-text p:not(.make-num) {
     color: var(--ink-soft);
   }
+  .tour-video {
+    margin: 0;
+  }
+  .tour-video video {
+    display: block;
+    width: 100%;
+    max-height: 36rem;
+    aspect-ratio: 1300 / 1290;
+    object-fit: contain;
+    background: #05060d;
+    border-radius: 0.8rem;
+    box-shadow: 0 20px 40px -20px rgb(27 34 84 / 0.45);
+  }
+  .tour-video figcaption {
+    margin-top: 0.75rem;
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
   .tour-row :global(img) {
     border-radius: 0.8rem;
     box-shadow: 0 20px 40px -20px rgb(27 34 84 / 0.45);
@@ -890,7 +935,7 @@ const contents = [
     .tour-row {
       grid-template-columns: 1fr;
     }
-    .tour-row:nth-child(even) .tour-text {
+    .tour-row.flip .tour-text {
       order: 0;
     }
   }

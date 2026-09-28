@@ -98,15 +98,17 @@ float shape(vec3 p) {
   return max(d, -(p.y + 0.34));
 }
 
-// Noise can push density up to 0.24 beyond the shape surface, and warp() moves it by up to ~0.19;
+// Noise can push density up to 0.24 beyond the shape surface, and warp() moves it by up to ~0.13;
 // the skip thresholds in main() (0.26 on the warped shape, 0.45 on the unwarped one) depend on this.
 float densityFrom(float s, float n) {
   return clamp((-s + (n - 0.52) * 0.5) * 11.0, 0.0, 1.0) * uDensity;
 }
 
 vec3 warp(vec3 p, vec3 w) {
-  vec3 q = p * 1.6 + w * 0.4;
-  return p + vec3(noise(q) - 0.5, (noise(q + 17.3) - 0.5) * 0.6, noise(q + 31.7) - 0.5) * 0.34;
+  // Keep the warp's wavelength well below the cloud's width, and its vertical part small,
+  // so drifting noise ruffles the edges instead of bending the whole body.
+  vec3 q = p * 2.8 + w * 0.4;
+  return p + vec3(noise(q) - 0.5, (noise(q + 17.3) - 0.5) * 0.3, noise(q + 31.7) - 0.5) * 0.24;
 }
 
 vec3 wind() {

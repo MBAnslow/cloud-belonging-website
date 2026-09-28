@@ -20,6 +20,10 @@ In May, green plastic garden mesh was our first attempt at a cloud body. It was 
 
 Strings of addressable LED pixels are zip-tied across each face in rows, every bulb pointing outwards. Each pixel can take its own colour, which is what makes gradients, travelling light and lightning possible. A pyramid places those pixels at different depths inside the cloud, so light can seem to move *through* it rather than across a flat panel.
 
+## Keeping the power cool
+
+The electronics had their own casualty. The first buck converter we bought overheated and broke, so we attached a small fan to the second one to keep it cool.
+
 ## Painting it white
 
 Green mesh under white fibre would tint every colour we tried to make. So the frame went out to the courtyard and was spray-painted white, dowels, mesh, joints and all.
