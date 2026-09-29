@@ -8,12 +8,12 @@ export const site = {
   team: [
     {
       name: 'Zéphir Lorne',
-      role: 'Research-creation, cognitive science & contemplative practice',
+      role: 'Research-creation, cognitive science and contemplative practice',
       bio: 'MSc Cognitive Science student at ENS-PSL. Works at the meeting point of art, science and mindfulness, and on the Réespiration research project (EnsadLab × AP-HP Pitié-Salpêtrière).',
     },
     {
       name: 'Michael Anslow',
-      role: 'Research, creative technology, light & systems',
+      role: 'Research, creative technology, light and systems',
       bio: 'Researcher at Sony CSL Paris, co-creator of Funiki, a system for composing dynamic light and sound atmospheres.',
     },
   ],

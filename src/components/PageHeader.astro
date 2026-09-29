@@ -1,5 +1,5 @@
 ---
-import { Image } from 'astro:assets';
+import CloudFrame from './CloudFrame.astro';
 import type { ImageMetadata } from 'astro';
 
 interface Props {
@@ -23,7 +23,7 @@ const { eyebrow, title, lede, image, imageAlt = '' } = Astro.props;
     </div>
     {
       image && (
-        <Image
+        <CloudFrame
           src={image}
           alt={imageAlt}
           widths={[500, 800, 1100]}
@@ -59,12 +59,9 @@ const { eyebrow, title, lede, image, imageAlt = '' } = Astro.props;
   .lede {
     max-width: 30rem;
   }
-  .photo {
-    width: 100%;
+  .photo :global(img.main) {
     aspect-ratio: 4 / 3;
     object-fit: cover;
-    border-radius: var(--radius);
-    background: var(--paper-deep);
   }
   @media (max-width: 860px) {
     .has-image .inner {

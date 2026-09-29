@@ -2,7 +2,6 @@
 import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
-import PageContents, { type ContentsItem } from '../components/PageContents.astro';
 import BreathChart from '../components/BreathChart.astro';
 import VideoClip from '../components/VideoClip.astro';
 import Figure from '../components/Figure.astro';
@@ -22,7 +21,6 @@ import swSimulator from '../assets/software/simulator.png';
 import swMapping from '../assets/software/mapping.png';
 import swSkyTimeline from '../assets/software/simulator-sky-timeline.png';
 import swLightning from '../assets/software/simulator-lightning.png';
-import swDrones from '../assets/software/drones.png';
 import swSamples from '../assets/software/samples.png';
 import swPads from '../assets/software/pads.png';
 import teaFront from '../assets/alpha/tea-front.jpg';
@@ -136,9 +134,9 @@ const tour = [
   {
     kicker: 'Sound · drones',
     title: 'A score written across the day',
-    img: swDrones,
-    alt: 'The drones page: a piano roll spanning 24 hours with a few long blue notes, and controls for oscillator waveform, an ADSR envelope, tremolo and distortion.',
-    caption: 'Drones on a 24-hour piano roll, with oscillator, envelope and tremolo.',
+    video: 'drone-interface',
+    alt: 'Screen recording of the drones page: a playhead moves across a 24-hour piano roll of long blue notes, above per-note controls for layer mix, a pink tremolo curve, a blue filter curve, and octave layers with tremolo and drift.',
+    caption: 'The drones page, with audio. Long notes on a 24-hour piano roll, shaped by tremolo, filter and drift.',
     body: [
       'The soundscape is composed on the same 24-hour clock as the light. A drone synth and a warm pad synth each have a piano roll that spans the whole day, so a note might hold for hours of sky time, from dusk into night.',
       'Drones are built from slow, layered sine tones, with a tiny drift that dissolves beating between close intervals into a soft chorus.',
@@ -190,17 +188,17 @@ const lying = [
 ];
 
 const dusk: GalleryItem[] = [
-  { video: 'alpha/lightning', portrait: true, caption: 'Lightning flickering through the fibre.' },
   { video: 'alpha/lightning-short', caption: 'A strike, seen from the floor.' },
-  { video: 'alpha/tea-lightning', caption: 'Tea under a storm.' },
+  { video: 'alpha/evening-1', caption: 'Dusk falls and the lightning begins.' },
 ];
 const twilight: GalleryItem[] = [
-  { video: 'alpha/evening-1', caption: 'The light intensifies and the colours bloom.' },
+  { video: 'alpha/lightning', portrait: true, caption: 'Lightning and magical sprites flickering through the fibre.' },
   { video: 'alpha/evening-2', caption: 'Violet, magenta and blue through the whole cloud.' },
 ];
 const breath: GalleryItem[] = [
   { video: 'alpha/breath', portrait: true, caption: 'A breath rising into the cloud.' },
   { video: 'alpha/breath-through', caption: 'Waves of breath travelling through it.' },
+  { video: 'alpha/tea-lightning', caption: 'Tea under a storm.' },
 ];
 
 const moments: GalleryItem[] = [
@@ -257,23 +255,7 @@ const learned = [
     text: 'Hundreds of LEDs wrapped in fibre need their temperature checked, not assumed. The buck converter ran hot until we gave it a fan, and later a better converter and controller.',
   },
 ];
-const glow = 'stroke="url(#toc-glow)"';
-const icons = {
-  alpha: `<path d="M6 34h36"/><path ${glow} d="M14 34a10 10 0 0 1 20 0"/><path d="M25 8l-5 10h6l-4 9"/>`,
-  moments: `<circle cx="17" cy="16" r="5"/><circle cx="31" cy="16" r="5"/><path d="M8 38c1-7 5-11 9-11s8 4 9 11"/><path ${glow} d="M22 38c1-7 5-11 9-11s8 4 9 11"/>`,
-  ready: `<path d="M13 30h22a6 6 0 0 0 .5-12A9 9 0 0 0 18 16a7 7 0 0 0-5 14Z"/><path ${glow} d="M24 30v10M20 36l4 4 4-4"/>`,
-  concept: `<path d="M13 34h22a7 7 0 0 0 .5-14A10 10 0 0 0 17 18a8 8 0 0 0-4 16Z"/><path ${glow} d="M17 27c5-4 10 3 15-1"/><path ${glow} fill="#f6b89c" stroke="none" d="M31 9l1.2 3.3L35.5 13.5l-3.3 1.2L31 18l-1.2-3.3-3.3-1.2 3.3-1.2Z"/>`,
-  fabrication: `<path d="M24 8 40 16 24 24 8 16Z"/><path ${glow} d="M8 23l16 8 16-8"/><path d="M8 30l16 8 16-8"/>`,
-  making: `<path d="M6 30c4 0 4-10 8-10s4 14 8 14 4-18 8-18 4 12 8 12 3-4 4-4"/><circle cx="22" cy="34" r="2.2" fill="#c3b6f0" stroke="none"/><circle cx="30" cy="16" r="2.2" fill="#f6b89c" stroke="none"/><path ${glow} d="M6 40h36"/>`,
-};
 
-const contents: ContentsItem[] = [
-  { id: 'alpha', label: 'The alpha', desc: 'The evening of 29–30 July 2026, on film', icon: icons.alpha },
-  { id: 'moments', label: 'Moments', desc: 'The people beneath it, and the screens', icon: icons.moments },
-  { id: 'fabrication', label: 'Fabrication', desc: 'The final cloud, layer by layer', icon: icons.fabrication },
-  { id: 'getting-ready', label: 'Getting ready', desc: 'Stuffing, hanging, electronics, ten days of building', icon: icons.ready },
-  { id: 'making', label: 'Technical details', desc: 'Materials, light, breath, sound, frame, software', icon: icons.making },
-];
 ---
 
 <Base theme="night" title="Installation" description="Cloudfulness, a breathing cloud installation about belonging to nature: the alpha on film, the people beneath it, fabrication and technical details.">
@@ -292,13 +274,21 @@ const contents: ContentsItem[] = [
     </p>
   </PageHeader>
 
-  <PageContents items={contents} />
 
   <section class="section dark evening" id="alpha">
+    <div class="phase-divider" id="alpha-start" aria-label="The alpha">
+      <div class="wrap phase-divider-inner">
+        <span class="pd-line" aria-hidden="true"></span>
+        <span class="pd-glyph" aria-hidden="true">α</span>
+        <span class="pd-text"><strong>The alpha</strong><span>July 2026</span></span>
+        <span class="pd-line" aria-hidden="true"></span>
+      </div>
+    </div>
+
     <div class="wrap">
       <div class="grid-2 head">
         <div class="reveal">
-          <p class="eyebrow">The evening</p>
+          <p class="eyebrow"><span class="phase-mark">α</span> The evening</p>
           <h2>From dusk to breath</h2>
         </div>
         <div class="reveal">
@@ -311,16 +301,16 @@ const contents: ContentsItem[] = [
         </div>
       </div>
 
-      <MediaGallery items={dusk} numeral="I" title="Dusk and lightning" description="The sun sets on the room and the first strikes flicker through the cloud." class="reveal" />
-      <MediaGallery items={twilight} numeral="II" title="Magical twilight" description="The light intensifies into violet, magenta and blue." columns={2} class="reveal" />
-      <MediaGallery items={breath} numeral="III" title="Breath" description="The cloud slows down and starts breathing with the people beneath it." columns={2} class="reveal" />
+      <MediaGallery items={dusk} audio="dusk-audio.mp3" numeral="I" title="Dusk and lightning" description="The sun sets on the room and the first strikes flicker through the cloud." class="reveal" />
+      <MediaGallery items={twilight} audio="magical-twilight.mp3" numeral="II" title="Magical twilight" description="The light intensifies into violet, magenta and blue." columns={2} class="reveal" />
+      <MediaGallery items={breath} audio="breath-effect.mp3" numeral="III" title="Breath" description="The cloud slows down and starts breathing with the people beneath it." columns={2} class="reveal" />
     </div>
   </section>
 
   <section class="section moments" id="moments">
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="eyebrow">Moments</p>
+        <p class="eyebrow"><span class="phase-mark">α</span> Moments</p>
         <h2>The people beneath it</h2>
         <p class="lede measure">
           Shoes off, lying on the floor, a glass of tea. Everyone who came had the same seat under the same sky.
@@ -334,7 +324,7 @@ const contents: ContentsItem[] = [
     <div class="wrap">
       <div class="grid-2 head">
         <div class="reveal">
-          <p class="eyebrow">Behind the screens</p>
+          <p class="eyebrow"><span class="phase-mark">α</span> Behind the screens</p>
           <h2>Two laptops and a pair of belts</h2>
         </div>
         <div class="reveal">
@@ -351,61 +341,10 @@ const contents: ContentsItem[] = [
   </section>
 
 
-  <section class="section fabrication" id="fabrication">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">Fabrication</p>
-        <h2>The final cloud, layer by layer</h2>
-        <p class="lede measure">
-          After months of trying mesh, tulle and fibre, this is how the finished cloud is made: a glowing core of light,
-          wrapped in four soft layers that turn hundreds of points of light into one diffuse glow.
-        </p>
-      </div>
-
-      <Figure
-        src={cloudMaterials}
-        alt="Diagram of the cloud's layers. Left: the outer layers, from outside to inside, are cotton, polyester fleece wadding, white hexagonal mesh and nylon diffuser fabric. Right: the inner layer, with addressable LEDs set in card directionality cylinders on an inner mesh frame, a rolled-mesh support strut, and a black fabric layer underneath."
-        caption="The materials and layers of the final cloud."
-        widths={[600, 1024]}
-        sizes="(min-width: 72rem) 64rem, 100vw"
-        class="reveal fab-diagram"
-      />
-
-      <div class="fab-layers">
-        <div class="reveal">
-          <h3>Outer layers <span>outside → inside</span></h3>
-          <ol class="layer-list">
-            {
-              outerLayers.map((l) => (
-                <li>
-                  <strong>{l.name}</strong>
-                  <p>{l.text}</p>
-                </li>
-              ))
-            }
-          </ol>
-        </div>
-        <div class="reveal">
-          <h3>Inner layer <span>the core of light</span></h3>
-          <ul class="layer-list">
-            {
-              innerLayers.map((l) => (
-                <li>
-                  <strong>{l.name}</strong>
-                  <p>{l.text}</p>
-                </li>
-              ))
-            }
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="section getting-ready" id="getting-ready">
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="eyebrow">Getting ready</p>
+        <p class="eyebrow"><span class="phase-mark">α</span> Getting ready</p>
         <h2>Ten days, and the last few hours</h2>
         <p class="lede measure">
           The alpha was built in ten days in a workshop. The last of it happened lying on the floor, pushing fibre up
@@ -453,15 +392,15 @@ const contents: ContentsItem[] = [
   <section class="section making" id="making">
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="eyebrow">Technical details</p>
+        <p class="eyebrow"><span class="phase-mark">α</span> Technical details</p>
         <h2>Everything behind the cloud</h2>
         <p class="lede measure">
-          The hardware and software that make it work, and how we got there. Open any part to see more.
+          The hardware and software that made the alpha work. Open any part to see more.
         </p>
       </div>
 
       <h3 class="tech-group reveal">Hardware</h3>
-      <details class="tech">
+      <details class="tech" open>
         <summary>
           <span class="tech-num">01</span>
           <span class="tech-kicker">Structure</span>
@@ -472,7 +411,7 @@ const contents: ContentsItem[] = [
         <div class="make-text reveal">
           <p>
             The cloud hangs from a low pyramid of wooden dowels held together by 3D-printed joints. The frame is wrapped
-            in plastic mesh, carries the LEDs, and is sprayed white so it doesn’t tint the light. Everything soft hangs
+            in plastic mesh, carries the LEDs, and is sprayed white so it doesn’t tint the light. The fibre shell hangs
             around it.
           </p>
           <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>Building the pyramid →</a></p>
@@ -488,21 +427,20 @@ const contents: ContentsItem[] = [
         <summary>
           <span class="tech-num">02</span>
           <span class="tech-kicker">Light</span>
-          <span class="tech-title">LEDs aimed from inside</span>
+          <span class="tech-title">LED pixels across the pyramid</span>
           <span class="tech-chev" aria-hidden="true"></span>
         </summary>
       <article class="make">
         <div class="make-text reveal">
           <p>
-            Rows of addressable LED pixels are tied across the pyramid. Each one sits in a small card tube that points
-            its light outwards, and rolled-mesh struts hold the layers away from the lights so they glow evenly instead
-            of showing as spots. Every LED has a position in the digital twin, which is how the software knows what
-            colour to give it.
+            Rows of addressable LED pixels are tied across the pyramid, driven by an ESP32 controller. Each pixel can
+            take its own colour and brightness, and each has a position in the digital twin, which is how the software
+            knows what colour to give it.
           </p>
-          <p><a href={url("/process/2026-09-02-inside-the-pyramid/")}>Aiming the light →</a></p>
+          <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>A pyramid of light →</a></p>
         </div>
         <div class="make-media two">
-          <Figure src={insideStruts} alt="Inside the pyramid: LEDs in card tubes on a square mesh, with rolled-mesh struts between them, lit blue." caption="Card tubes and struts." ratio="4 / 5" class="reveal" />
+          <Figure src={buildLedCloud} alt="LED pixels glowing inside the frame before the fibre went on." caption="The pixels, before the fibre." ratio="4 / 5" class="reveal" />
           <VideoClip name="cloud-led" orientation="portrait" caption="The LEDs inside the cloud." class="reveal" />
         </div>
       </article>
@@ -511,26 +449,22 @@ const contents: ContentsItem[] = [
       <details class="tech">
         <summary>
           <span class="tech-num">03</span>
-          <span class="tech-kicker">Layers</span>
-          <span class="tech-title">Four soft layers</span>
+          <span class="tech-kicker">Body</span>
+          <span class="tech-title">Fibre on a mesh shell</span>
           <span class="tech-chev" aria-hidden="true"></span>
         </summary>
       <article class="make">
         <div class="make-text reveal">
           <p>
-            Around the core are four layers, from the inside out: a nylon diffuser, thick polyester wadding, a white
-            hexagonal mesh, and pulled cotton for the cumulus surface. Each softens the light a little more, so hundreds
-            of points become one glow.
+            The body is loose polyester fibre, the kind used to stuff cushions, layered over a white hexagonal mesh and
+            pinned in place with bamboo skewers. It hides the individual lights and turns them into a soft glow with
+            darker folds.
           </p>
-          <p>
-            <a href="#fabrication">The layers in detail ↑</a>
-            <br />
-            <a href={url("/process/2026-08-26-layers/")}>Building the layers →</a>
-          </p>
+          <p><a href={url("/process/2026-07-30-the-alpha-cloud/")}>The alpha cloud →</a></p>
         </div>
         <div class="make-media two">
-          <Figure src={layersShowing} alt="The cloud glowing pink, with its layers of wadding and mesh visible at the edge." caption="The layers at the edge." ratio="4 / 5" class="reveal" />
-          <Figure src={thickWadding} alt="Thick white wadding glowing over the lights." caption="Wadding gives it a body." ratio="4 / 5" class="reveal" />
+          <Figure src={buildSkewersMesh} alt="Fibre pinned into the hexagonal mesh with bamboo skewers." caption="Fibre pinned to the mesh." ratio="4 / 5" class="reveal" />
+          <Figure src={buildStuffing} alt="Stuffing fibre into the cloud from below." caption="Stuffing it from below." ratio="4 / 5" class="reveal" />
         </div>
       </article>
       </details>
@@ -546,14 +480,14 @@ const contents: ContentsItem[] = [
         <div class="make-text reveal">
           <p>
             The cloud runs from a battery, so there are no mains cables near people lying on the floor. A buck converter
-            steps the voltage down for the LEDs, and an ESP32-based controller receives colours from the software over
-            the network. The first converter ran hot in the alpha, so it was replaced with a larger one.
+            steps the voltage down for the LEDs. Under the full load of the cloud it ran hot, so we measured it with a
+            thermal camera and added a small fan.
           </p>
           <p><a href="#getting-ready">The electronics in the alpha ↑</a></p>
         </div>
         <div class="make-media two">
-          <Figure src={betterBuck} alt="A larger buck converter wired to a new LED controller." caption="The new converter and controller." ratio="4 / 5" class="reveal" />
-          <Figure src={elecController} alt="The LED controller board." caption="The controller." ratio="4 / 5" class="reveal" />
+          <Figure src={elecOverheating} alt="A thermal camera reading of the buck converter running hot." caption="Running hot." ratio="4 / 5" class="reveal" />
+          <Figure src={elecFanFix} alt="The buck converter with a small fan fitted." caption="A small fan fixed it." ratio="4 / 5" class="reveal" />
         </div>
       </article>
       </details>
@@ -583,9 +517,6 @@ const contents: ContentsItem[] = [
       </div>
       </details>
 
-      <p class="tech-more reveal">
-        Mesh, tulle, projectors, LED matrices: the experiments that led here are in the <a href={url("/process/")}>process journal →</a>
-      </p>
 
       <h3 class="tech-group reveal">Software</h3>
       <details class="tech" id="software">
@@ -714,14 +645,95 @@ const contents: ContentsItem[] = [
     </div>
   </section>
 
+  <section class="section fabrication" id="beta">
+    <div class="phase-divider" id="beta-start" aria-label="The beta">
+      <div class="wrap phase-divider-inner">
+        <span class="pd-line" aria-hidden="true"></span>
+        <span class="pd-glyph" aria-hidden="true">β</span>
+        <span class="pd-text"><strong>The beta</strong><span>August – September 2026</span></span>
+        <span class="pd-line" aria-hidden="true"></span>
+      </div>
+    </div>
+
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow"><span class="phase-mark">β</span> Updates in beta</p>
+        <h2>Rebuilding the cloud</h2>
+        <p class="lede measure">
+          After the alpha, we took the cloud apart and rebuilt it. The single skin of fibre became four soft layers, each
+          LED was aimed outwards, the electronics stopped running hot, and the software learned new kinds of light.
+        </p>
+      </div>
+
+      <Figure
+        src={cloudMaterials}
+        alt="Diagram of the cloud's layers. Left: the outer layers, from outside to inside, are cotton, polyester fleece wadding, white hexagonal mesh and nylon diffuser fabric. Right: the inner layer, with addressable LEDs set in card directionality cylinders on an inner mesh frame, a rolled-mesh support strut, and a black fabric layer underneath."
+        caption="The materials and layers of the beta cloud."
+        widths={[600, 1024]}
+        sizes="(min-width: 72rem) 64rem, 100vw"
+        class="reveal fab-diagram"
+      />
+
+      <div class="fab-layers">
+        <div class="reveal">
+          <h3>Outer layers <span>outside → inside</span></h3>
+          <ol class="layer-list">
+            {
+              outerLayers.map((l) => (
+                <li>
+                  <strong>{l.name}</strong>
+                  <p>{l.text}</p>
+                </li>
+              ))
+            }
+          </ol>
+        </div>
+        <div class="reveal">
+          <h3>Inner layer <span>the core of light</span></h3>
+          <ul class="layer-list">
+            {
+              innerLayers.map((l) => (
+                <li>
+                  <strong>{l.name}</strong>
+                  <p>{l.text}</p>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </div>
+
+      <div class="beta-updates">
+        <article class="reveal">
+          <Figure src={insideStruts} alt="Inside the pyramid: LEDs in card tubes on a square mesh, with rolled-mesh struts between them, lit blue." ratio="4 / 3" />
+          <h3>Aimed light</h3>
+          <p>A card tube around each LED points it outwards, and rolled-mesh struts hold the layers away from the lights.</p>
+          <a href={url("/process/2026-09-02-inside-the-pyramid/")}>Aiming the light →</a>
+        </article>
+        <article class="reveal">
+          <Figure src={betterBuck} alt="A larger buck converter wired to a new LED controller." ratio="4 / 3" />
+          <h3>Cooler electronics</h3>
+          <p>A larger buck converter and a new controller, so the cloud no longer needs a fan to stay cool.</p>
+          <a href={url("/process/2026-09-02-inside-the-pyramid/")}>New electronics →</a>
+        </article>
+        <article class="reveal">
+          <Figure src={layersShowing} alt="The rebuilt cloud glowing pink, with its layers visible at the edge." ratio="4 / 3" />
+          <h3>New light in the software</h3>
+          <p>Bump mapping for depth, highlights where the sun catches the top, and sprites that arrive with their own sound.</p>
+          <a href={url("/process/2026-09-16-better-sprites/")}>Sprites with sound →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
   <section class="section dark after">
     <div class="wrap grid-2">
       <div class="reveal">
         <p class="eyebrow">What the alpha taught us</p>
         <h2>Packed away, for now</h2>
         <p class="lede">
-          The alpha is the latest Cloudfulness there is. It showed us what worked and what to change, and it is packed
-          up waiting for the next room.
+          The alpha showed us what worked and what to change, and the beta grew out of it. The cloud is packed up now,
+          waiting for the next room.
         </p>
         <ul class="learned">
           {
@@ -756,6 +768,78 @@ const contents: ContentsItem[] = [
 </script>
 
 <style>
+  .beta-updates {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(1.25rem, 3vw, 2rem);
+    margin-top: clamp(2.5rem, 5vw, 4rem);
+  }
+  .beta-updates h3 {
+    margin: 1rem 0 0.4rem;
+    font-size: 1.2rem;
+  }
+  .beta-updates p {
+    margin: 0 0 0.6rem;
+    font-size: 0.92rem;
+    opacity: 0.8;
+  }
+  .beta-updates a {
+    font-size: 0.88rem;
+  }
+  @media (max-width: 860px) {
+    .beta-updates {
+      grid-template-columns: 1fr;
+    }
+  }
+  .phase-divider {
+    margin: calc(clamp(1rem, 3vw, 2rem) * -1) 0 clamp(2.5rem, 5vw, 4rem);
+  }
+  .phase-divider-inner {
+    display: flex;
+    align-items: center;
+    gap: clamp(1rem, 3vw, 2rem);
+  }
+  .pd-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgb(200 190 255 / 0.45));
+  }
+  .pd-line:last-child {
+    background: linear-gradient(90deg, rgb(200 190 255 / 0.45), transparent);
+  }
+  .pd-glyph {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: clamp(3rem, 7vw, 4.75rem);
+    line-height: 1;
+    color: #f2eeff;
+    text-shadow: 0 0 28px rgb(170 150 255 / 0.45);
+  }
+  .pd-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgb(230 226 255 / 0.6);
+  }
+  .pd-text strong {
+    font-weight: 500;
+    color: rgb(240 236 255 / 0.9);
+  }
+  .phase-mark {
+    display: inline-block;
+    margin-right: 0.35em;
+    font-family: var(--font-display);
+    font-size: 2.6em;
+    font-style: italic;
+    letter-spacing: 0;
+    text-transform: none;
+    line-height: 0;
+    vertical-align: -0.1em;
+    opacity: 0.85;
+  }
   .status {
     display: inline-flex;
     align-items: baseline;
@@ -1019,7 +1103,6 @@ const contents: ContentsItem[] = [
   .screens p {
     color: var(--ink-soft);
   }
-
 
   .screens {
     background: linear-gradient(180deg, var(--paper), var(--paper-deep));

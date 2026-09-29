@@ -66,7 +66,7 @@ const method = [
   {
     step: 'Make',
     text: 'We turned those ideas into materials, light, sensors and a score, building and testing the cloud piece by piece in the studio.',
-    link: { href: '/installation/#fabrication', label: 'How the cloud is made' },
+    link: { href: '/installation/#beta', label: 'How the cloud is made' },
   },
   {
     step: 'Listen',
@@ -108,6 +108,10 @@ const tried = [
         <a class="button" href={url("/concept/")}>Why belonging</a>
       </div>
     </div>
+    <button type="button" class="theme-toggle" aria-pressed="false" data-src={url('/audio/cloud-main-theme.mp3')} data-theme-toggle>
+      <span class="theme-icon" aria-hidden="true"></span>
+      <span class="theme-label">Sound off</span>
+    </button>
     <a class="scroll-hint" href="#invitation" aria-label="Scroll to introduction">
       <span></span>
     </a>
@@ -164,7 +168,7 @@ const tried = [
           ))
         }
       </div>
-      <a class="button" href={url("/installation/#fabrication")}>See how it is made</a>
+      <a class="button" href={url("/installation/#beta")}>See how it is made</a>
     </div>
   </section>
 
@@ -250,7 +254,81 @@ const tried = [
   </section>
 </Base>
 
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  if (btn) {
+    const audio = new Audio(btn.dataset.src);
+    audio.loop = true;
+    audio.preload = 'none';
+    const target = 0.25;
+    let fade = 0;
+    const setVolume = (to: number, done?: () => void) => {
+      cancelAnimationFrame(fade);
+      const from = audio.volume;
+      const start = performance.now();
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / 1200);
+        audio.volume = from + (to - from) * t;
+        if (t < 1) fade = requestAnimationFrame(step);
+        else done?.();
+      };
+      fade = requestAnimationFrame(step);
+    };
+    btn.addEventListener('click', () => {
+      const on = btn.getAttribute('aria-pressed') !== 'true';
+      btn.setAttribute('aria-pressed', String(on));
+      btn.querySelector('.theme-label')!.textContent = on ? 'Sound on' : 'Sound off';
+      if (on) {
+        audio.volume = 0;
+        audio.play().catch(() => {});
+        setVolume(target);
+      } else {
+        setVolume(0, () => audio.pause());
+      }
+    });
+  }
+</script>
+
 <style>
+  .theme-toggle {
+    position: absolute;
+    right: clamp(1rem, 3vw, 2rem);
+    bottom: clamp(1.25rem, 3vw, 2rem);
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.4rem 0.85rem 0.4rem 0.65rem;
+    border: 1px solid rgb(255 255 255 / 0.22);
+    border-radius: 999px;
+    background: rgb(10 12 31 / 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--hero-fg, #fff);
+    font: inherit;
+    font-size: 0.72rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .theme-toggle:hover {
+    background: rgb(255 255 255 / 0.14);
+  }
+  .theme-toggle[aria-pressed='true'] {
+    border-color: rgb(210 200 255 / 0.6);
+  }
+  .theme-icon {
+    width: 1rem;
+    height: 1rem;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 5 6 9H2v6h4l5 4z'/%3E%3Cpath d='m22 9-6 6M16 9l6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 5 6 9H2v6h4l5 4z'/%3E%3Cpath d='m22 9-6 6M16 9l6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+  }
+  .theme-toggle[aria-pressed='true'] .theme-icon {
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 5 6 9H2v6h4l5 4z'/%3E%3Cpath d='M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 5 6 9H2v6h4l5 4z'/%3E%3Cpath d='M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14'/%3E%3C/svg%3E");
+  }
   .hero {
     --hero-fg: #fbfaff;
     --hero-fg-soft: rgb(251 250 255 / 0.82);
