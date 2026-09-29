@@ -13,6 +13,12 @@ const journal = defineCollection({
       cover: image().optional(),
       coverAlt: z.string().optional(),
       video: z.string().optional(),
+      gallery: z
+        .array(z.object({ src: image(), alt: z.string(), caption: z.string().optional() }))
+        .default([]),
+      clips: z
+        .array(z.object({ name: z.string(), caption: z.string().optional(), portrait: z.boolean().default(false), sound: z.boolean().default(false) }))
+        .default([]),
       tags: z.array(z.string()).default([]),
       draft: z.boolean().default(false),
     }),

@@ -5,6 +5,28 @@ stage: Sharing
 summary: 'First public sharing of the work in progress, at an art–science day on atmosphere at the Académie du Climat in Paris.'
 cover: ../../assets/photos/talk-slide.jpg
 coverAlt: 'Zéphir presenting in a wood-panelled room at the Académie du Climat, beside a slide mapping belonging to design choices.'
+clips:
+  - name: journal/shot-between-people-mockup
+    caption: 'The simulated installation.'
+gallery:
+  - src: ../../assets/journal/2026-07-02-quand-le-ciel-recule/poster-on-door.jpg
+    alt: 'The poster on the door.'
+    caption: 'The poster on the door.'
+  - src: ../../assets/journal/2026-07-02-quand-le-ciel-recule/room-of-presentation.jpg
+    alt: 'The room before the talk.'
+    caption: 'The room before the talk.'
+  - src: ../../assets/journal/2026-07-02-quand-le-ciel-recule/zephir-presents-framed-by-2-people.jpg
+    alt: 'Zéphir presenting.'
+    caption: 'Zéphir presenting.'
+  - src: ../../assets/journal/2026-07-02-quand-le-ciel-recule/zephir-shows-mockup-installation-simulation.jpg
+    alt: 'Showing the mock-up.'
+    caption: 'Showing the mock-up.'
+  - src: ../../assets/journal/2026-07-02-quand-le-ciel-recule/touch-designer-processing.jpg
+    alt: 'Breath processing in TouchDesigner.'
+    caption: 'Breath processing in TouchDesigner.'
+  - src: ../../assets/journal/2026-07-02-quand-le-ciel-recule/stack-of-books.jpg
+    alt: 'Reading for the talk.'
+    caption: 'Reading for the talk.'
 tags: [talk, Réespiration, research-creation]
 ---
 

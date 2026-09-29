@@ -2,6 +2,10 @@
 import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
+import PageContents, { type ContentsItem } from '../components/PageContents.astro';
+import Figure from '../components/Figure.astro';
+import ScoreGrid from '../components/ScoreGrid.astro';
+import alphaWarm from '../assets/photos/alpha-warm.jpg';
 import alphaTeam from '../assets/photos/alpha-team.jpg';
 
 const facets = [
@@ -49,6 +53,119 @@ const practices = [
   },
 ];
 
+const belongingMap = [
+  {
+    quality: 'Belonging is embodied and anchored',
+    choice: 'A multisensory space.',
+    how: ' You take off your shoes and lie down beneath the cloud, among soft fabric, warm light and a glass of tea.',
+  },
+  {
+    quality: 'Belonging is a journey',
+    choice: 'An evolving score.',
+    how: ' Dusk, a magical twilight, then breath synchrony: the experience moves, and you move with it.',
+  },
+  {
+    quality: 'Belonging is dynamic',
+    choice: 'Biofeedback.',
+    how: ' A sensor follows your breathing, and the cloud’s light rises and settles with it. You breathe with the cloud rather than control it.',
+  },
+  {
+    quality: 'Belonging depends on the quality of connections',
+    choice: 'A shared experience.',
+    how: ' One sky over everyone in the room, with nobody in a better seat.',
+  },
+];
+
+const whyCloud = [
+  { title: 'It is above everyone', text: 'Nobody has a better seat. A cloud offers a shared perspective without a stage.' },
+  { title: 'It gives light a body', text: 'A cloud is a volume for light to live in — glowing, flashing, catching the sun.' },
+  { title: 'It is always changing', text: 'Clouds are impermanence made visible. They form, drift, rain and form again.' },
+  { title: 'It is water, and so are we', text: 'The water cycle is continuity and unity: the same water in vapour, rain, river, tea, and us.' },
+  { title: 'It follows you home', text: 'Everyone sees clouds. We hope the next one you see brings a little of this back.' },
+  { title: 'It is forgiving', text: 'Dim, diffuse light feels primal and hides the imperfections of whatever room we are in.' },
+];
+
+const decisions = [
+  {
+    choice: 'Breath as the interface',
+    why: 'Breath is both voluntary and involuntary, and everyone has it. Breathing in rhythm with something is one of the simplest forms of co-regulation. It also builds on what Zéphir learned from Réespiration.',
+  },
+  {
+    choice: 'Breathing with the cloud, not controlling it',
+    why: 'We want people to feel that they belong with the cloud, not that they are in charge of it. Its light follows the rise and fall of your respiration, like a companion keeping time with you, rather than obeying commands.',
+  },
+  {
+    choice: 'Lightning at dusk',
+    why: 'People arrive carrying their day. As the sun sets, the first lightning pulls attention into the room and towards weather: nature as vast, a little wild, and very present.',
+  },
+  {
+    choice: 'A magical twilight before the breath',
+    why: 'The twilight turns the experience into a story. As its light intensifies and colours flare up through the whole cloud at once, the cloud gains a presence and a character. By the time it begins to breathe with you, a bond is already there.',
+  },
+  {
+    choice: 'Lying down, shoes off',
+    why: 'Posture changes the role you play. Lying on the floor under a sky turns a visitor into an inhabitant, and the small ritual of preparation already begins the shared experience.',
+  },
+  {
+    choice: 'No instructions about feelings',
+    why: 'Being told to feel connected is the fastest way not to be. The space offers conditions and a little mystery, and leaves the story to the people in it.',
+  },
+];
+
+const openQuestions = [
+  'How do we invite someone to breathe with the cloud without instructing them?',
+  'How much of the twilight’s story should be told, and how much left to the imagination?',
+  'How does the bond with the cloud carry on after you leave?',
+  'Where could it live next: a gallery, a public space, a train carriage, a boat?',
+  'What would a space for belonging to each other, or to ourselves, look like?',
+];
+
+const glow = 'stroke="url(#toc-glow)"';
+const contents: ContentsItem[] = [
+  {
+    id: 'what',
+    label: 'What belonging is',
+    desc: 'A need, a process, embodied and placed',
+    icon: `<circle cx="24" cy="24" r="14"/><path ${glow} d="M17 25c3 4 11 4 14 0"/><circle cx="19" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="29" cy="20" r="1.4" fill="currentColor" stroke="none"/>`,
+  },
+  {
+    id: 'interbeing',
+    label: 'Beyond people',
+    desc: 'Interbeing, and a cloud in your tea',
+    icon: `<path d="M13 22h22a6 6 0 0 0 .5-12A9 9 0 0 0 18 8a7 7 0 0 0-5 14Z"/><path ${glow} d="M18 27v4M24 27v6M30 27v4"/><path d="M14 36h20l-2 6H16Z"/>`,
+  },
+  {
+    id: 'why-art',
+    label: 'Why art',
+    desc: 'Belonging can’t be streamed',
+    icon: `<path d="M24 8 40 38H8Z"/><path ${glow} d="M16 30h16"/>`,
+  },
+  {
+    id: 'into-a-room',
+    label: 'Into a room',
+    desc: 'How the ideas became a cloud',
+    icon: `<path d="M8 40V18L24 8l16 10v22"/><path ${glow} d="M16 26h16a4 4 0 0 0 0-8 6 6 0 0 0-11-1 5 5 0 0 0-5 9Z"/>`,
+  },
+  {
+    id: 'score',
+    label: 'The score',
+    desc: 'Dusk, magical twilight, breath',
+    icon: `<path d="M6 34h36"/><path ${glow} d="M14 34a10 10 0 0 1 20 0"/><path d="M30 12a7 7 0 1 0 6 10 6 6 0 0 1-6-10Z"/>`,
+  },
+  {
+    id: 'decisions',
+    label: 'Design decisions',
+    desc: 'Why it is the way it is',
+    icon: `<path d="M24 6v36"/><path ${glow} d="M24 14h12l4 4-4 4H24"/><path d="M24 26H12l-4 4 4 4h12"/>`,
+  },
+  {
+    id: 'questions',
+    label: 'Open questions',
+    desc: 'An invitation to take them further',
+    icon: `<path d="M18 18a6 6 0 1 1 9 5c-2 1-3 2-3 5"/><circle ${glow} cx="24" cy="36" r="1.8"/><circle cx="24" cy="24" r="18"/>`,
+  },
+];
+
 const questions = [
   'How do you feel that you belong without feeling that you are being controlled?',
   'What is the difference between having control and playing a role?',
@@ -60,16 +177,18 @@ const questions = [
 ];
 ---
 
-<Base title="Belonging" description="Belonging as a need, a process and an embodied experience — and why we think art and research-creation are good places to explore it.">
+<Base title="Concept" description="The concept behind Cloudfulness: belonging as a need, a process and an embodied experience, why art and research-creation, and how the ideas became a cloud.">
   <PageHeader
-    eyebrow="The theme"
+    eyebrow="Concept"
     image={alphaTeam}
     imageAlt="Two of the team grinning beside the cloud, lit pink."
-    title="Belonging"
+    title="Belonging, and why a cloud"
     lede="We started by asking whether art and technology could help people find a moment of peace. We kept arriving at the same answer: peace is rarely something we find alone."
   />
 
-  <section class="section">
+  <PageContents items={contents} />
+
+  <section class="section" id="what">
     <div class="wrap grid-2">
       <blockquote class="big-quote reveal">
         <p>“Our need to belong is like our need for water.”</p>
@@ -111,7 +230,7 @@ const questions = [
     </div>
   </section>
 
-  <section class="section dark interbeing">
+  <section class="section dark interbeing" id="interbeing">
     <div class="wrap grid-2">
       <div class="reveal">
         <p class="eyebrow">Beyond people</p>
@@ -171,7 +290,7 @@ const questions = [
     </div>
   </section>
 
-  <section class="section why">
+  <section class="section why" id="why-art">
     <div class="wrap grid-2">
       <div class="reveal">
         <p class="eyebrow">Why art, why research-creation</p>
@@ -196,7 +315,90 @@ const questions = [
     </div>
   </section>
 
-  <section class="section questions dark">
+    <section class="section built-in" id="into-a-room">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">An example of belonging</p>
+        <h2>Belonging to nature, built into a room</h2>
+        <p>
+          Belonging to ourselves, to each other and to nature are always connected. <em>Cloudfulness</em> leans towards
+          nature: a shared sky, weather and water, something larger that was here before us and will continue after.
+        </p>
+        <p>
+          We started from what the research says belonging is, and turned each quality into a design choice.{' '}
+          <a href={url('/installation/')}>See the installation →</a>
+        </p>
+      </div>
+      <dl class="mapping reveal">
+        {
+          belongingMap.map((m) => (
+            <div>
+              <dt>{m.quality}</dt>
+              <dd>
+                <strong>{m.choice}</strong>
+                {m.how}
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section" id="why-a-cloud">
+    <div class="wrap why-cloud">
+      <div class="why-text">
+        <p class="eyebrow reveal">Why a cloud</p>
+        <h2 class="reveal">Something we all live under</h2>
+        <div class="why-grid">
+          {
+            whyCloud.map((w) => (
+              <div class="why-item reveal">
+                <h3>{w.title}</h3>
+                <p>{w.text}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+      <Figure
+        src={alphaWarm}
+        alt="Looking up from the floor at the fibre cloud glowing warm white, hanging from the ceiling in a dark room."
+        caption="Looking up at the alpha cloud, 29 July 2026."
+        ratio="3 / 4"
+        widths={[400, 700, 1000]}
+        sizes="(min-width: 60rem) 22rem, 100vw"
+        class="reveal why-video"
+      />
+    </div>
+  </section>
+
+  <ScoreGrid />
+
+  <section class="section decisions" id="decisions">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">How we reasoned</p>
+        <h2>Why it is the way it is</h2>
+        <p class="lede measure">
+          Every element of the installation answers a question about belonging. These are the decisions we made, and
+          our reasons for them.
+        </p>
+      </div>
+      <dl class="decision-list">
+        {
+          decisions.map((d) => (
+            <div class="decision reveal">
+              <dt>{d.choice}</dt>
+              <dd>{d.why}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
+  </section>
+
+  <section class="section questions dark" id="questions">
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow">An open invitation</p>
@@ -207,9 +409,20 @@ const questions = [
           into your own practice, and tell us what you find.
         </p>
       </div>
-      <ul class="q-list">
-        {questions.map((q) => <li class="reveal">{q}</li>)}
-      </ul>
+      <div class="q-cols">
+        <div>
+          <h3 class="q-head reveal">About belonging</h3>
+          <ul class="q-list">
+            {questions.map((q) => <li class="reveal">{q}</li>)}
+          </ul>
+        </div>
+        <div>
+          <h3 class="q-head reveal">About the cloud</h3>
+          <ul class="q-list">
+            {openQuestions.map((q) => <li class="reveal">{q}</li>)}
+          </ul>
+        </div>
+      </div>
       <div class="actions reveal">
         <a class="button" href={url("/toolkit/")}>Use the belonging checklist</a>
         <a class="button" href={url("/process/#lessons")}>Read what we learned</a>
@@ -357,5 +570,108 @@ const questions = [
     display: flex;
     flex-wrap: wrap;
     gap: 0.8rem;
+  }
+  .built-in p {
+    color: var(--ink-soft);
+  }
+  .built-in a {
+    color: var(--ink);
+  }
+  .mapping {
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .mapping div {
+    padding-block: 1.1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .mapping dt {
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--dusk);
+    margin-bottom: 0.35rem;
+  }
+  .mapping dd {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+  .mapping strong {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: var(--ink);
+  }
+  .why-cloud {
+    display: grid;
+    grid-template-columns: 1fr minmax(14rem, 22rem);
+    gap: clamp(2rem, 6vw, 6rem);
+    align-items: start;
+  }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 2rem 2.5rem;
+    margin-top: 2.5rem;
+  }
+  .why-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0.3rem;
+  }
+  .why-item p {
+    color: var(--ink-soft);
+    font-size: 0.97rem;
+    margin: 0;
+  }
+  :global(.why-video) {
+    position: sticky;
+    top: 6rem;
+  }
+  @media (max-width: 860px) {
+    .why-cloud {
+      grid-template-columns: 1fr;
+    }
+    :global(.why-video) {
+      position: static;
+      max-width: 22rem;
+    }
+  }
+
+  .decision-list {
+    margin: 0;
+    border-top: 1px solid var(--line);
+  }
+  .decision {
+    display: grid;
+    grid-template-columns: minmax(12rem, 1fr) 2fr;
+    gap: 1rem 3rem;
+    padding-block: 1.6rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .decision dt {
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.65rem);
+    line-height: 1.2;
+  }
+  .decision dd {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+  @media (max-width: 700px) {
+    .decision {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .q-cols {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr));
+    gap: 1rem clamp(2rem, 5vw, 5rem);
+  }
+  .q-head {
+    font-size: 1.1rem;
+    color: var(--ink-faint);
+    margin-bottom: 0.5rem;
   }
 </style>

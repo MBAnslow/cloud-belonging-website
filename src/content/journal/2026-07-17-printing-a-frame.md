@@ -5,6 +5,19 @@ stage: Making
 summary: 'A cloud that has to hang, hold lights and survive being moved between venues needs a skeleton. We started printing one, and the printer did not survive the first attempt unscathed.'
 cover: ../../assets/photos/print-frame-1.jpg
 coverAlt: 'A failed print at Sony CSL Paris: a large blob of melted white filament has engulfed the 3D printer’s nozzle and print head.'
+gallery:
+  - src: ../../assets/journal/2026-07-17-printing-a-frame/zephir-3d-printing-design.jpg
+    alt: 'Designing the joints.'
+    caption: 'Designing the joints.'
+  - src: ../../assets/journal/2026-07-17-printing-a-frame/pyramid-3d-joints-printed.jpg
+    alt: 'Printed joints.'
+    caption: 'Printed joints.'
+  - src: ../../assets/journal/2026-07-17-printing-a-frame/lots-of-failure-broken-3d-printer-bad-wood-connection.jpg
+    alt: 'A lot of failure.'
+    caption: 'A lot of failure.'
+  - src: ../../assets/journal/2026-07-17-printing-a-frame/drill-connector-pyramid-frame.jpg
+    alt: 'Drilling the connectors.'
+    caption: 'Drilling the connectors.'
 tags: [structure, 3D printing, fabrication]
 ---
 

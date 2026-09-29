@@ -1,0 +1,99 @@
+---
+import Cloud3D from './Cloud3D.astro';
+import { phases } from '../data/phases';
+import type { CloudStateName } from '../lib/cloud/states';
+
+const cells: { id: string; numeral: string; title: string; cloud: CloudStateName; text: string }[] = [
+  {
+    id: 'arrival',
+    numeral: 'Before',
+    title: 'Arrival',
+    cloud: 'golden',
+    text: 'Shoes off, lying down beneath a cloud in warm golden light, before anything begins.',
+  },
+  ...phases.map((p) => ({ id: p.id, numeral: p.numeral, title: p.title, cloud: p.cloud, text: p.notes.join(' · ') })),
+];
+---
+
+<section class="section score" id="score">
+  <div class="wrap">
+    <div class="score-head reveal">
+      <p class="eyebrow">The score</p>
+      <h2>From dusk to a cloud that breathes with you</h2>
+      <p class="lede">
+        The installation unfolds in three stages. The magical twilight turns the experience into a story and builds
+        intensity, so that by the time the cloud begins to breathe with you, you already feel bound to it.
+      </p>
+    </div>
+    <ol class="score-grid">
+      {
+        cells.map((c) => (
+          <li class="cell reveal">
+            <div class="sky">
+              <Cloud3D mode="controlled" initial={c.cloud} place={[0, 0.12, 0.62]} placeNarrow={[0, 0.12, 0.62]} />
+            </div>
+            <div class="caption">
+              <p class="numeral">{c.numeral}</p>
+              <h3>{c.title}</h3>
+              <p>{c.text}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</section>
+
+<style>
+  .score-head {
+    max-width: 46rem;
+    margin-bottom: 2.5rem;
+  }
+  .score-grid {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+  .cell {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--radius);
+    overflow: hidden;
+    color: #fbfaff;
+    background: #1b2250;
+  }
+  .sky {
+    position: absolute;
+    inset: 0;
+  }
+  .caption {
+    position: absolute;
+    inset: auto 0 0;
+    padding: 2.5rem 1.4rem 1.2rem;
+    background: linear-gradient(180deg, transparent, rgb(14 19 40 / 0.72));
+  }
+  .numeral {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: 0.95rem;
+    opacity: 0.8;
+    margin: 0 0 0.2rem;
+  }
+  .caption h3 {
+    font-size: clamp(1.3rem, 1.1rem + 0.8vw, 1.8rem);
+    margin: 0 0 0.25rem;
+  }
+  .caption p:last-child {
+    margin: 0;
+    font-size: 0.88rem;
+    opacity: 0.85;
+  }
+  @media (max-width: 700px) {
+    .score-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

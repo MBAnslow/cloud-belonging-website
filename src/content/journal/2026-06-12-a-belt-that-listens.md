@@ -5,6 +5,28 @@ stage: Making
 summary: 'Building a wearable breath sensor from a stretch band and a tiny microcontroller — and testing which band width actually hears a breath.'
 cover: ../../assets/photos/belt-sketch.jpg
 coverAlt: 'A pencil sketch of a vest seen from the front and back, with a breathing sensor band drawn in magenta around the waist.'
+gallery:
+  - src: ../../assets/journal/2026-06-12-a-belt-that-listens/trying-rubber-conductive-arduino-breadboard.jpg
+    alt: 'Conductive rubber on a breadboard.'
+    caption: 'Conductive rubber on a breadboard.'
+  - src: ../../assets/journal/2026-06-12-a-belt-that-listens/belt-connection-prototype.jpg
+    alt: 'The first connection.'
+    caption: 'The first connection.'
+  - src: ../../assets/journal/2026-06-12-a-belt-that-listens/belt-device.jpg
+    alt: 'The belt and its device.'
+    caption: 'The belt and its device.'
+  - src: ../../assets/journal/2026-06-12-a-belt-that-listens/breathing-belt-battery-connected.jpg
+    alt: 'Running on battery.'
+    caption: 'Running on battery.'
+  - src: ../../assets/journal/2026-06-12-a-belt-that-listens/cloud-jacket-belt.jpg
+    alt: 'The belt, sewn into a jacket.'
+    caption: 'The belt, sewn into a jacket.'
+  - src: ../../assets/journal/2026-06-12-a-belt-that-listens/cloud-jacket-pocket-device.jpg
+    alt: 'The device in its pocket.'
+    caption: 'The device in its pocket.'
+  - src: ../../assets/journal/2026-06-12-a-belt-that-listens/inside-cloud-jacket-device-red-glow.jpg
+    alt: 'Inside the pocket.'
+    caption: 'Inside the pocket.'
 tags: [hardware, breath, ESP32, TouchDesigner]
 ---
 

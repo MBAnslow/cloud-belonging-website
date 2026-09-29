@@ -5,6 +5,29 @@ stage: Exploration
 summary: 'Visits to immersive theatre in Paris, and a conversation about what not to do: never tell people what they should be feeling.'
 cover: ../../assets/photos/visit-grand-hotel.jpg
 coverAlt: 'Zéphir and Michael taking a selfie outside the Grand Hôtel des Rêves in Paris.'
+clips:
+  - name: journal/scrim-usage-example
+    caption: 'A scrim turning light into atmosphere.'
+    portrait: true
+gallery:
+  - src: ../../assets/journal/2026-05-19-rituals-not-instructions/grand-hotel-des-reve-fieldtrip-outside.jpg
+    alt: 'Outside the Grand Hôtel des Rêves.'
+    caption: 'Outside the Grand Hôtel des Rêves.'
+  - src: ../../assets/journal/2026-05-19-rituals-not-instructions/glow-in-dark-ceiling.jpg
+    alt: 'A glow-in-the-dark ceiling.'
+    caption: 'A glow-in-the-dark ceiling.'
+  - src: ../../assets/journal/2026-05-19-rituals-not-instructions/zephir-console-clouds-above-rocket-launch.jpg
+    alt: 'Clouds above a rocket launch.'
+    caption: 'Clouds above a rocket launch.'
+  - src: ../../assets/journal/2026-05-19-rituals-not-instructions/spotlight-nautilus.jpg
+    alt: 'A single spotlight.'
+    caption: 'A single spotlight.'
+  - src: ../../assets/journal/2026-05-19-rituals-not-instructions/zephir-cloack-engaging-in-theme.jpg
+    alt: 'Playing along in a cloak.'
+    caption: 'Playing along in a cloak.'
+  - src: ../../assets/journal/2026-05-19-rituals-not-instructions/lighting-rig.jpg
+    alt: 'The lighting rig.'
+    caption: 'The lighting rig.'
 tags: [field visits, ritual, sharing]
 ---
 

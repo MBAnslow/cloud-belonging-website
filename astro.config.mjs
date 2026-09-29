@@ -7,4 +7,8 @@ export default defineConfig({
   // GitHub Pages serves the site from /<repo>/. Links in pages use `url()` from src/lib/url.ts;
   // links inside journal Markdown should be relative (e.g. `../../toolkit/`).
   base: '/cloud-belonging-website',
+  redirects: {
+    '/belonging': '/cloud-belonging-website/concept/',
+    '/alpha': '/cloud-belonging-website/installation/#alpha',
+  },
 });

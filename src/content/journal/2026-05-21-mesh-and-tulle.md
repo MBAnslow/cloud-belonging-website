@@ -5,6 +5,32 @@ stage: Making
 summary: 'Our first attempts at building a cloud by hand — and what the Réespiration study taught us about breathing together.'
 cover: ../../assets/photos/mesh-zephir.jpg
 coverAlt: 'Zéphir kneeling on the studio floor, shaping a sheet of green plastic mesh into a cloud form.'
+clips:
+  - name: journal/tulle-run-corridor
+    caption: 'Running tulle down the corridor.'
+    portrait: true
+gallery:
+  - src: ../../assets/journal/2026-05-21-mesh-and-tulle/first-mesh-play-before-cotton.jpg
+    alt: 'The first mesh form.'
+    caption: 'The first mesh form.'
+  - src: ../../assets/journal/2026-05-21-mesh-and-tulle/prep-first-mesh-play-cable-ties.jpg
+    alt: 'Zip ties hold the shape.'
+    caption: 'Zip ties hold the shape.'
+  - src: ../../assets/journal/2026-05-21-mesh-and-tulle/first-mesh-play-cotton-stuffing.jpg
+    alt: 'Stuffing it with cotton.'
+    caption: 'Stuffing it with cotton.'
+  - src: ../../assets/journal/2026-05-21-mesh-and-tulle/first-mesh-play.jpg
+    alt: 'Our first small cloud.'
+    caption: 'Our first small cloud.'
+  - src: ../../assets/journal/2026-05-21-mesh-and-tulle/tulle-play-small-cloud.jpg
+    alt: 'A tulle cloud.'
+    caption: 'A tulle cloud.'
+  - src: ../../assets/journal/2026-05-21-mesh-and-tulle/trying-tulle-aquarium-chair.jpg
+    alt: 'Tulle over a chair.'
+    caption: 'Tulle over a chair.'
+  - src: ../../assets/journal/2026-05-21-mesh-and-tulle/why-not-try-anything-diffusion-fabric.jpg
+    alt: 'Why not try any fabric?'
+    caption: 'Why not try any fabric?'
 tags: [materials, breath, prototyping]
 ---
 

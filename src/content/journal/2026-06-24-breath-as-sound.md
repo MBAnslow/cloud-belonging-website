@@ -6,6 +6,18 @@ summary: 'Breaths become sound objects that play the cloud like an instrument â€
 cover: ../../assets/photos/tulle-light-3.jpg
 coverAlt: 'A tulle cloud hanging from a ceiling grid, lit in pale blue and green by a projector below.'
 video: tulle-projector
+clips:
+  - name: journal/projector-lines-through-tulle
+    caption: 'Lines of light through tulle.'
+  - name: journal/projector-testing
+    caption: 'Testing projections.'
+gallery:
+  - src: ../../assets/journal/2026-06-24-breath-as-sound/projector-on-tulle.jpg
+    alt: 'A projector lighting tulle.'
+    caption: 'A projector lighting tulle.'
+  - src: ../../assets/journal/2026-06-24-breath-as-sound/projector-on-tulle-far.jpg
+    alt: 'From further back.'
+    caption: 'From further back.'
 tags: [sound, projection, tulle]
 ---
 

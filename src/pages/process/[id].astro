@@ -4,6 +4,7 @@ import { render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import VideoClip from '../../components/VideoClip.astro';
+import MediaGallery, { type GalleryItem } from '../../components/MediaGallery.astro';
 import { getJournal, formatDate } from '../../lib/journal';
 
 export async function getStaticPaths() {
@@ -16,7 +17,11 @@ export async function getStaticPaths() {
 
 const { entry, newer, older } = Astro.props;
 const { Content } = await render(entry);
-const { title, date, stage, summary, cover, coverAlt, video, tags } = entry.data;
+const { title, date, stage, summary, cover, coverAlt, video, gallery, clips, tags } = entry.data;
+const media: GalleryItem[] = [
+  ...clips.map((c) => ({ video: c.name, caption: c.caption, portrait: c.portrait, sound: c.sound })),
+  ...gallery.map((g) => ({ image: g.src, alt: g.alt, caption: g.caption })),
+];
 const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
 ---
 
@@ -46,6 +51,17 @@ const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
       <div class="prose">
         <Content />
       </div>
+    </div>
+
+    {
+      media.length > 0 && (
+        <div class="wrap media">
+          <MediaGallery items={media} columns={media.length < 3 ? media.length : 3} title={clips.length && gallery.length ? "Photos and video" : clips.length ? "Video" : "Photos"} />
+        </div>
+      )
+    }
+
+    <div class="wrap narrow body after-media">
 
       {
         video && (
@@ -133,6 +149,15 @@ const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
   }
   .entry-video {
     margin-top: 2.5rem;
+  }
+  .body:has(+ .media) {
+    padding-bottom: 1.5rem;
+  }
+  .after-media {
+    padding-top: 0;
+  }
+  .media {
+    margin-bottom: 1.25rem;
   }
   .entry-video.portrait {
     max-width: 22rem;

@@ -1,0 +1,136 @@
+---
+export interface ContentsItem {
+  id: string;
+  label: string;
+  desc: string;
+  /** Inner SVG markup on a 48×48 grid; `stroke="url(#toc-glow)"` gives the accent gradient. */
+  icon: string;
+}
+
+interface Props {
+  items: ContentsItem[];
+}
+
+const { items } = Astro.props;
+const contents = items;
+---
+
+<nav class="contents" aria-label="On this page">
+  <div class="wrap">
+    <svg width="0" height="0" aria-hidden="true" style="position:absolute">
+      <linearGradient id="toc-glow" x1="0" x2="1">
+        <stop offset="0" stop-color="#b3a4ee"></stop>
+        <stop offset="1" stop-color="#f6a98a"></stop>
+      </linearGradient>
+    </svg>
+    <p class="eyebrow ruled">On this page</p>
+    <ol>
+      {
+        contents.map((c, i) => (
+          <li>
+            <a href={`#${c.id}`}>
+              <svg class="icon" viewBox="0 0 48 48" aria-hidden="true">
+                <Fragment set:html={c.icon} />
+              </svg>
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              <span class="label">{c.label}</span>
+              <span class="desc">{c.desc}</span>
+              <span class="arrow" aria-hidden="true">↓</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </div>
+</nav>
+
+<style>
+  .contents {
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    background:
+      radial-gradient(ellipse 40% 80% at 0% 100%, rgb(179 164 238 / 0.18), transparent 70%),
+      radial-gradient(ellipse 40% 80% at 100% 0%, rgb(246 169 138 / 0.16), transparent 70%),
+      var(--paper-deep);
+  }
+  .contents ol {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: 1rem;
+  }
+  .contents a {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 1.5rem 1.5rem 1.4rem;
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.75);
+    border: 1px solid rgb(255 255 255 / 0.9);
+    box-shadow: 0 1px 2px rgb(27 34 84 / 0.04), 0 10px 30px -12px rgb(27 34 84 / 0.12);
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .contents a:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 2px 4px rgb(27 34 84 / 0.05), 0 22px 40px -16px rgb(91 76 180 / 0.3);
+  }
+  .contents .icon {
+    width: 3.75rem;
+    height: 3.75rem;
+    padding: 0.55rem;
+    margin-bottom: 1.25rem;
+    border-radius: 50%;
+    background: radial-gradient(circle at 35% 30%, #fff, rgb(179 164 238 / 0.28) 70%, rgb(246 169 138 / 0.3));
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .contents .num {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--font-display);
+    font-size: 0.95rem;
+    color: var(--ink-faint);
+  }
+  .contents .label {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    line-height: 1.2;
+    margin-bottom: 0.35rem;
+  }
+  .contents .desc {
+    font-size: 0.88rem;
+    color: var(--ink-soft);
+    flex: 1;
+  }
+  .contents .arrow {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--dusk);
+    transition: transform 0.35s ease;
+  }
+  .contents a:hover .arrow {
+    transform: translateY(3px);
+  }
+  :global(main [id]) {
+    scroll-margin-top: 4.5rem;
+  }
+  :global(html.theme-night) .contents a {
+    background: rgb(255 255 255 / 0.05);
+    border-color: rgb(255 255 255 / 0.1);
+    box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.5);
+  }
+  :global(html.theme-night) .contents a:hover {
+    background: rgb(255 255 255 / 0.08);
+  }
+  :global(html.theme-night) .contents .icon {
+    background: radial-gradient(circle at 35% 30%, rgb(255 255 255 / 0.2), rgb(179 164 238 / 0.14) 70%, rgb(246 169 138 / 0.2));
+  }
+</style>

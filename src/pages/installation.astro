@@ -2,20 +2,19 @@
 import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
-import SkyPhases from '../components/SkyPhases.astro';
+import PageContents, { type ContentsItem } from '../components/PageContents.astro';
 import BreathChart from '../components/BreathChart.astro';
 import VideoClip from '../components/VideoClip.astro';
 import Figure from '../components/Figure.astro';
+import insideStruts from '../assets/journal/post-alpha/inside-pyramid-leds-struts.jpg';
+import layersShowing from '../assets/journal/post-alpha/different-layers-showing.jpg';
+import thickWadding from '../assets/journal/post-alpha/thick-wadding.jpg';
+import betterBuck from '../assets/journal/post-alpha/better-buck-converter-different-controller.jpg';
+import MediaGallery, { type GalleryItem } from '../components/MediaGallery.astro';
 
-import meshZephir from '../assets/photos/mesh-zephir.jpg';
-import tulleAssembly from '../assets/photos/tulle-assembly.jpg';
-import tulleLight2 from '../assets/photos/tulle-light-2.jpg';
 import beltSketch from '../assets/photos/belt-sketch.jpg';
 import printFrame from '../assets/photos/print-frame-1.jpg';
-import alphaWarm from '../assets/photos/alpha-warm.jpg';
-import alphaLyingBlue from '../assets/photos/alpha-lying-blue.jpg';
 import buildFrameAssembly from '../assets/photos/build-frame-assembly.jpg';
-import buildSkewers from '../assets/photos/build-skewers.jpg';
 
 import cloudMaterials from '../assets/photos/cloud-materials.jpg';
 import ledLightingDiagram from '../assets/photos/led-lighting-diagram.jpg';
@@ -26,6 +25,36 @@ import swLightning from '../assets/software/simulator-lightning.png';
 import swDrones from '../assets/software/drones.png';
 import swSamples from '../assets/software/samples.png';
 import swPads from '../assets/software/pads.png';
+import teaFront from '../assets/alpha/tea-front.jpg';
+import pinkPurpleBlue from '../assets/alpha/pink-purple-blue.jpg';
+import cloudRoom from '../assets/alpha/cloud-room.jpg';
+import zephirTeaBlue from '../assets/alpha/zephir-tea-blue.jpg';
+import visitorsUnderCloud from '../assets/alpha/visitors-under-cloud.jpg';
+import workshopFisheye from '../assets/alpha/workshop-fisheye.jpg';
+import wholeRoom from '../assets/alpha/whole-room.jpg';
+import selfie from '../assets/alpha/selfie.jpg';
+import zephirHug from '../assets/alpha/zephir-hug.jpg';
+import zephirLyingUnder from '../assets/alpha/zephir-lying-under.jpg';
+import cloudInABag from '../assets/alpha/cloud-in-a-bag.jpg';
+import twoScreens from '../assets/alpha/two-screens.jpg';
+import touchdesignerBelts from '../assets/alpha/touchdesigner-belts.jpg';
+import prepWorkbench from '../assets/alpha/prep-workbench.jpg';
+import prepStuffing from '../assets/alpha/prep-stuffing.jpg';
+import prepStuffingDistant from '../assets/alpha/prep-stuffing-distant.jpg';
+import prepThumbsUp from '../assets/alpha/prep-thumbs-up.jpg';
+import prepArmScratches from '../assets/alpha/prep-arm-scratches.jpg';
+import elecController from '../assets/alpha/elec-controller.jpg';
+import elecBattery from '../assets/alpha/elec-battery.jpg';
+import elecBuckConverter from '../assets/alpha/elec-buck-converter.jpg';
+import elecOverheating from '../assets/alpha/elec-overheating.jpg';
+import elecFanFix from '../assets/alpha/elec-fan-fix.jpg';
+import buildDowels from '../assets/photos/build-dowels.jpg';
+import buildPyramidCourtyard from '../assets/photos/build-pyramid-courtyard.jpg';
+import buildLedCloud from '../assets/photos/build-led-cloud.jpg';
+import buildSkewersMesh from '../assets/photos/build-skewers-mesh.jpg';
+import buildShell from '../assets/photos/build-shell.jpg';
+import buildThermal from '../assets/photos/build-thermal.jpg';
+import buildStuffing from '../assets/photos/build-stuffing.jpg';
 
 const outerLayers = [
   {
@@ -67,38 +96,6 @@ const innerLayers = [
     name: 'Black fabric layer',
     text: 'Underneath the frame, a black fabric stops light escaping backwards, so it only leaves through the diffusing layers.',
   },
-];
-
-const belongingMap = [
-  {
-    quality: 'Belonging is embodied and anchored',
-    choice: 'A multisensory space.',
-    how: ' You take off your shoes and lie down beneath the cloud, among soft fabric, warm light and a glass of tea.',
-  },
-  {
-    quality: 'Belonging is a journey',
-    choice: 'An evolving score.',
-    how: ' Dusk, a magical twilight, then breath synchrony: the experience moves, and you move with it.',
-  },
-  {
-    quality: 'Belonging is dynamic',
-    choice: 'Biofeedback.',
-    how: ' A sensor follows your breathing, and the cloud’s light rises and settles with it. You breathe with the cloud rather than control it.',
-  },
-  {
-    quality: 'Belonging depends on the quality of connections',
-    choice: 'A shared experience.',
-    how: ' One sky over everyone in the room, with nobody in a better seat.',
-  },
-];
-
-const whyCloud = [
-  { title: 'It is above everyone', text: 'Nobody has a better seat. A cloud offers a shared perspective without a stage.' },
-  { title: 'It gives light a body', text: 'A cloud is a volume for light to live in — glowing, flashing, catching the sun.' },
-  { title: 'It is always changing', text: 'Clouds are impermanence made visible. They form, drift, rain and form again.' },
-  { title: 'It is water, and so are we', text: 'The water cycle is continuity and unity: the same water in vapour, rain, river, tea, and us.' },
-  { title: 'It follows you home', text: 'Everyone sees clouds. We hope the next one you see brings a little of this back.' },
-  { title: 'It is forgiving', text: 'Dim, diffuse light feels primal and hides the imperfections of whatever room we are in.' },
 ];
 
 const tour = [
@@ -182,27 +179,108 @@ const tour = [
   },
 ];
 
+const lying = [
+  { src: zephirLyingUnder, wide: true, alt: 'Lying on white sheets directly beneath the cloud, which glows warm white overhead.' },
+  { src: pinkPurpleBlue, wide: false, alt: 'The cloud glowing pink, purple and blue above the sheets, seen from the floor.' },
+  { src: visitorsUnderCloud, wide: true, alt: 'Visitors lounging on beanbags and sheets beneath the glowing cloud in front of a blue backdrop.' },
+  { src: zephirTeaBlue, wide: true, alt: 'Zéphir pouring tea beneath the cloud, lit blue.' },
+  { src: selfie, wide: false, alt: 'A grinning selfie of the two of us beside the cloud, glowing pink.' },
+  { src: wholeRoom, wide: true, alt: 'The whole room from above: the cloud glowing over sheets, a small tea table and people sitting on the floor.' },
+  { src: zephirHug, wide: false, alt: 'Zéphir hugging the cloud while it glows white.' },
+];
+
+const dusk: GalleryItem[] = [
+  { video: 'alpha/lightning', portrait: true, caption: 'Lightning flickering through the fibre.' },
+  { video: 'alpha/lightning-short', caption: 'A strike, seen from the floor.' },
+  { video: 'alpha/tea-lightning', caption: 'Tea under a storm.' },
+];
+const twilight: GalleryItem[] = [
+  { video: 'alpha/evening-1', caption: 'The light intensifies and the colours bloom.' },
+  { video: 'alpha/evening-2', caption: 'Violet, magenta and blue through the whole cloud.' },
+];
+const breath: GalleryItem[] = [
+  { video: 'alpha/breath', portrait: true, caption: 'A breath rising into the cloud.' },
+  { video: 'alpha/breath-through', caption: 'Waves of breath travelling through it.' },
+];
+
+const moments: GalleryItem[] = [
+  ...lying.map((m) => ({ image: m.src, alt: m.alt })),
+  { image: cloudRoom, alt: 'The alpha cloud glowing above white sheets, with a teapot on a small pedestal below.', caption: 'The room, set for tea.' },
+  { image: workshopFisheye, alt: 'A fisheye view of the workshop with the cloud glowing white in its corner.', caption: 'The corner of the workshop we turned into a sky.' },
+];
+
+const screens: GalleryItem[] = [
+  { image: touchdesignerBelts, alt: 'A laptop running TouchDesigner with breath waveforms from the belts, the cloud glowing behind it.', caption: 'Breath from the belts, in TouchDesigner.' },
+  { video: 'alpha/gui', caption: 'Driving the cloud from the control app.' },
+  { image: twoScreens, alt: 'Two laptops side by side at the edge of the room, with the cloud lit in the background.', caption: 'Two screens: breath on one, the sky on the other.' },
+];
+
+const prep: GalleryItem[] = [
+  { image: prepStuffing, alt: 'Close-up from below: hands pushing fibre into the hexagonal mesh with a bamboo skewer.', caption: 'Stuffing the cloud from below.' },
+  { image: prepStuffingDistant, alt: 'Lying on the floor under the hanging cloud, reaching up to shape it.', caption: 'Hours on the floor.' },
+  { video: 'alpha/prep-hanging', caption: 'Hanging the cloud.' },
+  { image: prepThumbsUp, alt: 'Lying under the lit cloud, giving a thumbs up.', caption: 'Nearly there.' },
+  { image: prepArmScratches, alt: 'A forearm covered in scratches from the plastic mesh.', caption: 'The mesh fought back.' },
+  { image: prepWorkbench, alt: 'The workbench covered in mesh, fibre, spray cans and tools.', caption: 'The workbench, mid-build.' },
+];
+
+const buildSteps = [
+  { src: buildDowels, date: '21 Jul', caption: 'Dowels and printed joints', alt: 'Wooden dowels and 3D-printed joints laid out on the workshop floor.' },
+  { src: buildFrameAssembly, date: '21 Jul', caption: 'LED pixels tied to a mesh pyramid', alt: 'Looking up through a mesh-wrapped wooden frame with LED pixels tied along it.' },
+  { src: buildPyramidCourtyard, date: '22 Jul', caption: 'Painted white in the courtyard', alt: 'The painted pyramid drying on cardboard in a narrow courtyard.' },
+  { src: buildLedCloud, date: '24 Jul', caption: 'First fibre over the lights', alt: 'A mound of fibre glowing violet on top of a frame of LED pixels.' },
+  { src: buildSkewersMesh, date: '24 Jul', caption: 'Fibre pinned with bamboo skewers', alt: 'Close-up of fibre on hexagonal mesh, held by bamboo skewers.' },
+  { src: buildThermal, date: '28 Jul', caption: 'Checking for heat', alt: 'A thermal camera reading 27.4 °C, pointed at wiring on the floor.' },
+  { src: buildShell, date: '28 Jul', caption: 'Judging the shape of the shell', alt: 'Holding the fibre and mesh shell overhead in the workshop.' },
+  { src: buildStuffing, date: '29 Jul', caption: 'Final shaping, from below', alt: 'Lying beneath the lit cloud, pushing a skewer up into the fibre.' },
+];
+
+const electronics = [
+  { src: elecController, caption: 'The LED controller.', alt: 'An LED controller board on a small acrylic plate, with wires running off it.' },
+  { src: elecBattery, caption: 'The battery pack.', alt: 'A blue lithium battery pack with red and black leads.' },
+  { src: elecBuckConverter, caption: 'The buck converter, stepping the voltage down for the LEDs.', alt: 'A buck converter module with a heat sink, wired with lever connectors.' },
+  { src: elecOverheating, caption: 'It ran hot. We checked how hot with a thermal camera.', alt: 'A thermal camera pointed at the electronics on the floor, showing a hot spot.' },
+  { src: elecFanFix, caption: 'The fix: a small fan on top.', alt: 'The electronics held in a hand, now with a small cooling fan mounted on top.' },
+];
+
+const learned = [
+  {
+    title: 'The twilight needed a story',
+    text: 'Colour changes alone read as a light show. They became the magical twilight, with images flashing through the cloud, so the bond forms before the breath begins.',
+  },
+  {
+    title: 'The cloud looked flat up close',
+    text: 'From underneath, a single fibre layer showed its lights. After the alpha we rebuilt it in layers, with a diffuser, wadding and cotton, and used bump mapping in the software to fake depth.',
+  },
+  {
+    title: 'Heat and power are part of the design',
+    text: 'Hundreds of LEDs wrapped in fibre need their temperature checked, not assumed. The buck converter ran hot until we gave it a fan, and later a better converter and controller.',
+  },
+];
 const glow = 'stroke="url(#toc-glow)"';
 const icons = {
+  alpha: `<path d="M6 34h36"/><path ${glow} d="M14 34a10 10 0 0 1 20 0"/><path d="M25 8l-5 10h6l-4 9"/>`,
+  moments: `<circle cx="17" cy="16" r="5"/><circle cx="31" cy="16" r="5"/><path d="M8 38c1-7 5-11 9-11s8 4 9 11"/><path ${glow} d="M22 38c1-7 5-11 9-11s8 4 9 11"/>`,
+  ready: `<path d="M13 30h22a6 6 0 0 0 .5-12A9 9 0 0 0 18 16a7 7 0 0 0-5 14Z"/><path ${glow} d="M24 30v10M20 36l4 4 4-4"/>`,
   concept: `<path d="M13 34h22a7 7 0 0 0 .5-14A10 10 0 0 0 17 18a8 8 0 0 0-4 16Z"/><path ${glow} d="M17 27c5-4 10 3 15-1"/><path ${glow} fill="#f6b89c" stroke="none" d="M31 9l1.2 3.3L35.5 13.5l-3.3 1.2L31 18l-1.2-3.3-3.3-1.2 3.3-1.2Z"/>`,
-  narrative: `<path d="M6 34h36"/><path ${glow} d="M14 34a10 10 0 0 1 20 0"/><path d="M30 12a7 7 0 1 0 6 10 6 6 0 0 1-6-10Z"/><path ${glow} d="M10 40h8M22 40h16"/>`,
   fabrication: `<path d="M24 8 40 16 24 24 8 16Z"/><path ${glow} d="M8 23l16 8 16-8"/><path d="M8 30l16 8 16-8"/>`,
   making: `<path d="M6 30c4 0 4-10 8-10s4 14 8 14 4-18 8-18 4 12 8 12 3-4 4-4"/><circle cx="22" cy="34" r="2.2" fill="#c3b6f0" stroke="none"/><circle cx="30" cy="16" r="2.2" fill="#f6b89c" stroke="none"/><path ${glow} d="M6 40h36"/>`,
 };
 
-const contents = [
-  { id: 'concept', label: 'Concept', desc: 'Belonging to nature, and why a cloud' },
-  { id: 'narrative', label: 'Narrative', desc: 'Dusk, magical twilight, breath synchrony' },
-  { id: 'fabrication', label: 'Fabrication', desc: 'The final cloud, layer by layer' },
-  { id: 'making', label: 'Technical details', desc: 'Materials, light, breath sensing, frame, software' },
+const contents: ContentsItem[] = [
+  { id: 'alpha', label: 'The alpha', desc: 'The evening of 29–30 July 2026, on film', icon: icons.alpha },
+  { id: 'moments', label: 'Moments', desc: 'The people beneath it, and the screens', icon: icons.moments },
+  { id: 'fabrication', label: 'Fabrication', desc: 'The final cloud, layer by layer', icon: icons.fabrication },
+  { id: 'getting-ready', label: 'Getting ready', desc: 'Stuffing, hanging, electronics, ten days of building', icon: icons.ready },
+  { id: 'making', label: 'Technical details', desc: 'Materials, light, breath, sound, frame, software', icon: icons.making },
 ];
 ---
 
-<Base title="Installation" description="Cloudfulness, a breathing cloud installation about belonging to nature: the concept, the narrative, fabrication and technical details.">
+<Base theme="night" title="Installation" description="Cloudfulness, a breathing cloud installation about belonging to nature: the alpha on film, the people beneath it, fabrication and technical details.">
   <PageHeader
     eyebrow="The installation"
-    image={alphaLyingBlue}
-    imageAlt="People lying on the floor beneath the glowing cloud, lit blue."
+    image={teaFront}
+    imageAlt="The alpha cloud glowing warm white above white sheets, with a small tea table beneath it."
     title="A cloud that listens"
     lede="A cloud hangs above you. The sun sets, lightning begins, and then the whole cloud starts to bloom with colour. Then the cloud begins to breathe with you.">
     <p class="status">
@@ -214,94 +292,64 @@ const contents = [
     </p>
   </PageHeader>
 
-  <nav class="contents" aria-label="On this page">
+  <PageContents items={contents} />
+
+  <section class="section dark evening" id="alpha">
     <div class="wrap">
-      <svg width="0" height="0" aria-hidden="true" style="position:absolute">
-        <linearGradient id="toc-glow" x1="0" x2="1">
-          <stop offset="0" stop-color="#b3a4ee"></stop>
-          <stop offset="1" stop-color="#f6a98a"></stop>
-        </linearGradient>
-      </svg>
-      <p class="eyebrow ruled">On this page</p>
-      <ol>
-        {
-          contents.map((c, i) => (
-            <li>
-              <a href={`#${c.id}`}>
-                <svg class="icon" viewBox="0 0 48 48" aria-hidden="true">
-                  <Fragment set:html={icons[c.id as keyof typeof icons]} />
-                </svg>
-                <span class="num">{String(i + 1).padStart(2, '0')}</span>
-                <span class="label">{c.label}</span>
-                <span class="desc">{c.desc}</span>
-                <span class="arrow" aria-hidden="true">↓</span>
-              </a>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </nav>
-
-  <section class="section built-in" id="concept">
-    <div class="wrap grid-2">
-      <div class="reveal">
-        <p class="eyebrow">An example of belonging</p>
-        <h2>Belonging to nature, built into a room</h2>
-        <p>
-          Belonging to ourselves, to each other and to nature are always connected. <em>Cloudfulness</em> leans towards
-          nature: a shared sky, weather and water, something larger that was here before us and will continue after.
-        </p>
-        <p>
-          We started from what the research says belonging is, and turned each quality into a design choice.{' '}
-          <a href={url('/belonging/')}>More on belonging →</a>
-        </p>
-      </div>
-      <dl class="mapping reveal">
-        {
-          belongingMap.map((m) => (
-            <div>
-              <dt>{m.quality}</dt>
-              <dd>
-                <strong>{m.choice}</strong>
-                {m.how}
-              </dd>
-            </div>
-          ))
-        }
-      </dl>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="wrap why-cloud">
-      <div class="why-text">
-        <p class="eyebrow reveal">Why a cloud</p>
-        <h2 class="reveal">Something we all live under</h2>
-        <div class="why-grid">
-          {
-            whyCloud.map((w) => (
-              <div class="why reveal">
-                <h3>{w.title}</h3>
-                <p>{w.text}</p>
-              </div>
-            ))
-          }
+      <div class="grid-2 head">
+        <div class="reveal">
+          <p class="eyebrow">The evening</p>
+          <h2>From dusk to breath</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            We closed off a corner of the studio with a blue backdrop and black panels, laid white sheets and beanbags on
+            the floor, and kept a pot of tea warm under the cloud. Over two days, people took turns lying beneath it as
+            it moved from dusk and lightning, through a violet and magenta twilight, into breathing with them.
+          </p>
+          <p class="small">All clips are silent. Click any of them to see it larger.</p>
         </div>
       </div>
-      <Figure
-        src={alphaWarm}
-        alt="Looking up from the floor at the fibre cloud glowing warm white, hanging from the ceiling in a dark room."
-        caption="Looking up at the alpha cloud, 29 July 2026."
-        ratio="3 / 4"
-        widths={[400, 700, 1000]}
-        sizes="(min-width: 60rem) 22rem, 100vw"
-        class="reveal why-video"
-      />
+
+      <MediaGallery items={dusk} numeral="I" title="Dusk and lightning" description="The sun sets on the room and the first strikes flicker through the cloud." class="reveal" />
+      <MediaGallery items={twilight} numeral="II" title="Magical twilight" description="The light intensifies into violet, magenta and blue." columns={2} class="reveal" />
+      <MediaGallery items={breath} numeral="III" title="Breath" description="The cloud slows down and starts breathing with the people beneath it." columns={2} class="reveal" />
     </div>
   </section>
 
-  <SkyPhases />
+  <section class="section moments" id="moments">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Moments</p>
+        <h2>The people beneath it</h2>
+        <p class="lede measure">
+          Shoes off, lying on the floor, a glass of tea. Everyone who came had the same seat under the same sky.
+        </p>
+      </div>
+      <MediaGallery items={moments} title="Under the cloud" description="Two days of visitors, tea and beanbags." class="reveal" />
+    </div>
+  </section>
+
+  <section class="section screens" id="screens">
+    <div class="wrap">
+      <div class="grid-2 head">
+        <div class="reveal">
+          <p class="eyebrow">Behind the screens</p>
+          <h2>Two laptops and a pair of belts</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            At the side of the room, TouchDesigner read the breathing belts and showed each breath as a wave, while our
+            own control app drove the sky, lightning and colour. Watching the screens and the cloud side by side was how
+            we tuned the evening as it happened.
+          </p>
+          <p><a href={url('/installation/#software')}>More about the software →</a></p>
+        </div>
+      </div>
+      <MediaGallery items={screens} title="The control desk" description="Breath waves on one screen, the sky on the other." class="reveal" />
+    </div>
+  </section>
+
 
   <section class="section fabrication" id="fabrication">
     <div class="wrap">
@@ -354,69 +402,171 @@ const contents = [
     </div>
   </section>
 
-  <section class="section making" id="making">
+  <section class="section getting-ready" id="getting-ready">
     <div class="wrap">
       <div class="section-head reveal">
-        <p class="eyebrow">Making</p>
-        <h2>How a cloud gets built</h2>
+        <p class="eyebrow">Getting ready</p>
+        <h2>Ten days, and the last few hours</h2>
         <p class="lede measure">
-          How we got to the final cloud: what we tried, what surprised us, and what we learned.
+          The alpha was built in ten days in a workshop. The last of it happened lying on the floor, pushing fibre up
+          into the cloud one skewer at a time.
         </p>
       </div>
 
+      <MediaGallery items={prep} title="The last few hours" description="Stuffing, hanging and shaping the cloud before the doors opened." class="reveal" />
+
+      <div class="elec">
+        <div class="elec-text reveal">
+          <p class="eyebrow">Electronics</p>
+          <h3>A cloud that ran warm</h3>
+          <p>
+            The LEDs run from a battery through a buck converter, which steps the voltage down to what the lights need.
+            Under the full load of the cloud it ran hot, so we measured it with a thermal camera and added a small fan.
+            After the alpha we replaced it with a better converter and controller.
+          </p>
+        </div>
+        <MediaGallery items={electronics.map((e) => ({ image: e.src, alt: e.alt, caption: e.caption }))} columns={3} class="reveal" />
+      </div>
+
+      <div class="build-head reveal">
+        <p class="eyebrow">Ten days of building</p>
+        <p class="small">From printed joints to a cloud on the ceiling, 20–29 July 2026. Scroll sideways.</p>
+      </div>
+      <div class="build-strip">
+        {
+          buildSteps.map((b) => (
+            <Figure
+              src={b.src}
+              alt={b.alt}
+              caption={`${b.date} · ${b.caption}`}
+              ratio="3 / 4"
+              widths={[360, 600]}
+              sizes="(min-width: 60rem) 16rem, 60vw"
+              class="reveal"
+            />
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <section class="section making" id="making">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Technical details</p>
+        <h2>Everything behind the cloud</h2>
+        <p class="lede measure">
+          The hardware and software that make it work, and how we got there. Open any part to see more.
+        </p>
+      </div>
+
+      <h3 class="tech-group reveal">Hardware</h3>
+      <details class="tech">
+        <summary>
+          <span class="tech-num">01</span>
+          <span class="tech-kicker">Structure</span>
+          <span class="tech-title">A pyramid frame</span>
+          <span class="tech-chev" aria-hidden="true"></span>
+        </summary>
       <article class="make">
         <div class="make-text reveal">
-          <p class="make-num">01 · Body</p>
-          <h3>From chicken mesh to tulle to fibre</h3>
           <p>
-            Our first cloud was plastic chicken mesh, crumpled into folds and held with zip ties. It was easy to cut
-            and shape, but heavy-looking and opaque. Then we tried tulle. A single layer is almost transparent, very
-            light, and catches light beautifully.
+            The cloud hangs from a low pyramid of wooden dowels held together by 3D-printed joints. The frame is wrapped
+            in plastic mesh, carries the LEDs, and is sprayed white so it doesn’t tint the light. Everything soft hangs
+            around it.
+          </p>
+          <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>Building the pyramid →</a></p>
+        </div>
+        <div class="make-media two">
+          <Figure src={printFrame} alt="A 3D printer printing a white frame part." caption="Printed joints." ratio="4 / 5" class="reveal" />
+          <Figure src={buildFrameAssembly} alt="Looking up through a mesh-wrapped wooden frame with LED pixels tied along it." caption="The pyramid, strung with LEDs." ratio="4 / 5" class="reveal" />
+        </div>
+      </article>
+      </details>
+
+      <details class="tech">
+        <summary>
+          <span class="tech-num">02</span>
+          <span class="tech-kicker">Light</span>
+          <span class="tech-title">LEDs aimed from inside</span>
+          <span class="tech-chev" aria-hidden="true"></span>
+        </summary>
+      <article class="make">
+        <div class="make-text reveal">
+          <p>
+            Rows of addressable LED pixels are tied across the pyramid. Each one sits in a small card tube that points
+            its light outwards, and rolled-mesh struts hold the layers away from the lights so they glow evenly instead
+            of showing as spots. Every LED has a position in the digital twin, which is how the software knows what
+            colour to give it.
+          </p>
+          <p><a href={url("/process/2026-09-02-inside-the-pyramid/")}>Aiming the light →</a></p>
+        </div>
+        <div class="make-media two">
+          <Figure src={insideStruts} alt="Inside the pyramid: LEDs in card tubes on a square mesh, with rolled-mesh struts between them, lit blue." caption="Card tubes and struts." ratio="4 / 5" class="reveal" />
+          <VideoClip name="cloud-led" orientation="portrait" caption="The LEDs inside the cloud." class="reveal" />
+        </div>
+      </article>
+      </details>
+
+      <details class="tech">
+        <summary>
+          <span class="tech-num">03</span>
+          <span class="tech-kicker">Layers</span>
+          <span class="tech-title">Four soft layers</span>
+          <span class="tech-chev" aria-hidden="true"></span>
+        </summary>
+      <article class="make">
+        <div class="make-text reveal">
+          <p>
+            Around the core are four layers, from the inside out: a nylon diffuser, thick polyester wadding, a white
+            hexagonal mesh, and pulled cotton for the cumulus surface. Each softens the light a little more, so hundreds
+            of points become one glow.
           </p>
           <p>
-            For the alpha we returned to the loose polyester fibre of our first lit cloud bottom, the kind used to stuff
-            cushions. Layered over a white hexagonal mesh and pinned in place with bamboo skewers, it hides the individual
-            lights and turns them into a soft glow with darker folds.
-          </p>
-          <p>
-            <a href={url("/process/2026-05-21-mesh-and-tulle/")}>Mesh and tulle →</a>
+            <a href="#fabrication">The layers in detail ↑</a>
             <br />
-            <a href={url("/process/2026-07-30-the-alpha-cloud/")}>Fibre and skewers →</a>
+            <a href={url("/process/2026-08-26-layers/")}>Building the layers →</a>
           </p>
         </div>
-        <div class="make-media three">
-          <Figure src={meshZephir} alt="Zéphir shaping green plastic mesh on the studio floor." caption="Mesh, May 2026." ratio="3 / 4" class="reveal" />
-          <Figure src={tulleAssembly} alt="Zéphir fixing layers of tulle to a stand." caption="Tulle, June 2026." ratio="3 / 4" class="reveal" />
-          <Figure src={buildSkewers} alt="Hands pinning fibre into hexagonal mesh with a bamboo skewer." caption="Fibre, July 2026." ratio="3 / 4" class="reveal" />
+        <div class="make-media two">
+          <Figure src={layersShowing} alt="The cloud glowing pink, with its layers of wadding and mesh visible at the edge." caption="The layers at the edge." ratio="4 / 5" class="reveal" />
+          <Figure src={thickWadding} alt="Thick white wadding glowing over the lights." caption="Wadding gives it a body." ratio="4 / 5" class="reveal" />
         </div>
       </article>
+      </details>
 
+      <details class="tech">
+        <summary>
+          <span class="tech-num">04</span>
+          <span class="tech-kicker">Power</span>
+          <span class="tech-title">Battery, converter, controller</span>
+          <span class="tech-chev" aria-hidden="true"></span>
+        </summary>
       <article class="make">
         <div class="make-text reveal">
-          <p class="make-num">02 · Light</p>
-          <h3>A glow inside, a sun below</h3>
           <p>
-            LEDs inside the cloud make it glow from within. An addressable LED matrix could create gradients, travelling
-            light and lightning. Lit from the floor by a projector, the tulle throws beams and casts its shadow onto the
-            ceiling. That gave us the idea that the audience might be the sun.
+            The cloud runs from a battery, so there are no mains cables near people lying on the floor. A buck converter
+            steps the voltage down for the LEDs, and an ESP32-based controller receives colours from the software over
+            the network. The first converter ran hot in the alpha, so it was replaced with a larger one.
           </p>
-          <p>
-            In the alpha, rows of addressable LED pixels are tied across a pyramid inside the fibre, driven by an ESP32
-            controller. Before anyone lay underneath, we checked the wiring with a thermal camera.
-          </p>
-          <p><a href={url("/process/2026-06-24-breath-as-sound/")}>Read about being the sun →</a></p>
+          <p><a href="#getting-ready">The electronics in the alpha ↑</a></p>
         </div>
-        <div class="make-media three">
-          <VideoClip name="cloud-led" orientation="portrait" caption="LEDs inside the cloud." class="reveal" />
-          <VideoClip name="led-matrix" orientation="portrait" caption="LED matrix test." class="reveal" />
-          <Figure src={tulleLight2} alt="The tulle cloud lit blue and green near the ceiling." caption="Projected light through tulle." ratio="9 / 16" class="reveal" />
+        <div class="make-media two">
+          <Figure src={betterBuck} alt="A larger buck converter wired to a new LED controller." caption="The new converter and controller." ratio="4 / 5" class="reveal" />
+          <Figure src={elecController} alt="The LED controller board." caption="The controller." ratio="4 / 5" class="reveal" />
         </div>
       </article>
+      </details>
 
-      <article class="make" id="breath">
+      <details class="tech" id="breath">
+        <summary>
+          <span class="tech-num">05</span>
+          <span class="tech-kicker">Breath</span>
+          <span class="tech-title">A belt that listens</span>
+          <span class="tech-chev" aria-hidden="true"></span>
+        </summary>
+      <article class="make">
         <div class="make-text reveal">
-          <p class="make-num">03 · Breath</p>
-          <h3>A belt that listens</h3>
           <p>
             Each participant wears a light belt with a stretch sensor. A tiny ESP32-C3 board sends the reading
             wirelessly as OSC messages to TouchDesigner, which detects the start of each in- and out-breath. Below are
@@ -431,56 +581,22 @@ const contents = [
       <div class="reveal chart">
         <BreathChart />
       </div>
+      </details>
 
-      <article class="make">
-        <div class="make-text reveal">
-          <p class="make-num">04 · Sound</p>
-          <h3>Wind that turns into chimes</h3>
-          <p>
-            We imagine the soundscape moving from field recordings (wind in bare trees, a distant dawn chorus)
-            towards something more musical as the experience builds. Each out-breath becomes a sound object that drifts up
-            and plays the cloud. Notes arriving together form chords, and held chords swell into drones. Thunder
-            answers lightning.
-          </p>
-          <p>
-            One idea we are exploring is generative audio morphs. A generative audio model partially denoises a nature
-            recording towards a prompt like “wind chimes”, and we pre-render a continuum of steps between the two to
-            crossfade as the room synchronises.
-          </p>
-        </div>
-        <div class="make-media sound-card reveal">
-          <p class="eyebrow">Listening list</p>
-          <ul>
-            <li>Varandas — <em>Slow Down the Wind, the Clouds Need a Break</em></li>
-            <li>Timothy Garrett — <em>Divergent Paths</em></li>
-            <li>World of White Ice — <em>Frost</em></li>
-            <li>Luke Kokoszka</li>
-            <li>Field recordings: wind, bare trees, dawn chorus</li>
-          </ul>
-        </div>
-      </article>
+      <p class="tech-more reveal">
+        Mesh, tulle, projectors, LED matrices: the experiments that led here are in the <a href={url("/process/")}>process journal →</a>
+      </p>
 
-      <article class="make">
+      <h3 class="tech-group reveal">Software</h3>
+      <details class="tech" id="software">
+        <summary>
+          <span class="tech-num">06</span>
+          <span class="tech-kicker">Software</span>
+          <span class="tech-title">A vibe-coded instrument and a digital twin</span>
+          <span class="tech-chev" aria-hidden="true"></span>
+        </summary>
+      <article class="make software">
         <div class="make-text reveal">
-          <p class="make-num">05 · Structure</p>
-          <h3>A skeleton for something soft</h3>
-          <p>
-            Soft materials won’t hold a shape on their own. We 3D-printed joints, slotted wooden dowels into them to make a
-            low pyramid, wrapped it in the same green mesh as our first cloud, and spray-painted the whole thing white so
-            it wouldn’t tint the light. It carries the LEDs, and the fibre shell hangs around it.
-          </p>
-          <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>Read about the frame →</a></p>
-        </div>
-        <div class="make-media two">
-          <Figure src={printFrame} alt="A 3D printer printing a white frame part." caption="Printing joints, July 2026." ratio="4 / 5" class="reveal" />
-          <Figure src={buildFrameAssembly} alt="Looking up through a mesh-wrapped wooden frame with LED pixels tied along it." caption="The pyramid, strung with LEDs." ratio="4 / 5" class="reveal" />
-        </div>
-      </article>
-
-      <article class="make software" id="software">
-        <div class="make-text reveal">
-          <p class="make-num">06 · Software</p>
-          <h3>A vibe-coded instrument and a digital twin</h3>
           <p>
             There was no off-the-shelf tool for lighting a cloud, so we made one. The software was
             <em>vibe coded</em>: written in conversation with AI coding assistants, one idea at a time. We described
@@ -510,15 +626,21 @@ const contents = [
           class="reveal"
         />
       </article>
+      </details>
 
 <div class="tour">
         {
           tour.map((t, i) => (
             <>
-            <div class:list={['tour-row reveal', { wide: t.wide, flip: i % 2 === 1 }]}>
+            <details class="tech">
+              <summary>
+                <span class="tech-num">{String(i + 7).padStart(2, '0')}</span>
+                <span class="tech-kicker">{t.kicker}</span>
+                <span class="tech-title">{t.title}</span>
+                <span class="tech-chev" aria-hidden="true"></span>
+              </summary>
+            <div class:list={['tour-row', { wide: t.wide }]}>
               <div class="tour-text">
-                <p class="make-num">{t.kicker}</p>
-                <h3>{t.title}</h3>
                 {t.body.map((p) => <p>{p}</p>)}
               </div>
               {t.video ? (
@@ -536,11 +658,17 @@ const contents = [
                 <Figure src={t.img} alt={t.alt} caption={t.caption} widths={[800, 1400, 2000]} sizes="(min-width: 72rem) 44rem, 100vw" />
               )}
             </div>
+            </details>
             {t.kicker === 'LED mapping' && (
-            <div class="twin reveal" id="led-lighting">
+            <details class="tech" id="led-lighting">
+              <summary>
+                <span class="tech-num">07b</span>
+                <span class="tech-kicker">How each LED gets its colour</span>
+                <span class="tech-title">Light probes on a virtual cloud</span>
+                <span class="tech-chev" aria-hidden="true"></span>
+              </summary>
+            <div class="twin">
               <div class="twin-text">
-                <p class="make-num">How each LED gets its colour</p>
-                <h3>Light probes on a virtual cloud</h3>
                 <ol class="twin-steps">
                   <li>
                     <strong>A virtual surface.</strong> In the digital twin, a smooth 3D mesh is placed over the pyramid frame
@@ -577,6 +705,7 @@ const contents = [
                 sizes="(min-width: 72rem) 64rem, 100vw"
               />
             </div>
+            </details>
             )}
             </>
           ))
@@ -585,118 +714,48 @@ const contents = [
     </div>
   </section>
 
+  <section class="section dark after">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">What the alpha taught us</p>
+        <h2>Packed away, for now</h2>
+        <p class="lede">
+          The alpha is the latest Cloudfulness there is. It showed us what worked and what to change, and it is packed
+          up waiting for the next room.
+        </p>
+        <ul class="learned">
+          {
+            learned.map((l) => (
+              <li>
+                <strong>{l.title}</strong>
+                <p>{l.text}</p>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="links">
+          <a class="button" href={url('/process/2026-08-18-bump-mapping-the-diffuser/')}>After the alpha</a>
+          <a class="button" href={url('/concept/')}>The concept</a>
+        </p>
+      </div>
+      <Figure src={cloudInABag} alt="The alpha cloud packed into a large clear bag, sitting on top of a black cabinet in the workshop." caption="The alpha, packed up and waiting." ratio="3 / 4" class="reveal" />
+    </div>
+  </section>
 </Base>
 
+<script>
+  const openTarget = () => {
+    const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (el instanceof HTMLDetailsElement && !el.open) {
+      el.open = true;
+      el.scrollIntoView();
+    }
+  };
+  openTarget();
+  window.addEventListener('hashchange', openTarget);
+</script>
+
 <style>
-  .contents {
-    padding-block: clamp(2.5rem, 5vw, 4rem);
-    background:
-      radial-gradient(ellipse 40% 80% at 0% 100%, rgb(179 164 238 / 0.18), transparent 70%),
-      radial-gradient(ellipse 40% 80% at 100% 0%, rgb(246 169 138 / 0.16), transparent 70%),
-      var(--paper-deep);
-  }
-  .contents ol {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
-    gap: 1rem;
-  }
-  .contents a {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    padding: 1.5rem 1.5rem 1.4rem;
-    border-radius: var(--radius);
-    background: rgb(255 255 255 / 0.75);
-    border: 1px solid rgb(255 255 255 / 0.9);
-    box-shadow: 0 1px 2px rgb(27 34 84 / 0.04), 0 10px 30px -12px rgb(27 34 84 / 0.12);
-    text-decoration: none;
-    color: inherit;
-    transition: transform 0.35s ease, box-shadow 0.35s ease;
-  }
-  .contents a:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 2px 4px rgb(27 34 84 / 0.05), 0 22px 40px -16px rgb(91 76 180 / 0.3);
-  }
-  .contents .icon {
-    width: 3.75rem;
-    height: 3.75rem;
-    padding: 0.55rem;
-    margin-bottom: 1.25rem;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #fff, rgb(179 164 238 / 0.28) 70%, rgb(246 169 138 / 0.3));
-    fill: none;
-    stroke: var(--ink);
-    stroke-width: 1.7;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .contents .num {
-    position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
-    font-family: var(--font-display);
-    font-size: 0.95rem;
-    color: var(--ink-faint);
-  }
-  .contents .label {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    line-height: 1.2;
-    margin-bottom: 0.35rem;
-  }
-  .contents .desc {
-    font-size: 0.88rem;
-    color: var(--ink-soft);
-    flex: 1;
-  }
-  .contents .arrow {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: var(--dusk);
-    transition: transform 0.35s ease;
-  }
-  .contents a:hover .arrow {
-    transform: translateY(3px);
-  }
-  :global(main [id]) {
-    scroll-margin-top: 4.5rem;
-  }
-  .built-in p {
-    color: var(--ink-soft);
-  }
-  .built-in a {
-    color: var(--ink);
-  }
-  .mapping {
-    margin: 0;
-    border-top: 1px solid var(--line);
-  }
-  .mapping div {
-    padding-block: 1.1rem;
-    border-bottom: 1px solid var(--line);
-  }
-  .mapping dt {
-    font-size: 0.8rem;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--dusk);
-    margin-bottom: 0.35rem;
-  }
-  .mapping dd {
-    margin: 0;
-    color: var(--ink-soft);
-  }
-  .mapping strong {
-    font-family: var(--font-display);
-    font-weight: 400;
-    font-size: 1.25rem;
-    color: var(--ink);
-  }
   .status {
     display: inline-flex;
     align-items: baseline;
@@ -727,41 +786,6 @@ const contents = [
     margin-bottom: 3rem;
     max-width: 44rem;
   }
-  .why-cloud {
-    display: grid;
-    grid-template-columns: 1fr minmax(14rem, 22rem);
-    gap: clamp(2rem, 6vw, 6rem);
-    align-items: start;
-  }
-  .why-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-    gap: 2rem 2.5rem;
-    margin-top: 2.5rem;
-  }
-  .why h3 {
-    font-size: 1.3rem;
-    margin-bottom: 0.3rem;
-  }
-  .why p {
-    color: var(--ink-soft);
-    font-size: 0.97rem;
-    margin: 0;
-  }
-  :global(.why-video) {
-    position: sticky;
-    top: 6rem;
-  }
-  @media (max-width: 860px) {
-    .why-cloud {
-      grid-template-columns: 1fr;
-    }
-    :global(.why-video) {
-      position: static;
-      max-width: 22rem;
-    }
-  }
-
   .fabrication {
     background: linear-gradient(180deg, var(--paper), var(--paper-deep));
   }
@@ -981,4 +1005,186 @@ const contents = [
     }
   }
 
+  .head {
+    margin-bottom: 3rem;
+  }
+  .small {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+  .evening {
+    background: linear-gradient(180deg, var(--night), #141a3d 55%, #2a1f52);
+  }
+  .evening p,
+  .screens p {
+    color: var(--ink-soft);
+  }
+
+
+  .screens {
+    background: linear-gradient(180deg, var(--paper), var(--paper-deep));
+  }
+
+  .elec {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: start;
+    padding-block: clamp(2rem, 4vw, 3rem);
+    border-top: 1px solid var(--line);
+    margin-bottom: clamp(3rem, 6vw, 5rem);
+  }
+  .elec-text p:not(.eyebrow) {
+    color: var(--ink-soft);
+  }
+  @media (max-width: 860px) {
+    .elec {
+      grid-template-columns: 1fr;
+    }
+  }
+  .build-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    margin-bottom: 1.5rem;
+  }
+  .build-head .eyebrow {
+    margin: 0;
+  }
+  .build-strip {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(13rem, 16rem);
+    gap: 1.25rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-bottom: 1rem;
+  }
+  .build-strip :global(figure) {
+    scroll-snap-align: start;
+  }
+
+  .after {
+    background: linear-gradient(180deg, #2a1f52, var(--night));
+  }
+  .after .grid-2 {
+    align-items: center;
+  }
+  .learned {
+    list-style: none;
+    margin: 2rem 0;
+    padding: 0;
+    border-top: 1px solid var(--line);
+  }
+  .learned li {
+    padding-block: 1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .learned strong {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: 1.25rem;
+    color: #f1f2fc;
+  }
+  .learned p {
+    margin: 0.25rem 0 0;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+  }
+  .links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+  }
+  .tech-more {
+    margin-top: 2rem;
+    font-size: 0.95rem;
+    opacity: 0.8;
+  }
+  .tech-group {
+    font-size: 0.78rem;
+    font-family: var(--font-body);
+    font-weight: 500;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 2.5rem 0 0.75rem;
+  }
+  .tech {
+    border-top: 1px solid var(--line);
+  }
+  .tech:last-of-type {
+    border-bottom: 1px solid var(--line);
+  }
+  .tech summary {
+    display: grid;
+    grid-template-columns: 3rem minmax(9rem, 14rem) 1fr 1.5rem;
+    align-items: baseline;
+    gap: 1rem;
+    padding: 1.1rem 0.25rem;
+    cursor: pointer;
+    list-style: none;
+    transition: background 0.25s;
+  }
+  .tech summary::-webkit-details-marker {
+    display: none;
+  }
+  .tech summary:hover {
+    background: rgb(255 255 255 / 0.03);
+  }
+  .tech-num {
+    font-family: var(--font-display);
+    font-style: italic;
+    color: var(--ink-faint);
+  }
+  .tech-kicker {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--dusk);
+  }
+  .tech-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 1rem + 0.5vw, 1.45rem);
+  }
+  .tech-chev {
+    justify-self: end;
+    width: 0.6rem;
+    height: 0.6rem;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translateY(-0.2rem) rotate(45deg);
+    transition: transform 0.3s;
+    opacity: 0.6;
+  }
+  .tech[open] .tech-chev {
+    transform: translateY(0.1rem) rotate(-135deg);
+  }
+  .tech[open] summary .tech-title {
+    color: #fff;
+  }
+  .tech .make,
+  .tech .tour-row,
+  .tech .twin {
+    border-top: 0;
+    padding-block: 0.5rem 2.5rem;
+  }
+  @media (max-width: 700px) {
+    .tech summary {
+      grid-template-columns: 2.2rem 1fr 1.2rem;
+    }
+    .tech-kicker {
+      grid-column: 2;
+    }
+    .tech-title {
+      grid-column: 2;
+    }
+    .tech-chev {
+      grid-column: 3;
+      grid-row: 1;
+    }
+  }
 </style>

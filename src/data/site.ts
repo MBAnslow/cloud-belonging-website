@@ -13,7 +13,7 @@ export const site = {
     },
     {
       name: 'Michael Anslow',
-      role: 'Creative technology, light & systems',
+      role: 'Research, creative technology, light & systems',
       bio: 'Researcher at Sony CSL Paris, co-creator of Funiki, a system for composing dynamic light and sound atmospheres.',
     },
   ],
@@ -21,7 +21,7 @@ export const site = {
 
 export const nav = [
   { href: '/installation/', label: 'Installation' },
-  { href: '/belonging/', label: 'Belonging' },
+  { href: '/concept/', label: 'Concept' },
   { href: '/process/', label: 'Process' },
   { href: '/toolkit/', label: 'Checklist' },
   { href: '/about/', label: 'About' },

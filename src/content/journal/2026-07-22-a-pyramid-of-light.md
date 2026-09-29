@@ -5,6 +5,31 @@ stage: Making
 summary: 'The printed parts became joints for a wooden frame. We wrapped it in the same green mesh as our very first cloud, covered it in LED pixels, and painted it white.'
 cover: ../../assets/photos/build-pyramid-floor.jpg
 coverAlt: 'A low pyramid of wooden dowels wrapped in green plastic mesh lies on a workshop floor, covered in rows of small LED pixels.'
+clips:
+  - name: journal/alpha-creating-pyramid-making-timelapse
+    caption: 'Building the pyramid, sped up.'
+  - name: journal/battery-works-success
+    caption: 'The battery works.'
+    portrait: true
+  - name: journal/early-lightning-pyramid-digital-twin
+    caption: 'Early lightning from the digital twin.'
+    portrait: true
+  - name: journal/zephir-animates-blow-effect-trial-pyramid-led
+    caption: 'Zéphir tries a blowing effect.'
+    portrait: true
+gallery:
+  - src: ../../assets/journal/2026-07-22-a-pyramid-of-light/pyramid-frame-making.jpg
+    alt: 'The frame comes together.'
+    caption: 'The frame comes together.'
+  - src: ../../assets/journal/2026-07-22-a-pyramid-of-light/pyramid-mwith-mesh-from-above.jpg
+    alt: 'Mesh over the frame.'
+    caption: 'Mesh over the frame.'
+  - src: ../../assets/journal/2026-07-22-a-pyramid-of-light/alpha-puttin-in-leds.jpg
+    alt: 'Putting in the LEDs.'
+    caption: 'Putting in the LEDs.'
+  - src: ../../assets/journal/2026-07-22-a-pyramid-of-light/led-mapping-starting-inside-frame.jpg
+    alt: 'Starting the mapping.'
+    caption: 'Starting the mapping.'
 tags: [structure, light, 3D printing, fabrication]
 ---
 

@@ -348,3 +348,25 @@ p {
     transform: none;
   }
 }
+
+/* Night theme: pages about the installation itself, which lives in a dark room. */
+html.theme-night {
+  --paper: #0b1026;
+  --paper-deep: #11173a;
+  --ink: #eceefb;
+  --ink-soft: #c5c8ea;
+  --ink-faint: #8f94c4;
+  --line: rgb(236 238 251 / 0.13);
+  --dusk: #aeb0f4;
+  color-scheme: dark;
+}
+html.theme-night .dark {
+  background: #10163a;
+}
+html.theme-night .site-header {
+  background: rgb(11 16 38 / 0.8);
+}
+html.theme-night .status,
+html.theme-night .pipeline {
+  background: rgb(255 255 255 / 0.06);
+}
