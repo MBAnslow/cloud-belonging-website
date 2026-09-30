@@ -11,6 +11,7 @@ interface Props {
 }
 
 const { eyebrow, title, lede, image, imageAlt = '' } = Astro.props;
+const seed = [...title].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 997, 7);
 ---
 
 <header class:list={['page-header', { 'has-image': !!image }]}>
@@ -27,7 +28,8 @@ const { eyebrow, title, lede, image, imageAlt = '' } = Astro.props;
           src={image}
           alt={imageAlt}
           widths={[500, 800, 1100]}
-          sizes="(min-width: 60rem) 30rem, 100vw"
+          sizes="(min-width: 60rem) 42rem, 100vw"
+          seed={seed}
           loading="eager"
           class="photo"
         />
@@ -47,7 +49,17 @@ const { eyebrow, title, lede, image, imageAlt = '' } = Astro.props;
     align-items: center;
   }
   .has-image .inner {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  }
+  .text {
+    position: relative;
+    z-index: 1;
+  }
+  .has-image :global(.photo) {
+    margin-left: clamp(-9rem, -7vw, -2rem);
+    margin-right: clamp(-4rem, -3vw, 0rem);
+    position: relative;
+    z-index: 0;
   }
   .eyebrow {
     margin-bottom: 1rem;
@@ -66,6 +78,9 @@ const { eyebrow, title, lede, image, imageAlt = '' } = Astro.props;
   @media (max-width: 860px) {
     .has-image .inner {
       grid-template-columns: 1fr;
+    }
+    .has-image :global(.photo) {
+      margin: 0;
     }
   }
 </style>

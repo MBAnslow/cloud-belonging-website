@@ -1,6 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
+import { cloudMasks, defaultTexture, fadeVars } from '../lib/cloudMask';
 
 interface Props {
   src: ImageMetadata;
@@ -14,90 +15,92 @@ interface Props {
 }
 
 const { src, alt, widths = [600, 1000, 1400], sizes = '100vw', seed = 3, loading = 'lazy', keep = [], class: className } = Astro.props;
-
-let rng = seed * 9301 + 49297;
-const rand = () => {
-  rng = (rng * 9301 + 49297) % 233280;
-  return rng / 233280;
-};
-const lobes = 11;
-const blobs: number[][] = [[50, 50, 32, 30]];
-for (let i = 0; i < lobes; i++) {
-  const angle = ((i + rand() * 0.6) / lobes) * Math.PI * 2;
-  const reach = 0.62 + rand() * 0.22;
-  const size = 9 + rand() * 11;
-  blobs.push([50 + Math.cos(angle) * 34 * reach, 50 + Math.sin(angle) * 32 * reach, size * (0.9 + rand() * 0.4), size]);
-}
-const inset = 0.92;
-const shape = (k: number) =>
-  blobs
-    .map(([cx, cy, rx, ry]) => `<ellipse cx='${50 + (cx - 50) * inset}' cy='${50 + (cy - 50) * inset}' rx='${rx * k * inset}' ry='${ry * k * inset}'/>`)
-    .join('');
-
-const mask = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'>
-<filter id='soft' x='-30%' y='-30%' width='160%' height='160%'><feGaussianBlur stdDeviation='2'/></filter>
-<filter id='core' x='-20%' y='-20%' width='140%' height='140%'>
-<feTurbulence type='fractalNoise' baseFrequency='0.045' numOctaves='3' seed='${seed}'/>
-<feDisplacementMap in='SourceGraphic' scale='16'/>
-<feGaussianBlur stdDeviation='1'/>
-</filter>
-<filter id='bleed' x='-20%' y='-20%' width='140%' height='140%'>
-<feTurbulence type='fractalNoise' baseFrequency='0.035' numOctaves='3' seed='${seed + 5}'/>
-<feDisplacementMap in='SourceGraphic' scale='30'/>
-<feGaussianBlur stdDeviation='2'/>
-</filter>
-<filter id='fringe' x='-20%' y='-20%' width='140%' height='140%'>
-<feTurbulence type='fractalNoise' baseFrequency='0.16' numOctaves='5' seed='${seed + 9}'/>
-<feDisplacementMap in='SourceGraphic' scale='14' result='d'/>
-<feGaussianBlur in='d' stdDeviation='0.8' result='b'/>
-<feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' seed='${seed + 3}'/>
-<feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.4 1.5' result='g'/>
-<feComposite in='b' in2='g' operator='in'/>
-</filter>
-<g fill='white'>
-<g filter='url(#fringe)' opacity='0.5'>${shape(1.04)}</g>
-<g filter='url(#bleed)' opacity='0.7'>${shape(0.96)}</g>
-<g filter='url(#core)'>${shape(0.84)}</g>
-${keep.map(([cx, cy, rx, ry]) => `<ellipse cx='${cx}' cy='${cy}' rx='${rx}' ry='${ry}' filter='url(#soft)'/>`).join('')}
-</g>
-</svg>`;
-
-const spill = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'>
-<filter id='s' x='-30%' y='-30%' width='160%' height='160%'>
-<feTurbulence type='fractalNoise' baseFrequency='0.03' numOctaves='4' seed='${seed + 13}'/>
-<feDisplacementMap in='SourceGraphic' scale='34' result='d'/>
-<feGaussianBlur in='d' stdDeviation='1.6' result='b'/>
-<feTurbulence type='fractalNoise' baseFrequency='0.5' numOctaves='3' seed='${seed + 4}'/>
-<feColorMatrix type='matrix' values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 -1.6 1.7' result='g'/>
-<feComposite in='b' in2='g' operator='in'/>
-</filter>
-<g fill='white' filter='url(#s)'>
-<g opacity='0.55'>${shape(1)}</g>
-<ellipse cx='${10 + (seed % 5) * 3}' cy='${70 + (seed % 3) * 6}' rx='16' ry='10' opacity='0.8'/>
-<ellipse cx='${88 - (seed % 4) * 3}' cy='${18 + (seed % 4) * 5}' rx='14' ry='9' opacity='0.7'/>
-<ellipse cx='${60 + (seed % 3) * 8}' cy='93' rx='12' ry='6' opacity='0.6'/>
-</g>
-</svg>`;
-
-const toUrl = (svg: string) => `url("data:image/svg+xml,${encodeURIComponent(svg.replace(/\n/g, ''))}")`;
+const { mask, spill } = cloudMasks(seed, keep);
 ---
 
-<div class:list={['cloud-frame', className]} style={`--mask:${toUrl(mask)};--spill:${toUrl(spill)}`}>
+<div
+  class:list={['cloud-frame', className]}
+  style={`--mask:${mask};--spill:${spill};${fadeVars(defaultTexture)}`}
+  data-seed={seed}
+  data-keep={JSON.stringify(keep)}
+>
   <Image src={src} alt="" widths={[400]} sizes="400px" loading={loading} class="spill" aria-hidden="true" />
   <Image src={src} alt={alt} widths={widths} sizes={sizes} loading={loading} class="main" />
 </div>
+
+<script>
+  import { cloudMasks, defaultTexture, fadeVars, type CloudTexture } from '../lib/cloudMask';
+
+  const params = new URLSearchParams(location.search);
+  if (params.has('cloud-debug') && !document.querySelector('.cloud-debug')) {
+    const texture: CloudTexture = { ...defaultTexture };
+    const controls: [keyof CloudTexture, string, number, number, number][] = [
+      ['grainScale', 'Edge grain size (low = zoomed in)', 0.05, 1.5, 0.01],
+      ['grainAmount', 'Edge grain strength', 0, 1.5, 0.01],
+      ['fringeOpacity', 'Outer fringe opacity', 0, 1, 0.01],
+      ['spillGrainScale', 'Spill grain size (low = zoomed in)', 0.05, 1.5, 0.01],
+      ['spillGrainAmount', 'Spill grain strength', 0, 1.5, 0.01],
+      ['fadeStart', 'Photo fade starts (% from centre)', 0, 100, 1],
+      ['fadeEnd', 'Photo fully faded (% from centre)', 1, 140, 1],
+      ['spillFadeStart', 'Spill fade starts (% from centre)', 0, 100, 1],
+      ['spillFadeEnd', 'Spill fully faded (% from centre)', 1, 140, 1],
+      ['scale', 'Image scale', 0.8, 1.6, 0.01],
+    ];
+
+    const apply = () => {
+      document.querySelectorAll<HTMLElement>('.cloud-frame').forEach((el) => {
+        const { mask, spill } = cloudMasks(Number(el.dataset.seed), JSON.parse(el.dataset.keep || '[]'), texture);
+        el.style.setProperty('--mask', mask);
+        el.style.setProperty('--spill', spill);
+        fadeVars(texture).split(';').forEach((d) => {
+          const [k, v] = d.split(':');
+          el.style.setProperty(k, v);
+        });
+      });
+    };
+
+    const panel = document.createElement('div');
+    panel.className = 'cloud-debug';
+    panel.innerHTML = `<strong>Cloud crop texture</strong>${controls
+      .map(
+        ([key, label, min, max, step]) =>
+          `<label>${label}<span><input type="range" name="${key}" min="${min}" max="${max}" step="${step}" value="${texture[key]}"><output>${texture[key]}</output></span></label>`,
+      )
+      .join('')}<button type="button">Copy values</button>`;
+    panel.addEventListener('input', (e) => {
+      const input = e.target as HTMLInputElement;
+      texture[input.name as keyof CloudTexture] = Number(input.value);
+      input.nextElementSibling!.textContent = input.value;
+      apply();
+    });
+    panel.querySelector('button')!.addEventListener('click', (e) => {
+      navigator.clipboard.writeText(JSON.stringify(texture));
+      (e.target as HTMLButtonElement).textContent = 'Copied';
+    });
+    Object.assign(panel.style, {
+      position: 'fixed', right: '1rem', bottom: '1rem', zIndex: '9999', width: '18rem', padding: '0.9rem 1rem',
+      display: 'grid', gap: '0.55rem', font: '12px/1.3 system-ui, sans-serif', color: '#111',
+      background: 'rgba(255,255,255,0.94)', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 6px 24px rgba(0,0,0,0.15)',
+    });
+    panel.querySelectorAll('label').forEach((l) => Object.assign(l.style, { display: 'grid', gap: '0.2rem' }));
+    panel.querySelectorAll('label span').forEach((s) => Object.assign((s as HTMLElement).style, { display: 'flex', gap: '0.5rem', alignItems: 'center' }));
+    panel.querySelectorAll('input').forEach((i) => (i.style.flex = '1'));
+    document.body.append(panel);
+  }
+</script>
 
 <style>
   .cloud-frame {
     position: relative;
     isolation: isolate;
+    scale: var(--cloud-scale, 1);
   }
   .cloud-frame :global(img.main) {
     display: block;
     width: 100%;
     height: auto;
-    -webkit-mask-image: var(--mask), radial-gradient(closest-side, #000 92%, transparent 100%);
-    mask-image: var(--mask), radial-gradient(closest-side, #000 92%, transparent 100%);
+    -webkit-mask-image: var(--mask), radial-gradient(closest-side, #000 var(--fade-start), transparent var(--fade-end));
+    mask-image: var(--mask), radial-gradient(closest-side, #000 var(--fade-start), transparent var(--fade-end));
     -webkit-mask-size: 100% 100%;
     mask-size: 100% 100%;
     -webkit-mask-repeat: no-repeat;
@@ -116,8 +119,8 @@ const toUrl = (svg: string) => `url("data:image/svg+xml,${encodeURIComponent(svg
     object-fit: cover;
     filter: blur(14px) saturate(1.6) brightness(1.05);
     opacity: 0.8;
-    -webkit-mask-image: var(--spill), radial-gradient(closest-side, #000 70%, transparent 99%);
-    mask-image: var(--spill), radial-gradient(closest-side, #000 70%, transparent 99%);
+    -webkit-mask-image: var(--spill), radial-gradient(closest-side, #000 var(--spill-fade-start), transparent var(--spill-fade-end));
+    mask-image: var(--spill), radial-gradient(closest-side, #000 var(--spill-fade-start), transparent var(--spill-fade-end));
     -webkit-mask-size: 100% 100%;
     mask-size: 100% 100%;
     -webkit-mask-repeat: no-repeat;
