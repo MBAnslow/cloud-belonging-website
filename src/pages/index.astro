@@ -166,11 +166,12 @@ const tried = [
         if (reduce) return;
         hero.classList.add('intro-playing');
         var timer;
-        var finish = function () {
+        var finish = function (e) {
           clearTimeout(timer);
           if (!hero.classList.contains('intro-playing')) return;
           hero.classList.remove('intro-playing');
           hero.classList.add('intro-done');
+          if (e) hero.classList.add('intro-skipped');
           ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (t) {
             window.removeEventListener(t, finish);
           });
@@ -431,6 +432,9 @@ const tried = [
   }
   .intro-done .hero-intro {
     animation: intro-leave 3.5s ease-in forwards;
+  }
+  .intro-skipped .hero-intro {
+    animation: intro-leave 0.5s ease-out forwards;
   }
   @keyframes intro-leave {
     to {
