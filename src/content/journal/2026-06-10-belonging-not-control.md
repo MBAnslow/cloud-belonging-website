@@ -1,7 +1,7 @@
 ---
 title: 'Belonging, not control'
 date: 2026-06-10
-stage: Exploration
+stage: 'Concept formation'
 summary: 'There is a difference between having control and playing a role. What if, for a while, participants could enter the logic of a cloud?'
 tags: [interbeing, impermanence, agency]
 ---

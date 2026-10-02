@@ -3,7 +3,6 @@ import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import BreathChart from '../components/BreathChart.astro';
-import VideoClip from '../components/VideoClip.astro';
 import Figure from '../components/Figure.astro';
 import insideStruts from '../assets/journal/post-alpha/inside-pyramid-leds-struts.jpg';
 import layersShowing from '../assets/journal/post-alpha/different-layers-showing.jpg';
@@ -12,8 +11,8 @@ import betterBuck from '../assets/journal/post-alpha/better-buck-converter-diffe
 import MediaGallery, { type GalleryItem } from '../components/MediaGallery.astro';
 
 import beltSketch from '../assets/photos/belt-sketch.jpg';
-import printFrame from '../assets/photos/print-frame-1.jpg';
-import buildFrameAssembly from '../assets/photos/build-frame-assembly.jpg';
+import printedJoints from '../assets/journal/2026-07-17-printing-a-frame/pyramid-3d-joints-printed.jpg';
+import pyramidFrameMaking from '../assets/journal/2026-07-22-a-pyramid-of-light/pyramid-frame-making.jpg';
 
 import cloudMaterials from '../assets/photos/cloud-materials.jpg';
 import ledLightingDiagram from '../assets/photos/led-lighting-diagram.jpg';
@@ -49,6 +48,8 @@ import elecFanFix from '../assets/alpha/elec-fan-fix.jpg';
 import buildDowels from '../assets/photos/build-dowels.jpg';
 import buildPyramidCourtyard from '../assets/photos/build-pyramid-courtyard.jpg';
 import buildLedCloud from '../assets/photos/build-led-cloud.jpg';
+import ledsInsideFrame from '../assets/journal/2026-07-22-a-pyramid-of-light/led-mapping-starting-inside-frame.jpg';
+import puttingInLeds from '../assets/journal/2026-07-22-a-pyramid-of-light/alpha-puttin-in-leds.jpg';
 import buildSkewersMesh from '../assets/photos/build-skewers-mesh.jpg';
 import buildShell from '../assets/photos/build-shell.jpg';
 import buildThermal from '../assets/photos/build-thermal.jpg';
@@ -224,7 +225,7 @@ const prep: GalleryItem[] = [
 
 const buildSteps = [
   { src: buildDowels, date: '21 Jul', caption: 'Dowels and printed joints', alt: 'Wooden dowels and 3D-printed joints laid out on the workshop floor.' },
-  { src: buildFrameAssembly, date: '21 Jul', caption: 'LED pixels tied to a mesh pyramid', alt: 'Looking up through a mesh-wrapped wooden frame with LED pixels tied along it.' },
+  { src: ledsInsideFrame, date: '21 Jul', caption: 'LED pixels tied inside a mesh pyramid', alt: 'Looking up inside the mesh-wrapped pyramid, with strings of LED pixels zip-tied along each face.' },
   { src: buildPyramidCourtyard, date: '22 Jul', caption: 'Painted white in the courtyard', alt: 'The painted pyramid drying on cardboard in a narrow courtyard.' },
   { src: buildLedCloud, date: '24 Jul', caption: 'First fibre over the lights', alt: 'A mound of fibre glowing violet on top of a frame of LED pixels.' },
   { src: buildSkewersMesh, date: '24 Jul', caption: 'Fibre pinned with bamboo skewers', alt: 'Close-up of fibre on hexagonal mesh, held by bamboo skewers.' },
@@ -248,7 +249,7 @@ const learned = [
   },
   {
     title: 'The cloud looked flat up close',
-    text: 'From underneath, a single fibre layer showed its lights. After the alpha we rebuilt it in layers, with a diffuser, wadding and cotton, and used bump mapping in the software to fake depth.',
+    text: 'From underneath, a single fibre layer showed its lights. After the alpha we rebuilt it in layers, with a diffuser, wadding and cotton, and gave the digital twin bumps so the light follows the cloud’s shape.',
   },
   {
     title: 'Heat and power are part of the design',
@@ -417,8 +418,8 @@ const learned = [
           <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>Building the pyramid →</a></p>
         </div>
         <div class="make-media two">
-          <Figure src={printFrame} alt="A 3D printer printing a white frame part." caption="Printed joints." ratio="4 / 5" class="reveal" />
-          <Figure src={buildFrameAssembly} alt="Looking up through a mesh-wrapped wooden frame with LED pixels tied along it." caption="The pyramid, strung with LEDs." ratio="4 / 5" class="reveal" />
+          <Figure src={printedJoints} alt="The 3D-printed joints for the pyramid frame." caption="Printed joints." ratio="4 / 5" class="reveal" />
+          <Figure src={pyramidFrameMaking} alt="The wooden dowel frame of the pyramid coming together with its printed joints." caption="The frame comes together." ratio="4 / 5" class="reveal" />
         </div>
       </article>
       </details>
@@ -427,21 +428,21 @@ const learned = [
         <summary>
           <span class="tech-num">02</span>
           <span class="tech-kicker">Light</span>
-          <span class="tech-title">LED pixels across the pyramid</span>
+          <span class="tech-title">LED pixels inside the pyramid</span>
           <span class="tech-chev" aria-hidden="true"></span>
         </summary>
       <article class="make">
         <div class="make-text reveal">
           <p>
-            Rows of addressable LED pixels are tied across the pyramid, driven by an ESP32 controller. Each pixel can
+            Rows of addressable LED pixels are tied along the inside of the pyramid, driven by an ESP32 controller. Each pixel can
             take its own colour and brightness, and each has a position in the digital twin, which is how the software
             knows what colour to give it.
           </p>
           <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>A pyramid of light →</a></p>
         </div>
         <div class="make-media two">
-          <Figure src={buildLedCloud} alt="LED pixels glowing inside the frame before the fibre went on." caption="The pixels, before the fibre." ratio="4 / 5" class="reveal" />
-          <VideoClip name="cloud-led" orientation="portrait" caption="The LEDs inside the cloud." class="reveal" />
+          <Figure src={ledsInsideFrame} alt="Looking up inside the mesh-wrapped pyramid, with strings of LED pixels zip-tied in rows along each face." caption="Inside the pyramid." ratio="4 / 5" class="reveal" />
+          <Figure src={puttingInLeds} alt="Michael zip-tying LED pixels onto one mesh-covered face of the pyramid frame." caption="Tying in the pixels." ratio="4 / 5" class="reveal" />
         </div>
       </article>
       </details>
@@ -714,12 +715,12 @@ const learned = [
           <Figure src={betterBuck} alt="A larger buck converter wired to a new LED controller." ratio="4 / 3" />
           <h3>Cooler electronics</h3>
           <p>A larger buck converter and a new controller, so the cloud no longer needs a fan to stay cool.</p>
-          <a href={url("/process/2026-09-02-inside-the-pyramid/")}>New electronics →</a>
+          <a href={url("/process/2026-09-03-cooler-electronics/")}>New electronics →</a>
         </article>
         <article class="reveal">
           <Figure src={layersShowing} alt="The rebuilt cloud glowing pink, with its layers visible at the edge." ratio="4 / 3" />
           <h3>New light in the software</h3>
-          <p>Bump mapping for depth, highlights where the sun catches the top, and sprites that arrive with their own sound.</p>
+          <p>Bumps in the digital twin for depth, highlights where the sun catches the top, and sprites that arrive with their own sound.</p>
           <a href={url("/process/2026-09-16-better-sprites/")}>Sprites with sound →</a>
         </article>
       </div>
@@ -746,7 +747,7 @@ const learned = [
           }
         </ul>
         <p class="links">
-          <a class="button" href={url('/process/2026-08-18-bump-mapping-the-diffuser/')}>After the alpha</a>
+          <a class="button" href={url('/process/2026-08-18-giving-the-digital-twin-bumps/')}>After the alpha</a>
           <a class="button" href={url('/concept/')}>The concept</a>
         </p>
       </div>

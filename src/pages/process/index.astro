@@ -6,7 +6,6 @@ import { getJournal } from '../../lib/journal';
 import { url } from '../../lib/url';
 import VideoClip from '../../components/VideoClip.astro';
 import Figure from '../../components/Figure.astro';
-import BreathSync from '../../components/BreathSync.astro';
 import alphaTeaser from '../../assets/alpha/visitors-under-cloud.jpg';
 import buildStuffing from '../../assets/photos/build-stuffing.jpg';
 import visitCeiling from '../../assets/photos/visit-cloud-ceiling.jpg';
@@ -14,7 +13,7 @@ import visitFire from '../../assets/photos/visit-tv-fire.jpg';
 import visitStars from '../../assets/photos/visit-stars.jpg';
 
 const entries = await getJournal();
-const stages = ['Proposal', 'Exploration', 'Making', 'Sharing'] as const;
+const stages = ['Proposal', 'Concept formation', 'Making', 'Sharing'] as const;
 
 const lessons = [
   {
@@ -169,32 +168,6 @@ for (const entry of entries) {
         </div>
       </div>
       <VideoClip name="simulation" ratio="1280 / 636" caption="Screen recording of the July 2026 simulation." class="reveal" />
-    </div>
-  </section>
-
-  <section class="section try" id="try">
-    <div class="wrap">
-      <div class="grid-2 try-head">
-        <div class="reveal">
-          <p class="eyebrow">Try it</p>
-          <h2>Breath synchrony, in your browser</h2>
-        </div>
-        <div class="reveal">
-          <p>
-            In the installation, a sensor follows your real breathing. Here, a button stands in for it. Your breath is
-            the large cloud, which swells and glows as you breathe in. The smaller clouds drift at their own rhythms,
-            and as you breathe slowly and steadily they gradually fall into step with you. Hold the rhythm long enough
-            and the sky brightens.
-          </p>
-          <p class="small">
-            This playful web version extends the idea beyond the installation. The small clouds are modelled as coupled
-            oscillators (a Kuramoto model), the same maths often used to describe fireflies flashing in unison.
-          </p>
-        </div>
-      </div>
-      <div class="reveal">
-        <BreathSync />
-      </div>
     </div>
   </section>
 
@@ -370,8 +343,7 @@ for (const entry of entries) {
     margin-bottom: 3rem;
     max-width: 44rem;
   }
-  .sim-head,
-  .try-head {
+  .sim-head {
     margin-bottom: 3rem;
   }
   .alpha {

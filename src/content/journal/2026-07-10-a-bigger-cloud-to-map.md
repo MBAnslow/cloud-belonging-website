@@ -3,6 +3,8 @@ title: 'A bigger cloud to map'
 date: 2026-07-10
 stage: Making
 summary: 'A larger cloud with LEDs mapped inside it: dawn, moonlight and the first real lightning.'
+cover: ../../assets/journal/2026-07-10-a-bigger-cloud-to-map/inside-spheroid-cloud.jpg
+coverAlt: 'Inside the spheroid cloud, with its mapped LEDs.'
 clips:
   - name: journal/zoom-in-spheroid-cloud
     caption: 'Up close.'
@@ -17,6 +19,9 @@ gallery:
   - src: ../../assets/journal/2026-07-10-a-bigger-cloud-to-map/inside-spheroid-cloud.jpg
     alt: 'Inside the spheroid.'
     caption: 'Inside the spheroid.'
+  - src: ../../assets/journal/2026-07-10-a-bigger-cloud-to-map/inside-spheroid-cloud-2.jpg
+    alt: 'Another view inside the spheroid cloud, with its LEDs.'
+    caption: 'Inside, from another side.'
   - src: ../../assets/journal/2026-07-10-a-bigger-cloud-to-map/moonlight.jpg
     alt: 'Moonlight.'
     caption: 'Moonlight.'

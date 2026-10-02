@@ -253,7 +253,7 @@ p {
   background: rgb(154 157 234 / 0.28);
   color: #33418f;
 }
-.tag[data-stage='Exploration'] {
+.tag[data-stage='Concept formation'] {
   background: rgb(220 167 211 / 0.35);
   color: #7a3f73;
 }

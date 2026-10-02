@@ -1,7 +1,7 @@
 ---
 title: 'Narrowing down: something you can take home'
 date: 2026-05-13
-stage: Exploration
+stage: 'Concept formation'
 summary: 'We decide the experience should outlive the room — so that the next time you see a cloud, something of it comes back.'
 tags: [design principles, transfer, perspective]
 ---

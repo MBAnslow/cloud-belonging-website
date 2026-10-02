@@ -1,7 +1,7 @@
 ---
 title: 'A conversation with Amos Blanton'
 date: 2026-06-26
-stage: Exploration
+stage: 'Concept formation'
 summary: 'Exhalations that form a cloud, the Diamond Sutra, Olafur Eliasson — and designing for an adjacent possible that people can lean into.'
 tags: [inspiration, tinkering, workshop]
 ---

@@ -1,7 +1,7 @@
 ---
 title: 'Scouting the theatre at ENS'
 date: 2026-07-22
-stage: Exploration
+stage: Making
 summary: 'A look at a theatre space for a future version of the cloud.'
 gallery:
   - src: ../../assets/journal/2026-07-22-scouting-the-theatre/scouting-theatre.jpg

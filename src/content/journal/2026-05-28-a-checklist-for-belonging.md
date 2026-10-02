@@ -1,7 +1,7 @@
 ---
 title: 'A checklist for belonging'
 date: 2026-05-28
-stage: Exploration
+stage: 'Concept formation'
 summary: 'How to share without pressure — and the idea that one output of this project could be a tool other people use.'
 tags: [sharing, toolkit, literature]
 ---

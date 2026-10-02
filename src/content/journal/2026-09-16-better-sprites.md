@@ -1,7 +1,7 @@
 ---
 title: 'Sprites that arrive with a sound'
 date: 2026-09-16
-stage: Exploration
+stage: Making
 summary: 'The strange flashes of the magical twilight now come with their own sound cues, so light and sound strike together.'
 cover: ../../assets/journal/post-alpha/sprite-flare.jpg
 coverAlt: 'The cloud flaring magenta and violet in a dark workshop as a sprite passes through it.'

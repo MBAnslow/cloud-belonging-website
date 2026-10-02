@@ -1,7 +1,7 @@
 ---
 title: 'Highlights'
 date: 2026-09-09
-stage: Exploration
+stage: Making
 summary: 'Bright glints where the sun catches the top of the cloud, like the silver lining on a real cumulus.'
 cover: ../../assets/journal/post-alpha/highlight-still.jpg
 coverAlt: 'The cloud glowing lilac and pink in the workshop, brightest along its top.'

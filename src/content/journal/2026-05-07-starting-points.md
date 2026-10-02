@@ -1,7 +1,7 @@
 ---
 title: 'Starting points: states, signals and a giant cloud'
 date: 2026-05-07
-stage: Exploration
+stage: 'Concept formation'
 summary: 'The internship begins with a list of possible installations, a survey of sensors, and an intuition about what it feels like to carry something heavy together.'
 tags: [ideas, sensors, agency]
 ---

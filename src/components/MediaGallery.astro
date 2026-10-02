@@ -59,7 +59,7 @@ const tiles = await Promise.all(
     </header>
   )
 }
-<div class:list={["gallery", { "one-row": items.length <= 4 }]} style={`--h:${items.length <= 4 ? 4 : columns >= 4 ? 10 : 15}rem`} data-gallery>
+<div class:list={["gallery", { "one-row": items.length <= 4, single: items.length === 1 }]} style={`--h:${items.length <= 4 ? 4 : columns >= 4 ? 10 : 15}rem`} data-gallery>
   {
     tiles.map((t, i) => (
       <button
@@ -248,7 +248,7 @@ const tiles = await Promise.all(
     isolation: isolate;
     --frame-bg: var(--paper-deep, #efebe4);
     --frame-fg: var(--ink, #1c1d3a);
-    padding: 1.35rem 0.25rem 0.25rem;
+    padding: 1.35rem 0 0;
     color: var(--frame-fg);
   }
   :global(html.theme-night) .frame {
@@ -258,7 +258,7 @@ const tiles = await Promise.all(
   .frame::before {
     content: '';
     position: absolute;
-    inset: -2.5rem -3rem;
+    inset: -1rem 0;
     z-index: -1;
     background: radial-gradient(
       ellipse 62% 58% at 50% 48%,
@@ -385,6 +385,13 @@ const tiles = await Promise.all(
   .gallery:not(.one-row)::after {
     content: '';
     flex-grow: 999;
+  }
+  .gallery.single {
+    justify-content: center;
+  }
+  .gallery.single .tile {
+    flex: 0 1 auto;
+    width: min(100%, calc(var(--r) * 30rem));
   }
   @media (max-width: 700px) {
     .gallery {

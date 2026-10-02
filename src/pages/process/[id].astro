@@ -17,12 +17,34 @@ export async function getStaticPaths() {
 
 const { entry, newer, older } = Astro.props;
 const { Content } = await render(entry);
-const { title, date, stage, summary, cover, coverAlt, video, gallery, clips, tags } = entry.data;
+const { title, date, stage, summary, cover, coverAlt, coverVideo, video, gallery, clips, sections, tags } = entry.data;
 const media: GalleryItem[] = [
   ...clips.map((c) => ({ video: c.name, caption: c.caption, portrait: c.portrait, sound: c.sound })),
   ...gallery.map((g) => ({ image: g.src, alt: g.alt, caption: g.caption })),
 ];
+const sectionMedia = sections.map((section) => {
+  const sectionClips: GalleryItem[] = section.clips.map((clip) => ({
+    video: clip.name,
+    caption: clip.caption,
+    portrait: clip.portrait,
+    sound: clip.sound,
+  }));
+  const sectionGallery: GalleryItem[] = section.gallery.map((item) => ({
+    image: item.src,
+    alt: item.alt,
+    caption: item.caption,
+  }));
+  return {
+    ...section,
+    media: section.galleryFirst
+      ? [...sectionGallery, ...sectionClips]
+      : [...sectionClips, ...sectionGallery],
+  };
+});
 const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
+const videoRatios: Record<string, string> = {
+  simulation: '1280 / 636',
+};
 ---
 
 <Base title={title} description={summary}>
@@ -40,8 +62,20 @@ const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
     </header>
 
     {
-      cover && (
-        <div class="wrap cover">
+      coverVideo ? (
+        <div class="wrap narrow cover">
+          <video
+            src={url(`/video/${coverVideo}.mp4`)}
+            poster={url(`/video/${coverVideo}.jpg`)}
+            autoplay
+            muted
+            loop
+            playsinline
+            aria-label={coverAlt}
+          />
+        </div>
+      ) : cover && (
+        <div class="wrap narrow cover">
           <Image src={cover} alt={coverAlt ?? ''} widths={[800, 1200, 1800]} sizes="(min-width: 72rem) 72rem, 100vw" loading="eager" />
         </div>
       )
@@ -54,8 +88,27 @@ const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
     </div>
 
     {
-      media.length > 0 && (
-        <div class="wrap media">
+      sectionMedia.length > 0 ? (
+        <div class="media-sections">
+          {sectionMedia.map((section) => (
+            <section class:list={['journal-part', { continuation: !section.title }]}>
+              <div class="wrap narrow journal-part-copy">
+                {section.title && <h2>{section.title}</h2>}
+                <p set:html={section.description} />
+              </div>
+              {section.media.length > 0 && (
+                <div class="wrap narrow media">
+                  <MediaGallery
+                    items={section.media}
+                    columns={section.media.length < 3 ? section.media.length : 3}
+                  />
+                </div>
+              )}
+            </section>
+          ))}
+        </div>
+      ) : media.length > 0 && (
+        <div class="wrap narrow media">
           <MediaGallery items={media} columns={media.length < 3 ? media.length : 3} title={clips.length && gallery.length ? "Photos and video" : clips.length ? "Video" : "Photos"} />
         </div>
       )
@@ -69,7 +122,7 @@ const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
             <VideoClip
               name={video}
               orientation={portraitVideos.includes(video) ? 'portrait' : 'landscape'}
-              ratio={video === 'simulation' ? '1280 / 636' : undefined}
+              ratio={videoRatios[video]}
             />
           </div>
         )
@@ -137,7 +190,9 @@ const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
   h1 {
     font-size: clamp(2.2rem, 1.5rem + 3vw, 4rem);
   }
-  .cover img {
+  .cover img,
+  .cover video {
+    display: block;
     width: auto;
     max-width: 100%;
     max-height: 78vh;
@@ -158,6 +213,23 @@ const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
   }
   .media {
     margin-bottom: 1.25rem;
+  }
+  .media-sections {
+    display: grid;
+    gap: clamp(3.5rem, 8vw, 6rem);
+    margin-bottom: 1.25rem;
+  }
+  .journal-part-copy {
+    margin-bottom: 1.5rem;
+  }
+  .journal-part-copy h2 {
+    margin-bottom: 0.75rem;
+  }
+  .journal-part-copy p:last-child {
+    color: var(--ink-soft);
+  }
+  .journal-part.continuation {
+    margin-top: -2.5rem;
   }
   .entry-video.portrait {
     max-width: 22rem;

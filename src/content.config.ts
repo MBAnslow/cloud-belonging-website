@@ -9,15 +9,31 @@ const journal = defineCollection({
       title: z.string(),
       date: z.coerce.date(),
       summary: z.string(),
-      stage: z.enum(['Proposal', 'Exploration', 'Making', 'Sharing']),
+      stage: z.enum(['Proposal', 'Concept formation', 'Making', 'Sharing']),
       cover: image().optional(),
       coverAlt: z.string().optional(),
+      coverVideo: z.string().optional(),
       video: z.string().optional(),
       gallery: z
         .array(z.object({ src: image(), alt: z.string(), caption: z.string().optional() }))
         .default([]),
       clips: z
         .array(z.object({ name: z.string(), caption: z.string().optional(), portrait: z.boolean().default(false), sound: z.boolean().default(false) }))
+        .default([]),
+      sections: z
+        .array(
+          z.object({
+            title: z.string().optional(),
+            description: z.string(),
+            galleryFirst: z.boolean().default(false),
+            gallery: z
+              .array(z.object({ src: image(), alt: z.string(), caption: z.string().optional() }))
+              .default([]),
+            clips: z
+              .array(z.object({ name: z.string(), caption: z.string().optional(), portrait: z.boolean().default(false), sound: z.boolean().default(false) }))
+              .default([]),
+          }),
+        )
         .default([]),
       tags: z.array(z.string()).default([]),
       draft: z.boolean().default(false),
