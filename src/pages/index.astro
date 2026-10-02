@@ -163,10 +163,7 @@ const tried = [
       (function () {
         var hero = document.currentScript.closest('.hero');
         var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        var seen = false;
-        try { seen = sessionStorage.getItem('heroIntroSeen') === '1'; } catch (e) {}
-        if (new URLSearchParams(location.search).has('intro')) seen = false;
-        if (reduce || seen) return;
+        if (reduce) return;
         hero.classList.add('intro-playing');
         var timer;
         var finish = function () {
@@ -174,7 +171,6 @@ const tried = [
           if (!hero.classList.contains('intro-playing')) return;
           hero.classList.remove('intro-playing');
           hero.classList.add('intro-done');
-          try { sessionStorage.setItem('heroIntroSeen', '1'); } catch (e) {}
           ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (t) {
             window.removeEventListener(t, finish);
           });
