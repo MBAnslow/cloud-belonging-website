@@ -22,6 +22,34 @@ import buildShell from '../assets/photos/build-shell.jpg';
 
 const latest = (await getJournal()).slice(0, 3);
 
+const introPhrases = [
+  'A cloud you lie beneath.',
+  'It watches the sun set with you.',
+  'Blooms through a magical twilight.',
+  'And then, it breathes with you.',
+];
+const rand = (n: number) => {
+  const x = Math.sin(n * 12.9898) * 43758.5453;
+  return x - Math.floor(x);
+};
+const introLetters = introPhrases.map((phrase, p) => {
+  const total = phrase.replace(/ /g, '').length;
+  let k = 0;
+  return phrase.split(' ').map((word) =>
+    [...word].map((ch) => {
+      const n = p * 100 + k;
+      const style = [
+        `--lx:${(0.4 + rand(n + 1) * 1.4).toFixed(2)}em`,
+        `--ly:${((rand(n + 2) - 0.5) * 1.6).toFixed(2)}em`,
+        `--lr:${((rand(n + 5) < 0.3 ? -1 : 1) * (60 + rand(n + 3) * 90)).toFixed(0)}deg`,
+        `--ld:${((k / total) * 0.45 + rand(n + 4) * 0.12).toFixed(2)}s`,
+      ].join(';');
+      k++;
+      return { ch, style };
+    }),
+  );
+});
+
 const doors = [
   {
     href: '/installation/',
@@ -96,6 +124,22 @@ const tried = [
       placeNarrow={[0, 0.58, 0.3]}
     />
     <div class="hero-shade" aria-hidden="true"></div>
+    <div class="hero-intro" aria-hidden="true">
+      {introLetters.map((words, i) => (
+        <p style={`--i:${i}`}>
+          {words.map((letters, w) => (
+            <>
+              {w > 0 && ' '}
+              <span class="intro-word">
+                {letters.map((l) => (
+                  <span class="intro-letter" style={l.style}>{l.ch}</span>
+                ))}
+              </span>
+            </>
+          ))}
+        </p>
+      ))}
+    </div>
     <div class="wrap hero-content">
       <p class="eyebrow">A research-creation installation<br />Paris, 2026</p>
       <h1>{site.title}</h1>
@@ -115,6 +159,32 @@ const tried = [
     <a class="scroll-hint" href="#invitation" aria-label="Scroll to introduction">
       <span></span>
     </a>
+    <script is:inline>
+      (function () {
+        var hero = document.currentScript.closest('.hero');
+        var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var seen = false;
+        try { seen = sessionStorage.getItem('heroIntroSeen') === '1'; } catch (e) {}
+        if (new URLSearchParams(location.search).has('intro')) seen = false;
+        if (reduce || seen) return;
+        hero.classList.add('intro-playing');
+        var timer;
+        var finish = function () {
+          clearTimeout(timer);
+          if (!hero.classList.contains('intro-playing')) return;
+          hero.classList.remove('intro-playing');
+          hero.classList.add('intro-done');
+          try { sessionStorage.setItem('heroIntroSeen', '1'); } catch (e) {}
+          ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (t) {
+            window.removeEventListener(t, finish);
+          });
+        };
+        timer = setTimeout(finish, 15300);
+        ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (t) {
+          window.addEventListener(t, finish, { passive: true });
+        });
+      })();
+    </script>
   </section>
 
   <section id="invitation" class="section">
@@ -332,7 +402,7 @@ const tried = [
   .hero {
     --hero-fg: #fbfaff;
     --hero-fg-soft: rgb(251 250 255 / 0.82);
-    --hero-shade: rgb(27 34 80 / 0.55);
+    --hero-shade: rgb(60 40 120 / 0.22);
     position: relative;
     min-height: 100svh;
     display: flex;
@@ -349,13 +419,146 @@ const tried = [
   .hero-shade {
     position: absolute;
     inset: 0;
-    background: radial-gradient(ellipse 70% 60% at 10% 90%, var(--hero-shade), transparent 70%);
+    background: radial-gradient(ellipse 85% 70% at 5% 100%, var(--hero-shade), transparent 75%);
     transition: background 2s ease;
     pointer-events: none;
   }
   .hero-content {
     position: relative;
     padding-block: 10rem clamp(5rem, 12vh, 8rem);
+  }
+  .hero[data-tone='dark'] .hero-content {
+    text-shadow: 0 1px 24px rgb(30 20 70 / 0.35);
+  }
+  .hero-intro {
+    display: none;
+  }
+  .intro-done .hero-intro {
+    animation: intro-leave 3.5s ease-in forwards;
+  }
+  @keyframes intro-leave {
+    to {
+      opacity: 0;
+    }
+  }
+  .intro-playing .hero-intro,
+  .intro-done .hero-intro {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: grid;
+    place-items: center;
+    padding: 0 var(--gutter);
+    pointer-events: none;
+  }
+  .hero-intro p {
+    grid-area: 1 / 1;
+    margin: 0;
+    max-width: 20ch;
+    text-align: center;
+    text-shadow: 0 2px 30px rgb(10 12 31 / 0.35);
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 1.3rem + 3vw, 4rem);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.15;
+    color: var(--hero-fg);
+    opacity: 0;
+    animation: intro-phrase 7.5s linear calc(0.3s + var(--i) * 4.2s) both;
+  }
+  /* A new phrase starts every 4.2s. It stays whole and readable until 2.4s, when its letters start
+     tumbling away, and the phrase keeps drifting and sinking for 7.5s, past the moment its last
+     letter vanishes, so it never visibly stops. The x offsets lie on one straight line (1.33em/s)
+     so the drift keeps a constant speed. */
+  @keyframes intro-phrase {
+    0% {
+      opacity: 0;
+      transform: translate(-3em, 0);
+      filter: blur(10px);
+    }
+    10.7% {
+      opacity: 1;
+      filter: blur(0);
+    }
+    32% {
+      transform: translate(0.2em, 0);
+    }
+    44% {
+      transform: translate(1.4em, 0.12em);
+    }
+    56% {
+      transform: translate(2.6em, 0.55em);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(7em, 1.7em);
+    }
+  }
+  .intro-word {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  .intro-letter {
+    display: inline-block;
+    --letter-delay: calc(2.7s + var(--i) * 4.2s + var(--ld));
+    animation:
+      intro-letter 4s linear var(--letter-delay) both,
+      intro-roll 4s linear var(--letter-delay) both;
+  }
+  /* Letters drift and roll at a constant speed; only their opacity and blur front-load, fading
+     most of the way in the first second and then lingering faintly until they vanish. */
+  @keyframes intro-letter {
+    0% {
+      opacity: 1;
+      translate: 0 0;
+      filter: blur(0);
+    }
+    25% {
+      opacity: 0.4;
+      filter: blur(4px);
+    }
+    100% {
+      opacity: 0;
+      translate: calc(var(--lx) * 1.15) calc(var(--ly) * 1.15);
+      filter: blur(7px);
+    }
+  }
+  @keyframes intro-roll {
+    from {
+      rotate: 0deg;
+    }
+    to {
+      rotate: var(--lr);
+    }
+  }
+  .intro-playing .hero-content > :not(.hero-intro),
+  .intro-playing .scroll-hint {
+    opacity: 0;
+    visibility: hidden;
+  }
+  .intro-done .hero-content > :not(.hero-intro),
+  .intro-done .scroll-hint {
+    animation: hero-arrive 1.2s cubic-bezier(0.25, 0.6, 0.3, 1) both;
+  }
+  .intro-done .hero-content > h1 {
+    animation-delay: 0.15s;
+  }
+  .intro-done .hero-content > .hero-lede {
+    animation-delay: 0.35s;
+  }
+  .intro-done .hero-content > .hero-actions,
+  .intro-done .scroll-hint {
+    animation-delay: 0.55s;
+  }
+  @keyframes hero-arrive {
+    from {
+      opacity: 0;
+      transform: translateY(1rem);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
   }
   .hero .eyebrow {
     color: var(--hero-fg-soft);

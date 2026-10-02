@@ -112,7 +112,7 @@ vec3 warp(vec3 p, vec3 w) {
 }
 
 vec3 wind() {
-  return vec3(uTime * 0.035, uTime * 0.012, uTime * 0.02);
+  return vec3(uTime * 0.09, uTime * 0.03, uTime * 0.05);
 }
 
 float hg(float mu, float g) {
@@ -136,6 +136,7 @@ void main() {
   float r = hash13(vec3(cell, 7.0));
   float star = step(0.986, r) * smoothstep(0.4, 0.0, length(fract(g) - 0.5));
   sky += vec3(star * uStars * ty * (0.6 + 0.4 * sin(uTime * 1.7 + r * 60.0)));
+  sky += sqrt(uFlashCol) * uFlash * 0.14 * (1.0 - 0.5 * ty);
 
   vec3 c = vec3(uPlace.xy, 0.0);
   vec3 lro = (ro - c) / uPlace.z;
@@ -185,7 +186,9 @@ void main() {
         vec3 gp = p - vec3(0.0, -0.02, 0.0);
         S += uGlowCol * uGlow * exp(-dot(gp, gp) * 3.0);
         if (uFlash > 0.001) {
-          S += uFlashCol * uFlash * exp(-length(p - uFlashPos) * 3.2) * 7.0;
+          // A hot core where the bolt is, plus light scattered through the rest of the cloud.
+          float fd = length(p - uFlashPos);
+          S += uFlashCol * uFlash * (exp(-fd * 4.5) * 10.0 + exp(-fd * 1.4) * 1.3);
         }
         if (uBloom > 0.001) {
           // The whole cloud lights up at once: a hot core fading out through the palette to its edges.
@@ -299,6 +302,9 @@ export class CloudRenderer {
   private flashColor: Vec3 = [1, 1, 1];
   private flashPalette: Vec3[] = [];
   private nextFlash = 0;
+  private flashStart = -1e9;
+  private flashEnd = -1e9;
+  private strokes: { t: number; a: number }[] = [];
   private bloomPalettes: Vec3[][] = [];
   private bloomColors: Vec3[] = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
   private bloomPos: Vec3 = [0, 0, 0];
@@ -399,8 +405,10 @@ export class CloudRenderer {
     const loop = (now: number) => {
       if (!this.running) return;
       this.raf = requestAnimationFrame(loop);
-      if (now - this.lastFrame < 1000 / 30 - 2) return;
-      if (this.lastFrame) this.adapt(now - this.lastFrame);
+      // Lightning strokes last tens of milliseconds, so render every frame while one is playing.
+      const striking = now < this.flashEnd;
+      if (!striking && now - this.lastFrame < 1000 / 30 - 2) return;
+      if (this.lastFrame && !striking) this.adapt(now - this.lastFrame);
       this.lastFrame = now;
       this.draw(now);
     };
@@ -443,15 +451,28 @@ export class CloudRenderer {
     const s = this.current;
     const time = this.options.animate ? (now - this.startTime) / 1000 : 12;
 
-    // Lightning: occasional double flashes at random points inside the cloud.
+    // Lightning: a strike is a burst of one to four sharp return strokes, then a faint afterglow.
     if (s.storm > 0.3 && now > this.nextFlash) {
-      this.flash = 1;
+      const count = 1 + Math.floor(Math.random() * 4);
+      this.strokes = [];
+      let t = 0;
+      for (let i = 0; i < count; i++) {
+        this.strokes.push({ t, a: i === 0 ? 1 : 0.45 + Math.random() * 0.55 });
+        t += 45 + Math.random() * 170;
+      }
+      this.flashStart = now;
+      this.flashEnd = now + t + 500;
       this.flashPos = [(Math.random() - 0.5) * 1.3, -0.15 + Math.random() * 0.45, (Math.random() - 0.5) * 0.5];
       this.flashColor = this.flashPalette[Math.floor(Math.random() * this.flashPalette.length)] ?? [1, 1, 1];
-      this.nextFlash = now + 900 + (Math.random() * 4200) / s.storm;
+      this.nextFlash = this.flashEnd + 1200 + (Math.random() * 4500) / s.storm;
     }
-    const flicker = this.flash > 0.55 && this.flash < 0.7 ? 0.25 : 1;
-    this.flash = Math.max(0, this.flash - 0.06);
+    const sinceStrike = now - this.flashStart;
+    let flash = sinceStrike >= 0 && now < this.flashEnd ? 0.12 * Math.exp(-sinceStrike / 450) : 0;
+    for (const stroke of this.strokes) {
+      const dt = sinceStrike - stroke.t;
+      if (dt >= 0) flash += stroke.a * Math.exp(-dt / 55);
+    }
+    this.flash = now < this.flashEnd ? Math.min(1.4, flash) : 0;
 
     // Colour blooms: the whole cloud flares up in a new palette, then slowly lets it go.
     if (s.bloom > 0.3 && this.bloomPalettes.length && now > this.nextBloom) {
@@ -487,7 +508,7 @@ export class CloudRenderer {
     gl.uniform1f(u.uDisc, s.disc);
     gl.uniform3fv(u.uDiscCol, s.discColor);
     gl.uniform3fv(u.uFlashPos, this.flashPos);
-    gl.uniform1f(u.uFlash, this.flash * Math.min(1, s.storm) * flicker);
+    gl.uniform1f(u.uFlash, this.flash * Math.min(1, s.storm * 2));
     gl.uniform3fv(u.uFlashCol, this.flashColor);
     gl.uniform1f(u.uBloom, bloomEnv * Math.min(1, s.bloom));
     gl.uniform3fv(u.uBloomPos, this.bloomPos);

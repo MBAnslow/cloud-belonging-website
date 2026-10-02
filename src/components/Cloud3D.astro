@@ -38,8 +38,8 @@ const {
   import { CloudRenderer } from '../lib/cloud/renderer';
   import { cloudStates, type CloudStateName } from '../lib/cloud/states';
 
-  const HOLD = 9000;
-  const TRANSITION = 11000;
+  const HOLD = 6500;
+  const TRANSITION = 6500;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   const parse = (s?: string) => (s ?? '').split(',').map(Number) as [number, number, number];
