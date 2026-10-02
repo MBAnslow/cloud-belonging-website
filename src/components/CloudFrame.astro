@@ -15,12 +15,12 @@ interface Props {
 }
 
 const { src, alt, widths = [600, 1000, 1400], sizes = '100vw', seed = 3, loading = 'lazy', keep = [], class: className } = Astro.props;
-const { mask, spill } = cloudMasks(seed, keep);
+const { mask, spill, halo } = cloudMasks(seed, keep);
 ---
 
 <div
   class:list={['cloud-frame', className]}
-  style={`--mask:${mask};--spill:${spill};${fadeVars(defaultTexture)}`}
+  style={`--mask:${mask};--spill:${spill};--halo:${halo};${fadeVars(defaultTexture)}`}
   data-seed={seed}
   data-keep={JSON.stringify(keep)}
 >
@@ -30,6 +30,33 @@ const { mask, spill } = cloudMasks(seed, keep);
 
 <script>
   import { cloudMasks, defaultTexture, fadeVars, type CloudTexture } from '../lib/cloudMask';
+
+  const tintHalo = (el: HTMLElement) => {
+    const img = el.querySelector<HTMLImageElement>('img.spill');
+    if (!img) return;
+    const sample = () => {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = canvas.height = 16;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true })!;
+        ctx.drawImage(img, 0, 0, 16, 16);
+        const px = ctx.getImageData(0, 0, 16, 16).data;
+        let r = 0, g = 0, b = 0;
+        for (let i = 0; i < px.length; i += 4) {
+          r += px[i];
+          g += px[i + 1];
+          b += px[i + 2];
+        }
+        const n = px.length / 4;
+        el.style.setProperty('--halo-avg', `${Math.round(r / n)} ${Math.round(g / n)} ${Math.round(b / n)}`);
+      } catch {
+        // Cross-origin or undecodable image: keep the grey fallback.
+      }
+    };
+    if (img.complete && img.naturalWidth) sample();
+    else img.addEventListener('load', sample, { once: true });
+  };
+  document.querySelectorAll<HTMLElement>('.cloud-frame').forEach(tintHalo);
 
   const params = new URLSearchParams(location.search);
   if (params.has('cloud-debug') && !document.querySelector('.cloud-debug')) {
@@ -45,13 +72,17 @@ const { mask, spill } = cloudMasks(seed, keep);
       ['spillFadeStart', 'Spill fade starts (% from centre)', 0, 100, 1],
       ['spillFadeEnd', 'Spill fully faded (% from centre)', 1, 140, 1],
       ['scale', 'Image scale', 0.8, 1.6, 0.01],
+      ['haloOpacity', 'Grey halo strength', 0, 1, 0.01],
+      ['haloSize', 'Grey halo reach (% beyond photo)', 0, 30, 1],
+      ['haloBlur', 'Grey halo softness (px blur)', 0, 60, 1],
     ];
 
     const apply = () => {
       document.querySelectorAll<HTMLElement>('.cloud-frame').forEach((el) => {
-        const { mask, spill } = cloudMasks(Number(el.dataset.seed), JSON.parse(el.dataset.keep || '[]'), texture);
+        const { mask, spill, halo } = cloudMasks(Number(el.dataset.seed), JSON.parse(el.dataset.keep || '[]'), texture);
         el.style.setProperty('--mask', mask);
         el.style.setProperty('--spill', spill);
+        el.style.setProperty('--halo', halo);
         fadeVars(texture).split(';').forEach((d) => {
           const [k, v] = d.split(':');
           el.style.setProperty(k, v);
@@ -94,6 +125,17 @@ const { mask, spill } = cloudMasks(seed, keep);
     position: relative;
     isolation: isolate;
     scale: var(--cloud-scale, 1);
+  }
+  .cloud-frame::before {
+    content: '';
+    position: absolute;
+    inset: calc(var(--halo-size) * -0.8) calc(var(--halo-size) * -1);
+    z-index: -2;
+    background: rgb(var(--halo-avg, 110 110 125) / var(--halo-opacity));
+    -webkit-mask: var(--halo) center / 100% 100% no-repeat;
+    mask: var(--halo) center / 100% 100% no-repeat;
+    filter: blur(var(--halo-blur));
+    pointer-events: none;
   }
   .cloud-frame :global(img.main) {
     display: block;

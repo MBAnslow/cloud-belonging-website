@@ -9,6 +9,9 @@ export interface CloudTexture {
   spillFadeStart: number;
   spillFadeEnd: number;
   scale: number;
+  haloOpacity: number;
+  haloSize: number;
+  haloBlur: number;
 }
 
 export const defaultTexture: CloudTexture = {
@@ -21,11 +24,14 @@ export const defaultTexture: CloudTexture = {
   fadeEnd: 104,
   spillFadeStart: 85,
   spillFadeEnd: 115,
-  scale: 1.03,
+  scale: 1.06,
+  haloOpacity: 0.42,
+  haloSize: 11,
+  haloBlur: 46,
 };
 
 export const fadeVars = (t: CloudTexture) =>
-  `--fade-start:${t.fadeStart}%;--fade-end:${t.fadeEnd}%;--spill-fade-start:${t.spillFadeStart}%;--spill-fade-end:${t.spillFadeEnd}%;--cloud-scale:${t.scale}`;
+  `--fade-start:${t.fadeStart}%;--fade-end:${t.fadeEnd}%;--spill-fade-start:${t.spillFadeStart}%;--spill-fade-end:${t.spillFadeEnd}%;--cloud-scale:${t.scale};--halo-opacity:${t.haloOpacity};--halo-size:${t.haloSize}%;--halo-blur:${t.haloBlur}px`;
 
 type Ellipse = [number, number, number, number];
 
@@ -97,6 +103,16 @@ ${keep.map(([cx, cy, rx, ry]) => `<ellipse cx='${cx}' cy='${cy}' rx='${rx}' ry='
 </g>
 </svg>`;
 
+  // The same lobes and edge distortion as the photo's outline, without grain, for a soft grey halo.
+  const halo = `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'>
+<filter id='h' x='-20%' y='-20%' width='140%' height='140%'>
+<feTurbulence type='fractalNoise' baseFrequency='0.035' numOctaves='3' seed='${seed + 5}'/>
+<feDisplacementMap in='SourceGraphic' scale='30'/>
+<feGaussianBlur stdDeviation='2.5'/>
+</filter>
+<g fill='white' filter='url(#h)'>${shape(1)}</g>
+</svg>`;
+
   const toUrl = (svg: string) => `url("data:image/svg+xml,${encodeURIComponent(svg.replace(/\n/g, ''))}")`;
-  return { mask: toUrl(mask), spill: toUrl(spill) };
+  return { mask: toUrl(mask), spill: toUrl(spill), halo: toUrl(halo) };
 }
