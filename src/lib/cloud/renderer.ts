@@ -305,6 +305,9 @@ export class CloudRenderer {
   private flashStart = -1e9;
   private flashEnd = -1e9;
   private strokes: { t: number; a: number }[] = [];
+  private flashFrom: Vec3 = [0, 0, 0];
+  private flashTo: Vec3 = [0, 0, 0];
+  private crawlDuration = 0;
   private bloomPalettes: Vec3[][] = [];
   private bloomColors: Vec3[] = [[0, 0, 0], [0, 0, 0], [0, 0, 0], [0, 0, 0]];
   private bloomPos: Vec3 = [0, 0, 0];
@@ -451,22 +454,38 @@ export class CloudRenderer {
     const s = this.current;
     const time = this.options.animate ? (now - this.startTime) / 1000 : 12;
 
-    // Lightning: a strike is a burst of one to four sharp return strokes, then a faint afterglow.
+    // Lightning: a strike is a burst of one to four sharp return strokes at one spot, then a faint
+    // afterglow. Some strikes instead crawl: a rapid run of flickers whose light travels across the cloud.
     if (s.storm > 0.3 && now > this.nextFlash) {
-      const count = 1 + Math.floor(Math.random() * 4);
+      const crawl = Math.random() < 0.45;
+      const count = crawl ? 5 + Math.floor(Math.random() * 5) : 1 + Math.floor(Math.random() * 4);
       this.strokes = [];
       let t = 0;
       for (let i = 0; i < count; i++) {
-        this.strokes.push({ t, a: i === 0 ? 1 : 0.45 + Math.random() * 0.55 });
-        t += 45 + Math.random() * 170;
+        this.strokes.push({ t, a: i === 0 ? 1 : crawl ? 0.55 + Math.random() * 0.45 : 0.45 + Math.random() * 0.55 });
+        t += crawl ? 35 + Math.random() * 60 : 45 + Math.random() * 170;
       }
       this.flashStart = now;
       this.flashEnd = now + t + 500;
-      this.flashPos = [(Math.random() - 0.5) * 1.3, -0.15 + Math.random() * 0.45, (Math.random() - 0.5) * 0.5];
+      this.crawlDuration = crawl ? t : 0;
+      const side = Math.random() < 0.5 ? -1 : 1;
+      this.flashFrom = crawl
+        ? [side * (0.55 + Math.random() * 0.35), -0.1 + Math.random() * 0.4, (Math.random() - 0.5) * 0.4]
+        : [(Math.random() - 0.5) * 1.3, -0.15 + Math.random() * 0.45, (Math.random() - 0.5) * 0.5];
+      this.flashTo = crawl
+        ? [-side * (0.2 + Math.random() * 0.7), -0.1 + Math.random() * 0.4, (Math.random() - 0.5) * 0.4]
+        : this.flashFrom;
       this.flashColor = this.flashPalette[Math.floor(Math.random() * this.flashPalette.length)] ?? [1, 1, 1];
       this.nextFlash = this.flashEnd + 1200 + (Math.random() * 4500) / s.storm;
     }
     const sinceStrike = now - this.flashStart;
+    const travel = this.crawlDuration > 0 ? Math.min(1, Math.max(0, sinceStrike / this.crawlDuration)) : 0;
+    const jitter = this.crawlDuration > 0 && travel < 1 ? 0.06 : 0;
+    this.flashPos = [
+      lerp(this.flashFrom[0], this.flashTo[0], travel) + (Math.random() - 0.5) * jitter,
+      lerp(this.flashFrom[1], this.flashTo[1], travel) + (Math.random() - 0.5) * jitter,
+      lerp(this.flashFrom[2], this.flashTo[2], travel),
+    ];
     let flash = sinceStrike >= 0 && now < this.flashEnd ? 0.12 * Math.exp(-sinceStrike / 450) : 0;
     for (const stroke of this.strokes) {
       const dt = sinceStrike - stroke.t;
