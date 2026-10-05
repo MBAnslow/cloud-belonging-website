@@ -10,18 +10,19 @@
     blur: number;
   };
 
+  const wave: Wave = {
+    height: 6.25,
+    baseline: 56,
+    amplitude: 39,
+    waves: 2.4,
+    phase: 0,
+    ripple: 0.43,
+    rippleFreq: 2.5,
+    blur: 3,
+  };
+
   const params = new URLSearchParams(location.search);
-  if (params.has('wave-debug') && !document.querySelector('.wave-debug')) {
-    const wave: Wave = {
-      height: 5.75,
-      baseline: 42,
-      amplitude: 33,
-      waves: 1.85,
-      phase: 1,
-      ripple: 0.39,
-      rippleFreq: 2.55,
-      blur: 10.5,
-    };
+  if (!document.querySelector('.wave-debug')) {
     const controls: [keyof Wave, string, number, number, number][] = [
       ['height', 'Boundary depth (rem)', 1, 16, 0.25],
       ['baseline', 'Wave centre line (% of depth)', 10, 90, 1],
@@ -33,13 +34,14 @@
       ['blur', 'Edge softness (blur)', 0, 40, 0.5],
     ];
 
-    const svg = (w: Wave) => {
+    const svg = (w: Wave, phaseOffset = 0) => {
       const pts: string[] = [];
       const n = 120;
       for (let i = 0; i <= n; i++) {
         const t = i / n;
-        const a = Math.sin(2 * Math.PI * (w.waves * t + w.phase));
-        const b = Math.sin(2 * Math.PI * (w.rippleFreq * w.waves * t + w.phase * 1.7));
+        const phase = w.phase + phaseOffset;
+        const a = Math.sin(2 * Math.PI * (w.waves * t + phase));
+        const b = Math.sin(2 * Math.PI * (w.rippleFreq * w.waves * t + phase * 1.7));
         const y = 120 * (w.baseline / 100 + (w.amplitude / 100) * ((a + w.ripple * b) / (1 + w.ripple)));
         pts.push(`${(-40 + t * 1520).toFixed(1)} ${y.toFixed(1)}`);
       }
@@ -50,15 +52,27 @@
       return `url("data:image/svg+xml,${encodeURIComponent(markup)}")`;
     };
 
+    const boundaries = Array.from(document.querySelectorAll<HTMLElement>('.blend')).map((element) => ({
+      element,
+      topPhase: Math.random(),
+      bottomPhase: Math.random(),
+    }));
+
     const apply = () => {
       const root = document.documentElement.style;
-      root.setProperty('--wave', svg(wave));
       root.setProperty('--wave-height', `${wave.height}rem`);
+      boundaries.forEach(({ element, topPhase, bottomPhase }) => {
+        element.style.setProperty('--wave-top', svg(wave, topPhase));
+        element.style.setProperty('--wave-bottom', svg(wave, bottomPhase));
+      });
     };
 
-    const panel = document.createElement('div');
-    panel.className = 'wave-debug';
-    panel.innerHTML = `<strong>Wave boundaries</strong>${controls
+    apply();
+    if (params.has('wave-debug')) {
+
+      const panel = document.createElement('div');
+      panel.className = 'wave-debug';
+      panel.innerHTML = `<strong>Wave boundaries</strong>${controls
       .map(
         ([key, label, min, max, step]) =>
           `<label>${label}<span><input type="range" name="${key}" min="${min}" max="${max}" step="${step}" value="${wave[key]}"><output>${wave[key]}</output></span></label>`,
@@ -82,7 +96,8 @@
     panel.querySelectorAll('label').forEach((l) => Object.assign(l.style, { display: 'grid', gap: '0.2rem' }));
     panel.querySelectorAll('label span').forEach((s) => Object.assign((s as HTMLElement).style, { display: 'flex', gap: '0.5rem', alignItems: 'center' }));
     panel.querySelectorAll('input').forEach((i) => (i.style.flex = '1'));
-    document.body.append(panel);
-    apply();
+      document.body.append(panel);
+      apply();
+    }
   }
 </script>

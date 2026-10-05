@@ -187,6 +187,10 @@ p {
     linear-gradient(180deg, var(--paper), var(--wash) 45%, var(--wash-deep) 70%, var(--paper));
 }
 
+.section.wash {
+  padding-block: clamp(6rem, 13vw, 10rem);
+}
+
 .blend {
   position: relative;
   isolation: isolate;
@@ -201,12 +205,12 @@ p {
   content: "";
   position: absolute;
   inset-inline: 0;
-  height: var(--wave-height, 5.75rem);
+  height: var(--wave-height, 6.25rem);
   pointer-events: none;
   z-index: -1;
   background: var(--paper);
-  -webkit-mask: var(--wave) 0 0 / 100% 100% no-repeat;
-  mask: var(--wave) 0 0 / 100% 100% no-repeat;
+  -webkit-mask: var(--wave-top, var(--wave)) 0 0 / 100% 100% no-repeat;
+  mask: var(--wave-top, var(--wave)) 0 0 / 100% 100% no-repeat;
 }
 
 .blend::before {
@@ -216,6 +220,8 @@ p {
 .blend::after {
   bottom: 0;
   transform: scale(-1, -1);
+  -webkit-mask-image: var(--wave-bottom, var(--wave));
+  mask-image: var(--wave-bottom, var(--wave));
 }
 
 html.theme-night .wash {
@@ -326,6 +332,10 @@ main > section.blend:last-of-type::after,
 .tag[data-stage='Concept formation'] {
   background: rgb(220 167 211 / 0.35);
   color: #7a3f73;
+}
+.tag[data-stage='Conversation'] {
+  background: rgb(141 198 196 / 0.38);
+  color: #2b6361;
 }
 .tag[data-stage='Making'] {
   background: rgb(248 169 140 / 0.35);

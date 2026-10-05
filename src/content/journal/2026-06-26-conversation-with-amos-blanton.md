@@ -1,12 +1,12 @@
 ---
 title: 'A conversation with Amos Blanton'
 date: 2026-06-26
-stage: 'Concept formation'
-summary: 'Exhalations that form a cloud, the Diamond Sutra, Olafur Eliasson — and designing for an adjacent possible that people can lean into.'
-tags: [inspiration, tinkering, workshop]
+stage: 'Conversation'
+summary: 'Rough notes from an informal remote meeting: exhalations that form a cloud, the Diamond Sutra, Olafur Eliasson — and designing for an adjacent possible that people can lean into.'
+tags: [conversation, inspiration, tinkering, workshop]
 ---
 
-We met [Amos Blanton](https://www.amosamos.net/PhD/), whose work sits between tinkering, constructionist exhibits and collective creativity.
+We scheduled an informal remote meeting with [Amos Blanton](https://www.amosamos.net/PhD/), whose work sits between tinkering, constructionist exhibits and collective creativity. What follows are the rough notes we took during the call, rather than a tidied-up account.
 
 ## Clouds made of breath
 

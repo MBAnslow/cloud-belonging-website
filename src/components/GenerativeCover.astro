@@ -1,0 +1,170 @@
+---
+interface Props {
+  seed: string;
+}
+
+const { seed } = Astro.props;
+
+const hash = (text: string) => {
+  let h = 1779033703 ^ text.length;
+  for (let i = 0; i < text.length; i++) {
+    h = Math.imul(h ^ text.charCodeAt(i), 3432918353);
+    h = (h << 13) | (h >>> 19);
+  }
+  return h >>> 0;
+};
+
+const seedValue = hash(seed);
+let state = seedValue;
+const random = () => {
+  state = (state + 0x6d2b79f5) >>> 0;
+  let t = state;
+  t = Math.imul(t ^ (t >>> 15), t | 1);
+  t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+  return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+};
+const between = (min: number, max: number) => min + random() * (max - min);
+const pick = <T,>(items: T[]) => items[Math.floor(random() * items.length)];
+const shuffle = <T,>(items: T[]) => {
+  const copy = [...items];
+  for (let i = copy.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+  return copy;
+};
+const round = (n: number) => Math.round(n * 10) / 10;
+
+const palettes = [
+  { sky: ['#bccde3', '#f1d6c8'], shade: '#6f7fa6', ink: '#1f2a44', colours: ['#e8735a', '#7d93c4', '#f0b48a', '#c98fb4', '#2f3d63', '#f2c27a'] },
+  { sky: ['#d3cce8', '#f5dccb'], shade: '#7b74a3', ink: '#26324d', colours: ['#e26d5c', '#a9a3d0', '#f2c27a', '#8fb8c9', '#3a3478', '#e9a88f'] },
+  { sky: ['#b7cbdc', '#ede0d4'], shade: '#62809a', ink: '#222b45', colours: ['#d9624f', '#8fa3d6', '#e9a88f', '#b7a6d6', '#24405a', '#d9bf94'] },
+];
+const palette = pick(palettes);
+const shadeRgb = [1, 3, 5].map((i) => (parseInt(palette.shade.slice(i, i + 2), 16) / 255).toFixed(3));
+const id = `gen-${seedValue.toString(36)}`;
+const W = 400;
+const H = 300;
+
+const polygon = (cx: number, cy: number, r: number, sides: number, rotation: number) =>
+  'M' +
+  Array.from({ length: sides }, (_, i) => {
+    const angle = rotation + (i / sides) * Math.PI * 2;
+    return `${round(cx + Math.cos(angle) * r)} ${round(cy + Math.sin(angle) * r)}`;
+  }).join('L') +
+  'Z';
+
+const shapePath = (kind: string, cx: number, cy: number, r: number, rotation: number) => {
+  if (kind === 'triangle') return polygon(cx, cy, r, 3, rotation);
+  if (kind === 'square') return polygon(cx, cy, r, 4, rotation);
+  if (kind === 'hexagon') return polygon(cx, cy, r, 6, rotation);
+  if (kind === 'diamond') return polygon(cx, cy, r, 4, Math.PI / 2);
+  if (kind === 'semicircle') {
+    const x1 = round(cx + Math.cos(rotation) * r);
+    const y1 = round(cy + Math.sin(rotation) * r);
+    const x2 = round(cx - Math.cos(rotation) * r);
+    const y2 = round(cy - Math.sin(rotation) * r);
+    return `M${x1} ${y1}A${r} ${r} 0 0 1 ${x2} ${y2}Z`;
+  }
+  return `M${round(cx - r)} ${cy}a${r} ${r} 0 1 0 ${round(r * 2)} 0a${r} ${r} 0 1 0 ${round(-r * 2)} 0Z`;
+};
+
+const shapeKinds = ['circle', 'triangle', 'square', 'hexagon', 'diamond', 'semicircle'];
+const colours = shuffle(palette.colours);
+const makeShape = (index: number, size: [number, number], opacity: [number, number]) => {
+  const cx = between(W * 0.12, W * 0.88);
+  const cy = between(H * 0.15, H * 0.75);
+  return {
+    d: shapePath(pick(shapeKinds), cx, cy, round(between(...size)), between(0, Math.PI * 2)),
+    fill: colours[index % colours.length],
+    opacity: round(between(...opacity)),
+  };
+};
+
+const backShapes = Array.from({ length: Math.floor(between(2, 4)) }, (_, i) => makeShape(i, [46, 86], [0.75, 0.95]));
+const frontShapes = Array.from({ length: Math.floor(between(2, 4)) }, (_, i) =>
+  makeShape(i + backShapes.length, [18, 44], [0.8, 0.95]),
+);
+
+const center = { x: round(between(W * 0.25, W * 0.7)), y: round(between(H * 0.3, H * 0.6)) };
+const rings = Array.from({ length: Math.floor(between(2, 4)) }, (_, i) => ({
+  r: round(between(40, 70) + i * between(35, 60)),
+  dashed: random() > 0.45,
+}));
+const outer = rings[rings.length - 1].r;
+const pointOn = (r: number) => {
+  const angle = between(0, Math.PI * 2);
+  return { x: round(center.x + Math.cos(angle) * r), y: round(center.y + Math.sin(angle) * r) };
+};
+const nodes = rings.flatMap((ring) =>
+  Array.from({ length: Math.floor(between(1, 4)) }, () => ({ ...pointOn(ring.r), size: round(between(1.8, 4.2)) })),
+);
+const links = nodes.filter(() => random() > 0.45);
+const arcRadius = round(between(H * 0.9, H * 1.4));
+const arcCenter = { x: round(between(W * 0.3, W * 0.7)), y: round(H + arcRadius * between(0.25, 0.55)) };
+
+const noiseSeed = seedValue % 997;
+---
+
+<svg class="generative-cover" viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+  <defs>
+    <linearGradient id={`${id}-sky`} x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color={palette.sky[0]} />
+      <stop offset="1" stop-color={palette.sky[1]} />
+    </linearGradient>
+    <filter id={`${id}-clouds`} x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.007 0.016" numOctaves="5" seed={noiseSeed} />
+      <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 2.6 -0.95" />
+      <feGaussianBlur stdDeviation="1.5" />
+    </filter>
+    <filter id={`${id}-cloud-shade`} x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.007 0.016" numOctaves="5" seed={noiseSeed} />
+      <feColorMatrix values={`0 0 0 0 ${shadeRgb[0]}  0 0 0 0 ${shadeRgb[1]}  0 0 0 0 ${shadeRgb[2]}  0 0 0 2.6 -0.95`} />
+      <feGaussianBlur stdDeviation="4" />
+    </filter>
+    <filter id={`${id}-grain`} x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed={noiseSeed + 3} />
+      <feColorMatrix type="saturate" values="0" />
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.14" />
+      </feComponentTransfer>
+    </filter>
+  </defs>
+
+  <rect width={W} height={H} fill={`url(#${id}-sky)`} />
+
+  <g fill="none" stroke={palette.ink} stroke-width="0.8" opacity="0.55">
+    <circle cx={arcCenter.x} cy={arcCenter.y} r={arcRadius} />
+    {rings.map((ring) => (
+      <circle cx={center.x} cy={center.y} r={ring.r} stroke-dasharray={ring.dashed ? '3 4' : undefined} />
+    ))}
+    <line x1={center.x - outer} y1={center.y} x2={center.x + outer} y2={center.y} stroke-dasharray="2 4" />
+    <line x1={center.x} y1={center.y - outer} x2={center.x} y2={center.y + outer} stroke-dasharray="2 4" />
+    {links.map((n) => (
+      <line x1={center.x} y1={center.y} x2={n.x} y2={n.y} />
+    ))}
+  </g>
+  <g fill={palette.ink} opacity="0.6">
+    <circle cx={center.x} cy={center.y} r="3.6" />
+    {nodes.map((n) => (
+      <circle cx={n.x} cy={n.y} r={n.size} />
+    ))}
+  </g>
+
+  {backShapes.map((s) => <path d={s.d} fill={s.fill} opacity={s.opacity} />)}
+
+  <rect width={W} height={H} filter={`url(#${id}-cloud-shade)`} transform="translate(0 7)" opacity="0.4" />
+  <rect width={W} height={H} filter={`url(#${id}-clouds)`} opacity="0.85" />
+
+  {frontShapes.map((s) => <path d={s.d} fill={s.fill} opacity={s.opacity} />)}
+
+  <rect width={W} height={H} filter={`url(#${id}-grain)`} />
+</svg>
+
+<style>
+  .generative-cover {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+</style>

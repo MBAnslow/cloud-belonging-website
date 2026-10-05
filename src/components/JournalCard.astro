@@ -3,6 +3,12 @@ import { url } from '../lib/url';
 import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { formatDate } from '../lib/journal';
+import GenerativeCover from './GenerativeCover.astro';
+import conversationPlaceholder from '../assets/photos/conversation-placeholder.jpg';
+
+const stagePlaceholders: Partial<Record<CollectionEntry<'journal'>['data']['stage'], ImageMetadata>> = {
+  Conversation: conversationPlaceholder,
+};
 
 interface Props {
   entry: CollectionEntry<'journal'>;
@@ -10,6 +16,7 @@ interface Props {
 
 const { entry } = Astro.props;
 const { title, date, summary, stage, cover, coverAlt, coverVideo, video } = entry.data;
+const stagePlaceholder = stagePlaceholders[stage];
 ---
 
 <article class="card reveal">
@@ -31,6 +38,15 @@ const { title, date, summary, stage, cover, coverAlt, coverVideo, video } = entr
           <Image src={cover} alt={coverAlt ?? ''} widths={[400, 700]} sizes="(min-width: 60rem) 22rem, 100vw" />
         ) : video ? (
           <img src={url(`/video/${video}.jpg`)} alt="" loading="lazy" decoding="async" />
+        ) : stage === 'Concept formation' ? (
+          <GenerativeCover seed={title} />
+        ) : stagePlaceholder ? (
+          <Image
+            src={stagePlaceholder}
+            alt=""
+            widths={[400, 700]}
+            sizes="(min-width: 60rem) 22rem, 100vw"
+          />
         ) : (
           <div class="placeholder" aria-hidden="true">
             <svg viewBox="0 0 40 24">
@@ -85,8 +101,12 @@ const { title, date, summary, stage, cover, coverAlt, coverVideo, video } = entr
     object-fit: cover;
     transition: transform 1.2s ease;
   }
+  .media :global(.generative-cover) {
+    transition: transform 1.2s ease;
+  }
   .link:hover .media img,
-  .link:hover .media video {
+  .link:hover .media video,
+  .link:hover .media :global(.generative-cover) {
     transform: scale(1.04);
   }
   .placeholder {
