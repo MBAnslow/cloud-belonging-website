@@ -81,9 +81,9 @@ const makeShape = (index: number, size: [number, number], opacity: [number, numb
   };
 };
 
-const backShapes = Array.from({ length: Math.floor(between(2, 4)) }, (_, i) => makeShape(i, [46, 86], [0.75, 0.95]));
+const backShapes = Array.from({ length: Math.floor(between(2, 4)) }, (_, i) => makeShape(i, [46, 86], [0.38, 0.74]));
 const frontShapes = Array.from({ length: Math.floor(between(2, 4)) }, (_, i) =>
-  makeShape(i + backShapes.length, [18, 44], [0.8, 0.95]),
+  makeShape(i + backShapes.length, [18, 44], [0.44, 0.86]),
 );
 
 const center = { x: round(between(W * 0.25, W * 0.7)), y: round(between(H * 0.3, H * 0.6)) };
@@ -153,8 +153,8 @@ const noiseSeed = seedValue % 997;
 
   {backShapes.map((s) => <path d={s.d} fill={s.fill} opacity={s.opacity} />)}
 
-  <rect width={W} height={H} filter={`url(#${id}-cloud-shade)`} transform="translate(0 7)" opacity="0.4" />
-  <rect width={W} height={H} filter={`url(#${id}-clouds)`} opacity="0.85" />
+  <rect width={W} height={H} filter={`url(#${id}-cloud-shade)`} transform="translate(0 7)" opacity="0.18" />
+  <rect width={W} height={H} filter={`url(#${id}-clouds)`} opacity="0.36" />
 
   {frontShapes.map((s) => <path d={s.d} fill={s.fill} opacity={s.opacity} />)}
 

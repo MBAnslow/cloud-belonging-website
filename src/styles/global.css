@@ -389,8 +389,24 @@ main > section.blend:last-of-type::after,
   margin: 2em 0;
 }
 
+.prose audio {
+  display: block;
+  width: min(100%, 32rem);
+  margin: 1.25em auto 0;
+}
+
 .prose figure {
   margin: 2.2em 0;
+}
+
+.prose figure:has(audio) {
+  display: grid;
+  justify-items: center;
+  text-align: center;
+}
+
+.prose figure:has(audio) audio {
+  margin-inline: auto;
 }
 
 .prose figcaption {

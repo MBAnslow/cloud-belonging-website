@@ -1,25 +1,69 @@
 ---
-title: 'The final score: dusk, magical twilight, breath'
+title: 'The final score: the sounds of the installation'
 date: 2026-09-24
 stage: Making
-summary: 'The experience settles into three stages. A magical twilight gives it a story and builds intensity, so a bond with the cloud forms before it begins to breathe with you.'
-tags: [score, twilight, breath]
+summary: 'How the installation score was implemented: drones, pads and bells tied to the day cycle, with enough direct synthesis control to respond to breath and light.'
+sections:
+  - title: 'How the score was built'
+    description: >-
+      The sound system was part of the same simulator that controlled the light. That meant we could place the audio on the same 24-hour timeline as dusk, magical twilight and breath synchrony, then tune the score while watching the cloud change. The important choice was to keep the score playable from inside the software, using synth voices, drones and triggered samples rather than a single fixed audio file. That gave us control over how the sound changed when the lights changed, and left room for the reactive parts of the installation.
+    gallery:
+      - src: ../../assets/software/simulator-sky-timeline.png
+        alt: 'The simulator timeline showing the 24-hour cycle used by the installation.'
+        caption: 'The 24-hour cycle gave the sound a shared structure with the light.'
+      - src: ../../assets/software/drones.png
+        alt: 'The drones panel in the Cloudfulness simulator.'
+        caption: 'Drones provided the continuous background tone.'
+      - src: ../../assets/software/pads.png
+        alt: 'The pads panel in the Cloudfulness simulator.'
+        caption: 'Pads could swell and change with the light.'
+      - src: ../../assets/software/samples.png
+        alt: 'The samples panel in the Cloudfulness simulator.'
+        caption: 'Bells and other samples marked changes between periods.'
+tags: [score, sound, drones, bells, breath]
 ---
 
-The July draft had six movements: dusk, storm, moonlight, shared breath, sunrise and tea. The installation we built has three.
+The July draft had six movements: dusk, storm, moonlight, shared breath, sunrise and tea. The alpha installation became simpler: dusk, magical twilight and breath synchrony. But the sound score had to do more than accompany those stages. It had to help the audience feel the transitions, hold the room together, and leave enough space for the cloud to become reactive.
 
-## I · Dusk
+## Drones as atmosphere
 
-The sun sets behind the cloud. As the light drains away, lightning begins to flicker inside it.
+The drone was the ground of the score: a consistent background presence that kept the room from feeling empty. It gave us a stable atmosphere underneath the changing light, the bell events and the breath stage.
 
-## II · Magical twilight
+Because it was generated in the software, rather than baked into a rendered track, we could treat it as part of the installation state. It could be balanced against the pads and samples, tuned to sit under the voice of the cloud, and shaped without breaking the timing of the rest of the system.
 
-This is where the experience becomes a story. Instead of fading into night, the light **intensifies**, and colours flare up through the whole cloud at once: amber at its heart, orange and pink around it, violet at its edges. Unlike lightning, which strikes one spot, these blooms fill the cloud and then slowly let go. It adds intensity before the breath stage, and it is where the participant **bonds with the cloud**. The cloud stops being an object overhead and becomes a presence with a character of its own.
+## Bells as wind and punctuation
 
-## III · Breath synchrony
+Bells marked changes in period. Conceptually, we used them to capture something like wind moving through the cloud: small, bright events that could pass through the space without becoming a melody in the normal sense. These sampled sounds, along with the thunder sounds, came from Freesound and were then placed inside our own timing and control system. Thematically, the bells also made sense in terms of the underlying Buddhist inspiration for the installation.
 
-Then the cloud begins to breathe with you. The breathing sensor follows the oscillations of your respiration, and the cloud changes with each breath: its light swells as you breathe in and settles as you breathe out.
+## Lightning and thunder
 
-## What changed, and why
+The thunder was not just a sound effect dropped on top of the lightning. The software generated lightning events, then chose thunder samples that roughly matched the character of the strike. A short, quiet strike could pick a shorter and quieter thunder sound; a larger, longer strike could pick something with more weight.
 
-The storm folded into dusk, and the quiet moonlight became a magical twilight that builds intensity rather than calm. The reason is the bond. Breathing with something means more once you feel you know it. The twilight gives the cloud its story, so that when it starts to follow your breath, it feels less like a display responding to a sensor and more like something you are with.
+![The Cloud bolts panel, where thunder tracks can be uploaded and tagged by volume and length.](/cloud-belonging-website/images/journal/cloud-bolts.png)
+
+Each cloud bolt could have its own audio file, volume, and tags for loudness and duration: low, medium or high; short, medium or long. The simulator could then choose a sample that matched the lightning event instead of always playing the same thunder.
+
+We also controlled the timing between light and sound. A lightning strike appears first, then the thunder follows after a delay. That delay could be tuned, so the thunder felt connected to the visual strike without happening at exactly the same moment.
+
+Panning mattered too. The thunder could move across the stereo field according to where the strike happened, helping the sound feel spatial rather than simply centred in the room. To keep repeated strikes from sounding identical, we used pitch shifting to add small variations each time a sample played.
+
+## Magical twilight
+
+For the magical twilight, we wanted the score to feel slightly ominous. Not frightening, but building anticipation and also somehow hinting that something magical and slightly spooky is happening. Against this is the sound of thunder and the sound of "sprites", which have unusual sound effects that sync to visual effects.
+
+We used a low drone followed by low synths swelling underneath the dusk background track to blend well with the rumble of thunder before magical twilight opens. These come in periodically, appearing and disappearing with plenty of space for the thunder to fill the room and the background drone and samples to shine through.
+
+<figure>
+  <audio controls preload="metadata" src="/cloud-belonging-website/audio/dusk-to-thunder.mp3"></audio>
+  <figcaption>Dusk and thunder opening into magical twilight.</figcaption>
+</figure>
+
+The opening of the magical twilight is marked by dark bell sounds with a little phaser on them. The pads then enter in response to the bells, but at a higher register. That register is closer to where the pads sit through the rest of the piece, so the transition moves from the low thunder-like swell into the more luminous sounds that follow. Wind chimes and shimmering sounds end this period before the more melodic part of the score begins.
+
+## The cloud as an instrument
+
+We liked the idea that the cloud could become a kind of instrument, changing with breath in a way that echoed what we explored in the IFT collaboration: web-like structures that respond to touch, proximity and gesture through sound and light. We did not take that idea too far in the alpha, but it was there as a direction.
+
+This is why we were careful with the reactive part of the score. If the installation responds to breath, the sound cannot be a rigid soundtrack that ignores the participant. At the same time, it cannot react so much that the experience becomes a toy or a demo of a sensor.
+
+So we kept the audio controlled inside the simulator: drones, pads, samples and synth parameters that could be shaped directly. That gave us a score with clear musical decisions, but also enough flexibility to follow what the installation was doing.
