@@ -6,7 +6,7 @@ import Cloud3D from '../components/Cloud3D.astro';
 import CloudFrame from '../components/CloudFrame.astro';
 import { getJournal } from '../lib/journal';
 import { site } from '../data/site';
-import callForBelonging from '../assets/photos/call-for-belonging.jpg';
+import callForBelonging from '../assets/photos/call-for-belonging-flag.jpg';
 
 const journal = await getJournal();
 const latest = journal.slice(0, 3);
@@ -123,7 +123,7 @@ const introLetters = introPhrases.map((phrase, p) => {
     <div class="wrap invitation-block">
       <p class="eyebrow invitation-label">Research Creation</p>
       <h2 class="statement">
-        <em>Cloudfulness</em> is our offering to ‘belonging’. It’s a statement of our interest, a{' '}
+        <em>Cloudfulness</em> is our attempt at building belonging. It is a statement of our interest, a{' '}
         <strong><a href={url("/process/")}>journal of our process</a></strong>, a
         {' '}<strong><a href={url("/toolkit/")}>checkpoint of our understanding</a></strong> and an artifact to serve as a
         {' '}
@@ -144,18 +144,24 @@ const introLetters = introPhrases.map((phrase, p) => {
           </p>
         </div>
       </div>
-      <h3 class="journal-row-title reveal">Recent</h3>
+      <h3 class="journal-row-title reveal">Latest</h3>
       <div class="grid-3">
         {latest.map((entry) => <JournalCard entry={entry} />)}
       </div>
-      <div class="featured-block">
-        <h3 class="journal-row-title reveal">Featured</h3>
+    </div>
+    <div class="featured-block">
+      <div class="wrap">
+        <div class="featured-heading reveal">
+          <h3>Featured</h3>
+          <p>A selection from the journal</p>
+          <span aria-hidden="true"></span>
+        </div>
         <div class="grid-3">
           {featured.map((entry) => <JournalCard entry={entry} />)}
         </div>
-      </div>
-      <div class="process-actions">
-        <a class="button" href={url("/process/")}>All entries</a>
+        <div class="process-actions">
+          <a class="button" href={url("/process/")}>All entries <span aria-hidden="true">→</span></a>
+        </div>
       </div>
     </div>
   </section>
@@ -521,7 +527,7 @@ const introLetters = introPhrases.map((phrase, p) => {
   }
 
   .statement {
-    font-size: clamp(1.65rem, 1.25rem + 1.8vw, 2.7rem);
+    font-size: clamp(1.85rem, 1.3rem + 2.1vw, 3.1rem);
     font-weight: 300;
     max-width: 40ch;
     margin: 0 auto;
@@ -541,7 +547,7 @@ const introLetters = introPhrases.map((phrase, p) => {
   }
   .method {
     background: linear-gradient(180deg, var(--paper), var(--paper-deep));
-    padding-block: clamp(6rem, 12vw, 10rem);
+    padding-block: clamp(7rem, 13vw, 11rem);
   }
   .invitation-block {
     width: 100%;
@@ -574,19 +580,40 @@ const introLetters = introPhrases.map((phrase, p) => {
     color: var(--ink-soft);
   }
   .process-overview {
-    padding-block: clamp(3.5rem, 6vw, 5rem);
+    padding-block: clamp(3.5rem, 6vw, 5rem) 0;
   }
   .journal-row-title {
-    margin: 0 0 1rem;
+    margin: 0 0 1.25rem;
     font-size: clamp(1.35rem, 1.15rem + 0.7vw, 1.8rem);
-    text-align: right;
+    text-align: center;
   }
   .featured-block {
     margin-top: clamp(2.5rem, 5vw, 4rem);
+    padding-block: clamp(2.5rem, 5vw, 4rem);
+    background: linear-gradient(180deg, var(--paper-deep), var(--paper));
+  }
+  .featured-heading {
+    margin-bottom: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+  }
+  .featured-heading h3 {
+    margin-bottom: 0.45rem;
+    font-size: clamp(1.65rem, 1.35rem + 1vw, 2.25rem);
+  }
+  .featured-heading p {
+    margin: 0;
+    color: var(--ink-soft);
+  }
+  .featured-heading span {
+    display: block;
+    width: 2.25rem;
+    height: 1px;
+    margin: 0.9rem auto 0;
+    background: var(--line);
   }
   .process-actions {
     display: flex;
-    justify-content: flex-end;
+    justify-content: center;
     margin-top: clamp(2rem, 4vw, 3rem);
   }
 

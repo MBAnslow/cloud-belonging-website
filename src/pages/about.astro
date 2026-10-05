@@ -6,6 +6,7 @@ import { site } from '../data/site';
 import { references } from '../data/references';
 import CloudFrame from '../components/CloudFrame.astro';
 import together from '../assets/team/together.jpg';
+import callForBelonging from '../assets/photos/call-for-belonging-flag.jpg';
 
 // Ordered left to right, as they appear in the photo.
 const order = ['Michael Anslow', 'Zéphir Lorne'];
@@ -18,8 +19,8 @@ const themes = [...new Set(references.map((r) => r.theme))];
     eyebrow="About"
     image={talkSlide}
     imageAlt="Zéphir presenting the project at the Académie du Climat in Paris."
-    title="Who, where, and with whose help"
-    lede="Cloudfulness began as a research-creation internship in 2026. It sits where cognitive science, contemplative practice, art and creative technology meet."
+    title="Who, where and for what?"
+    lede="Cloudfulness began as a research-creation project at Sony CSL Paris at the intersection of cognitive science, contemplative practice, art and creative technology."
   />
 
   <section class="section">
@@ -53,41 +54,17 @@ const themes = [...new Set(references.map((r) => r.theme))];
     </div>
   </section>
 
-  <section class="section">
-    <div class="wrap grid-2">
-      <div class="reveal">
-        <p class="eyebrow">Context</p>
-        <h2>Research-creation</h2>
-      </div>
-      <div class="reveal">
-        <p>
-          In research-creation, making the work and studying it happen together. We build something, invite people in,
-          and listen carefully, through first-person accounts as much as measurements. What we learn goes back into the
-          work.
-        </p>
-        <p>
-          The project grew out of Zéphir’s research-creation proposal <em>A Space For You</em> and the <em>Réespiration</em>
-          pilot study Zéphir has been running. It was developed during an internship at <a href="https://csl.sony.fr/">Sony CSL Paris</a>,
-          alongside <a href="https://csl.sony.fr/projects/funiki/">Funiki</a>, a project on dynamic light and sound atmospheres.
-        </p>
-        <p>
-          With thanks to everyone who shared their time and ideas along the way, including Amos Blanton, Joanna, Alice
-          and Ben.
-        </p>
-      </div>
-    </div>
-  </section>
-
   <section class="section contact dark" id="contact">
-    <div class="wrap grid-2">
-      <div class="reveal">
-        <p class="eyebrow">Contact</p>
-        <h2>Host it, try it, think with us</h2>
-      </div>
-      <div class="reveal">
+    <div class="wrap contact-inner">
+      <div class="contact-copy reveal">
+        <p class="eyebrow">A call for belonging</p>
+        <h2>Open to collaborate and explore belonging</h2>
         <p class="lede">
-          We’d love to hear from venues interested in hosting the installation, groups who would like to try the
-          workshop, and artists and researchers exploring belonging in their own work.
+          Our next space, our next installation, our next research-creation iteration, our next conceptual leap in
+          understanding and our next new acquaintances.
+        </p>
+        <p class="lede">
+          We welcome venues, researchers, artists and communities who want to explore and build belonging together.
         </p>
         {
           site.contactEmail ? (
@@ -99,6 +76,14 @@ const themes = [...new Set(references.map((r) => r.theme))];
           )
         }
       </div>
+      <CloudFrame
+        src={callForBelonging}
+        alt="A lone figure holding a large flag above a sea of clouds at sunrise."
+        widths={[500, 800, 1100]}
+        sizes="(min-width: 60rem) 42rem, 100vw"
+        seed={47}
+        class="contact-photo reveal"
+      />
     </div>
   </section>
 
@@ -212,6 +197,43 @@ const themes = [...new Set(references.map((r) => r.theme))];
   .contact .pending {
     color: var(--ink-faint);
     font-style: italic;
+  }
+  .contact {
+    background: linear-gradient(180deg, #3b1824, #6f2f2d 58%, #2f1725);
+  }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+  .contact-copy {
+    position: relative;
+    z-index: 1;
+  }
+  .contact-copy h2 {
+    max-width: 12ch;
+  }
+  .contact-copy .lede {
+    max-width: 33rem;
+  }
+  .contact :global(.contact-photo) {
+    position: relative;
+    z-index: 0;
+    margin-left: clamp(-7rem, -6vw, -2rem);
+    margin-right: clamp(-4rem, -3vw, 0rem);
+  }
+  .contact-photo :global(img.main) {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  @media (max-width: 860px) {
+    .contact-inner {
+      grid-template-columns: 1fr;
+    }
+    .contact :global(.contact-photo) {
+      margin: 0;
+    }
   }
   .refs-head {
     margin-bottom: 3rem;
