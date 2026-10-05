@@ -3,6 +3,7 @@ import { url } from '../../lib/url';
 import { render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
+import Cloud3D from '../../components/Cloud3D.astro';
 import VideoClip from '../../components/VideoClip.astro';
 import MediaGallery, { type GalleryItem } from '../../components/MediaGallery.astro';
 import { getJournal, formatDate } from '../../lib/journal';
@@ -45,6 +46,39 @@ const portraitVideos = ['led-matrix', 'cloud-led', 'tulle-projector'];
 const videoRatios: Record<string, string> = {
   simulation: '1280 / 636',
 };
+const twilightClouds = [
+  {
+    id: 'dusk',
+    title: 'Dusk',
+    cloud: 'dusk' as const,
+    cycle: ['golden', 'dusk'] as const,
+    audio: 'dusk.mp3',
+  },
+  {
+    id: 'magical-twilight',
+    title: 'Magical twilight',
+    cloud: 'twilight' as const,
+    cycle: ['dusk', 'twilight'] as const,
+    audio: 'magical-twilight.mp3',
+  },
+];
+const extraScoreClouds = [
+  {
+    id: 'breath-and-dawn',
+    title: 'Breath and dawn',
+    cloud: 'breath' as const,
+    cycle: ['breath', 'dawn'] as const,
+    audio: 'breath-and-dawn.mp3',
+  },
+  {
+    id: 'daylight',
+    title: 'Daylight',
+    cloud: 'day' as const,
+    cycle: ['day', 'paper'] as const,
+    audio: 'daylight.mp3',
+  },
+];
+const showTwilightClouds = entry.id === '2026-09-24-the-final-score';
 ---
 
 <Base title={title} description={summary}>
@@ -86,6 +120,46 @@ const videoRatios: Record<string, string> = {
         <Content />
       </div>
     </div>
+
+    {
+      showTwilightClouds && (
+        <div class="wrap narrow score-clouds" id="score-clouds-block" data-score-clouds>
+          {twilightClouds.map((phase) => (
+            <div class="score-period">
+              <figure class="score-cloud">
+                <div class="score-sky">
+                  <Cloud3D mode="cycle" initial={phase.cloud} cycle={[...phase.cycle]} place={[0, 0.12, 0.62]} placeNarrow={[0, 0.12, 0.62]} />
+                </div>
+                <figcaption>
+                  <strong>{phase.title}</strong>
+                </figcaption>
+              </figure>
+              <audio controls preload="metadata" src={url(`/audio/${phase.audio}`)} aria-label={`${phase.title} score`} />
+            </div>
+          ))}
+        </div>
+      )
+    }
+
+    {
+      showTwilightClouds && (
+        <div class="wrap narrow score-clouds" id="score-clouds-extra-block" data-score-clouds>
+          {extraScoreClouds.map((phase) => (
+            <div class="score-period">
+              <figure class="score-cloud">
+                <div class="score-sky">
+                  <Cloud3D mode="cycle" initial={phase.cloud} cycle={[...phase.cycle]} place={[0, 0.12, 0.62]} placeNarrow={[0, 0.12, 0.62]} />
+                </div>
+                <figcaption>
+                  <strong>{phase.title}</strong>
+                </figcaption>
+              </figure>
+              <audio controls preload="metadata" src={url(`/audio/${phase.audio}`)} aria-label={`${phase.title} score`} />
+            </div>
+          ))}
+        </div>
+      )
+    }
 
     {
       sectionMedia.length > 0 ? (
@@ -162,6 +236,21 @@ const videoRatios: Record<string, string> = {
   </nav>
 </Base>
 
+{
+  showTwilightClouds && (
+    <script>
+      [
+        ['score-clouds-marker', 'score-clouds-block'],
+        ['score-clouds-extra-marker', 'score-clouds-extra-block'],
+      ].forEach(([markerId, blockId]) => {
+        const marker = document.getElementById(markerId);
+        const block = document.getElementById(blockId);
+        if (marker && block) marker.replaceWith(block);
+      });
+    </script>
+  )
+}
+
 <style>
   .narrow {
     max-width: 46rem;
@@ -233,6 +322,51 @@ const videoRatios: Record<string, string> = {
   }
   .entry-video.portrait {
     max-width: 22rem;
+  }
+  .score-clouds {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-block: 1.25rem 2.5rem;
+  }
+  .score-cloud {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    margin: 0;
+    overflow: hidden;
+    border-radius: var(--radius);
+    background: #1b2250;
+    color: #fbfaff;
+  }
+  .score-period audio {
+    display: block;
+    width: 100%;
+    margin-top: 0.75rem;
+  }
+  .score-sky {
+    position: absolute;
+    inset: 0;
+  }
+  .score-cloud figcaption {
+    position: absolute;
+    left: 1rem;
+    bottom: 1rem;
+    display: inline-flex;
+    padding: 0.42rem 0.72rem;
+    border-radius: 999px;
+    background: rgb(14 19 40 / 0.72);
+    backdrop-filter: blur(8px);
+  }
+  .score-cloud strong {
+    font-size: 0.86rem;
+    line-height: 1.1;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  @media (max-width: 700px) {
+    .score-clouds {
+      grid-template-columns: 1fr;
+    }
   }
   .tags {
     list-style: none;

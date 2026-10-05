@@ -4,10 +4,10 @@ import { Image } from 'astro:assets';
 import type { CollectionEntry } from 'astro:content';
 import { formatDate } from '../lib/journal';
 import GenerativeCover from './GenerativeCover.astro';
-import conversationPlaceholder from '../assets/photos/conversation-placeholder.jpg';
+import discussionPlaceholder from '../assets/photos/discussion-placeholder.png';
 
 const stagePlaceholders: Partial<Record<CollectionEntry<'journal'>['data']['stage'], ImageMetadata>> = {
-  Conversation: conversationPlaceholder,
+  Conversation: discussionPlaceholder,
 };
 
 interface Props {
@@ -15,8 +15,8 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, date, summary, stage, cover, coverAlt, coverVideo, video } = entry.data;
-const stagePlaceholder = stagePlaceholders[stage];
+const { title, date, summary, stage, cover, coverAlt, coverVideo, video, tags } = entry.data;
+const stagePlaceholder = tags.includes('conversation') ? discussionPlaceholder : stagePlaceholders[stage];
 ---
 
 <article class="card reveal">

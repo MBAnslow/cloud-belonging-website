@@ -3,6 +3,8 @@ title: 'The final score: the sounds of the installation'
 date: 2026-09-24
 stage: Making
 summary: 'How the installation score was implemented: drones, pads and bells tied to the day cycle, with enough direct synthesis control to respond to breath and light.'
+cover: ../../assets/journal/2026-09-24-the-final-score/final-score-cover.jpg
+coverAlt: 'A dreamy storm collage with clouds, bells, lightning, a red sun and musical notation flowing through the sky.'
 sections:
   - title: 'How the score was built'
     description: >-
@@ -47,22 +49,38 @@ We also controlled the timing between light and sound. A lightning strike appear
 
 Panning mattered too. The thunder could move across the stereo field according to where the strike happened, helping the sound feel spatial rather than simply centred in the room. To keep repeated strikes from sounding identical, we used pitch shifting to add small variations each time a sample played.
 
-## Magical twilight
+## Scoring the narrative
+
+### From Dusk to the Magical Twilight
 
 For the magical twilight, we wanted the score to feel slightly ominous. Not frightening, but building anticipation and also somehow hinting that something magical and slightly spooky is happening. Against this is the sound of thunder and the sound of "sprites", which have unusual sound effects that sync to visual effects.
 
 We used a low drone followed by low synths swelling underneath the dusk background track to blend well with the rumble of thunder before magical twilight opens. These come in periodically, appearing and disappearing with plenty of space for the thunder to fill the room and the background drone and samples to shine through.
 
-<figure>
-  <audio controls preload="metadata" src="/cloud-belonging-website/audio/dusk-to-thunder.mp3"></audio>
-  <figcaption>Dusk and thunder opening into magical twilight.</figcaption>
-</figure>
+<div id="score-clouds-marker"></div>
 
 The opening of the magical twilight is marked by dark bell sounds with a little phaser on them. The pads then enter in response to the bells, but at a higher register. That register is closer to where the pads sit through the rest of the piece, so the transition moves from the low thunder-like swell into the more luminous sounds that follow. Wind chimes and shimmering sounds end this period before the more melodic part of the score begins.
+
+### Breath and Dawn to Daylight
+
+The last part needed to bring across a sense of optimism as the dawn comes. This moves away from the mysterious magical twilight and also needs to support the breath modulation. We went with long sweeping pads with consonant chords and kept the on and off swelling of chords to give space to the other parts of the track. The long chords also allow the breath modulation effect to be more clearly heard as it changes. You can read more about that later in this post.
+
+Finally, as dawn comes, we return to the bird song with a slightly disorienting trippy sound. The 'real' world is returning. The pads and drones gradually fix to a single very long note which gradually fades away until all that is left is silence and we return to daylight from which the installation began.
+
+<div id="score-clouds-extra-marker"></div>
 
 ## The cloud as an instrument
 
 We liked the idea that the cloud could become a kind of instrument, changing with breath in a way that echoed what we explored in the IFT collaboration: web-like structures that respond to touch, proximity and gesture through sound and light. We did not take that idea too far in the alpha, but it was there as a direction.
+
+<figure>
+  <video controls playsinline preload="metadata" src="/cloud-belonging-website/video/audio-breath-modulation.mp4" poster="/cloud-belonging-website/video/audio-breath-modulation.jpg"></video>
+  <figcaption>Breath modulating the sound, with audio. Watch the drone, pad and sample controls move as each breath passes through the cloud.</figcaption>
+</figure>
+
+As each out-breath travels up into the cloud, the software measures how much of the cloud it lights. That single value then drives the mix. Each slider in the master panel sets where a parameter lands when the cloud is fully lit by breath, plus an offset for where it rests between breaths. The live value glides between the two.
+
+It moves the volume, saturation, tremolo and filters of the drones, the volume, saturation, spread and filters of the pads, and the volume and filters of the samples. The soundscape swells and opens as a breath washes through the cloud, then settles as it fades. Turn the sound on to hear it.
 
 This is why we were careful with the reactive part of the score. If the installation responds to breath, the sound cannot be a rigid soundtrack that ignores the participant. At the same time, it cannot react so much that the experience becomes a toy or a demo of a sensor.
 

@@ -351,12 +351,21 @@ main > section.blend:last-of-type::after,
 }
 
 .prose h2 {
-  font-size: clamp(1.5rem, 1.2rem + 1.2vw, 2.1rem);
-  margin-top: 2.2em;
+  font-size: clamp(1.85rem, 1.45rem + 1.4vw, 2.5rem);
+  font-weight: 360;
+  line-height: 1.08;
+  letter-spacing: -0.018em;
+  margin: 2.8em 0 0.85em;
+  padding-top: 0.7em;
+  border-top: 1px solid rgb(59 82 180 / 0.22);
 }
 
 .prose h3 {
-  margin-top: 1.8em;
+  font-size: clamp(1.25rem, 1.12rem + 0.55vw, 1.55rem);
+  font-weight: 520;
+  line-height: 1.22;
+  color: var(--ink-soft);
+  margin: 2.2em 0 0.65em;
 }
 
 .prose ul,

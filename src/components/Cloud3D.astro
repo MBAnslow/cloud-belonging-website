@@ -100,11 +100,14 @@ const {
     if (el.dataset.mode === 'cycle' && !reduce) {
       const names = (el.dataset.cycle ?? '').split(',') as CloudStateName[];
       let i = Math.max(0, names.indexOf(el.dataset.initial as CloudStateName));
-      setInterval(() => {
-        if (document.hidden) return;
-        i = (i + 1) % names.length;
-        renderer.setState(cloudStates[names[i]], TRANSITION);
-      }, HOLD + TRANSITION);
+      const advance = () => {
+        if (!document.hidden) {
+          i = (i + 1) % names.length;
+          renderer.setState(cloudStates[names[i]], TRANSITION);
+        }
+        window.setTimeout(advance, HOLD + TRANSITION);
+      };
+      window.setTimeout(advance, HOLD);
     }
 
     el.addEventListener('cloud:state', (e) => {
