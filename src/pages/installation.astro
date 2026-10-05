@@ -14,6 +14,7 @@ import beltSketch from '../assets/photos/belt-sketch.jpg';
 import printedJoints from '../assets/journal/2026-07-17-printing-a-frame/pyramid-3d-joints-printed.jpg';
 import pyramidFrameMaking from '../assets/journal/2026-07-22-a-pyramid-of-light/pyramid-frame-making.jpg';
 
+import cloudTeapotPedestal from '../assets/photos/cloud-teapot-pedestal.png';
 import cloudMaterials from '../assets/photos/cloud-materials.jpg';
 import ledLightingDiagram from '../assets/photos/led-light-probes-diagram.jpg';
 import swSimulator from '../assets/software/simulator.png';
@@ -392,12 +393,19 @@ const learned = [
 
   <section class="section blend schematic making" id="making">
     <div class="wrap">
-      <div class="section-head reveal">
+      <div class="section-head schematic-head reveal">
         <p class="eyebrow"><span class="phase-mark">α</span> Technical details</p>
         <h2>Everything behind the cloud</h2>
         <p class="lede measure">
           The hardware and software that made the alpha work. Open any part to see more.
         </p>
+        <img
+          class="schematic-illustration"
+          src={cloudTeapotPedestal.src}
+          alt="Line drawing of the cloud installation above a teapot on a small pedestal."
+          loading="lazy"
+          decoding="async"
+        />
       </div>
 
       <h3 class="tech-group reveal">Hardware</h3>
@@ -757,6 +765,69 @@ const learned = [
 </Base>
 
 <script>
+  const illustrationParams = new URLSearchParams(location.search);
+  if (illustrationParams.has('illustration-debug') && !document.querySelector('.illustration-debug')) {
+    const head = document.querySelector<HTMLElement>('.schematic-head');
+    if (head) {
+      const settings = {
+        top: 5.25,
+        right: -0.5,
+        width: 54,
+        opacity: 0.14,
+        glow: 0.22,
+        height: 29,
+      };
+      const controls: [keyof typeof settings, string, number, number, number][] = [
+        ['top', 'Top offset (rem)', -6, 12, 0.25],
+        ['right', 'Right offset (vw)', -18, 12, 0.5],
+        ['width', 'Width (vw)', 30, 120, 1],
+        ['opacity', 'Opacity', 0, 1, 0.01],
+        ['glow', 'Blue glow strength', 0, 1, 0.01],
+        ['height', 'Header min-height (rem)', 10, 36, 0.5],
+      ];
+
+      const apply = () => {
+        head.style.setProperty('--schematic-ill-top', `${settings.top}rem`);
+        head.style.setProperty('--schematic-ill-right', `${settings.right}vw`);
+        head.style.setProperty('--schematic-ill-width', `${settings.width}vw`);
+        head.style.setProperty('--schematic-ill-opacity', `${settings.opacity}`);
+        head.style.setProperty('--schematic-ill-glow', `${settings.glow}`);
+        head.style.setProperty('--schematic-head-height', `${settings.height}rem`);
+      };
+
+      const panel = document.createElement('div');
+      panel.className = 'illustration-debug';
+      panel.innerHTML = `<strong>Cloud illustration</strong>${controls
+        .map(
+          ([key, label, min, max, step]) =>
+            `<label>${label}<span><input type="range" name="${key}" min="${min}" max="${max}" step="${step}" value="${settings[key]}"><output>${settings[key]}</output></span></label>`,
+        )
+        .join('')}<button type="button">Copy values</button>`;
+      panel.addEventListener('input', (e) => {
+        const input = e.target as HTMLInputElement;
+        settings[input.name as keyof typeof settings] = Number(input.value);
+        input.nextElementSibling!.textContent = input.value;
+        apply();
+      });
+      panel.querySelector('button')!.addEventListener('click', (e) => {
+        navigator.clipboard.writeText(JSON.stringify(settings));
+        (e.target as HTMLButtonElement).textContent = 'Copied';
+      });
+      Object.assign(panel.style, {
+        position: 'fixed', right: '1rem', bottom: '1rem', zIndex: '9999', width: '18rem', padding: '0.9rem 1rem',
+        display: 'grid', gap: '0.55rem', font: '12px/1.3 system-ui, sans-serif', color: '#111',
+        background: 'rgba(255,255,255,0.94)', border: '1px solid #ccc', borderRadius: '8px', boxShadow: '0 6px 24px rgba(0,0,0,0.15)',
+      });
+      panel.querySelectorAll('label').forEach((l) => Object.assign(l.style, { display: 'grid', gap: '0.2rem' }));
+      panel.querySelectorAll('label span').forEach((s) => Object.assign((s as HTMLElement).style, { display: 'flex', gap: '0.5rem', alignItems: 'center' }));
+      panel.querySelectorAll('input').forEach((i) => (i.style.flex = '1'));
+      document.body.append(panel);
+      apply();
+    }
+  }
+</script>
+
+<script>
   const openTarget = () => {
     const el = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
     if (el instanceof HTMLDetailsElement && !el.open) {
@@ -875,6 +946,42 @@ const learned = [
     background:
       radial-gradient(ellipse 70% 50% at 50% 30%, rgb(90 160 230 / 0.08), transparent 70%),
       #04060d;
+  }
+  .schematic-head {
+    position: relative;
+    min-height: var(--schematic-head-height, 29rem);
+    max-width: none;
+    padding-top: clamp(1rem, 3vw, 2rem);
+    isolation: isolate;
+  }
+  .schematic-head :is(.eyebrow, h2, .lede) {
+    position: relative;
+    z-index: 1;
+    max-width: 44rem;
+  }
+  .schematic-illustration {
+    position: absolute;
+    z-index: 0;
+    top: var(--schematic-ill-top, 5.25rem);
+    right: var(--schematic-ill-right, -0.5vw);
+    width: min(var(--schematic-ill-width, 54vw), 48rem);
+    opacity: var(--schematic-ill-opacity, 0.14);
+    filter:
+      drop-shadow(0 0 0.9rem rgb(140 190 255 / var(--schematic-ill-glow, 0.22)))
+      drop-shadow(0 0 2rem rgb(70 110 255 / calc(var(--schematic-ill-glow, 0.22) * 0.63)));
+    pointer-events: none;
+  }
+  @media (max-width: 760px) {
+    .schematic-head {
+      min-height: clamp(18rem, 70vw, 26rem);
+      padding-bottom: 8rem;
+    }
+    .schematic-illustration {
+      top: 7rem;
+      right: -5rem;
+      width: min(120vw, 44rem);
+      opacity: 0.72;
+    }
   }
   .fabrication {
     background: linear-gradient(180deg, var(--paper), var(--paper-deep));
