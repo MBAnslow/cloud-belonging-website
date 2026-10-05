@@ -192,16 +192,19 @@ p {
   isolation: isolate;
 }
 
+:root {
+  --wave: url("data:image/svg+xml,%3Csvg%20xmlns%3D'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg'%20viewBox%3D'0%200%201440%20120'%20preserveAspectRatio%3D'none'%3E%3Cfilter%20id%3D'f'%20x%3D'-5%25'%20y%3D'-50%25'%20width%3D'110%25'%20height%3D'200%25'%3E%3CfeGaussianBlur%20stdDeviation%3D'10.5'%2F%3E%3C%2Ffilter%3E%3Cpath%20filter%3D'url(%23f)'%20d%3D'M-40%20-40H1480V32.9L1480.0%2032.9L1467.3%2033.5L1454.7%2034.0L1442.0%2034.1L1429.3%2033.8L1416.7%2033.1L1404.0%2032.0L1391.3%2030.6L1378.7%2028.9L1366.0%2027.1L1353.3%2025.2L1340.7%2023.5L1328.0%2022.2L1315.3%2021.2L1302.7%2020.9L1290.0%2021.3L1277.3%2022.4L1264.7%2024.3L1252.0%2027.1L1239.3%2030.6L1226.7%2034.9L1214.0%2039.7L1201.3%2044.9L1188.7%2050.3L1176.0%2055.8L1163.3%2061.1L1150.7%2066.1L1138.0%2070.7L1125.3%2074.5L1112.7%2077.7L1100.0%2080.0L1087.3%2081.5L1074.7%2082.1L1062.0%2081.9L1049.3%2081.1L1036.7%2079.7L1024.0%2077.9L1011.3%2075.8L998.7%2073.6L986.0%2071.5L973.3%2069.5L960.7%2067.9L948.0%2066.6L935.3%2065.7L922.7%2065.2L910.0%2065.2L897.3%2065.4L884.7%2065.9L872.0%2066.4L859.3%2067.0L846.7%2067.3L834.0%2067.3L821.3%2066.9L808.7%2065.9L796.0%2064.2L783.3%2061.9L770.7%2058.9L758.0%2055.2L745.3%2051.0L732.7%2046.4L720.0%2041.5L707.3%2036.4L694.7%2031.4L682.0%2026.7L669.3%2022.4L656.7%2018.7L644.0%2015.7L631.3%2013.5L618.7%2012.3L606.0%2012.0L593.3%2012.6L580.7%2014.0L568.0%2016.2L555.3%2019.0L542.7%2022.3L530.0%2025.8L517.3%2029.5L504.7%2033.1L492.0%2036.6L479.3%2039.7L466.7%2042.3L454.0%2044.5L441.3%2046.2L428.7%2047.4L416.0%2048.1L403.3%2048.5L390.7%2048.6L378.0%2048.6L365.3%2048.7L352.7%2048.9L340.0%2049.4L327.3%2050.3L314.7%2051.7L302.0%2053.6L289.3%2056.1L276.7%2059.0L264.0%2062.5L251.3%2066.2L238.7%2070.1L226.0%2074.1L213.3%2078.0L200.7%2081.5L188.0%2084.6L175.3%2087.0L162.7%2088.7L150.0%2089.5L137.3%2089.3L124.7%2088.3L112.0%2086.3L99.3%2083.5L86.7%2080.0L74.0%2075.9L61.3%2071.3L48.7%2066.5L36.0%2061.7L23.3%2056.9L10.7%2052.5L-2.0%2048.4L-14.7%2045.0L-27.3%2042.1L-40.0%2039.8Z'%2F%3E%3C%2Fsvg%3E");
+}
+
 .blend::before,
 .blend::after {
   content: "";
   position: absolute;
   inset-inline: 0;
-  height: clamp(3.5rem, 7vw, 6rem);
+  height: var(--wave-height, 5.75rem);
   pointer-events: none;
   z-index: -1;
   background: var(--paper);
-  --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-5%25' y='-50%25' width='110%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='9'/%3E%3C/filter%3E%3Cpath filter='url(%23f)' d='M-40 -40H1480V58C1320 30 1180 34 1010 62S690 98 500 74 160 30 -40 62Z'/%3E%3C/svg%3E");
   -webkit-mask: var(--wave) 0 0 / 100% 100% no-repeat;
   mask: var(--wave) 0 0 / 100% 100% no-repeat;
 }
@@ -225,14 +228,14 @@ main > section.wash:last-of-type {
     linear-gradient(180deg, var(--paper), var(--wash) 45%, var(--wash-deep));
 }
 
-main > section.wash:first-of-type,
+main > section.wash:first-child,
 .hero + .wash {
   background:
     radial-gradient(ellipse 60% 80% at 72% 50%, var(--wash-glow), transparent 75%),
     linear-gradient(180deg, var(--wash), var(--wash-deep) 55%, var(--paper));
 }
 
-main > section.blend:first-of-type::before,
+main > section.blend:first-child::before,
 .hero + .blend::before,
 main > section.blend:last-of-type::after,
 .blend + .blend::before,
@@ -436,4 +439,9 @@ html.theme-night .site-header {
 html.theme-night .status,
 html.theme-night .pipeline {
   background: rgb(255 255 255 / 0.06);
+}
+
+html.theme-night .blend + .blend::before,
+html.theme-night .blend:has(+ .blend)::after {
+  display: block;
 }

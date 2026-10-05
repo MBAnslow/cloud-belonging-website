@@ -276,7 +276,7 @@ const learned = [
   </PageHeader>
 
 
-  <section class="section dark evening" id="alpha">
+  <section class="section dark blend evening" id="alpha">
     <div class="phase-divider" id="alpha-start" aria-label="The alpha">
       <div class="wrap phase-divider-inner">
         <span class="pd-line" aria-hidden="true"></span>
@@ -321,7 +321,7 @@ const learned = [
     </div>
   </section>
 
-  <section class="section screens" id="screens">
+  <section class="section blend screens" id="screens">
     <div class="wrap">
       <div class="grid-2 head">
         <div class="reveal">
@@ -646,7 +646,7 @@ const learned = [
     </div>
   </section>
 
-  <section class="section fabrication" id="beta">
+  <section class="section blend fabrication" id="beta">
     <div class="phase-divider" id="beta-start" aria-label="The beta">
       <div class="wrap phase-divider-inner">
         <span class="pd-line" aria-hidden="true"></span>
@@ -727,7 +727,7 @@ const learned = [
     </div>
   </section>
 
-  <section class="section dark after">
+  <section class="section dark blend after">
     <div class="wrap grid-2">
       <div class="reveal">
         <p class="eyebrow">What the alpha taught us</p>
@@ -878,6 +878,9 @@ const learned = [
   }
   .fabrication {
     background: linear-gradient(180deg, var(--paper), var(--paper-deep));
+  }
+  .fabrication::after {
+    display: none !important;
   }
   :global(.fab-diagram) {
     max-width: 64rem;
@@ -1156,7 +1159,16 @@ const learned = [
   }
 
   .after {
-    background: linear-gradient(180deg, #2a1f52, var(--night));
+    --after-bg: #05060c;
+  }
+  :global(html.theme-night) .after {
+    background: var(--after-bg);
+  }
+  .after::before {
+    top: auto;
+    bottom: calc(100% - 1px);
+    background: var(--after-bg);
+    transform: scaleY(-1);
   }
   .after .grid-2 {
     align-items: center;
