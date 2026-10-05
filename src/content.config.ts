@@ -8,6 +8,7 @@ const journal = defineCollection({
     z.object({
       title: z.string(),
       date: z.coerce.date(),
+      dateLabel: z.string().optional(),
       summary: z.string(),
       stage: z.enum(['Proposal', 'Concept formation', 'Conversation', 'Making', 'Sharing']),
       cover: image().optional(),

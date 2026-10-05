@@ -15,7 +15,7 @@ interface Props {
 }
 
 const { entry } = Astro.props;
-const { title, date, summary, stage, cover, coverAlt, coverVideo, video, tags } = entry.data;
+const { title, date, dateLabel, summary, stage, cover, coverAlt, coverVideo, video, tags } = entry.data;
 const stagePlaceholder = tags.includes('conversation') ? discussionPlaceholder : stagePlaceholders[stage];
 ---
 
@@ -58,7 +58,7 @@ const stagePlaceholder = tags.includes('conversation') ? discussionPlaceholder :
     </div>
     <div class="meta">
       <span class="tag" data-stage={stage}>{stage}</span>
-      <time datetime={date.toISOString()}>{formatDate(date)}</time>
+      <time datetime={date.toISOString()}>{dateLabel ?? formatDate(date)}</time>
     </div>
     <h3>{title}</h3>
     <p>{summary}</p>

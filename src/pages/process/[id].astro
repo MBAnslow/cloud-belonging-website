@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 
 const { entry, newer, older } = Astro.props;
 const { Content } = await render(entry);
-const { title, date, stage, summary, cover, coverAlt, coverVideo, video, gallery, clips, sections, tags } = entry.data;
+const { title, date, dateLabel, stage, summary, cover, coverAlt, coverVideo, video, gallery, clips, sections, tags } = entry.data;
 const media: GalleryItem[] = [
   ...clips.map((c) => ({ video: c.name, caption: c.caption, portrait: c.portrait, sound: c.sound })),
   ...gallery.map((g) => ({ image: g.src, alt: g.alt, caption: g.caption })),
@@ -88,7 +88,7 @@ const showTwilightClouds = entry.id === '2026-09-24-the-final-score';
         <a class="back" href={url("/process/")}>← Process journal</a>
         <div class="meta">
           <span class="tag" data-stage={stage}>{stage}</span>
-          <time datetime={date.toISOString()}>{formatDate(date)}</time>
+          <time datetime={date.toISOString()}>{dateLabel ?? formatDate(date)}</time>
         </div>
         <h1>{title}</h1>
         <p class="lede">{summary}</p>
