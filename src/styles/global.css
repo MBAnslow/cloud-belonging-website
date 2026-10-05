@@ -177,8 +177,75 @@ p {
   padding-block: clamp(4rem, 10vw, 8rem);
 }
 
-.section + .section {
-  border-top: 1px solid var(--line);
+.wash {
+  --wash-tint: #e88c6e;
+  --wash: color-mix(in srgb, var(--paper) 76%, var(--wash-tint));
+  --wash-deep: color-mix(in srgb, var(--paper) 70%, var(--wash-tint));
+  --wash-glow: transparent;
+  background:
+    radial-gradient(ellipse 60% 80% at 72% 50%, var(--wash-glow), transparent 75%),
+    linear-gradient(180deg, var(--paper), var(--wash) 45%, var(--wash-deep) 70%, var(--paper));
+}
+
+.blend {
+  position: relative;
+  isolation: isolate;
+}
+
+.blend::before,
+.blend::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: clamp(3.5rem, 7vw, 6rem);
+  pointer-events: none;
+  z-index: -1;
+  background: var(--paper);
+  --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'%3E%3Cfilter id='f' x='-5%25' y='-50%25' width='110%25' height='200%25'%3E%3CfeGaussianBlur stdDeviation='9'/%3E%3C/filter%3E%3Cpath filter='url(%23f)' d='M-40 -40H1480V58C1320 30 1180 34 1010 62S690 98 500 74 160 30 -40 62Z'/%3E%3C/svg%3E");
+  -webkit-mask: var(--wave) 0 0 / 100% 100% no-repeat;
+  mask: var(--wave) 0 0 / 100% 100% no-repeat;
+}
+
+.blend::before {
+  top: 0;
+}
+
+.blend::after {
+  bottom: 0;
+  transform: scale(-1, -1);
+}
+
+html.theme-night .wash {
+  --wash-tint: #000;
+}
+
+main > section.wash:last-of-type {
+  background:
+    radial-gradient(ellipse 60% 80% at 72% 50%, var(--wash-glow), transparent 75%),
+    linear-gradient(180deg, var(--paper), var(--wash) 45%, var(--wash-deep));
+}
+
+main > section.wash:first-of-type,
+.hero + .wash {
+  background:
+    radial-gradient(ellipse 60% 80% at 72% 50%, var(--wash-glow), transparent 75%),
+    linear-gradient(180deg, var(--wash), var(--wash-deep) 55%, var(--paper));
+}
+
+main > section.blend:first-of-type::before,
+.hero + .blend::before,
+main > section.blend:last-of-type::after,
+.blend + .blend::before,
+.blend:has(+ .blend)::after {
+  display: none;
+}
+
+.wash-sky {
+  --wash-tint: #8fa3d6;
+}
+
+.wash-sand {
+  --wash-tint: #d9bf94;
 }
 
 .dark {

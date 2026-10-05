@@ -119,7 +119,7 @@ const introLetters = introPhrases.map((phrase, p) => {
     </script>
   </section>
 
-  <section id="invitation" class="section method">
+  <section id="invitation" class="section wash method">
     <div class="wrap invitation-block">
       <p class="eyebrow invitation-label">Research Creation</p>
       <h2 class="statement">
@@ -132,7 +132,7 @@ const introLetters = introPhrases.map((phrase, p) => {
     </div>
   </section>
 
-  <section class="section process-overview">
+  <section class="section wash wash-sky process-overview">
     <div class="wrap">
       <div class="latest-head reveal">
         <div>
@@ -166,7 +166,7 @@ const introLetters = introPhrases.map((phrase, p) => {
     </div>
   </section>
 
-  <section class="section call">
+  <section class="section wash call">
     <div class="wrap call-inner">
       <div class="call-copy reveal">
         <p class="eyebrow ruled">A call for belonging</p>
@@ -546,7 +546,7 @@ const introLetters = introPhrases.map((phrase, p) => {
     text-underline-offset: 0.16em;
   }
   .method {
-    background: linear-gradient(180deg, var(--paper), var(--paper-deep));
+    --wash-tint: #a9a3d0;
     padding-block: clamp(7rem, 13vw, 11rem);
   }
   .invitation-block {
@@ -569,7 +569,7 @@ const introLetters = introPhrases.map((phrase, p) => {
     align-items: end;
     gap: 1rem;
     flex-wrap: wrap;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
   }
   .latest-head h2 {
     margin: 0;
@@ -588,12 +588,12 @@ const introLetters = introPhrases.map((phrase, p) => {
     text-align: center;
   }
   .featured-block {
-    margin-top: clamp(2.5rem, 5vw, 4rem);
-    padding-block: clamp(2.5rem, 5vw, 4rem);
-    background: linear-gradient(180deg, var(--paper-deep), var(--paper));
+    margin-top: clamp(1.25rem, 3vw, 2.25rem);
+    padding-block: clamp(1.5rem, 3vw, 2.5rem);
+    background: radial-gradient(ellipse 75% 65% at 50% 50%, rgb(169 163 208 / 0.2), transparent 75%);
   }
   .featured-heading {
-    margin-bottom: clamp(2rem, 4vw, 3rem);
+    margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
     text-align: center;
   }
   .featured-heading h3 {
@@ -614,11 +614,11 @@ const introLetters = introPhrases.map((phrase, p) => {
   .process-actions {
     display: flex;
     justify-content: center;
-    margin-top: clamp(2rem, 4vw, 3rem);
+    margin-top: clamp(1.25rem, 2.5vw, 2rem);
   }
 
   .call {
-    background: linear-gradient(180deg, var(--paper), var(--cream));
+    --wash-tint: #f2c27a;
   }
   .call-inner {
     display: grid;
