@@ -23,6 +23,7 @@ const { mask, spill, halo } = cloudMasks(seed, keep);
   style={`--mask:${mask};--spill:${spill};--halo:${halo};${fadeVars(defaultTexture)}`}
   data-seed={seed}
   data-keep={JSON.stringify(keep)}
+  data-cloud-frame
 >
   <Image src={src} alt="" widths={[400]} sizes="400px" loading={loading} class="spill" aria-hidden="true" />
   <Image src={src} alt={alt} widths={widths} sizes={sizes} loading={loading} class="main" />
@@ -57,6 +58,20 @@ const { mask, spill, halo } = cloudMasks(seed, keep);
     else img.addEventListener('load', sample, { once: true });
   };
   document.querySelectorAll<HTMLElement>('.cloud-frame').forEach(tintHalo);
+
+  document.querySelectorAll<HTMLElement>('[data-cloud-frame]').forEach((el) => {
+    const imgs = Array.from(el.querySelectorAll<HTMLImageElement>('img'));
+    const reveal = () => el.classList.add('is-loaded');
+    const ready = (img: HTMLImageElement) =>
+      img.complete && img.naturalWidth > 0
+        ? Promise.resolve()
+        : new Promise<void>((resolve) => {
+            img.addEventListener('load', () => resolve(), { once: true });
+            img.addEventListener('error', () => resolve(), { once: true });
+          });
+
+    Promise.all(imgs.map(ready)).then(reveal);
+  });
 
   const params = new URLSearchParams(location.search);
   if (params.has('cloud-debug') && !document.querySelector('.cloud-debug')) {
@@ -125,6 +140,11 @@ const { mask, spill, halo } = cloudMasks(seed, keep);
     position: relative;
     isolation: isolate;
     scale: var(--cloud-scale, 1);
+    opacity: 0;
+    transition: opacity 0.45s ease;
+  }
+  .cloud-frame.is-loaded {
+    opacity: 1;
   }
   .cloud-frame::before {
     content: '';

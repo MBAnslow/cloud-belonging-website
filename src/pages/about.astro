@@ -1,7 +1,7 @@
 ---
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
-import talkSlide from '../assets/photos/talk-slide.jpg';
+import zephirExplains from '../assets/photos/zephir-explains-hands-up.jpg';
 import { site } from '../data/site';
 import { references } from '../data/references';
 import CloudFrame from '../components/CloudFrame.astro';
@@ -17,8 +17,8 @@ const themes = [...new Set(references.map((r) => r.theme))];
 <Base title="About" description="The people, context and sources behind Cloudfulness, a research-creation project on belonging.">
   <PageHeader
     eyebrow="About"
-    image={talkSlide}
-    imageAlt="Zéphir presenting the project at the Académie du Climat in Paris."
+    image={zephirExplains}
+    imageAlt="Zéphir presenting the Cloudfulness concept at the Académie du Climat in Paris."
     title="Who, where and for what?"
     lede="Cloudfulness began as a research-creation project at Sony CSL Paris at the intersection of cognitive science, contemplative practice, art and creative technology."
   />

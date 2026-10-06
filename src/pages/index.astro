@@ -9,15 +9,22 @@ import { site } from '../data/site';
 import callForBelonging from '../assets/photos/call-for-belonging-flag.jpg';
 
 const journal = await getJournal();
-const latest = journal.slice(0, 3);
-const featuredIds = [
+const latest = journal.slice(0, 4);
+const latestIds = new Set(latest.map((entry) => entry.id));
+const featuredCandidateIds = [
   '2026-06-11-sensitive-webs',
   '2026-07-02-quand-le-ciel-recule',
   '2026-09-24-the-final-score',
+  '2026-07-improvising-to-a-script',
+  '2026-07-30-the-alpha-cloud',
+  '2026-02-10-a-space-for-you',
 ];
-const featured = featuredIds
+const featured = featuredCandidateIds
   .map((id) => journal.find((entry) => entry.id === id))
-  .filter((entry): entry is (typeof journal)[number] => Boolean(entry));
+  .filter((entry): entry is (typeof journal)[number] => Boolean(entry) && !latestIds.has(entry.id))
+  .concat(journal.filter((entry) => !latestIds.has(entry.id) && !featuredCandidateIds.includes(entry.id)))
+  .filter((entry, index, entries) => entries.findIndex((candidate) => candidate.id === entry.id) === index)
+  .slice(0, 4);
 
 const introPhrases = [
   'A cloud you lie beneath.',
@@ -152,20 +159,22 @@ const introLetters = introPhrases.map((phrase, p) => {
           </p>
         </div>
       </div>
-      <h3 class="journal-row-title reveal">Latest</h3>
-      <div class="grid-3">
-        {latest.map((entry) => <JournalCard entry={entry} />)}
-      </div>
-    </div>
-    <div class="featured-block">
-      <div class="wrap">
+      <div class="featured-block">
         <div class="featured-heading reveal">
           <h3>Featured</h3>
           <p>A selection from the journal</p>
           <span aria-hidden="true"></span>
         </div>
-        <div class="grid-3">
+        <div class="home-journal-grid">
           {featured.map((entry) => <JournalCard entry={entry} />)}
+        </div>
+      </div>
+    </div>
+    <div class="latest-block">
+      <div class="wrap">
+        <h3 class="journal-row-title reveal">Latest</h3>
+        <div class="home-journal-grid">
+          {latest.map((entry) => <JournalCard entry={entry} />)}
         </div>
         <div class="process-actions">
           <a class="button" href={url("/process/")}>All entries <span aria-hidden="true">→</span></a>
@@ -611,6 +620,11 @@ const introLetters = introPhrases.map((phrase, p) => {
     font-size: clamp(1.35rem, 1.15rem + 0.7vw, 1.8rem);
     text-align: center;
   }
+  .home-journal-grid {
+    display: grid;
+    gap: clamp(1.1rem, 2.4vw, 2rem);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
   .featured-block {
     margin-top: clamp(1.25rem, 3vw, 2.25rem);
     padding-block: clamp(1.5rem, 3vw, 2.5rem);
@@ -638,6 +652,18 @@ const introLetters = introPhrases.map((phrase, p) => {
     display: flex;
     justify-content: center;
     margin-top: clamp(1.25rem, 2.5vw, 2rem);
+  }
+
+  @media (max-width: 980px) {
+    .home-journal-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 580px) {
+    .home-journal-grid {
+      grid-template-columns: 1fr;
+    }
   }
 
   .call {
