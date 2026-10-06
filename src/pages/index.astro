@@ -50,11 +50,11 @@ const introLetters = introPhrases.map((phrase, p) => {
         `--fy:${((rand(n + 8) - 0.5) * 2.6).toFixed(2)}em`,
         `--fr:${((rand(n + 10) < 0.5 ? -1 : 1) * (90 + rand(n + 13) * 170)).toFixed(0)}deg`,
         `--fs:${(0.5 + rand(n + 11) * 0.4).toFixed(2)}`,
-        `--din:${(2.2 + along * 0.9 + rand(n + 12) * 0.25).toFixed(2)}s`,
+        `--din:${(1.75 + along * 0.7 + rand(n + 12) * 0.2).toFixed(2)}s`,
         `--lx:${(0.8 + rand(n + 1) * 2.2).toFixed(2)}em`,
         `--ly:${((rand(n + 2) - 0.5) * 2.2).toFixed(2)}em`,
         `--lr:${((rand(n + 5) < 0.3 ? -1 : 1) * (70 + rand(n + 3) * 130)).toFixed(0)}deg`,
-        `--dout:${(2.2 + (1 - along) * 0.9 + rand(n + 4) * 0.25).toFixed(2)}s`,
+        `--dout:${(2.9 + (1 - along) * 0.9 + rand(n + 4) * 0.25).toFixed(2)}s`,
       ].join(';');
       k++;
       return { ch, style };
@@ -126,7 +126,7 @@ const introLetters = introPhrases.map((phrase, p) => {
             window.removeEventListener(t, finish);
           });
         };
-        timer = setTimeout(finish, 16800);
+        timer = setTimeout(finish, 20200);
         ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (t) {
           window.addEventListener(t, finish, { passive: true });
         });
@@ -383,8 +383,8 @@ const introLetters = introPhrases.map((phrase, p) => {
   }
   .intro-letter > span {
     animation:
-      intro-depart var(--dout) cubic-bezier(0.55, 0.12, 0.8, 0.5) var(--at) both,
-      intro-vanish var(--dout) linear var(--at) both;
+      intro-depart var(--dout) cubic-bezier(0.55, 0.12, 0.8, 0.5) calc(var(--at) + 0.65s) both,
+      intro-vanish var(--dout) linear calc(var(--at) + 0.65s) both;
   }
   @keyframes intro-approach {
     from {
@@ -425,11 +425,11 @@ const introLetters = introPhrases.map((phrase, p) => {
       opacity: 1;
       filter: blur(0);
     }
-    14% {
+    22% {
       opacity: 1;
       filter: blur(0);
     }
-    50% {
+    58% {
       opacity: 0.45;
       filter: blur(4px);
     }
