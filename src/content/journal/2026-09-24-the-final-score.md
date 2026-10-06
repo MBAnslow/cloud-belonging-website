@@ -1,10 +1,10 @@
 ---
 title: 'The final score: the sounds of the installation'
 date: 2026-09-24
-stage: Making
+stage: Article
 summary: 'How the installation score was implemented: drones, pads and bells tied to the day cycle, with enough direct synthesis control to respond to breath and light.'
-cover: ../../assets/journal/2026-09-24-the-final-score/final-score-cover.jpg
-coverAlt: 'A dreamy storm collage with clouds, bells, lightning, a red sun and musical notation flowing through the sky.'
+cover: ../../assets/journal/2026-09-24-the-final-score/cloud-score.jpg
+coverAlt: 'Watercolour bells, wind chimes and flowing musical staves moving through blue and pink storm clouds.'
 sections:
   - title: 'How the score was built'
     description: >-

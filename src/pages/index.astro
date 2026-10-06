@@ -36,6 +36,11 @@ const introLetters = introPhrases.map((phrase, p) => {
     [...word].map((ch) => {
       const n = p * 100 + k;
       const style = [
+        `--fx:${(-0.7 - rand(n + 9) * 1.8).toFixed(2)}em`,
+        `--fy:${((rand(n + 8) - 0.5) * 2.4).toFixed(2)}em`,
+        `--fr:${((rand(n + 10) < 0.5 ? -1 : 1) * (80 + rand(n + 13) * 160)).toFixed(0)}deg`,
+        `--fs:${(0.55 + rand(n + 11) * 0.4).toFixed(2)}`,
+        `--fd:${(((total - 1 - k) / total) * 0.58 + rand(n + 12) * 0.08).toFixed(2)}s`,
         `--lx:${(0.4 + rand(n + 1) * 1.4).toFixed(2)}em`,
         `--ly:${((rand(n + 2) - 0.5) * 1.6).toFixed(2)}em`,
         `--lr:${((rand(n + 5) < 0.3 ? -1 : 1) * (60 + rand(n + 3) * 90)).toFixed(0)}deg`,
@@ -340,28 +345,28 @@ const introLetters = introPhrases.map((phrase, p) => {
     opacity: 0;
     animation: intro-phrase 7.5s linear calc(0.3s + var(--i) * 4.2s) both;
   }
-  /* A new phrase starts every 4.2s. It stays whole and readable until 2.4s, when its letters start
-     tumbling away, and the phrase keeps drifting and sinking for 7.5s, past the moment its last
-     letter vanishes, so it never visibly stops. The x offsets lie on one straight line (1.33em/s)
-     so the drift keeps a constant speed. */
+  /* Letters assemble while the phrase follows one continuous rightward path. It remains readable
+     in formation without ever stopping, then keeps travelling as its letters tumble away. */
   @keyframes intro-phrase {
     0% {
       opacity: 0;
-      transform: translate(-3em, 0);
-      filter: blur(10px);
+      transform: translate(-2.4em, -0.08em);
     }
-    10.7% {
+    1% {
       opacity: 1;
-      filter: blur(0);
     }
-    32% {
-      transform: translate(0.2em, 0);
+    20% {
+      transform: translate(-0.5em, 0);
     }
-    44% {
-      transform: translate(1.4em, 0.12em);
+    40% {
+      opacity: 1;
+      transform: translate(1.4em, 0.1em);
     }
-    56% {
-      transform: translate(2.6em, 0.55em);
+    55% {
+      transform: translate(2.8em, 0.25em);
+    }
+    70% {
+      transform: translate(4.2em, 0.65em);
     }
     100% {
       opacity: 1;
@@ -374,10 +379,33 @@ const introLetters = introPhrases.map((phrase, p) => {
   }
   .intro-letter {
     display: inline-block;
-    --letter-delay: calc(2.7s + var(--i) * 4.2s + var(--ld));
+    --form-delay: calc(0.3s + var(--i) * 4.2s + var(--fd));
+    --letter-delay: calc(3s + var(--i) * 4.2s + var(--ld));
     animation:
-      intro-letter 4s linear var(--letter-delay) both,
-      intro-roll 4s linear var(--letter-delay) both;
+      intro-form 1.4s cubic-bezier(0.25, 0.65, 0.25, 1) var(--form-delay) both,
+      intro-letter 4s linear var(--letter-delay) forwards,
+      intro-roll 4s linear var(--letter-delay) forwards;
+  }
+  @keyframes intro-form {
+    from {
+      opacity: 0;
+      transform: translate(var(--fx), var(--fy)) rotate(var(--fr)) scale(var(--fs));
+      filter: blur(7px);
+    }
+    55% {
+      opacity: 0.35;
+      filter: blur(5px);
+    }
+    84% {
+      opacity: 0.78;
+      transform: translate(0.08em, -0.03em) rotate(-3deg) scale(1.025);
+      filter: blur(1.5px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: blur(0);
+    }
   }
   /* Letters drift and roll at a constant speed; only their opacity and blur front-load, fading
      most of the way in the first second and then lingering faintly until they vanish. */

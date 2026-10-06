@@ -38,6 +38,6 @@ That week we went to see how others hold an audience: *Le Grand Hôtel des Rêve
 
 We also came back to psychology. Michael shared his writing on belonging, including on Maslow and the Blackfoot. Out of that came a simple realisation: **you cannot have this experience without the participants.** If the work is about how people bring belonging to each other, it is deeply relational. It can't just be streamed and understood.
 
-Zéphir also had a [conversation with Joana about ritual](/cloud-belonging-website/process/2026-05-19-a-conversation-with-joanna/) that gave us a set of principles we still use.
+Zéphir also had a [conversation with Joanna Riquett about ritual](/cloud-belonging-website/process/2026-05-19-a-conversation-with-joanna/) that gave us a set of principles we still use.
 
 Other ideas from the week: a mindful train carriage, a bus whose destination you don't know, a barge. And the *Regards connectés* exercise, where two people hold eye contact for a long time. After how long does the experience begin?

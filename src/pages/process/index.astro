@@ -13,50 +13,7 @@ import visitFire from '../../assets/photos/visit-tv-fire.jpg';
 import visitStars from '../../assets/photos/visit-stars.jpg';
 
 const entries = await getJournal();
-const stages = ['Proposal', 'Concept formation', 'Conversation', 'Making', 'Sharing'] as const;
-
-const lessons = [
-  {
-    title: 'Never tell people what to feel',
-    text: 'Being told to feel connected is the fastest way not to. Small rituals and room for people’s own stories work better.',
-    href: '/process/2026-05-19-rituals-not-instructions/',
-  },
-  {
-    title: 'Belonging is not control',
-    text: 'Interactive work usually rewards control. We wanted people to play a role alongside the cloud, breathing with it rather than steering it.',
-    href: '/process/2026-06-10-belonging-not-control/',
-  },
-  {
-    title: 'Make it travel home',
-    text: 'Asking the experience to carry into everyday life kept it minimal. The next cloud you see should bring a little of it back.',
-    href: '/process/2026-05-13-something-you-take-home/',
-  },
-  {
-    title: 'How people are welcomed shapes what they feel',
-    text: 'Réespiration showed a wide range of responses, from deep relaxation to boredom. Priming, guidance and a robust signal matter as much as the artwork.',
-    href: '/process/2026-07-02-quand-le-ciel-recule/',
-  },
-  {
-    title: 'A breath sensor has to really hear a breath',
-    text: 'Narrow stretch bands barely registered above the noise. A 20 cm band gave a clear, readable wave.',
-    href: '/process/2026-06-12-a-belt-that-listens/',
-  },
-  {
-    title: 'The material has to hide the technology',
-    text: 'Mesh was too opaque and tulle wouldn’t hold a shape. Layers of soft fibre over a mesh shell finally turned hundreds of LEDs into one glow.',
-    href: '/process/2026-07-30-the-alpha-cloud/',
-  },
-  {
-    title: 'A bond before the breath',
-    text: 'Six planned movements became three. The magical twilight gives the cloud a character, so breathing with it means more.',
-    href: '/process/2026-09-24-the-final-score/',
-  },
-  {
-    title: 'Design an adjacent possible',
-    text: 'Offer something people can discover, lean into and make their own, with many ways in.',
-    href: '/process/2026-06-26-conversation-with-amos-blanton/',
-  },
-];
+const stages = ['Concept formation', 'Conversation', 'Making', 'Article'] as const;
 
 const byMonth = new Map<string, typeof entries>();
 for (const entry of entries) {
@@ -73,26 +30,6 @@ for (const entry of entries) {
     title="How it came together"
     lede="Research-creation, as it happened: notes from our meetings, material tests, visits and conversations, in the order they happened. The false starts are here too, because they shaped the work as much as what stayed."
   />
-
-  <section class="section lessons" id="lessons">
-    <div class="wrap">
-      <div class="lessons-head reveal">
-        <p class="eyebrow">Lessons learned along the way</p>
-        <h2>What the process taught us</h2>
-      </div>
-      <ol class="lesson-list">
-        {
-          lessons.map((l) => (
-            <li class="reveal">
-              <h3>{l.title}</h3>
-              <p>{l.text}</p>
-              <a href={url(l.href)}>Read the entry →</a>
-            </li>
-          ))
-        }
-      </ol>
-    </div>
-  </section>
 
   <section class="section wash wash-sand timeline-section">
     <div class="wrap">
@@ -238,50 +175,6 @@ for (const entry of entries) {
     background: var(--ink);
     color: var(--paper);
     border-color: var(--ink);
-  }
-  .lessons {
-    background: linear-gradient(180deg, var(--paper), var(--paper-deep));
-    padding-top: 3rem;
-  }
-  .lessons-head {
-    margin-bottom: 2.5rem;
-  }
-  .lesson-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-    gap: 1.25rem;
-    counter-reset: lesson;
-  }
-  .lesson-list li {
-    counter-increment: lesson;
-    padding: 1.5rem;
-    border-radius: var(--radius);
-    background: rgb(255 255 255 / 0.7);
-    border: 1px solid var(--line);
-    display: flex;
-    flex-direction: column;
-  }
-  .lesson-list li::before {
-    content: counter(lesson, decimal-leading-zero);
-    font-family: var(--font-display);
-    color: var(--dusk);
-    margin-bottom: 0.8rem;
-  }
-  .lesson-list h3 {
-    font-size: 1.25rem;
-    margin-bottom: 0.4rem;
-  }
-  .lesson-list p {
-    color: var(--ink-soft);
-    font-size: 0.95rem;
-    flex: 1;
-  }
-  .lesson-list a {
-    color: var(--ink);
-    font-size: 0.88rem;
   }
   .next {
     display: flex;

@@ -953,6 +953,8 @@ const learned = [
     max-width: none;
     padding-top: clamp(1rem, 3vw, 2rem);
     isolation: isolate;
+    overflow-x: clip;
+    overflow-y: visible;
   }
   .schematic-head :is(.eyebrow, h2, .lede) {
     position: relative;
@@ -980,7 +982,6 @@ const learned = [
       top: 7rem;
       right: -5rem;
       width: min(120vw, 44rem);
-      opacity: 0.72;
     }
   }
   .fabrication {
@@ -1266,7 +1267,7 @@ const learned = [
   }
 
   .after {
-    --after-bg: #05060c;
+    --after-bg: #10163a;
   }
   :global(html.theme-night) .after {
     background: var(--after-bg);
@@ -1276,6 +1277,9 @@ const learned = [
     bottom: calc(100% - 1px);
     background: var(--after-bg);
     transform: scaleY(-1);
+  }
+  :global(html.theme-night footer.site-footer) {
+    background: #05060c;
   }
   .after .grid-2 {
     align-items: center;

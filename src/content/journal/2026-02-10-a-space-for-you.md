@@ -1,7 +1,7 @@
 ---
 title: 'A Space For You: the first proposal'
 date: 2026-02-10
-stage: Proposal
+stage: 'Concept formation'
 summary: 'Before there was a cloud, there was a room to pause: a research-creation proposal asking whether art and technology can open a door to contemplative practice.'
 cover: ../../assets/journal/proposal/sketch-lit.jpg
 coverAlt: 'A sketch of a dim room with people lying on large beanbags under soft coloured ceiling panels, abstract glowing lamps and a microphone in the foreground.'

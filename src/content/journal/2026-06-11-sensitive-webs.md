@@ -1,7 +1,7 @@
 ---
 title: 'Sensitive webs: two days of sensitive machines'
 date: 2026-06-11
-stage: Sharing
+stage: Article
 summary: 'At a two-day Sensitive Machines hackathon with the Institute for Future Technologies, we built two webs you play with your hands: one that answers with sound and spoken prompts, and one that answers with ripples of light.'
 cover: ../../assets/journal/2026-06-11-sensitive-webs/led-web-hand.jpg
 coverAlt: 'A hand reaching towards a circular copper-wire web strung with glowing white LEDs, against a dark background.'

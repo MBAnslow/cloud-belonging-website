@@ -45,6 +45,7 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  overflow-x: clip;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -62,6 +63,7 @@ html {
 
 body {
   margin: 0;
+  overflow-x: clip;
   background: var(--paper);
   color: var(--ink);
   font-family: var(--font-body);
@@ -205,7 +207,7 @@ p {
   content: "";
   position: absolute;
   inset-inline: 0;
-  height: var(--wave-height, 6.25rem);
+  height: var(--wave-render-height, var(--wave-height, 6.25rem));
   pointer-events: none;
   z-index: -1;
   background: var(--paper);
@@ -222,6 +224,12 @@ p {
   transform: scale(-1, -1);
   -webkit-mask-image: var(--wave-bottom, var(--wave));
   mask-image: var(--wave-bottom, var(--wave));
+}
+
+@media (max-width: 700px) {
+  .blend {
+    --wave-render-height: 3.5rem;
+  }
 }
 
 html.theme-night .wash {
@@ -325,10 +333,6 @@ main > section.blend:last-of-type::after,
   color: var(--ultramarine);
 }
 
-.tag[data-stage='Proposal'] {
-  background: rgb(154 157 234 / 0.28);
-  color: #33418f;
-}
 .tag[data-stage='Concept formation'] {
   background: rgb(220 167 211 / 0.35);
   color: #7a3f73;
@@ -341,7 +345,7 @@ main > section.blend:last-of-type::after,
   background: rgb(248 169 140 / 0.35);
   color: #9a4527;
 }
-.tag[data-stage='Sharing'] {
+.tag[data-stage='Article'] {
   background: rgb(249 199 124 / 0.42);
   color: #85561a;
 }

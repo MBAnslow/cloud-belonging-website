@@ -1,7 +1,7 @@
 ---
 title: 'A research notebook at “Quand le ciel recule”'
 date: 2026-07-02
-stage: Sharing
+stage: Article
 summary: 'First public sharing of the work in progress, at an art–science day on atmosphere at the Académie du Climat in Paris.'
 cover: ../../assets/photos/talk-slide.jpg
 coverAlt: 'Zéphir presenting in a wood-panelled room at the Académie du Climat, beside a slide mapping belonging to design choices.'
