@@ -20,6 +20,16 @@
     rippleFreq: 2.5,
     blur: 3,
   };
+  const mobileWave: Wave = {
+    height: 2.75,
+    baseline: 56,
+    amplitude: 20,
+    waves: 2.15,
+    phase: 0.01,
+    ripple: 0.43,
+    rippleFreq: 2.15,
+    blur: 2.5,
+  };
 
   const params = new URLSearchParams(location.search);
   if (!document.querySelector('.wave-debug')) {
@@ -61,31 +71,36 @@
     const apply = () => {
       const root = document.documentElement.style;
       root.setProperty('--wave-height', `${wave.height}rem`);
+      root.setProperty('--mobile-wave-height', `${mobileWave.height}rem`);
       boundaries.forEach(({ element, topPhase, bottomPhase }) => {
         element.style.setProperty('--wave-top', svg(wave, topPhase));
         element.style.setProperty('--wave-bottom', svg(wave, bottomPhase));
+        element.style.setProperty('--wave-top-mobile', svg(mobileWave, topPhase));
+        element.style.setProperty('--wave-bottom-mobile', svg(mobileWave, bottomPhase));
       });
     };
 
     apply();
-    if (params.has('wave-debug')) {
+    if (params.has('wave-debug') || params.has('mobile-wave-debug')) {
+      const mobile = params.has('mobile-wave-debug');
+      const debugWave = mobile ? mobileWave : wave;
 
       const panel = document.createElement('div');
       panel.className = 'wave-debug';
-      panel.innerHTML = `<strong>Wave boundaries</strong>${controls
+      panel.innerHTML = `<strong>${mobile ? 'Mobile wave boundaries' : 'Wave boundaries'}</strong>${controls
       .map(
         ([key, label, min, max, step]) =>
-          `<label>${label}<span><input type="range" name="${key}" min="${min}" max="${max}" step="${step}" value="${wave[key]}"><output>${wave[key]}</output></span></label>`,
+          `<label>${label}<span><input type="range" name="${key}" min="${min}" max="${max}" step="${step}" value="${debugWave[key]}"><output>${debugWave[key]}</output></span></label>`,
       )
       .join('')}<button type="button">Copy values</button>`;
     panel.addEventListener('input', (e) => {
       const input = e.target as HTMLInputElement;
-      wave[input.name as keyof Wave] = Number(input.value);
+      debugWave[input.name as keyof Wave] = Number(input.value);
       input.nextElementSibling!.textContent = input.value;
       apply();
     });
     panel.querySelector('button')!.addEventListener('click', (e) => {
-      navigator.clipboard.writeText(JSON.stringify(wave));
+      navigator.clipboard.writeText(JSON.stringify(debugWave));
       (e.target as HTMLButtonElement).textContent = 'Copied';
     });
     Object.assign(panel.style, {

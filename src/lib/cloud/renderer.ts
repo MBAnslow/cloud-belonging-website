@@ -37,6 +37,9 @@ uniform vec3 uBloomD;
 uniform float uBloomSeed;
 uniform vec3 uPlace;
 uniform float uExposure;
+uniform float uBreath;
+uniform float uBreathX;
+uniform vec3 uBreathCol;
 
 float hash13(vec3 p) {
   p = fract(p * 0.1031);
@@ -183,8 +186,17 @@ void main() {
         float light = beer * mix(1.0, powder, 0.55);
         vec3 amb = mix(uAmbBot, uAmbTop, clamp((p.y + 0.4) / 1.2, 0.0, 1.0));
         vec3 S = uSunCol * light * phase + amb * (0.35 + 0.65 * exp(-ld * 1.2));
+        float glowK = 1.0;
+        if (uBreath > 0.001) {
+          // A breath is a band of light sweeping through the cloud from left to right. Its front leans and
+          // ripples so it reads as a wave; the glow is dimmed ahead of it and refills behind.
+          float bd = p.x - uBreathX + p.y * 0.2 + (noise(vec3(p.yz * 2.4, uTime * 0.3)) - 0.5) * 0.26;
+          glowK = 1.0 - 0.85 * uBreath * smoothstep(-0.1, 0.18, bd);
+          S += uBreathCol * uBreath * (exp(-bd * bd * 30.0) * 3.0 + exp(-bd * bd * 4.0) * 0.8);
+          S += uGlowCol * uBreath * glowK * 0.45;
+        }
         vec3 gp = p - vec3(0.0, -0.02, 0.0);
-        S += uGlowCol * uGlow * exp(-dot(gp, gp) * 3.0);
+        S += uGlowCol * uGlow * glowK * exp(-dot(gp, gp) * 3.0);
         if (uFlash > 0.001) {
           // A hot core where the bolt is, plus light scattered through the rest of the cloud.
           float fd = length(p - uFlashPos);
@@ -223,6 +235,7 @@ export type GLState = {
   ambientTop: Vec3;
   ambientBottom: Vec3;
   glowColor: Vec3;
+  breathColor: Vec3;
   discColor: Vec3;
   glow: number;
   pulse: number;
@@ -252,6 +265,7 @@ function toGL(s: CloudState): GLState {
     ambientTop: lin(hex(s.ambientTop), s.ambientIntensity),
     ambientBottom: lin(hex(s.ambientBottom), s.ambientIntensity),
     glowColor: lin(hex(s.glowColor)),
+    breathColor: lin(hex(s.breathColor)),
     discColor: hex(s.discColor),
     glow: s.glow,
     pulse: s.pulse,
@@ -366,7 +380,8 @@ export class CloudRenderer {
     for (const name of [
       'uRes', 'uTime', 'uSunDir', 'uSunCol', 'uSkyTop', 'uSkyHor', 'uAmbTop', 'uAmbBot', 'uGlowCol', 'uGlow',
       'uDensity', 'uStars', 'uDisc', 'uDiscCol', 'uFlashPos', 'uFlash', 'uFlashCol', 'uBloom', 'uBloomPos',
-      'uBloomA', 'uBloomB', 'uBloomC', 'uBloomD', 'uBloomSeed', 'uPlace', 'uExposure',
+      'uBloomA', 'uBloomB', 'uBloomC', 'uBloomD', 'uBloomSeed', 'uPlace', 'uExposure', 'uBreath', 'uBreathX',
+      'uBreathCol',
     ]) {
       this.uniforms[name] = gl.getUniformLocation(prog, name);
     }
@@ -504,10 +519,10 @@ export class CloudRenderer {
     const sinceBloom = (now - this.bloomStart) / 1000;
     const bloomEnv = sinceBloom < 0.35 ? Math.sin((sinceBloom / 0.35) * Math.PI * 0.5) : Math.exp(-(sinceBloom - 0.35) / 1.1);
 
-    // Respiration-like rhythm: ~4 s in, ~6 s out.
-    const cycle = (time % 10) / 10;
-    const breath = cycle < 0.4 ? 0.5 - 0.5 * Math.cos((cycle / 0.4) * Math.PI) : 0.5 + 0.5 * Math.cos(((cycle - 0.4) / 0.6) * Math.PI);
-    const glow = s.glow * (1 - s.pulse + s.pulse * (0.3 + 0.7 * breath));
+    // One breath every 9 s: the glow dims, then the band sweeps from beyond the left edge to beyond the right.
+    const breathT = time % 9;
+    const rise = 0.5 - 0.5 * Math.cos(Math.PI * Math.min(1, Math.max(0, (breathT - 0.8) / 6)));
+    const breath = this.options.animate ? s.pulse : 0;
 
     const gl = this.gl;
     const u = this.uniforms;
@@ -521,7 +536,7 @@ export class CloudRenderer {
     gl.uniform3fv(u.uAmbTop, s.ambientTop);
     gl.uniform3fv(u.uAmbBot, s.ambientBottom);
     gl.uniform3fv(u.uGlowCol, s.glowColor);
-    gl.uniform1f(u.uGlow, glow);
+    gl.uniform1f(u.uGlow, s.glow);
     gl.uniform1f(u.uDensity, s.density);
     gl.uniform1f(u.uStars, s.stars);
     gl.uniform1f(u.uDisc, s.disc);
@@ -536,8 +551,11 @@ export class CloudRenderer {
     gl.uniform3fv(u.uBloomC, this.bloomColors[2]);
     gl.uniform3fv(u.uBloomD, this.bloomColors[3]);
     gl.uniform1f(u.uBloomSeed, this.bloomSeed);
-    gl.uniform3f(u.uPlace, place.x, place.y, place.scale * (1 + 0.035 * s.pulse * breath));
+    gl.uniform3f(u.uPlace, place.x, place.y, place.scale * (1 + 0.03 * breath * Math.sin(Math.PI * rise)));
     gl.uniform1f(u.uExposure, s.exposure);
+    gl.uniform1f(u.uBreath, breath);
+    gl.uniform1f(u.uBreathX, lerp(-1.75, 1.75, rise));
+    gl.uniform3fv(u.uBreathCol, s.breathColor);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
 
     this.options.onFrame?.(s);

@@ -12,8 +12,9 @@ export type CloudState = {
   ambientIntensity: number;
   glowColor: string;
   glow: number;
-  /** 0–1: how much the inner glow follows a slow breathing rhythm. */
+  /** 0–1: strength of the breaths that rise through the cloud as bands of light. */
   pulse: number;
+  breathColor: string;
   density: number;
   stars: number;
   /** Visibility of the sun or moon disc and its halo. */
@@ -42,6 +43,7 @@ const base: CloudState = {
   glowColor: '#c9b8ff',
   glow: 0,
   pulse: 0,
+  breathColor: '#5cf59a',
   density: 1,
   stars: 0,
   disc: 0,
@@ -173,7 +175,7 @@ export const cloudStates = {
     discColor: '#dfe6ff',
     exposure: 1.4,
   },
-  /** The cloud's light swells and settles with the participant's respiration. */
+  /** Each of the participant's breaths rises through the violet cloud as a band of cool light. */
   breath: {
     ...base,
     skyTop: '#1b2250',
@@ -184,7 +186,7 @@ export const cloudStates = {
     ambientTop: '#344c9e',
     ambientBottom: '#28366f',
     ambientIntensity: 0.4,
-    glowColor: '#d9c6ff',
+    glowColor: '#9466ff',
     glow: 2.4,
     pulse: 1,
     stars: 0.6,

@@ -35,16 +35,19 @@ const introLetters = introPhrases.map((phrase, p) => {
   return phrase.split(' ').map((word) =>
     [...word].map((ch) => {
       const n = p * 100 + k;
+      const along = k / Math.max(total - 1, 1);
+      // Every letter reaches its place at the same instant. Letters further right take longer over the
+      // approach, so they appear and slow down first, and they leave fastest.
       const style = [
-        `--fx:${(-0.7 - rand(n + 9) * 1.8).toFixed(2)}em`,
-        `--fy:${((rand(n + 8) - 0.5) * 2.4).toFixed(2)}em`,
-        `--fr:${((rand(n + 10) < 0.5 ? -1 : 1) * (80 + rand(n + 13) * 160)).toFixed(0)}deg`,
-        `--fs:${(0.55 + rand(n + 11) * 0.4).toFixed(2)}`,
-        `--fd:${(((total - 1 - k) / total) * 0.58 + rand(n + 12) * 0.08).toFixed(2)}s`,
-        `--lx:${(0.4 + rand(n + 1) * 1.4).toFixed(2)}em`,
-        `--ly:${((rand(n + 2) - 0.5) * 1.6).toFixed(2)}em`,
-        `--lr:${((rand(n + 5) < 0.3 ? -1 : 1) * (60 + rand(n + 3) * 90)).toFixed(0)}deg`,
-        `--ld:${((k / total) * 0.45 + rand(n + 4) * 0.12).toFixed(2)}s`,
+        `--fx:${(-1.2 - rand(n + 9) * 2.2).toFixed(2)}em`,
+        `--fy:${((rand(n + 8) - 0.5) * 2.6).toFixed(2)}em`,
+        `--fr:${((rand(n + 10) < 0.5 ? -1 : 1) * (90 + rand(n + 13) * 170)).toFixed(0)}deg`,
+        `--fs:${(0.5 + rand(n + 11) * 0.4).toFixed(2)}`,
+        `--din:${(2.2 + along * 0.9 + rand(n + 12) * 0.25).toFixed(2)}s`,
+        `--lx:${(0.8 + rand(n + 1) * 2.2).toFixed(2)}em`,
+        `--ly:${((rand(n + 2) - 0.5) * 2.2).toFixed(2)}em`,
+        `--lr:${((rand(n + 5) < 0.3 ? -1 : 1) * (70 + rand(n + 3) * 130)).toFixed(0)}deg`,
+        `--dout:${(2.2 + (1 - along) * 0.9 + rand(n + 4) * 0.25).toFixed(2)}s`,
       ].join(';');
       k++;
       return { ch, style };
@@ -72,7 +75,7 @@ const introLetters = introPhrases.map((phrase, p) => {
               {w > 0 && ' '}
               <span class="intro-word">
                 {letters.map((l) => (
-                  <span class="intro-letter" style={l.style}>{l.ch}</span>
+                  <span class="intro-letter" style={l.style}><span>{l.ch}</span></span>
                 ))}
               </span>
             </>
@@ -116,7 +119,7 @@ const introLetters = introPhrases.map((phrase, p) => {
             window.removeEventListener(t, finish);
           });
         };
-        timer = setTimeout(finish, 15300);
+        timer = setTimeout(finish, 16800);
         ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (t) {
           window.addEventListener(t, finish, { passive: true });
         });
@@ -342,95 +345,88 @@ const introLetters = introPhrases.map((phrase, p) => {
     font-style: italic;
     line-height: 1.15;
     color: var(--hero-fg);
-    opacity: 0;
-    animation: intro-phrase 7.5s linear calc(0.3s + var(--i) * 4.2s) both;
+    --at: calc(3s + var(--i) * 4.2s);
+    animation: intro-drift 7s linear calc(var(--at) - 3.5s) both;
   }
-  /* Letters assemble while the phrase follows one continuous rightward path. It remains readable
-     in formation without ever stopping, then keeps travelling as its letters tumble away. */
-  @keyframes intro-phrase {
-    0% {
-      opacity: 0;
-      transform: translate(-2.4em, -0.08em);
+  /* Each phrase is one continuous flow: letters roll in from the left, slow almost to a stop at the
+     single instant they line up as text, then gather speed again as they roll away to the right.
+     The approach eases out and the departure eases in with matching slow speeds at that instant. */
+  @keyframes intro-drift {
+    from {
+      transform: translateX(-0.9em);
     }
-    1% {
-      opacity: 1;
-    }
-    20% {
-      transform: translate(-0.5em, 0);
-    }
-    40% {
-      opacity: 1;
-      transform: translate(1.4em, 0.1em);
-    }
-    55% {
-      transform: translate(2.8em, 0.25em);
-    }
-    70% {
-      transform: translate(4.2em, 0.65em);
-    }
-    100% {
-      opacity: 1;
-      transform: translate(7em, 1.7em);
+    to {
+      transform: translateX(1.1em);
     }
   }
   .intro-word {
     display: inline-block;
     white-space: nowrap;
   }
-  .intro-letter {
+  .intro-letter,
+  .intro-letter > span {
     display: inline-block;
-    --form-delay: calc(0.3s + var(--i) * 4.2s + var(--fd));
-    --letter-delay: calc(3s + var(--i) * 4.2s + var(--ld));
-    animation:
-      intro-form 1.4s cubic-bezier(0.25, 0.65, 0.25, 1) var(--form-delay) both,
-      intro-letter 4s linear var(--letter-delay) forwards,
-      intro-roll 4s linear var(--letter-delay) forwards;
   }
-  @keyframes intro-form {
+  .intro-letter {
+    animation:
+      intro-approach var(--din) cubic-bezier(0.2, 0.5, 0.45, 0.88) calc(var(--at) - var(--din)) both,
+      intro-appear var(--din) linear calc(var(--at) - var(--din)) both;
+  }
+  .intro-letter > span {
+    animation:
+      intro-depart var(--dout) cubic-bezier(0.55, 0.12, 0.8, 0.5) var(--at) both,
+      intro-vanish var(--dout) linear var(--at) both;
+  }
+  @keyframes intro-approach {
+    from {
+      transform: translate(var(--fx), var(--fy)) rotate(var(--fr)) scale(var(--fs));
+    }
+    to {
+      transform: none;
+    }
+  }
+  @keyframes intro-appear {
     from {
       opacity: 0;
-      transform: translate(var(--fx), var(--fy)) rotate(var(--fr)) scale(var(--fs));
-      filter: blur(7px);
+      filter: blur(8px);
     }
     55% {
-      opacity: 0.35;
-      filter: blur(5px);
+      opacity: 0.55;
+      filter: blur(3px);
     }
-    84% {
-      opacity: 0.78;
-      transform: translate(0.08em, -0.03em) rotate(-3deg) scale(1.025);
-      filter: blur(1.5px);
+    88% {
+      opacity: 1;
+      filter: blur(0);
     }
     to {
       opacity: 1;
-      transform: none;
       filter: blur(0);
     }
   }
-  /* Letters drift and roll at a constant speed; only their opacity and blur front-load, fading
-     most of the way in the first second and then lingering faintly until they vanish. */
-  @keyframes intro-letter {
-    0% {
+  @keyframes intro-depart {
+    from {
+      transform: none;
+    }
+    to {
+      transform: translate(var(--lx), var(--ly)) rotate(var(--lr)) scale(1.1);
+    }
+  }
+  @keyframes intro-vanish {
+    from {
       opacity: 1;
-      translate: 0 0;
       filter: blur(0);
     }
-    25% {
-      opacity: 0.4;
+    14% {
+      opacity: 1;
+      filter: blur(0);
+    }
+    50% {
+      opacity: 0.45;
       filter: blur(4px);
     }
-    100% {
-      opacity: 0;
-      translate: calc(var(--lx) * 1.15) calc(var(--ly) * 1.15);
-      filter: blur(7px);
-    }
-  }
-  @keyframes intro-roll {
-    from {
-      rotate: 0deg;
-    }
     to {
-      rotate: var(--lr);
+      opacity: 0;
+      filter: blur(8px);
     }
   }
   .intro-playing .hero-content > :not(.hero-intro),

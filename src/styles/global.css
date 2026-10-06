@@ -211,8 +211,8 @@ p {
   pointer-events: none;
   z-index: -1;
   background: var(--paper);
-  -webkit-mask: var(--wave-top, var(--wave)) 0 0 / 100% 100% no-repeat;
-  mask: var(--wave-top, var(--wave)) 0 0 / 100% 100% no-repeat;
+  -webkit-mask: var(--wave-active-top, var(--wave-top, var(--wave))) 0 0 / 100% 100% no-repeat;
+  mask: var(--wave-active-top, var(--wave-top, var(--wave))) 0 0 / 100% 100% no-repeat;
 }
 
 .blend::before {
@@ -228,7 +228,13 @@ p {
 
 @media (max-width: 700px) {
   .blend {
-    --wave-render-height: 3.5rem;
+    --wave-render-height: var(--mobile-wave-height, 3.5rem);
+    --wave-active-top: var(--wave-top-mobile, var(--wave-top, var(--wave)));
+    --wave-active-bottom: var(--wave-bottom-mobile, var(--wave-bottom, var(--wave)));
+  }
+  .blend::after {
+    -webkit-mask-image: var(--wave-active-bottom);
+    mask-image: var(--wave-active-bottom);
   }
 }
 
