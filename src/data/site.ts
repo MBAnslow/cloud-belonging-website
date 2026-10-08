@@ -29,6 +29,6 @@ export const nav = [
   { href: '/installation/', label: 'Installation' },
   { href: '/concept/', label: 'Concept' },
   { href: '/process/', label: 'Process' },
-  { href: '/toolkit/', label: 'Checklist' },
+  { href: '/collaborate/', label: 'Collaborate' },
   { href: '/about/', label: 'About' },
 ];

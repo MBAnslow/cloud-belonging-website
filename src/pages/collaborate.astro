@@ -1,0 +1,426 @@
+---
+import { url } from '../lib/url';
+import Base from '../layouts/Base.astro';
+import PageHeader from '../components/PageHeader.astro';
+import Checklist from '../components/Checklist.astro';
+import CloudFrame from '../components/CloudFrame.astro';
+import callForBelonging from '../assets/photos/call-for-belonging-flag.jpg';
+import alphaTeaRitual from '../assets/photos/alpha-tea-ritual.jpg';
+import Figure from '../components/Figure.astro';
+import { Image } from 'astro:assets';
+import exhibitionPlan from '../assets/photos/exhibition-top-down.jpg';
+import imgPeople from '../assets/photos/belonging-people.jpg';
+import imgOurselves from '../assets/photos/belonging-ourselves.jpg';
+import imgNature from '../assets/photos/belonging-nature.jpg';
+
+const movements = [
+  {
+    name: 'Arrive',
+    time: '20 min',
+    text: 'Cross a threshold. Shoes off, phones away. A short inward question: how are you arriving today? A few minutes of breathing together, with nothing to achieve.',
+  },
+  {
+    name: 'Sense',
+    time: '30 min',
+    text: 'Experience a small version of the cloud: lie under a small cloud of cotton and light, breathe with a sensor, notice what happens in you and around you. Then notice the room, the others, the weather outside.',
+  },
+  {
+    name: 'Make',
+    time: '60 min',
+    text: 'In small groups, tinker with the materials we used (cotton, wadding, mesh, LEDs, breath sensors, sound) to build a tiny space for belonging. Many entry points: some will sew, some will code, some will write a ritual.',
+  },
+  {
+    name: 'Share',
+    time: '30 min',
+    text: 'Visit each other’s spaces. Then a sharing circle: each person speaks once about what they experienced, and is listened to without reply.',
+  },
+];
+
+const belongings = [
+  {
+    title: 'To people',
+    image: imgPeople,
+    alt: 'Friends gathered around a campfire under a crescent moon',
+    text: 'Belonging to each other: strangers, friends, families and communities, and what makes us feel seen and accepted.',
+  },
+  {
+    title: 'To ourselves',
+    image: imgOurselves,
+    alt: 'A person meditating by a window at sunset over rooftops',
+    text: 'Belonging in our own bodies, memories and stories: feeling at home in who we are.',
+  },
+  {
+    title: 'To nature',
+    image: imgNature,
+    alt: 'A walker on a mountain top above the clouds at sunrise',
+    text: 'Belonging to the sky, the weather, the living world and the places we share with it.',
+  },
+];
+
+const circleRules = [
+  'Speak from your own experience, in the first person.',
+  'Listen without replying, advising or comparing.',
+  'Silence is welcome. You can always pass.',
+  'What is shared in the circle stays in the circle.',
+];
+
+const prompts = [
+  'The next time you see a cloud, take three breaths with it. Where was this water yesterday?',
+  'Notice a moment today when someone made you feel you belonged. What exactly did they do?',
+  'Think of a place where you belong. Which sense brings it back first — a sound, a smell, a texture?',
+  'Offer someone five minutes of listening without replying.',
+];
+---
+
+<Base title="Collaborate" description="Collaborate with us on workshops, installations and research about belonging. Includes the belonging checklist and an example workshop as examples of what a collaboration could produce.">
+  <PageHeader
+    eyebrow="Collaborate"
+    image={alphaTeaRitual}
+    imageAlt="Pouring tea beneath the cloud, lit blue, while someone watches from a beanbag."
+    title="Collaborate with us"
+    lede="We are interested in bringing belonging back to each other, to places and to communities through art, research, science and community. Below: how to get in touch, and an example of something a collaboration could produce."
+  />
+
+  <section class="section wash contact" id="contact">
+    <div class="wrap contact-inner">
+      <div class="contact-copy reveal">
+        <p class="eyebrow">A call for belonging</p>
+        <h2>Open to collaborate and explore belonging</h2>
+        <p class="lede">
+          We are open to creating a <a href={url("/collaborate/#workshop")}>workshop around belonging</a>, hosting the
+          <a href={url("/installation/")}> installation</a> elsewhere, adapting the
+          <a href={url("/concept/")}> concept</a> to new situations, or co-creating new installations around belonging.
+        </p>
+        <a class="button" href="mailto:michael.anslow@gmail.com?cc=zephir.lorne@ens.psl.eu">Start a conversation</a>
+      </div>
+      <CloudFrame
+        src={callForBelonging}
+        alt="A lone figure holding a large flag above a sea of clouds at sunrise."
+        widths={[500, 800, 1100]}
+        sizes="(min-width: 60rem) 42rem, 100vw"
+        seed={47}
+        class="contact-photo reveal"
+      />
+    </div>
+  </section>
+
+  <section class="section bridge">
+    <div class="wrap bridge-inner reveal">
+      <p class="eyebrow">What it could lead to</p>
+      <h2>Possible outputs</h2>
+      <p class="lede">
+        To show what working together might produce, here are some possibilities: a belonging checklist and a sketch of
+        a workshop from our own process, an exhibition that brings other people’s work together, and small practices
+        for everyday contexts. All are tentative,
+        and we would like to shape them with collaborators.
+      </p>
+    </div>
+  </section>
+
+  <section class="section wash wash-sand" id="checklist">
+    <div class="wrap">
+      <div class="grid-2 head">
+        <div class="reveal">
+          <p class="eyebrow">Example output · the belonging checklist · tentative, draft 1</p>
+          <h2>Designing a space where people can belong</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            A set of prompts for anyone designing an installation, ritual, workshop or gathering. It isn’t a recipe, and
+            you don’t need to cover every point. It is shown here as an example of what could be relevant: use it to see which parts of the design space you are working in, and
+            which you might be missing. We see it as a starting point that could be refined together with collaborators.
+          </p>
+          <p class="small">
+            Compiled (with AI assistance) from our literature notes on belonging, group mindfulness and ritual media
+            (Malaver Turbay, 2022), then edited by us.
+          </p>
+        </div>
+      </div>
+      <Checklist />
+    </div>
+  </section>
+
+  <section class="section wash workshop" id="workshop">
+    <div class="wrap">
+      <div class="grid-2 head">
+        <div class="reveal">
+          <p class="eyebrow">Example output · a possible workshop</p>
+          <h2>A workshop on making spaces for belonging</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            This is an example of what a hands-on workshop for artists, designers, researchers, students and communities
+            could look like. It would draw on the <em>arriving, exploring, sharing</em> structure of performative scores in museums (Løppenthin
+            et al., 2022). It could also borrow from tinkering and constructionist practice: design an <em>adjacent
+            possible</em> that people can lean into, with many ways in.
+          </p>
+          <p class="small">A possible format, about 2½ hours. It is only a sketch, to be adapted to every group and place.</p>
+        </div>
+      </div>
+
+      <ol class="movements">
+        {
+          movements.map((m, i) => (
+            <li class="movement reveal">
+              <span class="m-num">{i + 1}</span>
+              <h3>{m.name}</h3>
+              <p class="m-time">{m.time}</p>
+              <p>{m.text}</p>
+            </li>
+          ))
+        }
+      </ol>
+
+      <div class="grid-2 extra">
+        <div class="circle reveal">
+          <h3>Guidelines for a sharing circle</h3>
+          <p class="small">Inspired by Dharma sharing in the Plum Village tradition.</p>
+          <ul>{circleRules.map((r) => <li>{r}</li>)}</ul>
+        </div>
+        <div class="host reveal">
+          <h3>Host it with us</h3>
+          <p>
+            Would you like to explore a workshop like this at your school, lab, festival or community space? We would be
+            glad to shape one together.
+          </p>
+          <a class="button" href="#contact">Get in touch</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section wash wash-sky exhibition" id="exhibition">
+    <div class="wrap">
+      <div class="grid-2 head">
+        <div class="reveal">
+          <p class="eyebrow">Possible output · an exhibition</p>
+          <h2>An exhibition on belonging</h2>
+        </div>
+        <div class="reveal">
+          <p>
+            We would like to bring together installations on different kinds of belonging in one exhibition, and we invite
+            artists, designers and researchers to propose their own. <em>Cloudfulness</em> looked at belonging to nature
+            through the sky above us; alongside it, other works could explore belonging in other directions.
+          </p>
+          <p><a class="button" href="#contact">Propose an installation</a></p>
+        </div>
+      </div>
+      <Figure
+        src={exhibitionPlan}
+        alt="Top-down watercolour view of a mock exhibition building: a campfire room on the left, a meditation room at the top, and a room with a glowing cloud installation on the right, joined by a central hall."
+        caption="A mock exhibition bringing belonging to people, to ourselves and to nature together in one building."
+        widths={[600, 1024]}
+        sizes="(min-width: 72rem) 64rem, 100vw"
+        class="exhibition-plan reveal"
+      />
+      <ul class="belongings">
+        {
+          belongings.map((b) => (
+            <li class="belonging reveal">
+              <Image src={b.image} alt={b.alt} widths={[400, 700]} sizes="(min-width: 60rem) 20rem, 100vw" />
+              <h3>{b.title}</h3>
+              <p>{b.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section wash prompts">
+    <div class="wrap">
+      <div class="head reveal">
+        <p class="eyebrow">Possible output · everyday practices</p>
+        <h2>Designing belonging for everyday contexts</h2>
+        <p class="small">Four small practices that could carry belonging beyond an installation, into daily life.</p>
+      </div>
+      <ol class="prompt-list">
+        {prompts.map((p) => <li class="reveal">{p}</li>)}
+      </ol>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .head {
+    margin-bottom: 3rem;
+  }
+  .small {
+    font-size: 0.85rem;
+    color: var(--ink-faint);
+  }
+  .workshop p {
+    color: var(--ink-soft);
+  }
+  .movements {
+    list-style: none;
+    margin: 0 0 4rem;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1.5rem;
+  }
+  .movement {
+    padding: 1.75rem;
+    border-radius: var(--radius);
+    background: rgb(255 255 255 / 0.45);
+    border: 1px solid var(--line);
+  }
+  .m-num {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    border: 1px solid var(--ink-faint);
+    color: var(--ink-soft);
+    font-family: var(--font-display);
+    margin-bottom: 1.5rem;
+  }
+  .movement h3 {
+    font-size: 1.8rem;
+    margin-bottom: 0.2rem;
+  }
+  .m-time {
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint) !important;
+  }
+  .circle,
+  .host {
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line);
+  }
+  .circle ul {
+    padding-left: 1.1em;
+    color: var(--ink-soft);
+    display: grid;
+    gap: 0.5rem;
+  }
+  .circle li::marker {
+    color: var(--dawn);
+  }
+  .prompt-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1.5rem;
+    counter-reset: p;
+  }
+  .prompt-list li {
+    counter-increment: p;
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+    line-height: 1.35;
+    font-weight: 330;
+    padding: 1.75rem;
+    border-radius: var(--radius);
+    background: linear-gradient(160deg, rgb(154 157 234 / 0.28), rgb(220 167 211 / 0.22) 50%, rgb(249 199 124 / 0.32));
+  }
+  .prompt-list li::before {
+    content: counter(p);
+    display: block;
+    font-family: var(--font-body);
+    font-size: 0.75rem;
+    color: var(--ink-faint);
+    margin-bottom: 1rem;
+  }
+
+  .contact {
+    --wash-glow: rgb(232 130 100 / 0.22);
+  }
+  .contact-inner {
+    display: grid;
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 5rem);
+    align-items: center;
+  }
+  .contact-copy {
+    position: relative;
+    z-index: 1;
+  }
+  .contact-copy h2 {
+    max-width: 12ch;
+  }
+  .contact-copy .lede {
+    max-width: 33rem;
+  }
+  .contact :global(.contact-photo) {
+    position: relative;
+    z-index: 0;
+    margin-left: clamp(-7rem, -6vw, -2rem);
+    margin-right: clamp(-4rem, -3vw, 0rem);
+  }
+  .contact-photo :global(img.main) {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+  }
+  @media (max-width: 860px) {
+    .contact-inner {
+      grid-template-columns: 1fr;
+    }
+    .contact :global(.contact-photo) {
+      margin: 0;
+    }
+  }
+  .bridge {
+    padding-block: clamp(3rem, 6vw, 5rem) 0;
+  }
+  .bridge-inner {
+    max-width: 44rem;
+  }
+
+  :global(figure.fig.exhibition-plan) {
+    max-width: 56rem;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+  .belongings {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1.5rem;
+  }
+  .belonging {
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    background: rgb(255 255 255 / 0.45);
+  }
+  .belonging img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: calc(var(--radius) / 2);
+    margin-bottom: 1rem;
+  }
+  .belonging h3 {
+    margin-bottom: 0.4rem;
+    font-size: 1.5rem;
+  }
+  .belonging p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+
+  @media print {
+    :global(.site-header),
+    :global(.site-footer),
+    :global(.page-header),
+    .workshop,
+    .exhibition,
+    .prompts,
+    .contact,
+    .bridge,
+    .head {
+      display: none !important;
+    }
+  }
+</style>
