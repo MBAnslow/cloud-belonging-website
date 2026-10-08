@@ -30,6 +30,6 @@ tags: [fabrication, pyramid]
 
 The green mesh and string lights could potentially show through where the cotton was thinner on the outer mesh, so we masked every LED and wire connector and sprayed everything white in the garden at CSL.
 
-Worrying about the darker colours showing through in some places was particularly true in the alpha, where we only had cotton pulled through the outer mesh. We didn’t want our decision on how thick the cotton should be to depend on hiding the darker elements of the pyramid, especially because the cotton served as a diffusion material and its density changed how much light got through.
+Worrying about the darker colours showing through in some places was particularly true in the pilot, where we only had cotton pulled through the outer mesh. We didn’t want our decision on how thick the cotton should be to depend on hiding the darker elements of the pyramid, especially because the cotton served as a diffusion material and its density changed how much light got through.
 
 Finally, Zéphir thought it’d be good to hang the pyramid up in the garden afterwards to let it air out overnight.

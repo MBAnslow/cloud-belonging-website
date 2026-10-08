@@ -1,12 +1,12 @@
 ---
-title: 'The alpha: lying under a cloud'
+title: 'The pilot: lying under a cloud'
 date: 2026-07-30
 stage: Making
 summary: 'A body of fibre pinned with bamboo skewers, a pyramid of LED pixels inside, and a corner of the studio turned into a small sky. Over two days, people lay beneath the first full cloud.'
 cover: ../../assets/photos/alpha-lying-under.jpg
 coverAlt: 'A person lies on white sheets on the floor beneath a large glowing cloud of white fibre, in a dark room with a blue backdrop.'
 video: alpha-dusk
-tags: [alpha, fibre, light, TouchDesigner, testing]
+tags: [pilot, fibre, light, TouchDesigner, testing]
 ---
 
 At the end of July we put everything together for the first time: the lit pyramid, a body around it, the breath belts, and a room to lie down in.
@@ -53,4 +53,4 @@ Over the afternoon and evening of the 29th and again on the 30th, people took tu
 
 ![Two of the team grinning beside the cloud, lit pink](../../assets/photos/alpha-team.jpg)
 
-It is an alpha: built in ten days in a workshop, with tape on the floor and the wiring in view. But for the first time, it was a cloud you could lie under.
+It is a pilot installation: built in ten days in a workshop, with tape on the floor and the wiring in view. But for the first time, it was a cloud you could lie under.

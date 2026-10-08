@@ -27,6 +27,6 @@ gallery:
 tags: [venue, theatre]
 ---
 
-We visited a theatre and large room at ENS to explore whether we could use them as a venue for our alpha installation. Unfortunately there were building works going on when we planned to show the installation, so we couldn't go ahead.
+We visited a theatre and large room at ENS to explore whether we could use them as a venue for our pilot installation. Unfortunately there were building works going on when we planned to show the installation, so we couldn't go ahead.
 
 It made us realise that the height of the installation could potentially make a big difference. You can't help but see the rigging when looking up, and some of the rigging has reflective elements to it, such as in the theatre. These wouldn't normally be seen by the audience, but could be a problem if we held the installation on the stage.

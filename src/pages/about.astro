@@ -3,15 +3,14 @@ import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
 import zephirExplains from '../assets/photos/zephir-explains-hands-up.jpg';
 import { site } from '../data/site';
-import { references } from '../data/references';
 import CloudFrame from '../components/CloudFrame.astro';
 import together from '../assets/team/together.jpg';
 import callForBelonging from '../assets/photos/call-for-belonging-flag.jpg';
+import { url } from '../lib/url';
 
 // Ordered left to right, as they appear in the photo.
 const order = ['Michael Anslow', 'Zéphir Lorne'];
 const team = [...site.team].sort((a, b) => order.indexOf(a.name) - order.indexOf(b.name));
-const themes = [...new Set(references.map((r) => r.theme))];
 ---
 
 <Base title="About" description="The people, context and sources behind Cloudfulness, a research-creation project on belonging.">
@@ -45,6 +44,11 @@ const themes = [...new Set(references.map((r) => r.theme))];
                 <h3>{person.name}</h3>
                 <p class="role">{person.role}</p>
                 <p class="bio">{person.bio}</p>
+                <div class="profile-links" aria-label={`${person.name} links`}>
+                  <a href={person.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
+                  <a href={person.website} target="_blank" rel="noreferrer">Website</a>
+                  <a href={`mailto:${person.email}`}>Email</a>
+                </div>
               </article>
             ))
           }
@@ -60,21 +64,11 @@ const themes = [...new Set(references.map((r) => r.theme))];
         <p class="eyebrow">A call for belonging</p>
         <h2>Open to collaborate and explore belonging</h2>
         <p class="lede">
-          Our next space, our next installation, our next research-creation iteration, our next conceptual leap in
-          understanding and our next new acquaintances.
+          We are open to creating a <a href={url("/toolkit/")}>workshop around belonging</a>, hosting the
+          <a href={url("/installation/")}> installation</a> elsewhere, adapting the
+          <a href={url("/concept/")}> concept</a> to new situations, or co-creating new installations around belonging.
         </p>
-        <p class="lede">
-          We welcome venues, researchers, artists and communities who want to explore and build belonging together.
-        </p>
-        {
-          site.contactEmail ? (
-            <a class="button" href={`mailto:${site.contactEmail}`}>
-              {site.contactEmail}
-            </a>
-          ) : (
-            <p class="pending">Contact details coming soon.</p>
-          )
-        }
+        <a class="button" href="mailto:michael.anslow@gmail.com?cc=zephir.lorne@ens.psl.eu">Start a conversation</a>
       </div>
       <CloudFrame
         src={callForBelonging}
@@ -84,37 +78,6 @@ const themes = [...new Set(references.map((r) => r.theme))];
         seed={47}
         class="contact-photo reveal"
       />
-    </div>
-  </section>
-
-  <section class="section" id="references">
-    <div class="wrap">
-      <div class="refs-head reveal">
-        <p class="eyebrow">Sources</p>
-        <h2>What we read</h2>
-        <p class="measure">
-          A selection from our literature review. These readings shaped our thinking about belonging, group practice,
-          ritual and interactive experience.
-        </p>
-      </div>
-      <div class="refs">
-        {
-          themes.map((theme) => (
-            <div class="theme reveal">
-              <h3>{theme}</h3>
-              <ul>
-                {references
-                  .filter((r) => r.theme === theme)
-                  .map((r) => (
-                    <li>
-                      {r.url ? <a href={r.url}>{r.citation}</a> : r.citation}
-                    </li>
-                  ))}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
     </div>
   </section>
 </Base>
@@ -184,6 +147,28 @@ const themes = [...new Set(references.map((r) => r.theme))];
     line-height: 1.55;
     color: var(--ink-faint, var(--ink-soft));
   }
+  .profile-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.9rem;
+  }
+  .profile-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2rem;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .profile-links a:hover {
+    border-color: var(--ink-soft);
+    color: var(--ink);
+  }
   .team-photo figcaption {
     margin-top: 0.9rem;
     font-size: 0.85rem;
@@ -193,10 +178,6 @@ const themes = [...new Set(references.map((r) => r.theme))];
     .callouts {
       grid-template-columns: 1fr;
     }
-  }
-  .contact .pending {
-    color: var(--ink-faint);
-    font-style: italic;
   }
   .contact {
     --wash-glow: rgb(232 130 100 / 0.22);
@@ -234,35 +215,5 @@ const themes = [...new Set(references.map((r) => r.theme))];
     .contact :global(.contact-photo) {
       margin: 0;
     }
-  }
-  .refs-head {
-    margin-bottom: 3rem;
-  }
-  .refs {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
-    gap: 3rem;
-  }
-  .theme h3 {
-    font-size: 1.35rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 1px solid var(--line);
-  }
-  .theme ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  .theme li {
-    font-size: 0.9rem;
-    color: var(--ink-soft);
-    padding-block: 0.7rem;
-    border-bottom: 1px solid var(--line);
-  }
-  .theme a {
-    text-decoration: none;
-  }
-  .theme a:hover {
-    text-decoration: underline;
   }
 </style>

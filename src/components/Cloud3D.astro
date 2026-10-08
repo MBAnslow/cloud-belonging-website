@@ -83,6 +83,13 @@ const {
             toneTarget.dataset.tone = tone;
           }
           if (!global) return;
+          // Publish the live sky colours so other page elements (like the Upcoming heading) can follow the cloud.
+          const root = document.documentElement.style;
+          const rgb = (c: number[]) => c.map((v) => Math.round(v * 255)).join(' ');
+          const top = `rgb(${rgb(s.skyTop)})`;
+          const horizon = `rgb(${rgb(s.skyHorizon)})`;
+          if (root.getPropertyValue('--sky-top') !== top) root.setProperty('--sky-top', top);
+          if (root.getPropertyValue('--sky-horizon') !== horizon) root.setProperty('--sky-horizon', horizon);
           const nextHeader = pick(luma(s.skyTop), headerTone);
           if (nextHeader && nextHeader !== headerTone) {
             headerTone = nextHeader;

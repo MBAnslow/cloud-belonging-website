@@ -9,7 +9,7 @@ gallery:
   - src: ../../assets/journal/post-alpha/inside-pyramid-struts-2-orange.jpg
     alt: 'The LEDs and struts inside the pyramid, lit orange.'
     caption: 'Each tube points its LED outwards.'
-tags: [LEDs, after the alpha]
+tags: [LEDs, after the pilot]
 ---
 
 We used a short card tube around each LED. It stops the light washing into its neighbours, so every pixel lights its own patch of cloud. The effect was probably quite small, but it helped a bit for finer-grained effects like lightning moving through the cloud.

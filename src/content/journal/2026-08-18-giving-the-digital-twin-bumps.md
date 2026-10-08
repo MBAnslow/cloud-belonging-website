@@ -13,7 +13,7 @@ clips:
     portrait: true
   - name: journal/bump-mapping-led-sensors
     caption: 'In the interface: a light orbits the digital twin while each LED samples it with its own sensor hemisphere.'
-tags: [light, digital twin, after the alpha]
+tags: [light, digital twin, after the pilot]
 ---
 
 The pyramid planes all have the same normal, so the light illuminates each plane all at once, evenly. That isn’t like the nice fluffy bumpy clouds we are used to. So, in the digital twin, we added “bumps” as Gaussians, aggregated together to roughly correspond to the bumps on the physical cloud.

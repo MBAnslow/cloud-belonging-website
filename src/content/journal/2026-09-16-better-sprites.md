@@ -12,7 +12,7 @@ clips:
   - name: journal/sprites-2
     caption: 'Sprites during a storm. Sound on.'
     sound: true
-tags: [sprites, sound, twilight, after the alpha]
+tags: [sprites, sound, twilight, after the pilot]
 ---
 
 A sprite is an image projected through the cloud in a quick strobe. Each one now triggers a matching sound, which makes the twilight feel like it is happening, not just playing.

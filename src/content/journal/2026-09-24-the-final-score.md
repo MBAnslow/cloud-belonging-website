@@ -25,7 +25,7 @@ sections:
 tags: [score, sound, drones, bells, breath]
 ---
 
-The July draft had six movements: dusk, storm, moonlight, shared breath, sunrise and tea. The alpha installation became simpler: dusk, magical twilight and breath synchrony. But the sound score had to do more than accompany those stages. It had to help the audience feel the transitions, hold the room together, and leave enough space for the cloud to become reactive.
+The July draft had six movements: dusk, storm, moonlight, shared breath, sunrise and tea. The pilot installation became simpler: dusk, magical twilight and breath synchrony. But the sound score had to do more than accompany those stages. It had to help the audience feel the transitions, hold the room together, and leave enough space for the cloud to become reactive.
 
 ## Drones as atmosphere
 
@@ -71,7 +71,7 @@ Finally, as dawn comes, we return to the bird song with a slightly disorienting 
 
 ## The cloud as an instrument
 
-We liked the idea that the cloud could become a kind of instrument, changing with breath in a way that echoed what we explored in the IFT collaboration: web-like structures that respond to touch, proximity and gesture through sound and light. We did not take that idea too far in the alpha, but it was there as a direction.
+We liked the idea that the cloud could become a kind of instrument, changing with breath in a way that echoed what we explored in the IFT collaboration: web-like structures that respond to touch, proximity and gesture through sound and light. We did not take that idea too far in the pilot, but it was there as a direction.
 
 <figure>
   <video controls playsinline preload="metadata" src="/cloud-belonging-website/video/audio-breath-modulation.mp4" poster="/cloud-belonging-website/video/audio-breath-modulation.jpg"></video>

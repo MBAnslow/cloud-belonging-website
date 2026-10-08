@@ -1,5 +1,5 @@
 ---
-title: 'Making the outer (alpha) layer'
+title: 'Making the outer (pilot) layer'
 date: 2026-07-24
 stage: Making
 summary: 'Hexagonal mesh over the pyramid, to hold the fibre away from the lights.'

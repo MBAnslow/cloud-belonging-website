@@ -59,18 +59,22 @@ import buildStuffing from '../assets/photos/build-stuffing.jpg';
 const outerLayers = [
   {
     name: 'Cotton',
+    phase: 'α' as const,
     text: 'The outermost layer and the one you see. Pulled into tufts, it gives the cloud its billowing, cumulus surface.',
   },
   {
     name: 'Polyester fleece wadding',
+    phase: 'β' as const,
     text: 'A thicker layer of wadding under the cotton. It gives the cloud its body and softens the light again on its way out.',
   },
   {
     name: 'White mesh',
+    phase: 'β' as const,
     text: 'A white plastic mesh with hexagonal cells, shaped into the cloud’s outline. It is the shell that holds the soft layers in place.',
   },
   {
     name: 'Nylon diffuser fabric',
+    phase: 'β' as const,
     text: 'The first thing the light meets. It spreads each point of light out before it reaches the wadding, so no single LED shows through as a hot spot.',
   },
 ];
@@ -78,22 +82,27 @@ const outerLayers = [
 const innerLayers = [
   {
     name: 'Inner mesh frame',
+    phase: 'α' as const,
     text: 'A square-grid mesh that forms the core of the cloud and carries the lights.',
   },
   {
     name: 'Addressable LEDs',
+    phase: 'α' as const,
     text: 'Individually controllable LED pixels (for example WS2811), fixed across the frame. Each can take its own colour and brightness, which makes gradients, lightning, colour blooms and breathing light possible.',
   },
   {
     name: 'Directionality cylinders',
+    phase: 'β' as const,
     text: 'A short card tube around each LED aims its light outwards, so each pixel lights its own patch of the cloud instead of washing into its neighbours.',
   },
   {
     name: 'Support struts',
+    phase: 'α' as const,
     text: 'Tubes of rolled mesh, rising from the frame, hold the outer layers at a distance from the lights.',
   },
   {
     name: 'Black fabric layer',
+    phase: 'α' as const,
     text: 'Underneath the frame, a black fabric stops light escaping backwards, so it only leaves through the diffusing layers.',
   },
 ];
@@ -205,7 +214,7 @@ const breath: GalleryItem[] = [
 
 const moments: GalleryItem[] = [
   ...lying.map((m) => ({ image: m.src, alt: m.alt })),
-  { image: cloudRoom, alt: 'The alpha cloud glowing above white sheets, with a teapot on a small pedestal below.', caption: 'The room, set for tea.' },
+  { image: cloudRoom, alt: 'The pilot cloud glowing above white sheets, with a teapot on a small pedestal below.', caption: 'The room, set for tea.' },
   { image: workshopFisheye, alt: 'A fisheye view of the workshop with the cloud glowing white in its corner.', caption: 'The corner of the workshop we turned into a sky.' },
 ];
 
@@ -250,7 +259,7 @@ const learned = [
   },
   {
     title: 'The cloud looked flat up close',
-    text: 'From underneath, a single fibre layer showed its lights. After the alpha we rebuilt it in layers, with a diffuser, wadding and cotton, and gave the digital twin bumps so the light follows the cloud’s shape.',
+    text: 'From underneath, a single fibre layer showed its lights. After the pilot we rebuilt it in layers, with a diffuser, wadding and cotton, and gave the digital twin bumps so the light follows the cloud’s shape.',
   },
   {
     title: 'Heat and power are part of the design',
@@ -260,49 +269,52 @@ const learned = [
 
 ---
 
-<Base theme="night" title="Installation" description="Cloudfulness, a breathing cloud installation about belonging to nature: the alpha on film, the people beneath it, fabrication and technical details.">
+<Base theme="night" title="Installation" description="Cloudfulness, a breathing cloud installation about belonging to nature: the pilot on film, the people beneath it, fabrication and technical details.">
   <PageHeader
     eyebrow="The installation"
     image={teaFront}
-    imageAlt="The alpha cloud glowing warm white above white sheets, with a small tea table beneath it."
-    title="A cloud that listens"
-    lede="A cloud hangs above you. The sun sets, lightning begins, and then the whole cloud starts to bloom with colour. Then the cloud begins to breathe with you.">
+    imageAlt="The pilot cloud glowing warm white above white sheets, with a small tea table beneath it."
+    title="Cloud Interbeing"
+    lede="A cloud hangs above you. As daylight fades, a mysterious storm approaches. Something ethereal shifts, and your passive observation becomes a causal connection, as your very breath illuminates the cloud. The boundary between you, the unfolding light of dawn and the cloud it illuminates begins to blur. You breathe together, holding this connection until dawn rises.">
     <p class="status">
       <span class="dot" aria-hidden="true"></span>
       <span>
-        <em>Cloudfulness</em>. Three stages: dusk, magical twilight, breath synchrony. First alpha
-        built and tested in July 2026.
+        Footage comes from the first pilot installation, built and tested in July 2026. We are working on a new
+        iteration planned for November.
       </span>
     </p>
   </PageHeader>
 
 
   <section class="section dark blend evening" id="alpha">
-    <div class="phase-divider" id="alpha-start" aria-label="The alpha">
+    <div class="phase-divider" id="alpha-start" aria-label="The pilot">
       <div class="wrap phase-divider-inner">
         <span class="pd-line" aria-hidden="true"></span>
         <span class="pd-glyph" aria-hidden="true">α</span>
-        <span class="pd-text"><strong>The alpha</strong><span>July 2026</span></span>
+        <span class="pd-text"><strong>The pilot</strong><span>July 2026</span></span>
         <span class="pd-line" aria-hidden="true"></span>
       </div>
+      <p class="wrap pd-intro">
+        We built and piloted our installation at Sony CSL Paris. This served as an alpha (α) iteration and our first
+        research-creation output.
+      </p>
     </div>
 
     <div class="wrap">
-      <div class="grid-2 head">
-        <div class="reveal">
-          <p class="eyebrow"><span class="phase-mark">α</span> The evening</p>
-          <h2>From dusk to breath</h2>
-        </div>
-        <div class="reveal">
-          <p>
-            We closed off a corner of the studio with a blue backdrop and black panels, laid white sheets and beanbags on
-            the floor, and kept a pot of tea warm under the cloud. Over two days, people took turns lying beneath it as
-            it moved from dusk and lightning, through a violet and magenta twilight, into breathing with them.
-          </p>
-          <p class="small">All clips are silent. Click any of them to see it larger.</p>
-        </div>
+      <div class="head evening-head reveal">
+        <p class="eyebrow"><span class="phase-mark">α</span> The evening</p>
+        <h2>From dusk to breath</h2>
+        <p>
+          We closed off a section of the atelier with a black backdrop, and we blacked out the street-level windows to
+          the right and the glass door to the garden at the back left. We decided to lay out a white sheet on the
+          ground both to cover the wooden texture of the floor and to reflect more light from the cloud. For seating,
+          we placed beanbags on the floor and kept a pot of tea warm under the cloud. Over two days, people took turns
+          reclining in front of the cloud as it moved from dusk, through the magical twilight, to breath
+          synchronisation and finally to daylight.
+        </p>
       </div>
 
+      <p class="small gallery-note">All clips are silent. Click any of them to see it larger.</p>
       <MediaGallery items={dusk} audio="dusk-audio.mp3" numeral="I" title="Dusk and lightning" description="The sun sets on the room and the first strikes flicker through the cloud." class="reveal" />
       <MediaGallery items={twilight} audio="magical-twilight.mp3" numeral="II" title="Magical twilight" description="The light intensifies into violet, magenta and blue." columns={2} class="reveal" />
       <MediaGallery items={breath} audio="breath-effect.mp3" numeral="III" title="Breath" description="The cloud slows down and starts breathing with the people beneath it." columns={2} class="reveal" />
@@ -349,8 +361,11 @@ const learned = [
         <p class="eyebrow"><span class="phase-mark">α</span> Getting ready</p>
         <h2>Ten days, and the last few hours</h2>
         <p class="lede measure">
-          The alpha was built in ten days in a workshop. The last of it happened lying on the floor, pushing fibre up
+          The pilot was built in ten days in a workshop. The last of it happened lying on the floor, pushing fibre up
           into the cloud one skewer at a time.
+        </p>
+        <p>
+          <a class="button" href={url('/process/')}>Follow the full build in the process journal <span aria-hidden="true">→</span></a>
         </p>
       </div>
 
@@ -363,7 +378,7 @@ const learned = [
           <p>
             The LEDs run from a battery through a buck converter, which steps the voltage down to what the lights need.
             Under the full load of the cloud it ran hot, so we measured it with a thermal camera and added a small fan.
-            After the alpha we replaced it with a better converter and controller.
+            After the pilot we replaced it with a better converter and controller.
           </p>
         </div>
         <MediaGallery items={electronics.map((e) => ({ image: e.src, alt: e.alt, caption: e.caption }))} columns={3} class="reveal" />
@@ -397,7 +412,7 @@ const learned = [
         <p class="eyebrow"><span class="phase-mark">α</span> Technical details</p>
         <h2>Everything behind the cloud</h2>
         <p class="lede measure">
-          The hardware and software that made the alpha work. Open any part to see more.
+          The hardware and software that made the pilot work. Open any part to see more.
         </p>
         <img
           class="schematic-illustration"
@@ -469,7 +484,7 @@ const learned = [
             pinned in place with bamboo skewers. It hides the individual lights and turns them into a soft glow with
             darker folds.
           </p>
-          <p><a href={url("/process/2026-07-30-the-alpha-cloud/")}>The alpha cloud →</a></p>
+          <p><a href={url("/process/2026-07-30-the-alpha-cloud/")}>The pilot cloud →</a></p>
         </div>
         <div class="make-media two">
           <Figure src={buildSkewersMesh} alt="Fibre pinned into the hexagonal mesh with bamboo skewers." caption="Fibre pinned to the mesh." ratio="4 / 5" class="reveal" />
@@ -492,7 +507,7 @@ const learned = [
             steps the voltage down for the LEDs. Under the full load of the cloud it ran hot, so we measured it with a
             thermal camera and added a small fan.
           </p>
-          <p><a href="#getting-ready">The electronics in the alpha ↑</a></p>
+          <p><a href="#getting-ready">The electronics in the pilot ↑</a></p>
         </div>
         <div class="make-media two">
           <Figure src={elecOverheating} alt="A thermal camera reading of the buck converter running hot." caption="Running hot." ratio="4 / 5" class="reveal" />
@@ -669,7 +684,7 @@ const learned = [
         <p class="eyebrow"><span class="phase-mark">β</span> Updates in beta</p>
         <h2>Rebuilding the cloud</h2>
         <p class="lede measure">
-          After the alpha, we took the cloud apart and rebuilt it. The single skin of fibre became four soft layers, each
+          After the pilot, we took the cloud apart and rebuilt it. The single skin of fibre became four soft layers, each
           LED was aimed outwards, the electronics stopped running hot, and the software learned new kinds of light.
         </p>
       </div>
@@ -690,7 +705,7 @@ const learned = [
             {
               outerLayers.map((l) => (
                 <li>
-                  <strong>{l.name}</strong>
+                  <strong>{l.name} <span class="layer-phase" title={l.phase === 'α' ? 'In the alpha and the beta' : 'New in the beta'}>{l.phase}</span></strong>
                   <p>{l.text}</p>
                 </li>
               ))
@@ -703,7 +718,7 @@ const learned = [
             {
               innerLayers.map((l) => (
                 <li>
-                  <strong>{l.name}</strong>
+                  <strong>{l.name} <span class="layer-phase" title={l.phase === 'α' ? 'In the alpha and the beta' : 'New in the beta'}>{l.phase}</span></strong>
                   <p>{l.text}</p>
                 </li>
               ))
@@ -711,6 +726,10 @@ const learned = [
           </ul>
         </div>
       </div>
+      <p class="layer-key reveal">
+        <span><span class="layer-phase">α</span> in the alpha and kept in the beta</span>
+        <span><span class="layer-phase">β</span> new in the beta</span>
+      </p>
 
       <div class="beta-updates">
         <article class="reveal">
@@ -738,11 +757,15 @@ const learned = [
   <section class="section dark blend after">
     <div class="wrap grid-2">
       <div class="reveal">
-        <p class="eyebrow">What the alpha taught us</p>
+        <p class="eyebrow">What the pilot taught us</p>
         <h2>Packed away, for now</h2>
         <p class="lede">
-          The alpha showed us what worked and what to change, and the beta grew out of it. The cloud is packed up now,
+          The pilot showed us what worked and what to change, and the beta grew out of it. The cloud is packed up now,
           waiting for the next room.
+        </p>
+        <p>
+          A new iteration is planned for November, which will give more people the chance to see the cloud in person.
+          We’ll share viewing opportunities here as soon as they’re confirmed.
         </p>
         <ul class="learned">
           {
@@ -755,11 +778,12 @@ const learned = [
           }
         </ul>
         <p class="links">
-          <a class="button" href={url('/process/2026-08-18-giving-the-digital-twin-bumps/')}>After the alpha</a>
+          <a class="button" href={url('/process/')}>Follow the full build in the process journal <span aria-hidden="true">→</span></a>
+          <a class="button" href={url('/process/2026-08-18-giving-the-digital-twin-bumps/')}>After the pilot</a>
           <a class="button" href={url('/concept/')}>The concept</a>
         </p>
       </div>
-      <Figure src={cloudInABag} alt="The alpha cloud packed into a large clear bag, sitting on top of a black cabinet in the workshop." caption="The alpha, packed up and waiting." ratio="3 / 4" class="reveal" />
+      <Figure src={cloudInABag} alt="The pilot cloud packed into a large clear bag, sitting on top of a black cabinet in the workshop." caption="The pilot, packed up and waiting." ratio="3 / 4" class="reveal" />
     </div>
   </section>
 </Base>
@@ -886,6 +910,15 @@ const learned = [
     line-height: 1;
     color: #f2eeff;
     text-shadow: 0 0 28px rgb(170 150 255 / 0.45);
+  }
+  .pd-intro {
+    margin-top: clamp(1.25rem, 3vw, 2rem);
+    max-width: 46rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.7rem);
+    line-height: 1.4;
+    text-align: left;
+    color: rgb(240 236 255 / 0.88);
   }
   .pd-text {
     display: flex;
@@ -1059,6 +1092,28 @@ const learned = [
     font-weight: 400;
     font-size: 1.2rem;
   }
+  .layer-phase {
+    margin-left: 0.3em;
+    font-family: var(--font-display);
+    font-size: 0.95em;
+    font-style: italic;
+    font-weight: 400;
+    color: var(--dusk);
+    opacity: 0.85;
+  }
+  .layer-key {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.5rem;
+    margin: 1.25rem 0 0;
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--ink-faint);
+  }
+  .layer-key .layer-phase {
+    margin-left: 0;
+    margin-right: 0.2em;
+  }
   .layer-list p {
     margin: 0.2rem 0 0;
     color: var(--ink-soft);
@@ -1208,6 +1263,15 @@ const learned = [
 
   .head {
     margin-bottom: 3rem;
+  }
+  .evening-head {
+    max-width: 46rem;
+    margin-bottom: 1.5rem;
+  }
+  .gallery-note {
+    margin: 0 0 0.6rem;
+    font-style: italic;
+    text-align: right;
   }
   .small {
     font-size: 0.85rem;

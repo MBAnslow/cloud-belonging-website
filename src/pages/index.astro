@@ -27,10 +27,10 @@ const featured = featuredCandidateIds
   .slice(0, 4);
 
 const introPhrases = [
-  'A cloud you lie beneath.',
-  'It watches the sun set with you.',
-  'Blooms through a magical twilight.',
-  'And then, it breathes with you.',
+  'A cloud hangs above you.',
+  'Bound to you in a magical storm.',
+  'A moment of inter-being.',
+  'Every breath illuminates and reverberates.',
 ];
 const rand = (n: number) => {
   const x = Math.sin(n * 12.9898) * 43758.5453;
@@ -98,7 +98,7 @@ const introLetters = introPhrases.map((phrase, p) => {
         under and look up to.
       </p>
       <div class="hero-actions">
-        <a class="button solid-light" href={url("/installation/")}>See the installation</a>
+        <a class="button solid-light" href={url("/installation/")}>See our pilot</a>
         <a class="button" href={url("/concept/")}>Why belonging</a>
       </div>
     </div>
@@ -144,6 +144,18 @@ const introLetters = introPhrases.map((phrase, p) => {
         {' '}
         <strong><a href={url("/about/#contact")}>point of collaboration</a></strong>.
       </h2>
+    </div>
+  </section>
+
+  <section class="section upcoming" id="upcoming">
+    <div class="wrap upcoming-inner reveal">
+      <p class="eyebrow">Upcoming</p>
+      <h2>See the installation</h2>
+      <p class="lede">
+        We are planning to show <em>Cloudfulness</em> towards the end of <strong>November 2026</strong>, with other
+        viewings in the near future.
+      </p>
+      <p class="lede"><strong>More details coming soon.</strong></p>
     </div>
   </section>
 
@@ -584,6 +596,38 @@ const introLetters = introPhrases.map((phrase, p) => {
   }
   .invitation-block {
     width: 100%;
+  }
+  .upcoming-inner {
+    max-width: 44rem;
+    text-align: center;
+  }
+  .upcoming-inner .lede {
+    margin-inline: auto;
+  }
+  /* A single, fixed wash in the dawn colours of the cloud, fading out at the edges. */
+  .upcoming {
+    padding-block: clamp(4rem, 8vw, 6.5rem);
+    background: linear-gradient(
+      180deg,
+      transparent 0%,
+      rgb(183 142 214 / 0.14) 40%,
+      rgb(255 178 166 / 0.22) 70%,
+      transparent 100%
+    );
+  }
+  /* The heading follows the hero cloud: Cloud3D publishes the live sky colours, darkened a little to stay readable. */
+  .upcoming-inner h2 {
+    color: var(--ink);
+    background: linear-gradient(
+      90deg,
+      color-mix(in srgb, var(--sky-top, #877cbe) 78%, var(--ink)),
+      color-mix(in srgb, var(--sky-horizon, #f8a98c) 58%, var(--ink))
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    width: fit-content;
+    margin-inline: auto;
   }
   .invitation-label {
     margin-bottom: 1rem;

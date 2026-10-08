@@ -4,13 +4,7 @@ import PageHeader from '../../components/PageHeader.astro';
 import JournalCard from '../../components/JournalCard.astro';
 import { getJournal } from '../../lib/journal';
 import { url } from '../../lib/url';
-import VideoClip from '../../components/VideoClip.astro';
-import Figure from '../../components/Figure.astro';
-import alphaTeaser from '../../assets/alpha/visitors-under-cloud.jpg';
 import buildStuffing from '../../assets/photos/build-stuffing.jpg';
-import visitCeiling from '../../assets/photos/visit-cloud-ceiling.jpg';
-import visitFire from '../../assets/photos/visit-tv-fire.jpg';
-import visitStars from '../../assets/photos/visit-stars.jpg';
 
 const entries = await getJournal();
 const stages = ['Concept formation', 'Conversation', 'Making', 'Article'] as const;
@@ -69,64 +63,6 @@ for (const entry of entries) {
       }
     </div>
   </section>
-  <section class="section dark blend alpha" id="alpha">
-    <div class="wrap grid-2 alpha-teaser">
-      <div class="reveal">
-        <p class="eyebrow">The alpha · 29–30 July 2026</p>
-        <h2>A cloud you can lie under</h2>
-        <p>
-          Everything came together at the end of July: the first full cloud, a corner of the studio turned into a sky,
-          and people lying beneath it. The installation page has films of the evening, the people who came, and how we
-          got it ready.
-        </p>
-        <p><a class="button" href={url('/installation/#alpha')}>See the alpha</a></p>
-      </div>
-      <Figure src={alphaTeaser} alt="People lounging on sheets and beanbags beneath the glowing alpha cloud." ratio="4 / 3" class="reveal" />
-    </div>
-  </section>
-
-  <section class="section dark blend sim">
-    <div class="wrap">
-      <div class="grid-2 sim-head">
-        <div class="reveal">
-          <p class="eyebrow">Simulating before building</p>
-          <h2>An early walk-through in 3D</h2>
-        </div>
-        <div class="reveal">
-          <p>
-            Before building at full scale, we made a simulation of the room to think through the experience. Breaths
-            are shown as waves with their own rate, depth and phase, and a <em>synchrony</em> measure rises as they
-            align. Lightning can be tuned for frequency and intensity.
-          </p>
-          <p class="small">
-            This recording is from July 2026, when the score still ended at sunrise. The final score has
-            <a href={url('/concept/#score')}>three stages</a>.
-          </p>
-        </div>
-      </div>
-      <VideoClip name="simulation" ratio="1280 / 636" caption="Screen recording of the July 2026 simulation." class="reveal" />
-    </div>
-  </section>
-
-  <section class="section wash visits" id="visits">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">Looking at how others do it</p>
-        <h2>Field visits</h2>
-        <p class="measure">
-          We visited immersive theatre in Paris to study thresholds, hosts and atmosphere: <em>Le Grand Hôtel des
-          Rêves</em>, and Moir’s immersive personality test <em>TOI</em>. Other touchstones include Fujiko Nakaya’s fog
-          sculptures and Olafur Eliasson’s <em>Beauty</em>.
-        </p>
-      </div>
-      <div class="grid-3">
-        <Figure src={visitCeiling} alt="A dark control room with swirling clouds projected across the ceiling." caption="A projected sky of clouds, Le Grand Hôtel des Rêves." ratio="3 / 4" class="reveal" />
-        <Figure src={visitStars} alt="A deep blue room with a starry ceiling." caption="A starry room — should our night have stars?" ratio="3 / 4" class="reveal" />
-        <Figure src={visitFire} alt="An old television showing a fireplace." caption="A fireplace on an old TV. For a while, a glowing hearth at the centre of the room was part of our design." ratio="3 / 4" class="reveal" />
-      </div>
-    </div>
-  </section>
-
 </Base>
 
 <script>
@@ -231,32 +167,6 @@ for (const entry of entries) {
     .month-label {
       position: static;
     }
-  }
-  .section-head {
-    margin-bottom: 3rem;
-    max-width: 44rem;
-  }
-  .sim-head {
-    margin-bottom: 3rem;
-  }
-  .alpha {
-    background: linear-gradient(180deg, var(--night), #141a3d 60%, var(--night));
-  }
-  .alpha p {
-    color: var(--ink-soft);
-  }
-  .alpha a {
-    color: #eceefb;
-  }
-  .alpha-teaser {
-    align-items: center;
-  }
-  .sim p {
-    color: var(--ink-soft);
-  }
-  .small {
-    font-size: 0.85rem;
-    color: var(--ink-faint);
   }
 
 </style>

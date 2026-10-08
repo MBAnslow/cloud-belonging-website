@@ -3,7 +3,8 @@ title: 'The story of a night'
 date: 2026-07-08
 stage: Making
 summary: 'The experience takes the shape of a compressed night — dusk, storm, moonlight, shared breath, sunrise, tea — and a 3D simulation lets us walk through it before building it.'
-video: simulation
+coverVideo: simulation
+coverAlt: 'A screen recording of the 3D simulation: figures lying on mats, each beneath their own cloud, as the room moves through the night.'
 tags: [score, simulation, structure]
 ---
 

@@ -6,7 +6,7 @@ summary: 'Eight lessons from imagining, testing and building Cloudfulness: about
 tags: [reflection, lessons, process, research-creation]
 ---
 
-Looking back across the conversations, experiments, false starts and the alpha installation, a few lessons kept returning.
+Looking back across the conversations, experiments, false starts and the pilot installation, a few lessons kept returning.
 
 ## Never tell people what to feel
 
@@ -42,7 +42,7 @@ Narrow stretch bands barely registered above the noise. A 20 cm band gave a clea
 
 Mesh was too opaque and tulle would not hold a shape. Layers of soft fibre over a mesh shell finally turned hundreds of LEDs into one glow.
 
-[Read *The alpha cloud* →](/cloud-belonging-website/process/2026-07-30-the-alpha-cloud/)
+[Read *The pilot cloud* →](/cloud-belonging-website/process/2026-07-30-the-alpha-cloud/)
 
 ## A bond before the breath
 

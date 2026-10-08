@@ -5,10 +5,10 @@ stage: Making
 summary: 'A 20 A buck converter and an ESP32 WLED controller, so the cloud no longer needs a fan to stay cool.'
 cover: ../../assets/journal/post-alpha/better-buck-converter-different-controller.jpg
 coverAlt: 'A new controller, a battery and a larger buck converter laid out on a desk.'
-tags: [electronics, after the alpha]
+tags: [electronics, after the pilot]
 ---
 
-In the alpha, the first buck converter overheated and broke, and the second one only stayed cool with a small fan attached to it.
+In the pilot, the first buck converter overheated and broke, and the second one only stayed cool with a small fan attached to it.
 
 For the beta we updated two parts:
 

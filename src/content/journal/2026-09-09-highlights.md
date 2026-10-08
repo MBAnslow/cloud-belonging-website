@@ -12,7 +12,7 @@ clips:
   - name: journal/highlights-2
     caption: 'Highlights following the sun.'
     portrait: true
-tags: [light, software, after the alpha]
+tags: [light, software, after the pilot]
 ---
 
 On top of the shading, the LEDs facing the sun most directly get an extra glint.
