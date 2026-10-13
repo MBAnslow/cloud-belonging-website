@@ -316,8 +316,8 @@ const learned = [
 
       <p class="small gallery-note">All clips are silent. Click any of them to see it larger.</p>
       <MediaGallery items={dusk} audio="dusk-audio.mp3" numeral="I" title="Dusk and lightning" description="The sun sets on the room and the first strikes flicker through the cloud." class="reveal" />
-      <MediaGallery items={twilight} audio="magical-twilight.mp3" numeral="II" title="Magical twilight" description="The light intensifies into violet, magenta and blue." columns={2} class="reveal" />
-      <MediaGallery items={breath} audio="breath-effect.mp3" numeral="III" title="Breath" description="The cloud slows down and starts breathing with the people beneath it." columns={2} class="reveal" />
+      <MediaGallery items={twilight} audio="magical-twilight.mp3" numeral="II" title="Magical twilight" description="The lightning intensifies. Multi-coloured 'sprites' appear with eerie sounds." columns={2} class="reveal" />
+      <MediaGallery items={breath} audio="breath-effect.mp3" numeral="III" title="Breath" description="Participant breath travels through the cloud on exhale. Uncovering the dawn light and bringing clarity to the dawn music." columns={2} class="reveal" />
     </div>
   </section>
 
@@ -327,7 +327,7 @@ const learned = [
         <p class="eyebrow"><span class="phase-mark">α</span> Moments</p>
         <h2>The people beneath it</h2>
         <p class="lede measure">
-          Shoes off, lying on the floor, a glass of tea. Everyone who came had the same seat under the same sky.
+          We invited many people to sit infront of the cloud or stand in larger groups. Many said it had a presence. They just wanted to stay in the room with it.
         </p>
       </div>
       <MediaGallery items={moments} title="Under the cloud" description="Two days of visitors, tea and beanbags." class="reveal" />
@@ -434,9 +434,13 @@ const learned = [
       <article class="make">
         <div class="make-text reveal">
           <p>
-            The cloud hangs from a low pyramid of wooden dowels held together by 3D-printed joints. The frame is wrapped
-            in plastic mesh, carries the LEDs, and is sprayed white so it doesn’t tint the light. The fibre shell hangs
-            around it.
+            The cloud hangs on a pyramid frame of wooden dowel rods held together by 3D-printed joints. The frame is wrapped with a plastic mesh, secured in place by zipties. There are plastic support struts made from rolled-up mesh to both support the outer layer and ensure it is far enough away from the LEDs to diffuse correctly.
+          </p>
+          <p>
+            This inner and outer seperation allows LEDs to shine outwards into the cloud material, independent of the complex surface of the cloud, leaving a reasonable LED-to-diffuser spacing to prevent hotspots and provide proper coverage across the outer material.
+          </p>
+          <p>
+            The pyramid shape simplified the geometry of the inner structure of the cloud but compromised the expressivity of the light fields we can create. We tried to account for this with our LED mapping approach described later.
           </p>
           <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>Building the pyramid →</a></p>
         </div>
@@ -457,15 +461,19 @@ const learned = [
       <article class="make">
         <div class="make-text reveal">
           <p>
-            Rows of addressable LED pixels are tied along the inside of the pyramid, driven by an ESP32 controller. Each pixel can
-            take its own colour and brightness, and each has a position in the digital twin, which is how the software
-            knows what colour to give it.
+            Rows of addressable LED pixels are woven into the mesh of the pyramid and numbered to make LED mapping easier. Each pixel can take its own colour and brightness, and each has a position in the digital twin, which is how the software knows what colour to give it.
+          </p>
+          <p>
+            We could have used LED strips for this pyramid design but string LEDs are more versatile for trying out different distances between LEDs and also for placing them on complex mesh shapes which we had originally experimented with. We already had enough string LEDs so we went ahead and used them.
+          </p>
+          <p>
+            We needed to inject power to the string LEDs every 100 LEDs which wasn't the case with similar length LED strips but wasn't a problem for our design.
           </p>
           <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>A pyramid of light →</a></p>
         </div>
         <div class="make-media two">
-          <Figure src={ledsInsideFrame} alt="Looking up inside the mesh-wrapped pyramid, with strings of LED pixels zip-tied in rows along each face." caption="Inside the pyramid." ratio="4 / 5" class="reveal" />
-          <Figure src={puttingInLeds} alt="Michael zip-tying LED pixels onto one mesh-covered face of the pyramid frame." caption="Tying in the pixels." ratio="4 / 5" class="reveal" />
+          <Figure src={ledsInsideFrame} alt="Looking out from inside the mesh-wrapped pyramid, with strings of LED pixels and a power injection point visible on the left." caption="Looking out from the pyramid. Power injection point visible on the left." ratio="4 / 5" class="reveal" />
+          <Figure src={puttingInLeds} alt="Michael weaving LED pixels onto one mesh-covered face of the pyramid frame." caption="Weaving in the pixels." ratio="4 / 5" class="reveal" />
         </div>
       </article>
       </details>
@@ -480,14 +488,15 @@ const learned = [
       <article class="make">
         <div class="make-text reveal">
           <p>
-            The body is loose polyester fibre, the kind used to stuff cushions, layered over a white hexagonal mesh and
-            pinned in place with bamboo skewers. It hides the individual lights and turns them into a soft glow with
-            darker folds.
+            The outer layer is loose cotton fibre, layered over a white hexagonal mesh. We tried to pull the cotton through the mesh to keep it in place rather than using glue. This worked but proved difficult as we closed up the cloud as we couldn't reach into the cloud surface anymore. To get around this we finished it off by pushing the cotton through the mesh with a skewer.
+          </p>
+          <p>
+            This approach looked great and created a texture you just wanted to touch. However the variable density of the cotton at points where the cotton was pulled or pushed through were very obvious when the LEDs were on. Moreoever, the cotton could fall out when handled or when the cloud fell (which absolutely didn't happen).
           </p>
           <p><a href={url("/process/2026-07-30-the-alpha-cloud/")}>The pilot cloud →</a></p>
         </div>
         <div class="make-media two">
-          <Figure src={buildSkewersMesh} alt="Fibre pinned into the hexagonal mesh with bamboo skewers." caption="Fibre pinned to the mesh." ratio="4 / 5" class="reveal" />
+          <Figure src={buildSkewersMesh} alt="Cotton pulled through hexagonal mesh, with skewers supporting the mesh structure along planes." caption="Cotton pulled through mesh. Skewers support mesh structure along planes." ratio="4 / 5" class="reveal" />
           <Figure src={buildStuffing} alt="Stuffing fibre into the cloud from below." caption="Stuffing it from below." ratio="4 / 5" class="reveal" />
         </div>
       </article>
@@ -503,11 +512,15 @@ const learned = [
       <article class="make">
         <div class="make-text reveal">
           <p>
-            The cloud runs from a battery, so there are no mains cables near people lying on the floor. A buck converter
-            steps the voltage down for the LEDs. Under the full load of the cloud it ran hot, so we measured it with a
-            thermal camera and added a small fan.
+            To keep mains cables away from participants lying on the floor, the installation runs off a 12 V 5600 mAh
+            lithium-ion battery. A DollaTek XL4016E1 buck converter steps the 12 V down to 5 V for the LEDs, powering a
+            QuinLED Dig-Quad controller running WLED firmware, fitted with an ESP32-ABE Ethernet module for wired control from TouchDesigner.
           </p>
-          <p><a href="#getting-ready">The electronics in the pilot ↑</a></p>
+          <p>
+            Under the full load of the lights the buck converter ran hot, so we monitored it with a thermal camera and
+            mounted a small fan over its heatsink before opening.
+          </p>
+          <p><a href={url("/process/2026-07-28-the-pilot-electronics/")}>The electronics in the pilot →</a></p>
         </div>
         <div class="make-media two">
           <Figure src={elecOverheating} alt="A thermal camera reading of the buck converter running hot." caption="Running hot." ratio="4 / 5" class="reveal" />
@@ -624,37 +637,13 @@ const learned = [
               </summary>
             <div class="twin">
               <div class="twin-text">
-                <ol class="twin-steps">
-                  <li>
-                    <strong>A virtual surface.</strong> In the digital twin, a smooth 3D mesh is placed over the pyramid frame
-                    to approximate the cloud’s shape. It is used only for the lighting calculations.
-                  </li>
-                  <li>
-                    <strong>Probes sample the sky.</strong> At each <em>light probe</em> on that surface, we average the light
-                    arriving over a hemisphere of directions from the sun, moon and sky. Directions blocked by the cloud’s own
-                    surface are left out.
-                  </li>
-                  <li>
-                    <strong>Many probes, many values.</strong> Probes are spread across the whole surface. Those on top, open to
-                    the sky, receive more light. Those in crevices receive less, shaded by the cloud itself.
-                  </li>
-                  <li>
-                    <strong>A value for every probe.</strong> Each probe stores a brightness and colour, giving a map of light
-                    over the whole cloud.
-                  </li>
-                  <li>
-                    <strong>Probes to LEDs.</strong> Each physical LED inside the cloud takes the value of its nearest probe, or
-                    a blend of nearby probes, which carries the calculated lighting onto the real lights.
-                  </li>
-                  <li>
-                    <strong>The cloud lights up.</strong> Driven by those values, the LEDs reproduce the highlights and shadows
-                    across the surface, so a simple frame of lights reads as one bumpy, volumetric cloud.
-                  </li>
-                </ol>
+                <p>
+                  In the digital twin, a smooth 3D mesh is placed over the pyramid frame to approximate the cloud’s shape for lighting calculations. Rather than lighting a flat panel, light probes across this virtual surface sample the environment, calculate self-occlusion in crevices and on ridges, and transfer the resulting light values directly onto the physical LEDs inside the cloud.
+                </p>
               </div>
               <Figure
                 src={ledLightingDiagram}
-                alt="Diagram in six steps. 1: a smooth virtual mesh over the pyramid frame, dotted with light probes. 2: a probe averages incoming light over a hemisphere, ignoring directions blocked by the cloud surface. 3: many probes across the cloud; those on top get more light, those in crevices less. 4: each probe stores a lighting value, shown as a heat map from bright to dark. 5: each LED inside the pyramid takes the value of its nearest probe or an interpolation of nearby ones. 6: the result, a cloud glowing with realistic highlights and shadows."
+                alt="Diagram in six steps showing how a smooth virtual mesh over the pyramid frame samples lighting via surface probes and transfers the calculated values onto the physical LEDs inside the cloud."
                 caption="How the digital twin lights each LED, from virtual surface to physical lights."
                 widths={[600, 1024]}
                 sizes="(min-width: 72rem) 64rem, 100vw"
@@ -1228,17 +1217,12 @@ const learned = [
   .twin :global(figure) {
     max-width: 64rem;
   }
-  .twin-steps {
-    margin: 0 0 1.25rem;
-    padding-left: 1.2em;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    gap: 0.9rem 2.5rem;
-    color: var(--ink-soft);
+  .twin-text {
+    max-width: 44rem;
   }
-  .twin-steps strong {
-    color: var(--ink);
-    font-weight: 600;
+  .twin-text p {
+    color: var(--ink-soft);
+    margin: 0;
   }
   .chart {
     margin-bottom: clamp(2.5rem, 5vw, 4rem);
