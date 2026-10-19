@@ -13,8 +13,8 @@ gallery:
     alt: 'The DollaTek XL4016E1 DC-DC buck converter stepping 12V down to 5V, mounted to aluminium extrusion with a small cooling fan taped beside the heatsink.'
     caption: 'DollaTek XL4016E1 buck converter with small cooling fan.'
   - src: ../../assets/journal/2026-07-28-the-pilot-electronics/alpha_prep_led_controller.jpg
-    alt: 'The QuinLED Dig-Quad board carrying an ESP32-ABE module with HanRun Ethernet, fused power distribution and four LED output channels.'
-    caption: 'QuinLED Dig-Quad with QuinLED-ESP32-ABE (Ethernet).'
+    alt: 'The QuinLED Dig-Quad board carrying an ESP32-ABE module, fused power distribution and four LED output channels.'
+    caption: 'QuinLED Dig-Quad with QuinLED-ESP32-ABE.'
   - src: ../../assets/journal/2026-07-28-the-pilot-electronics/buck-converter-overheating-how-hot.jpg
     alt: 'A FLIR TG267 thermal camera reading showing how hot the electronics ran under load.'
     caption: 'Checking temperatures under load with a thermal camera.'
@@ -32,7 +32,7 @@ In the main bench picture above, the full chain runs from left to right:
 
 - **Battery:** A **Cityork 12 V 5600 mAh rechargeable lithium-ion battery** (67.2 Wh, model XZ01). Running the cloud off battery power meant zero mains cables anywhere near people lying on the floor beneath the installation.
 - **Buck converter:** A **DollaTek XL4016E1 DC 4–40 V to DC 1.25–36 V 8 A step-down converter**. It takes the 12 V from the battery and steps it down to 5 V for the addressable LED pixels. In the bench photo it is mounted to a short piece of aluminium profile, with a small green-taped fan already fitted along the heatsink fins.
-- **LED controller:** A **QuinLED Dig-Quad** board running [WLED](https://kno.wled.ge/) open-source firmware, paired with a **QuinLED-ESP32-ABE** brainboard module (v3r2). The Dig-Quad is designed specifically for addressable LED projects: it features heavy-duty power input terminals, four individually fused positive outputs (using automotive mini-fuses) plus fused power injection ports, on-board level shifters for clean 5 V data lines, and large onboard capacitors to buffer sudden current spikes. Running WLED allowed us to stream realtime DDP/E1.31 lighting frames, while the ABE module gives the ESP32 a physical **HanRun RJ45 Ethernet port**, allowing wired network control directly from TouchDesigner without relying on congested local Wi-Fi.
+- **LED controller:** A **QuinLED Dig-Quad** board running [WLED](https://kno.wled.ge/) open-source firmware, paired with a **QuinLED-ESP32-ABE** brainboard module (v3r2). We borrowed this QuinLED from a team in our lab that was doing live lighting for music shows (we later replaced it after the pilot). The Dig-Quad is designed specifically for addressable LED projects: it features heavy-duty power input terminals, four individually fused positive outputs (using automotive mini-fuses) plus fused power injection ports, on-board level shifters for clean 5 V data lines, and large onboard capacitors to buffer sudden current spikes. Running WLED allowed us to stream realtime lighting frames over Wi-Fi from our custom control software. (TouchDesigner was run separately on a second laptop purely for reading the breathing belts and sending OSC triggers.)
 
 ## Running hot, and a quick cooling fix
 

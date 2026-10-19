@@ -10,6 +10,7 @@ import exhibitionPlan from '../assets/photos/exhibition-top-down.jpg';
 import imgPeople from '../assets/photos/belonging-people.jpg';
 import imgOurselves from '../assets/photos/belonging-ourselves.jpg';
 import imgNature from '../assets/photos/belonging-nature.jpg';
+import belongingApp from '../assets/photos/belonging-app.jpg';
 
 const movements = [
   {
@@ -75,12 +76,9 @@ const prompts = [
     <div class="wrap contact-inner">
       <div class="contact-copy reveal">
         <p class="eyebrow">A call for belonging</p>
-        <h2>Open to collaborate and explore belonging</h2>
+        <h2>Open to collaborate</h2>
         <p class="lede">
-          We are looking for a venue to show <a href={url("/installation/")}><em>Cloudfulness</em></a>, or support to refine
-          and improve the installation. We are also open to creating a
-          <a href={url("/collaborate/#workshop")}>workshop around belonging</a>, adapting the
-          <a href={url("/concept/")}>concept</a> to new situations, or co-creating new installations around belonging.
+          We really enjoyed working and thinking about belonging and bringing that together to form our cloud. We're more than happy to expand on this work so please reach out!
         </p>
         <a class="button" href="mailto:michael.anslow@gmail.com?cc=zephir.lorne@ens.psl.eu">Start a conversation</a>
       </div>
@@ -100,10 +98,7 @@ const prompts = [
       <p class="eyebrow">What it could lead to</p>
       <h2>Possible outputs</h2>
       <p class="lede">
-        To show what working together might produce, here are some possibilities: a belonging checklist and a sketch of
-        a workshop from our own process, an exhibition that brings other people’s work together, and small practices
-        for everyday contexts. All are tentative,
-        and we would like to shape them with collaborators.
+        To show what working together might produce, here are some possibilities: a <a href="#checklist">belonging checklist</a> for crafting installations, a <a href="#workshop">workshop</a> on belonging, an <a href="#exhibition">exhibition</a> on different types of belonging, exploration of small <a href="#practices">practices</a> to belong in everyday contexts, and a <a href="#sharing">website</a> to share experiences of belonging. All are tentative, and we would like to shape them with collaborators.
       </p>
     </div>
   </section>
@@ -218,7 +213,7 @@ const prompts = [
     </div>
   </section>
 
-  <section class="section wash prompts">
+  <section class="section wash prompts" id="practices">
     <div class="wrap">
       <div class="head reveal">
         <p class="eyebrow">Possible output · everyday practices</p>
@@ -228,6 +223,38 @@ const prompts = [
       <ol class="prompt-list">
         {prompts.map((p) => <li class="reveal">{p}</li>)}
       </ol>
+    </div>
+  </section>
+
+  <section class="section wash wash-sky sharing" id="sharing">
+    <div class="wrap grid-2">
+      <div class="reveal">
+        <p class="eyebrow">Possible output · community sharing platform</p>
+        <h2>A website for sharing moments of connection</h2>
+        <div class="prose" style="margin-top: 1.5rem;">
+          <p class="lede">
+            By focusing on community sharing, we imagine extending the physical installation into a shared digital space where anyone can contribute their own moments of connection.
+          </p>
+          <p>
+            Through photos, stories, and personal reflections, participants can share what belonging means to them—whether they found it with friends, within themselves, or in the natural world. This digital space functions as a living, growing collective archive of human connection, taking the themes of the installation beyond a single room and inviting a wider public to participate.
+          </p>
+          <p style="margin-top: 2rem;">
+            To see an existing example of how people are already sharing these moments of connection:
+          </p>
+          <p style="margin-top: 1rem;">
+            <a class="button" href="https://cloudfullness.com/" target="_blank" rel="noopener">Visit cloudfullness.com ↗</a>
+          </p>
+        </div>
+      </div>
+      <div class="reveal app-image-container">
+        <Figure
+          src={belongingApp}
+          alt="Mockup of the community sharing website, showing sections for 'Belonging to nature', community photos, and community testimonials under 'What people say'."
+          widths={[400, 700]}
+          sizes="(min-width: 60rem) 30rem, 100vw"
+          class="app-image"
+        />
+      </div>
     </div>
   </section>
 </Base>
@@ -340,6 +367,17 @@ const prompts = [
   .contact-copy .lede {
     max-width: 33rem;
   }
+  .collab-list {
+    margin: 1rem 0 2rem;
+    padding-left: 1.25rem;
+    display: grid;
+    gap: 0.5rem;
+    font-size: 1.15rem;
+    line-height: 1.6;
+  }
+  .collab-list li::marker {
+    color: var(--dusk);
+  }
   .contact :global(.contact-photo) {
     position: relative;
     z-index: 0;
@@ -402,6 +440,21 @@ const prompts = [
     color: var(--ink-soft);
   }
 
+  .sharing {
+    padding-block: clamp(4rem, 8vw, 6rem);
+  }
+  .app-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  :global(.app-image) {
+    max-width: 28rem;
+    box-shadow: 0 10px 40px rgb(0 0 0 / 0.08);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+
   @media print {
     :global(.site-header),
     :global(.site-footer),
@@ -409,6 +462,7 @@ const prompts = [
     .workshop,
     .exhibition,
     .prompts,
+    .sharing,
     .contact,
     .bridge,
     .head {

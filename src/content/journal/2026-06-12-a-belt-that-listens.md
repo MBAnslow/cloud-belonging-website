@@ -27,6 +27,12 @@ gallery:
   - src: ../../assets/journal/2026-06-12-a-belt-that-listens/inside-cloud-jacket-device-red-glow.jpg
     alt: 'Inside the pocket.'
     caption: 'Inside the pocket.'
+  - src: ../../assets/journal/2026-06-12-a-belt-that-listens/belt-electronics.jpg
+    alt: 'The belt stretch sensor connected to the ESP32-C3 board with alligator test leads.'
+    caption: 'Testing the stretch sensor with the ESP32-C3 board.'
+  - src: ../../assets/journal/2026-06-12-a-belt-that-listens/belt-battery-connection.jpg
+    alt: 'The ESP32-C3 board wired to a lithium battery pack and alligator test clips.'
+    caption: 'Connecting the battery to the ESP32-C3 board.'
 tags: [hardware, breath, ESP32, TouchDesigner]
 ---
 
@@ -38,7 +44,11 @@ Zéphir designed a vest-like wearable with a stretch sensor band around the tors
 
 ![Wiring diagram: a TP4057 charging module, a 3.7 V battery, a push button and an ESP32-C3 Super Mini](../../assets/photos/belt-wiring.jpg)
 
-The firmware went through a few simple stages: printing one analogue value over serial, reading two sensors at once, then sending the breath value over Wi-Fi as **OSC** messages (`/breath/breath0`). A TouchDesigner patch receives them, smooths the signal, and works out when an in-breath or out-breath begins, using a lagged trail and a threshold window.
+![The belt stretch sensor connected with alligator clips to the ESP32-C3 microcontroller board](../../assets/photos/belt-electronics.jpg)
+
+![The ESP32-C3 board connected to a lithium battery pack and alligator leads](../../assets/photos/belt-battery-connection.jpg)
+
+The firmware went through a few simple stages: printing one analogue value over serial, reading two sensors at once, then sending the sensor stream over Wi-Fi. In TouchDesigner, a patch receives the sensor stream, smooths the signal, detects the onset of each in-breath and out-breath using a lagged trail and threshold window, and broadcasts **OSC** trigger messages (`/breath/breath0`) across the local network to the main control software.
 
 ## Which band hears a breath?
 

@@ -30,6 +30,9 @@ gallery:
   - src: ../../assets/journal/2026-07-22-a-pyramid-of-light/led-mapping-starting-inside-frame.jpg
     alt: 'Starting the mapping.'
     caption: 'Starting the mapping.'
+  - src: ../../assets/journal/2026-07-22-a-pyramid-of-light/led-power-drop-yellowing.jpg
+    alt: 'White LEDs without power injection showing voltage drop and yellowing along the strand.'
+    caption: 'White LEDs without power injection: voltage drop causes colour fading to yellow.'
 tags: [structure, light, 3D printing, fabrication]
 ---
 
@@ -42,6 +45,10 @@ The printed parts from last week turned out to be joints. Wooden dowels slot int
 In May, green plastic garden mesh was our first attempt at a cloud body. It was too heavy-looking and too opaque, and we moved on to tulle. Now it came back as a skin for the skeleton. Stretched over the dowels and tied at every edge, it gives the lights something to hold on to.
 
 Strings of addressable LED pixels are zip-tied across each face in rows, every bulb pointing outwards. Each pixel can take its own colour, which is what makes gradients, travelling light and lightning possible. A pyramid places those pixels at different depths inside the cloud, so light can seem to move *through* it rather than across a flat panel.
+
+Without injecting power periodically along the line, 5 V string lights suffer voltage drop: setting all pixels to full white causes the furthest LEDs along the strand to fade into amber and yellow. Injecting power every 100 pixels keeps the voltage steady and colours true across the whole cloud.
+
+![White LEDs on the workbench without power injection, shifting from bright white to yellow along the strand](../../assets/photos/led-power-drop-yellowing.jpg)
 
 ## Keeping the power cool
 

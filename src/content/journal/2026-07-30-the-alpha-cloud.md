@@ -29,7 +29,7 @@ Once it hung from the ceiling, the last of the shaping happened lying down, look
 
 ## Light and heat
 
-Inside, the pixels hang on the white mesh in rows. A QuinLED ESP32 controller with an Ethernet port and fused outputs drives them, and TouchDesigner runs the show: it reads the breath belts and sends light to the cloud.
+Inside, the pixels hang on the white mesh in rows. A QuinLED ESP32 controller with fused outputs drives them via WLED over Wi-Fi, receiving light data from our custom control software. TouchDesigner ran separately on a second screen to read the breath belts and send triggers over OSC.
 
 ![Rows of LED pixels lit up on white mesh, laid across a workbench](../../assets/photos/build-led-grid.jpg)
 

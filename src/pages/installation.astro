@@ -11,8 +11,12 @@ import betterBuck from '../assets/journal/post-alpha/better-buck-converter-diffe
 import MediaGallery, { type GalleryItem } from '../components/MediaGallery.astro';
 
 import beltSketch from '../assets/photos/belt-sketch.jpg';
+import beltElectronics from '../assets/photos/belt-electronics.jpg';
+import jacketPocketDevice from '../assets/journal/2026-06-12-a-belt-that-listens/cloud-jacket-pocket-device.jpg';
 import printedJoints from '../assets/journal/2026-07-17-printing-a-frame/pyramid-3d-joints-printed.jpg';
 import pyramidFrameMaking from '../assets/journal/2026-07-22-a-pyramid-of-light/pyramid-frame-making.jpg';
+import pyramidMeshAbove from '../assets/journal/2026-07-22-a-pyramid-of-light/pyramid-mwith-mesh-from-above.jpg';
+import ledPowerDrop from '../assets/photos/led-power-drop-yellowing.jpg';
 
 import cloudTeapotPedestal from '../assets/photos/cloud-teapot-pedestal.png';
 import cloudMaterials from '../assets/photos/cloud-materials.jpg';
@@ -46,6 +50,7 @@ import elecBattery from '../assets/alpha/elec-battery.jpg';
 import elecBuckConverter from '../assets/alpha/elec-buck-converter.jpg';
 import elecOverheating from '../assets/alpha/elec-overheating.jpg';
 import elecFanFix from '../assets/alpha/elec-fan-fix.jpg';
+import alphaPowerLedControl from '../assets/journal/2026-07-28-the-pilot-electronics/alpha_power_led_control.jpg';
 import buildDowels from '../assets/photos/build-dowels.jpg';
 import buildPyramidCourtyard from '../assets/photos/build-pyramid-courtyard.jpg';
 import buildLedCloud from '../assets/photos/build-led-cloud.jpg';
@@ -55,6 +60,7 @@ import buildSkewersMesh from '../assets/photos/build-skewers-mesh.jpg';
 import buildShell from '../assets/photos/build-shell.jpg';
 import buildThermal from '../assets/photos/build-thermal.jpg';
 import buildStuffing from '../assets/photos/build-stuffing.jpg';
+import pullingCottonThrough from '../assets/journal/2026-05-23-stuffing-the-mesh/first-mesh-play-cotton-stuffing.jpg';
 
 const outerLayers = [
   {
@@ -207,9 +213,9 @@ const twilight: GalleryItem[] = [
   { video: 'alpha/evening-2', caption: 'Violet, magenta and blue through the whole cloud.' },
 ];
 const breath: GalleryItem[] = [
-  { video: 'alpha/breath', portrait: true, caption: 'A breath rising into the cloud.' },
+  { video: 'alpha/breath', portrait: true, caption: 'Breath travelling through the cloud.' },
   { video: 'alpha/breath-through', caption: 'Waves of breath travelling through it.' },
-  { video: 'alpha/tea-lightning', caption: 'Tea under a storm.' },
+  { video: 'alpha/tea-lightning', caption: 'Breath and lightning' },
 ];
 
 const moments: GalleryItem[] = [
@@ -343,9 +349,7 @@ const learned = [
         </div>
         <div class="reveal">
           <p>
-            At the side of the room, TouchDesigner read the breathing belts and showed each breath as a wave, while our
-            own control app drove the sky, lightning and colour. Watching the screens and the cloud side by side was how
-            we tuned the evening as it happened.
+            At the righthand side of the room, TouchDesigner read the breathing belts and sent OSC trigger commands to the main control software. Our own control app drove the time of day simulation, LED mapping, lightning, breath controls, audio and reactive elements such as audio modulation. Watching the screens and the cloud side by side was how we tuned the evening as it happened.
           </p>
           <p><a href={url('/installation/#software')}>More about the software →</a></p>
         </div>
@@ -361,8 +365,7 @@ const learned = [
         <p class="eyebrow"><span class="phase-mark">α</span> Getting ready</p>
         <h2>Ten days, and the last few hours</h2>
         <p class="lede measure">
-          The pilot was built in ten days in a workshop. The last of it happened lying on the floor, pushing fibre up
-          into the cloud one skewer at a time.
+          The pilot was built in ten days in the atelier of Sony CSL Paris following a long period of prototyping and conceptualisation. The last of it happened lying on the floor, pushing fibre up into the cloud one skewer at a time.
         </p>
         <p>
           <a class="button" href={url('/process/')}>Follow the full build in the process journal <span aria-hidden="true">→</span></a>
@@ -374,11 +377,12 @@ const learned = [
       <div class="elec">
         <div class="elec-text reveal">
           <p class="eyebrow">Electronics</p>
-          <h3>A cloud that ran warm</h3>
+          <h3>What was that popping sound?</h3>
           <p>
-            The LEDs run from a battery through a buck converter, which steps the voltage down to what the lights need.
-            Under the full load of the cloud it ran hot, so we measured it with a thermal camera and added a small fan.
-            After the pilot we replaced it with a better converter and controller.
+            The LEDs run from a battery through a buck converter, which steps the voltage down to what the lights need. The first buck converter couldn't take the amperage and a component overheated and was damaged.
+          </p>
+          <p>
+            Luckily we bought two just incase. Under the full load of the cloud it ran hot, so we measured it with a thermal camera and added a small fan which was very effective. After the pilot we replaced it with a better converter and controller.
           </p>
         </div>
         <MediaGallery items={electronics.map((e) => ({ image: e.src, alt: e.alt, caption: e.caption }))} columns={3} class="reveal" />
@@ -411,9 +415,6 @@ const learned = [
       <div class="section-head schematic-head reveal">
         <p class="eyebrow"><span class="phase-mark">α</span> Technical details</p>
         <h2>Everything behind the cloud</h2>
-        <p class="lede measure">
-          The hardware and software that made the pilot work. Open any part to see more.
-        </p>
         <img
           class="schematic-illustration"
           src={cloudTeapotPedestal.src}
@@ -444,9 +445,11 @@ const learned = [
           </p>
           <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>Building the pyramid →</a></p>
         </div>
-        <div class="make-media two">
+        <div class="make-media four">
           <Figure src={printedJoints} alt="The 3D-printed joints for the pyramid frame." caption="Printed joints." ratio="4 / 5" class="reveal" />
           <Figure src={pyramidFrameMaking} alt="The wooden dowel frame of the pyramid coming together with its printed joints." caption="The frame comes together." ratio="4 / 5" class="reveal" />
+          <Figure src={pyramidMeshAbove} alt="The completed pyramid frame wrapped in green plastic mesh with support struts visible." caption="Completed pyramid with mesh." ratio="4 / 5" class="reveal" />
+          <Figure src={insideStruts} alt="Rolled mesh support struts holding the outer layer away from the LEDs inside the pyramid." caption="Rolled mesh support struts." ratio="4 / 5" class="reveal" />
         </div>
       </article>
       </details>
@@ -461,7 +464,7 @@ const learned = [
       <article class="make">
         <div class="make-text reveal">
           <p>
-            Rows of addressable LED pixels are woven into the mesh of the pyramid and numbered to make LED mapping easier. Each pixel can take its own colour and brightness, and each has a position in the digital twin, which is how the software knows what colour to give it.
+            Rows of addressable LED pixels — BTF-LIGHTING WS2811 IC RGB 50 LEDs 12 mm DC5V IP68 Green LED String Lights — are woven into the mesh of the pyramid and numbered to make LED mapping easier. Each pixel can take its own colour and brightness, and each has a position in the digital twin, which is how the software knows what colour to give it.
           </p>
           <p>
             We could have used LED strips for this pyramid design but string LEDs are more versatile for trying out different distances between LEDs and also for placing them on complex mesh shapes which we had originally experimented with. We already had enough string LEDs so we went ahead and used them.
@@ -471,7 +474,8 @@ const learned = [
           </p>
           <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>A pyramid of light →</a></p>
         </div>
-        <div class="make-media two">
+        <div class="make-media three">
+          <Figure src={ledPowerDrop} alt="White LEDs without power injection showing voltage drop and yellowing along the strand." caption="White LEDs without power injection: voltage drop causes colour fading to yellow." ratio="4 / 5" class="reveal" />
           <Figure src={ledsInsideFrame} alt="Looking out from inside the mesh-wrapped pyramid, with strings of LED pixels and a power injection point visible on the left." caption="Looking out from the pyramid. Power injection point visible on the left." ratio="4 / 5" class="reveal" />
           <Figure src={puttingInLeds} alt="Michael weaving LED pixels onto one mesh-covered face of the pyramid frame." caption="Weaving in the pixels." ratio="4 / 5" class="reveal" />
         </div>
@@ -482,7 +486,7 @@ const learned = [
         <summary>
           <span class="tech-num">03</span>
           <span class="tech-kicker">Body</span>
-          <span class="tech-title">Fibre on a mesh shell</span>
+          <span class="tech-title">Cloud cotton on a mesh</span>
           <span class="tech-chev" aria-hidden="true"></span>
         </summary>
       <article class="make">
@@ -495,7 +499,8 @@ const learned = [
           </p>
           <p><a href={url("/process/2026-07-30-the-alpha-cloud/")}>The pilot cloud →</a></p>
         </div>
-        <div class="make-media two">
+        <div class="make-media three">
+          <Figure src={pullingCottonThrough} alt="Hands pulling cotton through the mesh." caption="Pulling the cotton through." ratio="4 / 5" class="reveal" />
           <Figure src={buildSkewersMesh} alt="Cotton pulled through hexagonal mesh, with skewers supporting the mesh structure along planes." caption="Cotton pulled through mesh. Skewers support mesh structure along planes." ratio="4 / 5" class="reveal" />
           <Figure src={buildStuffing} alt="Stuffing fibre into the cloud from below." caption="Stuffing it from below." ratio="4 / 5" class="reveal" />
         </div>
@@ -514,17 +519,12 @@ const learned = [
           <p>
             To keep mains cables away from participants lying on the floor, the installation runs off a 12 V 5600 mAh
             lithium-ion battery. A DollaTek XL4016E1 buck converter steps the 12 V down to 5 V for the LEDs, powering a
-            QuinLED Dig-Quad controller running WLED firmware, fitted with an ESP32-ABE Ethernet module for wired control from TouchDesigner.
-          </p>
-          <p>
-            Under the full load of the lights the buck converter ran hot, so we monitored it with a thermal camera and
-            mounted a small fan over its heatsink before opening.
+            QuinLED Dig-Quad controller running WLED firmware, fitted with an ESP32-ABE module, controlled over Wi-Fi from our custom control software.
           </p>
           <p><a href={url("/process/2026-07-28-the-pilot-electronics/")}>The electronics in the pilot →</a></p>
         </div>
-        <div class="make-media two">
-          <Figure src={elecOverheating} alt="A thermal camera reading of the buck converter running hot." caption="Running hot." ratio="4 / 5" class="reveal" />
-          <Figure src={elecFanFix} alt="The buck converter with a small fan fitted." caption="A small fan fixed it." ratio="4 / 5" class="reveal" />
+        <div class="make-media">
+          <Figure src={alphaPowerLedControl} alt="The complete electronics setup for the pilot: Cityork battery, DollaTek buck converter and QuinLED Dig-Quad controller laid out on the bench." caption="The complete pilot power and control setup." ratio="4 / 5" class="reveal" />
         </div>
       </article>
       </details>
@@ -533,20 +533,23 @@ const learned = [
         <summary>
           <span class="tech-num">05</span>
           <span class="tech-kicker">Breath</span>
-          <span class="tech-title">A belt that listens</span>
+          <span class="tech-title">Conductive rubber breath belt</span>
           <span class="tech-chev" aria-hidden="true"></span>
         </summary>
       <article class="make">
         <div class="make-text reveal">
           <p>
-            Each participant wears a light belt with a stretch sensor. A tiny ESP32-C3 board sends the reading
-            wirelessly as OSC messages to TouchDesigner, which detects the start of each in- and out-breath. Below are
+            Each participant wears a light belt with a conductive rubber stretch sensor. A tiny ESP32-C3 board reads
+            the analogue sensor output and sends it wirelessly to TouchDesigner, which smooths the signal, detects the
+            start of each in- and out-breath, and broadcasts OSC trigger messages to the main control app. Below are
             real recordings from our tests with different band widths and amounts of stretch, all on the same scale.
           </p>
           <p><a href={url("/process/2026-06-12-a-belt-that-listens/")}>Read about the belt →</a></p>
         </div>
-        <div class="make-media">
-          <Figure src={beltSketch} alt="Sketch of a vest with a breathing sensor band around the torso." caption="Early design sketch for the breathing vest." class="reveal" />
+        <div class="make-media three">
+          <Figure src={beltSketch} alt="Sketch of a vest with a breathing sensor band around the torso." caption="Early design sketch for the breathing vest." ratio="4 / 5" class="reveal" />
+          <Figure src={beltElectronics} alt="The wearable breathing belt prototype with stretch sensor, alligator clips, and ESP32-C3 microcontroller board." caption="The stretch sensor and ESP32-C3 electronics." ratio="4 / 5" class="reveal" />
+          <Figure src={jacketPocketDevice} alt="The wireless breathing sensor device tucked neatly into the chest pocket of the cloud jacket." caption="The device in its pocket." ratio="4 / 5" class="reveal" />
         </div>
       </article>
       <div class="reveal chart">
@@ -783,12 +786,12 @@ const learned = [
     const head = document.querySelector<HTMLElement>('.schematic-head');
     if (head) {
       const settings = {
-        top: 5.25,
-        right: -0.5,
-        width: 54,
-        opacity: 0.14,
-        glow: 0.22,
-        height: 29,
+        top: 1,
+        right: 2,
+        width: 36,
+        opacity: 0.07,
+        glow: 0.12,
+        height: 12,
       };
       const controls: [keyof typeof settings, string, number, number, number][] = [
         ['top', 'Top offset (rem)', -6, 12, 0.25],
@@ -971,7 +974,7 @@ const learned = [
   }
   .schematic-head {
     position: relative;
-    min-height: var(--schematic-head-height, 29rem);
+    min-height: var(--schematic-head-height, 12rem);
     max-width: none;
     padding-top: clamp(1rem, 3vw, 2rem);
     isolation: isolate;
@@ -986,24 +989,24 @@ const learned = [
   .schematic-illustration {
     position: absolute;
     z-index: 0;
-    top: var(--schematic-ill-top, 5.25rem);
-    right: var(--schematic-ill-right, -0.5vw);
-    width: min(var(--schematic-ill-width, 54vw), 48rem);
-    opacity: var(--schematic-ill-opacity, 0.14);
+    top: var(--schematic-ill-top, 1rem);
+    right: var(--schematic-ill-right, 2vw);
+    width: min(var(--schematic-ill-width, 36vw), 28rem);
+    opacity: var(--schematic-ill-opacity, 0.07);
     filter:
-      drop-shadow(0 0 0.9rem rgb(140 190 255 / var(--schematic-ill-glow, 0.22)))
-      drop-shadow(0 0 2rem rgb(70 110 255 / calc(var(--schematic-ill-glow, 0.22) * 0.63)));
+      drop-shadow(0 0 0.6rem rgb(140 190 255 / var(--schematic-ill-glow, 0.12)))
+      drop-shadow(0 0 1.2rem rgb(70 110 255 / calc(var(--schematic-ill-glow, 0.12) * 0.63)));
     pointer-events: none;
   }
   @media (max-width: 760px) {
     .schematic-head {
-      min-height: clamp(18rem, 70vw, 26rem);
-      padding-bottom: 8rem;
+      min-height: clamp(9rem, 32vw, 13rem);
+      padding-bottom: 2rem;
     }
     .schematic-illustration {
-      top: 7rem;
-      right: -5rem;
-      width: min(120vw, 44rem);
+      top: 1.5rem;
+      right: -2rem;
+      width: min(70vw, 24rem);
     }
   }
   .fabrication {
@@ -1135,11 +1138,23 @@ const learned = [
     grid-template-columns: 1fr 1fr;
     gap: 1rem;
   }
+  .make-media.four {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
   .make-media.three {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.8rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
     align-items: start;
+  }
+  @media (max-width: 600px) {
+    .make-media.two,
+    .make-media.three,
+    .make-media.four {
+      grid-template-columns: 1fr;
+    }
   }
   .make.software {
     align-items: start;
@@ -1370,7 +1385,7 @@ const learned = [
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--ink-faint);
-    margin: 2.5rem 0 0.75rem;
+    margin: 1.25rem 0 0.75rem;
   }
   .tech {
     border-top: 1px solid var(--line);
