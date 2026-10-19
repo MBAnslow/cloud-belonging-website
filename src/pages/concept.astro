@@ -187,13 +187,15 @@ const questions = [
 ---
 
 <Base title="Concept" description="The concept behind Cloudfulness: belonging as a need, a process and an embodied experience, why art and research-creation, and how the ideas became a cloud.">
-  <PageHeader
-    eyebrow="Concept"
-    image={alphaTeam}
-    imageAlt="Two of the team grinning beside the cloud, lit pink."
-    title="Belonging, and why a cloud"
-    lede="We started by asking whether art and technology could help people find a moment of peace. We kept arriving at the same answer: peace is rarely something we find alone."
-  />
+  <div class="page-wash page-wash-concept">
+    <PageHeader
+      eyebrow="Concept"
+      image={alphaTeam}
+      imageAlt="Two of the team grinning beside the cloud, lit pink."
+      title="Belonging, and why a cloud"
+      lede="We started by asking whether art and technology could help people find a moment of peace. We kept arriving at the same answer: peace is rarely something we find alone."
+    />
+  </div>
 
   <PageContents items={contents} />
 
@@ -738,5 +740,23 @@ const questions = [
   }
   .theme a:hover {
     text-decoration: underline;
+  }
+
+  .page-wash {
+    --stop-1: color-mix(in srgb, var(--paper) calc(var(--m1) * 1%), var(--c1));
+    --stop-2: color-mix(in srgb, var(--paper) calc(var(--m2) * 1%), var(--c2));
+    --stop-3: color-mix(in srgb, var(--paper) calc(var(--m3) * 1%), var(--c3));
+    background:
+      linear-gradient(calc(var(--angle) * 1deg),
+        var(--stop-1) calc(var(--p1) * 1%),
+        var(--stop-2) calc(var(--p2) * 1%),
+        var(--stop-3) calc(var(--p3) * 1%),
+        var(--paper) 100%);
+  }
+  .page-wash-concept {
+    --angle: 180;
+    --c1: #ff5fb8; --m1: 80; --p1: 0;
+    --c2: #c73eff; --m2: 86; --p2: 35;
+    --c3: #8e6fff; --m3: 93; --p3: 60;
   }
 </style>

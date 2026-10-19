@@ -17,13 +17,15 @@ for (const entry of entries) {
 ---
 
 <Base title="Process" description="A process journal documenting how a cloud installation about belonging was imagined, tested and built over time.">
-  <PageHeader
-    eyebrow="Process journal"
-    image={buildStuffing}
-    imageAlt="Lying on a pillow beneath the lit cloud, pushing a bamboo skewer up into the fibre."
-    title="How it came together"
-    lede="Research-creation, as it happened: notes from our meetings, material tests, visits and conversations, in the order they happened. The false starts are here too, because they shaped the work as much as what stayed."
-  />
+  <div class="page-wash page-wash-process">
+    <PageHeader
+      eyebrow="Process journal"
+      image={buildStuffing}
+      imageAlt="Lying on a pillow beneath the lit cloud, pushing a bamboo skewer up into the fibre."
+      title="How it came together"
+      lede="Research-creation, as it happened: notes from our meetings, material tests, visits and conversations, in the order they happened. The false starts are here too, because they shaped the work as much as what stayed."
+    />
+  </div>
 
   <section class="section wash wash-sand timeline-section">
     <div class="wrap">
@@ -169,4 +171,21 @@ for (const entry of entries) {
     }
   }
 
+  .page-wash {
+    --stop-1: color-mix(in srgb, var(--paper) calc(var(--m1) * 1%), var(--c1));
+    --stop-2: color-mix(in srgb, var(--paper) calc(var(--m2) * 1%), var(--c2));
+    --stop-3: color-mix(in srgb, var(--paper) calc(var(--m3) * 1%), var(--c3));
+    background:
+      linear-gradient(calc(var(--angle) * 1deg),
+        var(--stop-1) calc(var(--p1) * 1%),
+        var(--stop-2) calc(var(--p2) * 1%),
+        var(--stop-3) calc(var(--p3) * 1%),
+        var(--paper) 100%);
+  }
+  .page-wash-process {
+    --angle: 180;
+    --c1: #ffb866; --m1: 60; --p1: 0;
+    --c2: #e78b3a; --m2: 72; --p2: 40;
+    --c3: #c87a4a; --m3: 85; --p3: 70;
+  }
 </style>

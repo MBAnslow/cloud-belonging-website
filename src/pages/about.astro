@@ -13,13 +13,15 @@ const team = [...site.team].sort((a, b) => order.indexOf(a.name) - order.indexOf
 ---
 
 <Base title="About" description="The people, context and sources behind Cloudfulness, a research-creation project on belonging.">
-  <PageHeader
-    eyebrow="About"
-    image={zephirExplains}
-    imageAlt="Zéphir presenting the Cloudfulness concept at the Académie du Climat in Paris."
-    title="Who, where and for what?"
-    lede="Cloudfulness began as a research-creation project at Sony CSL Paris at the intersection of cognitive science, contemplative practice, art and creative technology."
-  />
+  <div class="page-wash page-wash-about">
+    <PageHeader
+      eyebrow="About"
+      image={zephirExplains}
+      imageAlt="Zéphir presenting the Cloudfulness concept at the Académie du Climat in Paris."
+      title="Who, where and for what?"
+      lede="Cloudfulness began as a research-creation project at Sony CSL Paris at the intersection of cognitive science, contemplative practice, art and creative technology."
+    />
+  </div>
 
   <section class="section">
     <div class="wrap">
@@ -165,5 +167,23 @@ const team = [...site.team].sort((a, b) => order.indexOf(a.name) - order.indexOf
   }
   .collab-pointer a {
     color: var(--ink);
+  }
+
+  .page-wash {
+    --stop-1: color-mix(in srgb, var(--paper) calc(var(--m1) * 1%), var(--c1));
+    --stop-2: color-mix(in srgb, var(--paper) calc(var(--m2) * 1%), var(--c2));
+    --stop-3: color-mix(in srgb, var(--paper) calc(var(--m3) * 1%), var(--c3));
+    background:
+      linear-gradient(calc(var(--angle) * 1deg),
+        var(--stop-1) calc(var(--p1) * 1%),
+        var(--stop-2) calc(var(--p2) * 1%),
+        var(--stop-3) calc(var(--p3) * 1%),
+        var(--paper) 100%);
+  }
+  .page-wash-about {
+    --angle: 180;
+    --c1: #c88a4a; --m1: 60; --p1: 0;
+    --c2: #c25a4a; --m2: 70; --p2: 40;
+    --c3: #8a5a3a; --m3: 85; --p3: 70;
   }
 </style>
