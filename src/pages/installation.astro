@@ -756,20 +756,10 @@ const learned = [
           waiting for the next room.
         </p>
         <p>
-          A new iteration is planned for November, which will give more people the chance to see the cloud in person.
+          A <a href={url('/#upcoming')}>new iteration is planned for November</a>, which will give more people the chance to see the cloud in person.
           We’ll share viewing opportunities here as soon as they’re confirmed.
         </p>
-        <ul class="learned">
-          {
-            learned.map((l) => (
-              <li>
-                <strong>{l.title}</strong>
-                <p>{l.text}</p>
-              </li>
-            ))
-          }
-        </ul>
-        <p class="links">
+        <p class="links" style="margin-top: 2rem;">
           <a class="button" href={url('/process/')}>Follow the full build in the process journal <span aria-hidden="true">→</span></a>
           <a class="button" href={url('/process/2026-08-18-giving-the-digital-twin-bumps/')}>After the pilot</a>
           <a class="button" href={url('/concept/')}>The concept</a>
