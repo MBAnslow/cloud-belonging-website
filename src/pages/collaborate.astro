@@ -363,6 +363,9 @@ const prompts = [
   .contact {
     --wash-glow: rgb(232 130 100 / 0.22);
     padding-top: clamp(7rem, 12vw, 10rem);
+    background:
+      radial-gradient(ellipse 60% 80% at 72% 50%, var(--wash-glow), transparent 75%),
+      linear-gradient(180deg, var(--wash-deep), var(--wash) 40%, var(--paper) 95%);
   }
   .contact-inner {
     display: grid;
