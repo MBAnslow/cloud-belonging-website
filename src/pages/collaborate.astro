@@ -123,6 +123,9 @@ const prompts = [
         </div>
       </div>
       <Checklist />
+      <div class="collab-actions reveal">
+        <a class="button" href="mailto:michael.anslow@gmail.com?cc=zephir.lorne@ens.psl.eu&subject=Designing%20a%20belonging%20checklist">Start a conversation</a>
+      </div>
     </div>
   </section>
 
@@ -169,7 +172,7 @@ const prompts = [
             Would you like to explore a workshop like this at your school, lab, festival or community space? We would be
             glad to shape one together.
           </p>
-          <a class="button" href="#contact">Get in touch</a>
+          <a class="button" href="mailto:michael.anslow@gmail.com?cc=zephir.lorne@ens.psl.eu&subject=A%20workshop%20on%20belonging">Start a conversation</a>
         </div>
       </div>
     </div>
@@ -188,7 +191,7 @@ const prompts = [
             artists, designers and researchers to propose their own. <em>Cloudfulness</em> looked at belonging to nature
             through the sky above us; alongside it, other works could explore belonging in other directions.
           </p>
-          <p><a class="button" href="#contact">Propose an installation</a></p>
+          <p><a class="button" href="mailto:michael.anslow@gmail.com?cc=zephir.lorne@ens.psl.eu&subject=Proposing%20an%20exhibition%20installation">Start a conversation</a></p>
         </div>
       </div>
       <Figure
@@ -223,6 +226,9 @@ const prompts = [
       <ol class="prompt-list">
         {prompts.map((p) => <li class="reveal">{p}</li>)}
       </ol>
+      <div class="collab-actions reveal">
+        <a class="button" href="mailto:michael.anslow@gmail.com?cc=zephir.lorne@ens.psl.eu&subject=Everyday%20practices%20for%20belonging">Start a conversation</a>
+      </div>
     </div>
   </section>
 
@@ -241,9 +247,10 @@ const prompts = [
           <p style="margin-top: 2rem;">
             We found an existing example of a website sharing an individual's photographs of clouds and mindfulness we thought we would share (<em>not affiliated with us</em>):
           </p>
-          <p style="margin-top: 1rem;">
+          <div class="collab-actions start reveal" style="margin-top: 1.5rem;">
             <a class="button" href="https://cloudfullness.com/" target="_blank" rel="noopener">Visit cloudfullness.com ↗</a>
-          </p>
+            <a class="button" href="mailto:michael.anslow@gmail.com?cc=zephir.lorne@ens.psl.eu&subject=Website%20for%20sharing%20experiences%20of%20belonging">Start a conversation</a>
+          </div>
         </div>
       </div>
       <div class="reveal app-image-container">
@@ -438,6 +445,17 @@ const prompts = [
     margin: 0;
     font-size: 0.95rem;
     color: var(--ink-soft);
+  }
+
+  .collab-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+    margin-top: 3rem;
+  }
+  .collab-actions.start {
+    justify-content: flex-start;
   }
 
   .sharing {
