@@ -2,7 +2,7 @@
 import { url } from '../lib/url';
 import Base from '../layouts/Base.astro';
 import PageHeader from '../components/PageHeader.astro';
-import PageContents, { type ContentsItem } from '../components/PageContents.astro';
+import PageContents, { type ContentsGroup } from '../components/PageContents.astro';
 import Figure from '../components/Figure.astro';
 import ScoreGrid from '../components/ScoreGrid.astro';
 import { references } from '../data/references';
@@ -124,54 +124,76 @@ const openQuestions = [
 const themes = [...new Set(references.map((r) => r.theme))];
 
 const glow = 'stroke="url(#toc-glow)"';
-const contents: ContentsItem[] = [
+const tones = { belonging: '#e0708a', design: '#2e8fe0', bibliography: '#c49a4e' };
+const contents: ContentsGroup[] = [
   {
-    id: 'what',
-    label: 'What belonging is',
-    desc: 'A need, a process, embodied and placed',
-    icon: `<circle cx="24" cy="24" r="14"/><path ${glow} d="M17 25c3 4 11 4 14 0"/><circle cx="19" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="29" cy="20" r="1.4" fill="currentColor" stroke="none"/>`,
+    id: 'part-belonging',
+    title: 'Our slice of belonging',
+    tone: tones.belonging,
+    items: [
+      {
+        id: 'what',
+        label: 'What belonging is',
+        desc: 'A need, a process, embodied and placed',
+        icon: `<circle cx="24" cy="24" r="14"/><path ${glow} d="M17 25c3 4 11 4 14 0"/><circle cx="19" cy="20" r="1.4" fill="currentColor" stroke="none"/><circle cx="29" cy="20" r="1.4" fill="currentColor" stroke="none"/>`,
+      },
+      {
+        id: 'interbeing',
+        label: 'Beyond people',
+        desc: 'Interbeing, and a cloud in your tea',
+        icon: `<path d="M13 22h22a6 6 0 0 0 .5-12A9 9 0 0 0 18 8a7 7 0 0 0-5 14Z"/><path ${glow} d="M18 27v4M24 27v6M30 27v4"/><path d="M14 36h20l-2 6H16Z"/>`,
+      },
+      {
+        id: 'why-art',
+        label: 'Why art',
+        desc: 'Belonging can’t be streamed',
+        icon: `<path d="M24 8 40 38H8Z"/><path ${glow} d="M16 30h16"/>`,
+      },
+    ],
   },
   {
-    id: 'interbeing',
-    label: 'Beyond people',
-    desc: 'Interbeing, and a cloud in your tea',
-    icon: `<path d="M13 22h22a6 6 0 0 0 .5-12A9 9 0 0 0 18 8a7 7 0 0 0-5 14Z"/><path ${glow} d="M18 27v4M24 27v6M30 27v4"/><path d="M14 36h20l-2 6H16Z"/>`,
+    id: 'part-design',
+    title: 'Installation design',
+    tone: tones.design,
+    items: [
+      {
+        id: 'into-a-room',
+        label: 'Into a room',
+        desc: 'How the ideas became a cloud',
+        icon: `<path d="M8 40V18L24 8l16 10v22"/><path ${glow} d="M16 26h16a4 4 0 0 0 0-8 6 6 0 0 0-11-1 5 5 0 0 0-5 9Z"/>`,
+      },
+      {
+        id: 'narrative',
+        label: 'The narrative',
+        desc: 'Dusk, magical twilight, breath',
+        icon: `<path d="M6 34h36"/><path ${glow} d="M14 34a10 10 0 0 1 20 0"/><path d="M30 12a7 7 0 1 0 6 10 6 6 0 0 1-6-10Z"/>`,
+      },
+      {
+        id: 'decisions',
+        label: 'Design decisions',
+        desc: 'Why it is the way it is',
+        icon: `<path d="M24 6v36"/><path ${glow} d="M24 14h12l4 4-4 4H24"/><path d="M24 26H12l-4 4 4 4h12"/>`,
+      },
+      {
+        id: 'questions',
+        label: 'Open questions',
+        desc: 'An invitation to take them further',
+        icon: `<path d="M18 18a6 6 0 1 1 9 5c-2 1-3 2-3 5"/><circle ${glow} cx="24" cy="36" r="1.8"/><circle cx="24" cy="24" r="18"/>`,
+      },
+    ],
   },
   {
-    id: 'why-art',
-    label: 'Why art',
-    desc: 'Belonging can’t be streamed',
-    icon: `<path d="M24 8 40 38H8Z"/><path ${glow} d="M16 30h16"/>`,
-  },
-  {
-    id: 'into-a-room',
-    label: 'Into a room',
-    desc: 'How the ideas became a cloud',
-    icon: `<path d="M8 40V18L24 8l16 10v22"/><path ${glow} d="M16 26h16a4 4 0 0 0 0-8 6 6 0 0 0-11-1 5 5 0 0 0-5 9Z"/>`,
-  },
-  {
-    id: 'narrative',
-    label: 'The narrative',
-    desc: 'Dusk, magical twilight, breath',
-    icon: `<path d="M6 34h36"/><path ${glow} d="M14 34a10 10 0 0 1 20 0"/><path d="M30 12a7 7 0 1 0 6 10 6 6 0 0 1-6-10Z"/>`,
-  },
-  {
-    id: 'decisions',
-    label: 'Design decisions',
-    desc: 'Why it is the way it is',
-    icon: `<path d="M24 6v36"/><path ${glow} d="M24 14h12l4 4-4 4H24"/><path d="M24 26H12l-4 4 4 4h12"/>`,
-  },
-  {
-    id: 'references',
-    label: 'What we read',
-    desc: 'The literature behind the concept',
-    icon: `<path d="M10 10h12a4 4 0 0 1 4 4v24a3 3 0 0 0-3-3H10Z"/><path ${glow} d="M38 10H26v28a3 3 0 0 1 3-3h9Z"/>`,
-  },
-  {
-    id: 'questions',
-    label: 'Open questions',
-    desc: 'An invitation to take them further',
-    icon: `<path d="M18 18a6 6 0 1 1 9 5c-2 1-3 2-3 5"/><circle ${glow} cx="24" cy="36" r="1.8"/><circle cx="24" cy="24" r="18"/>`,
+    id: 'part-bibliography',
+    title: 'Bibliography',
+    tone: tones.bibliography,
+    items: [
+      {
+        id: 'references',
+        label: 'What we read',
+        desc: 'The literature behind the concept',
+        icon: `<path d="M10 10h12a4 4 0 0 1 4 4v24a3 3 0 0 0-3-3H10Z"/><path ${glow} d="M38 10H26v28a3 3 0 0 1 3-3h9Z"/>`,
+      },
+    ],
   },
 ];
 
@@ -197,9 +219,17 @@ const questions = [
     />
   </div>
 
-  <PageContents items={contents} />
+  <PageContents groups={contents} />
 
-  <section class="section wash" id="what">
+  <section class="section wash blend part part-belonging" id="part-belonging">
+    <div class="wrap reveal">
+      <p class="eyebrow">Part 1</p>
+      <h2>Our slice of belonging</h2>
+      <p class="lede measure">What belonging means to us, how it reaches beyond people, and why we approached it through art.</p>
+    </div>
+  </section>
+
+  <section class="section" id="what">
     <div class="wrap grid-2">
       <blockquote class="big-quote reveal">
         <p>“Our need to belong is like our need for water.”</p>
@@ -301,7 +331,7 @@ const questions = [
     </div>
   </section>
 
-  <section class="section wash wash-sand why" id="why-art">
+  <section class="section wash wash-sand blend why" id="why-art">
     <div class="wrap grid-2">
       <div class="reveal">
         <p class="eyebrow">Why art, why research-creation</p>
@@ -326,7 +356,15 @@ const questions = [
     </div>
   </section>
 
-    <section class="section built-in" id="into-a-room">
+  <section class="section wash blend part part-design" id="part-design">
+    <div class="wrap reveal">
+      <p class="eyebrow">Part 2</p>
+      <h2>Installation design</h2>
+      <p class="lede measure">How those ideas became a room: the cloud, the narrative it moves through, the decisions behind it, and the questions still open.</p>
+    </div>
+  </section>
+
+  <section class="section built-in" id="into-a-room">
     <div class="wrap grid-2">
       <div class="reveal">
         <p class="eyebrow">An example of belonging</p>
@@ -356,7 +394,7 @@ const questions = [
     </div>
   </section>
 
-  <section class="section wash" id="why-a-cloud">
+  <section class="section wash blend" id="why-a-cloud">
     <div class="wrap why-cloud">
       <div class="why-text">
         <p class="eyebrow reveal">Why a cloud</p>
@@ -386,7 +424,7 @@ const questions = [
 
   <ScoreGrid />
 
-  <section class="section wash wash-sky decisions" id="decisions">
+  <section class="section wash wash-sky blend decisions" id="decisions">
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow">How we reasoned</p>
@@ -406,35 +444,6 @@ const questions = [
           ))
         }
       </dl>
-    </div>
-  </section>
-
-  <section class="section references" id="references">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">Sources</p>
-        <h2>What we read</h2>
-        <p class="measure">
-          A selection from our literature review. These readings shaped our thinking about belonging, group practice,
-          ritual and interactive experience.
-        </p>
-      </div>
-      <div class="refs">
-        {
-          themes.map((theme) => (
-            <div class="theme reveal">
-              <h3>{theme}</h3>
-              <ul>
-                {references
-                  .filter((r) => r.theme === theme)
-                  .map((r) => (
-                    <li>{r.url ? <a href={r.url}>{r.citation}</a> : r.citation}</li>
-                  ))}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
     </div>
   </section>
 
@@ -469,9 +478,69 @@ const questions = [
       </div>
     </div>
   </section>
+
+  <section class="section wash blend part part-bibliography" id="part-bibliography">
+    <div class="wrap reveal">
+      <p class="eyebrow">Part 3</p>
+      <h2>Bibliography</h2>
+      <p class="lede measure">The literature behind the concept.</p>
+    </div>
+  </section>
+
+  <section class="section references" id="references">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Sources</p>
+        <h2>What we read</h2>
+        <p class="measure">
+          A selection from our literature review. These readings shaped our thinking about belonging, group practice,
+          ritual and interactive experience.
+        </p>
+      </div>
+      <div class="refs">
+        {
+          themes.map((theme) => (
+            <div class="theme reveal">
+              <h3>{theme}</h3>
+              <ul>
+                {references
+                  .filter((r) => r.theme === theme)
+                  .map((r) => (
+                    <li>{r.url ? <a href={r.url}>{r.citation}</a> : r.citation}</li>
+                  ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 </Base>
 
 <style>
+  .part {
+    padding-block: clamp(5rem, 10vw, 7.5rem);
+    --stop-1: color-mix(in srgb, var(--paper) 78%, var(--tone));
+    --stop-2: color-mix(in srgb, var(--paper) 90%, var(--tone));
+    background: linear-gradient(180deg, var(--stop-1), var(--stop-2) 60%, var(--paper));
+  }
+  .part .eyebrow {
+    color: var(--tone);
+    font-weight: 600;
+  }
+  .part h2 {
+    font-size: clamp(2.4rem, 1.8rem + 2.6vw, 4rem);
+    margin-bottom: 0.6rem;
+  }
+  .part-belonging {
+    --tone: #e0708a;
+  }
+  .part-design {
+    --tone: #2e8fe0;
+  }
+  .part-bibliography {
+    --tone: #c49a4e;
+  }
   .big-quote {
     margin: 0;
     font-family: var(--font-display);
