@@ -3,8 +3,8 @@ import { defineConfig } from 'astro/config';
 
 // Custom domain at the root: SITE = 'https://your-domain.org', BASE = ''.
 // GitHub Pages project URL: SITE = 'https://mbanslow.github.io', BASE = '/cloud-belonging-website'.
-const SITE = 'https://mbanslow.github.io';
-const BASE = '/cloud-belonging-website';
+const SITE = 'https://www.cloudfulness.life';
+const BASE = '';
 
 // https://astro.build/config
 export default defineConfig({
