@@ -8,6 +8,10 @@ export interface ContentsItem {
 }
 
 export interface BandGradient {
+  /** Colour used at each gradient stop. Defaults to the section tone. */
+  c1?: string;
+  c2?: string;
+  c3?: string;
   /** % of the tone mixed into the paper at each gradient stop. */
   m1: number;
   m2: number;
@@ -43,6 +47,9 @@ const bandStyle = (g: ContentsGroup, i: number) => {
   const v = { ...defaultGradient, ...g.gradient };
   return [
     `--tone:${g.tone}`,
+    `--c1:${v.c1 ?? g.tone}`,
+    `--c2:${v.c2 ?? g.tone}`,
+    `--c3:${v.c3 ?? g.tone}`,
     `--m1:${v.m1}%`,
     `--m2:${v.m2}%`,
     `--m3:${v.m3}%`,
@@ -84,7 +91,6 @@ const bandStyle = (g: ContentsGroup, i: number) => {
                   <span class="num">{String(++n).padStart(2, '0')}</span>
                   <span class="label">{c.label}</span>
                   <span class="desc">{c.desc}</span>
-                  <span class="arrow" aria-hidden="true">↓</span>
                 </a>
               </li>
             ))}
@@ -98,29 +104,39 @@ const bandStyle = (g: ContentsGroup, i: number) => {
 
 <style>
   .contents {
-    padding-block: clamp(2.5rem, 5vw, 4rem);
+    position: relative;
+    z-index: 2;
+    padding-block: clamp(3.5rem, 6vw, 5rem);
+    border-top: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
     background:
+      linear-gradient(180deg, transparent 0%, transparent 52%, #fff 90%, #fff 100%),
       radial-gradient(ellipse 40% 80% at 0% 100%, rgb(179 164 238 / 0.18), transparent 70%),
       radial-gradient(ellipse 40% 80% at 100% 0%, rgb(246 169 138 / 0.16), transparent 70%),
       var(--paper-deep);
+  }
+  .contents::before,
+  .contents::after {
+    content: none;
   }
   .contents ol {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
-    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 11rem), 13rem));
+    justify-content: center;
+    gap: 0.9rem;
   }
   .contents .mini {
     --wave-depth: 3rem;
-    margin-top: var(--wave-depth);
+    border-radius: calc(var(--radius) * 1.5);
+    overflow: hidden;
     filter: drop-shadow(0 18px 30px rgb(27 34 84 / 0.12));
   }
   .contents .band {
-    --stop-1: color-mix(in srgb, var(--tone) var(--m1), var(--paper));
-    --stop-2: color-mix(in srgb, var(--tone) var(--m2), var(--paper));
-    --stop-3: color-mix(in srgb, var(--tone) var(--m3), var(--paper));
+    --stop-1: color-mix(in srgb, var(--c1) var(--m1), var(--paper));
+    --stop-2: color-mix(in srgb, var(--c2) var(--m2), var(--paper));
+    --stop-3: color-mix(in srgb, var(--c3) var(--m3), var(--paper));
     position: relative;
     isolation: isolate;
     padding: 3rem clamp(1.25rem, 3vw, 2.25rem);
@@ -129,51 +145,27 @@ const bandStyle = (g: ContentsGroup, i: number) => {
       linear-gradient(180deg, var(--stop-1) var(--p1), var(--stop-2) var(--p2), var(--stop-3) var(--p3));
   }
   .contents .band + .band {
-    padding-top: calc(var(--wave-depth) + 1.5rem);
-  }
-  .contents .band:first-child::before {
-    content: '';
-    position: absolute;
-    inset-inline: 0;
-    top: 0;
-    height: var(--wave-depth);
-    z-index: 1;
-    pointer-events: none;
-    background: var(--paper-deep);
-    -webkit-mask: var(--wave) 0 0 / 100% 100% no-repeat;
-    mask: var(--wave) 0 0 / 100% 100% no-repeat;
+    padding-top: 3rem;
+    border-top: 1px solid rgb(255 255 255 / 0.35);
   }
   .contents .band::after {
-    content: '';
-    position: absolute;
-    inset-inline: 0;
-    top: 100%;
-    height: var(--wave-depth);
-    z-index: -1;
-    pointer-events: none;
-    background: var(--stop-3);
-    -webkit-mask: var(--wave) 0 0 / 100% 100% no-repeat;
-    mask: var(--wave) 0 0 / 100% 100% no-repeat;
+    content: none;
   }
   .contents .band:last-child {
-    padding-bottom: calc(var(--wave-depth) + 1.5rem);
-  }
-  .contents .band:last-child::after {
-    top: auto;
-    bottom: 0;
-    transform: scale(-1, -1);
-    background: var(--paper);
+    padding-bottom: 3rem;
   }
   .contents .group {
     display: flex;
-    align-items: baseline;
-    gap: 0.75rem;
-    margin-bottom: 1.1rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.85rem;
+    margin-bottom: 1.35rem;
     color: var(--ink);
+    text-align: center;
     text-decoration: none;
   }
   .contents .part {
-    font-size: 0.7rem;
+    font-size: 0.82rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 600;
@@ -181,14 +173,15 @@ const bandStyle = (g: ContentsGroup, i: number) => {
   }
   .contents .group-title {
     font-family: var(--font-display);
-    font-size: clamp(1.35rem, 1.2rem + 0.6vw, 1.75rem);
+    font-size: clamp(1.7rem, 1.4rem + 1vw, 2.35rem);
   }
   .contents li a {
     position: relative;
     display: flex;
     flex-direction: column;
     height: 100%;
-    padding: 1.5rem 1.5rem 1.4rem;
+    min-height: 10rem;
+    padding: 1.15rem 1.15rem 1rem;
     border-radius: var(--radius);
     background: rgb(255 255 255 / 0.75);
     border: 1px solid rgb(255 255 255 / 0.9);
@@ -202,10 +195,13 @@ const bandStyle = (g: ContentsGroup, i: number) => {
     box-shadow: 0 2px 4px rgb(27 34 84 / 0.05), 0 22px 40px -16px rgb(91 76 180 / 0.3);
   }
   .contents .icon {
-    width: 3.75rem;
-    height: 3.75rem;
-    padding: 0.55rem;
-    margin-bottom: 1.25rem;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: 2.7rem;
+    height: 2.7rem;
+    padding: 0.45rem;
+    margin: 0;
     border-radius: 50%;
     background: radial-gradient(circle at 35% 30%, #fff, rgb(179 164 238 / 0.28) 70%, rgb(246 169 138 / 0.3));
     fill: none;
@@ -216,31 +212,24 @@ const bandStyle = (g: ContentsGroup, i: number) => {
   }
   .contents .num {
     position: absolute;
-    top: 1.5rem;
-    right: 1.5rem;
+    top: 1rem;
+    right: 1rem;
     font-family: var(--font-display);
     font-size: 0.95rem;
     color: var(--ink-faint);
   }
   .contents .label {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     line-height: 1.2;
     margin-bottom: 0.35rem;
+    padding-right: 1.5rem;
   }
   .contents .desc {
-    font-size: 0.88rem;
+    font-size: 0.76rem;
     color: var(--ink-soft);
     flex: 1;
-  }
-  .contents .arrow {
-    margin-top: 1rem;
-    font-size: 0.9rem;
-    color: var(--dusk);
-    transition: transform 0.35s ease;
-  }
-  .contents li a:hover .arrow {
-    transform: translateY(3px);
+    padding-right: 3.2rem;
   }
   :global(main [id]) {
     scroll-margin-top: 4.5rem;
@@ -259,7 +248,20 @@ const bandStyle = (g: ContentsGroup, i: number) => {
 </style>
 
 <script>
-  type Gradient = { m1: number; m2: number; m3: number; p1: number; p2: number; p3: number; glow: number; glowX: number; glowY: number };
+  type Gradient = {
+    c1?: string;
+    c2?: string;
+    c3?: string;
+    m1: number;
+    m2: number;
+    m3: number;
+    p1: number;
+    p2: number;
+    p3: number;
+    glow: number;
+    glowX: number;
+    glowY: number;
+  };
 
   const params = new URLSearchParams(location.search);
   if (params.has('contents-debug') && !document.querySelector('.contents-debug')) {
@@ -283,6 +285,9 @@ const bandStyle = (g: ContentsGroup, i: number) => {
     const apply = (b: (typeof bands)[number]) => {
       const s = b.el.style;
       s.setProperty('--tone', b.tone);
+      s.setProperty('--c1', b.g.c1 ?? b.tone);
+      s.setProperty('--c2', b.g.c2 ?? b.tone);
+      s.setProperty('--c3', b.g.c3 ?? b.tone);
       s.setProperty('--m1', `${b.g.m1}%`);
       s.setProperty('--m2', `${b.g.m2}%`);
       s.setProperty('--m3', `${b.g.m3}%`);
@@ -305,6 +310,9 @@ const bandStyle = (g: ContentsGroup, i: number) => {
           (b, i) =>
             `<fieldset data-band="${i}"><legend>${b.title}</legend>` +
             `<label>Tone<span><input type="color" name="tone" value="${b.tone}"><output>${b.tone}</output></span></label>` +
+            `<label>Stop 1 colour<span><input type="color" name="c1" value="${b.g.c1 ?? b.tone}"><output>${b.g.c1 ?? b.tone}</output></span></label>` +
+            `<label>Stop 2 colour<span><input type="color" name="c2" value="${b.g.c2 ?? b.tone}"><output>${b.g.c2 ?? b.tone}</output></span></label>` +
+            `<label>Stop 3 colour<span><input type="color" name="c3" value="${b.g.c3 ?? b.tone}"><output>${b.g.c3 ?? b.tone}</output></span></label>` +
             controls
               .map(
                 ([key, label, min, max, step]) =>
@@ -319,6 +327,7 @@ const bandStyle = (g: ContentsGroup, i: number) => {
       const input = e.target as HTMLInputElement;
       const b = bands[Number(input.closest('fieldset')!.dataset.band)];
       if (input.name === 'tone') b.tone = input.value;
+      else if (input.name === 'c1' || input.name === 'c2' || input.name === 'c3') b.g[input.name] = input.value;
       else b.g[input.name as keyof Gradient] = Number(input.value);
       input.nextElementSibling!.textContent = input.value;
       apply(b);

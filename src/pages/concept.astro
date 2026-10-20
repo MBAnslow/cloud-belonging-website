@@ -124,13 +124,14 @@ const openQuestions = [
 const themes = [...new Set(references.map((r) => r.theme))];
 
 const glow = 'stroke="url(#toc-glow)"';
-const tones = { belonging: '#e0708a', design: '#2e8fe0', bibliography: '#c49a4e' };
+const tones = { belonging: '#33bbff', design: '#ffd500', bibliography: '#c44f99' };
 
 const contents: ContentsGroup[] = [
   {
     id: 'part-belonging',
     title: 'Our slice of belonging',
     tone: tones.belonging,
+    gradient: { m1: 65, m2: 48, m3: 35, p1: 20, p2: 45, p3: 91, glow: 0.51, glowX: 64, glowY: 35, c1: '#75ddff', c2: '#57ddff', c3: '#006eff' },
     items: [
       {
         id: 'what',
@@ -156,6 +157,7 @@ const contents: ContentsGroup[] = [
     id: 'part-design',
     title: 'Installation design',
     tone: tones.design,
+    gradient: { m1: 22, m2: 31, m3: 25, p1: 0, p2: 45, p3: 100, glow: 0.45, glowX: 85, glowY: 30, c1: '#ffae00', c2: '#ff6600', c3: '#ff2600' },
     items: [
       {
         id: 'into-a-room',
@@ -187,6 +189,7 @@ const contents: ContentsGroup[] = [
     id: 'part-bibliography',
     title: 'Bibliography',
     tone: tones.bibliography,
+    gradient: { m1: 10, m2: 18, m3: 40, p1: 0, p2: 30, p3: 77, glow: 0.45, glowX: 85, glowY: 30, c1: '#ff0000', c2: '#ff0000', c3: '#ff0000' },
     items: [
       {
         id: 'references',
@@ -197,6 +200,33 @@ const contents: ContentsGroup[] = [
     ],
   },
 ];
+
+const partStop = (group: ContentsGroup, stop: '1' | '3') => {
+  const gradient = group.gradient ?? {};
+  const colour = gradient[`c${stop}`] ?? group.tone;
+  const mix = gradient[`m${stop}`] ?? (stop === '1' ? 10 : 30);
+  return `color-mix(in srgb, ${colour} ${mix}%, var(--page-paper))`;
+};
+
+const partStyle = (group: ContentsGroup, previous?: ContentsGroup) => {
+  const gradient = group.gradient ?? {};
+  return [
+    `--tone:${group.tone}`,
+    `--prev-stop:${previous ? partStop(previous, '3') : '#fff'}`,
+    `--c1:${gradient.c1 ?? group.tone}`,
+    `--c2:${gradient.c2 ?? group.tone}`,
+    `--c3:${gradient.c3 ?? group.tone}`,
+    `--m1:${gradient.m1 ?? 10}%`,
+    `--m2:${gradient.m2 ?? 18}%`,
+    `--m3:${gradient.m3 ?? 30}%`,
+    `--p1:${gradient.p1 ?? 0}%`,
+    `--p2:${gradient.p2 ?? 45}%`,
+    `--p3:${gradient.p3 ?? 100}%`,
+    `--glow:${gradient.glow ?? 0.45}`,
+    `--glow-x:${gradient.glowX ?? 85}%`,
+    `--glow-y:${gradient.glowY ?? 30}%`,
+  ].join(';');
+};
 
 const questions = [
   'How do you feel that you belong without feeling that you are being controlled?',
@@ -222,7 +252,7 @@ const questions = [
 
   <PageContents groups={contents} />
 
-  <div class="part" id="part-belonging" style={`--tone:${tones.belonging}`}>
+  <div class="part" id="part-belonging" style={partStyle(contents[0])}>
     <header class="part-head">
       <div class="wrap reveal">
         <p class="part-num">Part 1</p>
@@ -274,7 +304,7 @@ const questions = [
     </div>
   </section>
 
-  <section class="section wash blend interbeing" id="interbeing">
+  <section class="section wash interbeing" id="interbeing">
     <div class="wrap grid-2">
       <div class="reveal">
         <p class="eyebrow">Beyond people</p>
@@ -334,7 +364,7 @@ const questions = [
     </div>
   </section>
 
-  <section class="section wash wash-sand blend why" id="why-art">
+  <section class="section wash wash-sand why" id="why-art">
     <div class="wrap grid-2">
       <div class="reveal">
         <p class="eyebrow">Why art, why research-creation</p>
@@ -361,7 +391,7 @@ const questions = [
 
   </div>
 
-  <div class="part" id="part-design" style={`--tone:${tones.design}`}>
+  <div class="part" id="part-design" style={partStyle(contents[1], contents[0])}>
     <header class="part-head">
       <div class="wrap reveal">
         <p class="part-num">Part 2</p>
@@ -401,7 +431,7 @@ const questions = [
     </div>
   </section>
 
-  <section class="section wash blend" id="why-a-cloud">
+  <section class="section wash" id="why-a-cloud">
     <div class="wrap why-cloud">
       <div class="why-text">
         <p class="eyebrow reveal">Why a cloud</p>
@@ -431,7 +461,7 @@ const questions = [
 
   <ScoreGrid />
 
-  <section class="section wash wash-sky blend decisions" id="decisions">
+  <section class="section wash wash-sky decisions" id="decisions">
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow">How we reasoned</p>
@@ -454,7 +484,7 @@ const questions = [
     </div>
   </section>
 
-  <section class="section questions dark blend" id="questions">
+  <section class="section questions dark" id="questions">
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow">An open invitation</p>
@@ -488,7 +518,7 @@ const questions = [
 
   </div>
 
-  <div class="part" id="part-bibliography" style={`--tone:${tones.bibliography}`}>
+  <div class="part" id="part-bibliography" style={partStyle(contents[2], contents[1])}>
     <header class="part-head">
       <div class="wrap reveal">
         <p class="part-num">Part 3</p>
@@ -534,33 +564,39 @@ const questions = [
     --page-paper: var(--paper);
   }
   .part {
+    --part-wave-depth: 6.25rem;
+    --part-stop-1: color-mix(in srgb, var(--c1) var(--m1), var(--page-paper));
+    --part-stop-2: color-mix(in srgb, var(--c2) var(--m2), var(--page-paper));
+    --part-stop-3: color-mix(in srgb, var(--c3) var(--m3), var(--page-paper));
     position: relative;
     isolation: isolate;
     --paper: color-mix(in srgb, var(--page-paper) 86%, var(--tone));
-    background: var(--paper);
+    background:
+      radial-gradient(ellipse 50% 70% at var(--glow-x) var(--glow-y), rgb(255 255 255 / var(--glow)), transparent 72%),
+      linear-gradient(180deg, var(--part-stop-1) var(--p1), var(--part-stop-2) var(--p2), var(--part-stop-3) var(--p3));
     padding-block: 6rem;
   }
-  .part::before,
-  .part::after {
+  .part::before {
     content: '';
     position: absolute;
     inset-inline: 0;
-    height: 6.25rem;
-    z-index: 1;
+    height: var(--part-wave-depth);
+    z-index: 2;
     pointer-events: none;
-    background: var(--page-paper);
+    background: var(--prev-stop);
     -webkit-mask: var(--wave) 0 0 / 100% 100% no-repeat;
     mask: var(--wave) 0 0 / 100% 100% no-repeat;
   }
   .part::before {
     top: 0;
   }
-  .part::after {
-    bottom: 0;
-    transform: scale(-1, -1);
-  }
   .part :global(.wash) {
     --wash-tint: var(--tone);
+    --wash: color-mix(in srgb, transparent 55%, var(--tone));
+    --wash-deep: color-mix(in srgb, transparent 70%, var(--tone));
+    background:
+      radial-gradient(ellipse 60% 75% at 78% 45%, rgb(255 255 255 / 0.24), transparent 72%),
+      linear-gradient(180deg, transparent 0%, var(--wash) 28%, var(--wash-deep) 62%, transparent 100%);
   }
   .part-head {
     padding-block: 2.5rem 1rem;
@@ -671,17 +707,20 @@ const questions = [
   }
   .interbeing {
     --angle: 180;
-    --c1: #5762ff; --m1: 85; --p1: 0;
-    --c2: #2e7eff; --m2: 88; --p2: 30;
-    --c3: #38b3ff; --m3: 94; --p3: 70;
+    --c1: #5762ff; --m1: 85; --p1: 8;
+    --c2: #2e7eff; --m2: 88; --p2: 40;
+    --c3: #38b3ff; --m3: 94; --p3: 76;
     --stop-1: color-mix(in srgb, var(--page-paper) calc(var(--m1) * 1%), var(--c1));
     --stop-2: color-mix(in srgb, var(--page-paper) calc(var(--m2) * 1%), var(--c2));
     --stop-3: color-mix(in srgb, var(--page-paper) calc(var(--m3) * 1%), var(--c3));
-    background: linear-gradient(calc(var(--angle) * 1deg),
-      var(--stop-1) calc(var(--p1) * 1%),
-      var(--stop-2) calc(var(--p2) * 1%),
-      var(--stop-3) calc(var(--p3) * 1%),
-      var(--paper) 100%);
+    background:
+      radial-gradient(ellipse 55% 70% at 82% 40%, rgb(255 255 255 / 0.22), transparent 72%),
+      linear-gradient(calc(var(--angle) * 1deg),
+        transparent 0%,
+        var(--stop-1) calc(var(--p1) * 1%),
+        var(--stop-2) calc(var(--p2) * 1%),
+        var(--stop-3) calc(var(--p3) * 1%),
+        transparent 100%);
   }
   .interbeing p {
     color: var(--ink-soft);
@@ -726,7 +765,9 @@ const questions = [
     color: var(--ink-soft);
   }
   .questions {
-    background: linear-gradient(180deg, var(--night) 0%, #3a3478 100%);
+    background:
+      radial-gradient(ellipse 55% 75% at 75% 45%, rgb(110 122 255 / 0.32), transparent 72%),
+      linear-gradient(180deg, transparent 0%, var(--night) 18%, #3a3478 72%, transparent 100%);
   }
   .q-list {
     list-style: none;
