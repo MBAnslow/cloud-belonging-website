@@ -11,6 +11,7 @@ import imgPeople from '../assets/photos/belonging-people.jpg';
 import imgOurselves from '../assets/photos/belonging-ourselves.jpg';
 import imgNature from '../assets/photos/belonging-nature.jpg';
 import belongingApp from '../assets/photos/belonging-app.jpg';
+import collaborateWorkshop from '../assets/photos/collaborate-workshop.jpg';
 
 
 const belongings = [
@@ -32,14 +33,6 @@ const belongings = [
     alt: 'A walker on a mountain top above the clouds at sunrise',
     text: 'Belonging to the sky, the weather, the living world and the places we share with it.',
   },
-];
-
-
-const prompts = [
-  'The next time you see a cloud, take three breaths with it. Where was this water yesterday?',
-  'Notice a moment today when someone made you feel you belonged. What exactly did they do?',
-  'Think of a place where you belong. Which sense brings it back first — a sound, a smell, a texture?',
-  'Offer someone five minutes of listening without replying.',
 ];
 ---
 
@@ -106,23 +99,34 @@ const prompts = [
       <div class="reveal">
         <p class="eyebrow">Example output · a possible workshop</p>
       </div>
-      <div class="grid-2">
-        <div class="reveal workshop-main">
+      <div class="grid-2" style="align-items: center;">
+        <div class="reveal workshop-left">
           <h2>A workshop on making spaces for belonging</h2>
           <div class="workshop-desc">
             <p>
               We would be open to (co)organising a workshop for artists, designers, researchers, students and communities. Whether to formally explore the concept through an academic lens towards academic papers, or to engaging with it in a creative workshop to explore new belonging creations or just to engage with the topic more to bring belonging into our everyday lives.
             </p>
           </div>
+          <div class="host" style="margin-top: 2.5rem;">
+            <h3>Host it with us</h3>
+            <p>
+              Would you like to explore a workshop like this at your school, lab, festival or community space? We would be
+              glad to shape one together.
+            </p>
+            <div class="collab-actions start" style="margin-top: 1.5rem;">
+              <a class="button" href="mailto:michael.anslow@gmail.com?cc=zephir.lorne@ens.psl.eu&subject=A%20workshop%20on%20belonging">Start a conversation</a>
+            </div>
+          </div>
         </div>
 
-        <div class="host reveal">
-          <h3>Host it with us</h3>
-          <p>
-            Would you like to explore a workshop like this at your school, lab, festival or community space? We would be
-            glad to shape one together.
-          </p>
-          <a class="button" href="mailto:michael.anslow@gmail.com?cc=zephir.lorne@ens.psl.eu&subject=A%20workshop%20on%20belonging">Start a conversation</a>
+        <div class="reveal workshop-image-container">
+          <Figure
+            src={collaborateWorkshop}
+            alt="A warm, sunlit watercolour painting of people sitting around a wooden table in a creative workshop, collaborating with laptops, papers, and plants."
+            widths={[500, 800]}
+            sizes="(min-width: 60rem) 34rem, 100vw"
+            class="workshop-image"
+          />
         </div>
       </div>
     </div>
@@ -170,15 +174,56 @@ const prompts = [
 
   <section class="section wash prompts" id="practices">
     <div class="wrap">
-      <div class="head reveal">
+      <div class="head reveal" style="margin-bottom: 3.5rem;">
         <p class="eyebrow">Possible output · everyday practices</p>
         <h2>Designing belonging for everyday contexts</h2>
-        <p class="small">Four small practices that could carry belonging beyond an installation, into daily life.</p>
+        <p class="small" style="max-width: 38rem; margin-top: 1rem; line-height: 1.5;">
+          How do we carry belonging beyond an installation or workshop and into the patterns of daily life? We are interested in exploring small, repeatable practices—inspired by cognitive science, mindfulness, and collaborative art—that help people slow down and connect.
+        </p>
       </div>
-      <ol class="prompt-list">
-        {prompts.map((p) => <li class="reveal">{p}</li>)}
-      </ol>
-      <div class="collab-actions reveal">
+
+      <div class="practices-grid">
+        <div class="practice-card reveal">
+          <div class="practice-num">01</div>
+          <h3>Relational & Listening Circles</h3>
+          <p class="practice-desc">
+            Practices of shared attention and deep, non-judgmental listening. These draw on traditional sharing circles where one person speaks and others simply listen.
+          </p>
+          <ul class="practice-examples">
+            <li><strong>Dharma Sharing:</strong> Gathering in a circle to share personal reflections on experiences, where others listen attentively without judgement, evaluation, or immediate reaction.</li>
+            <li><strong>Regards Connectés:</strong> Sitting opposite someone and holding silent eye contact for an extended period, noticing when self-consciousness fades into simple connection.</li>
+            <li><strong>Active Validation:</strong> Offering someone five minutes of uninterrupted listening, responding with recognition and support rather than advice.</li>
+          </ul>
+        </div>
+
+        <div class="practice-card reveal">
+          <div class="practice-num">02</div>
+          <h3>Sensory & Breath Grounding</h3>
+          <p class="practice-desc">
+            Tuning into the body, the immediate surroundings, and nature to ground ourselves and reduce anxiety.
+          </p>
+          <ul class="practice-examples">
+            <li><strong>Atmospheric Breath:</strong> Taking three slow breaths in synchrony with a passing cloud, a moving shadow, or a shifting light, contemplating where the water of that cloud was yesterday.</li>
+            <li><strong>Object Storytelling:</strong> Inviting participants to bring an ordinary object that holds personal significance, using it as a sensory anchor to share stories of home and memory.</li>
+            <li><strong>Somatic Proximity:</strong> Guided cues that invite you to stay with your current posture, attend to the physical sensation of breathing, or quietly recall last night's dreams.</li>
+          </ul>
+        </div>
+
+        <div class="practice-card reveal">
+          <div class="practice-num">03</div>
+          <h3>Thresholds & Daily Transitions</h3>
+          <p class="practice-desc">
+            Creating clear boundaries to mark the transition between busy, distracted states and moments of restful presence.
+          </p>
+          <ul class="practice-examples">
+            <li><strong>Crossing the Threshold:</strong> A simple physical gesture—such as removing shoes, setting a phone to silent in a shared basket, or pausing at a door—to mark a conscious entry into a shared space.</li>
+            <li><strong>The Mindful Pause:</strong> Dedicating a routine daily activity—like brewing tea, watching water boil on a pedestal, or sitting by a window at sunset—as a moment of quiet, collective introspection.</li>
+            <li><strong>Unscheduled Journeys:</strong> Boarding a train carriage, a bus, or a boat with no fixed agenda, letting go of destination and focus to simply occupy the movement and space.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="collab-actions reveal" style="margin-top: 4rem;">
         <a class="button" href="mailto:michael.anslow@gmail.com?cc=zephir.lorne@ens.psl.eu&subject=Everyday%20practices%20for%20belonging">Start a conversation</a>
       </div>
     </div>
@@ -240,32 +285,79 @@ const prompts = [
     border-top: none;
     padding-top: 0;
   }
-  .prompt-list {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-    gap: 1.5rem;
-    counter-reset: p;
+  .workshop-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
-  .prompt-list li {
-    counter-increment: p;
-    font-family: var(--font-display);
-    font-size: 1.3rem;
-    line-height: 1.35;
-    font-weight: 330;
-    padding: 1.75rem;
+  :global(.workshop-image) {
+    max-width: 36rem;
+    width: 100%;
+    box-shadow: 0 10px 40px rgb(0 0 0 / 0.06);
     border-radius: var(--radius);
-    background: linear-gradient(160deg, rgb(154 157 234 / 0.28), rgb(220 167 211 / 0.22) 50%, rgb(249 199 124 / 0.32));
+    overflow: hidden;
   }
-  .prompt-list li::before {
-    content: counter(p);
-    display: block;
-    font-family: var(--font-body);
-    font-size: 0.75rem;
+  .practices-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  .practice-card {
+    padding: 2.25rem 2rem;
+    border-radius: var(--radius);
+    background: linear-gradient(165deg, rgb(154 157 234 / 0.12), rgb(220 167 211 / 0.08) 50%, rgb(249 199 124 / 0.14));
+    border: 1px solid var(--line);
+    display: flex;
+    flex-direction: column;
+  }
+  .practice-num {
+    font-family: var(--font-display);
+    font-size: 0.9rem;
     color: var(--ink-faint);
-    margin-bottom: 1rem;
+    margin-bottom: 0.8rem;
+    letter-spacing: 0.05em;
+  }
+  .practice-card h3 {
+    font-size: 1.45rem;
+    margin-bottom: 0.8rem;
+    font-family: var(--font-display);
+    font-weight: 400;
+    line-height: 1.25;
+  }
+  .practice-desc {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+    margin-bottom: 1.5rem;
+  }
+  .practice-examples {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 1.25rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .practice-examples li {
+    position: relative;
+    padding-left: 1.1rem;
+  }
+  .practice-examples li::before {
+    content: "·";
+    position: absolute;
+    left: 0;
+    top: -0.1em;
+    font-size: 1.5rem;
+    color: var(--ink-faint);
+    line-height: 1;
+  }
+  .practice-examples strong {
+    color: var(--ink-strong);
+    display: block;
+    margin-bottom: 0.15rem;
   }
 
   :global(main) > section.wash.contact,
