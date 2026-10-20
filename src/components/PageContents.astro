@@ -111,7 +111,8 @@ const bandStyle = (g: ContentsGroup, i: number) => {
   .contents {
     position: relative;
     z-index: 2;
-    padding-block: clamp(3.5rem, 6vw, 5rem);
+    padding-top: clamp(5.5rem, 8vw, 8rem);
+    padding-bottom: clamp(8.5rem, 12vw, 12rem);
     background: #fff;
   }
   .contents::before,
@@ -284,6 +285,54 @@ const bandStyle = (g: ContentsGroup, i: number) => {
       previewAlpha: Number(el.dataset.previewAlpha ?? 1),
       g: JSON.parse(el.dataset.gradient!) as Gradient,
     }));
+
+    const pageWashEl = document.querySelector<HTMLElement>('.page-wash');
+    const pageWashConfig = {
+      angle: 180,
+      c1: '#ff5fb8', m1: 80, p1: 0,
+      c2: '#c73eff', m2: 90, p2: 35,
+      c3: '#8e6fff', m3: 86, p3: 60
+    };
+
+    if (pageWashEl) {
+      const styles = window.getComputedStyle(pageWashEl);
+      const angle = styles.getPropertyValue('--angle').trim();
+      const c1 = styles.getPropertyValue('--c1').trim();
+      const m1 = styles.getPropertyValue('--m1').trim();
+      const p1 = styles.getPropertyValue('--p1').trim();
+      const c2 = styles.getPropertyValue('--c2').trim();
+      const m2 = styles.getPropertyValue('--m2').trim();
+      const p2 = styles.getPropertyValue('--p2').trim();
+      const c3 = styles.getPropertyValue('--c3').trim();
+      const m3 = styles.getPropertyValue('--m3').trim();
+      const p3 = styles.getPropertyValue('--p3').trim();
+
+      if (angle) pageWashConfig.angle = Number(angle);
+      if (c1) pageWashConfig.c1 = c1;
+      if (m1) pageWashConfig.m1 = Number(m1);
+      if (p1) pageWashConfig.p1 = Number(p1);
+      if (c2) pageWashConfig.c2 = c2;
+      if (m2) pageWashConfig.m2 = Number(m2);
+      if (p2) pageWashConfig.p2 = Number(p2);
+      if (c3) pageWashConfig.c3 = c3;
+      if (m3) pageWashConfig.m3 = Number(m3);
+      if (p3) pageWashConfig.p3 = Number(p3);
+    }
+
+    const applyPageWash = () => {
+      if (!pageWashEl) return;
+      const s = pageWashEl.style;
+      s.setProperty('--angle', String(pageWashConfig.angle));
+      s.setProperty('--c1', pageWashConfig.c1);
+      s.setProperty('--m1', String(pageWashConfig.m1));
+      s.setProperty('--p1', String(pageWashConfig.p1));
+      s.setProperty('--c2', pageWashConfig.c2);
+      s.setProperty('--m2', String(pageWashConfig.m2));
+      s.setProperty('--p2', String(pageWashConfig.p2));
+      s.setProperty('--c3', pageWashConfig.c3);
+      s.setProperty('--m3', String(pageWashConfig.m3));
+      s.setProperty('--p3', String(pageWashConfig.p3));
+    };
     const apply = (b: (typeof bands)[number]) => {
       [b.el, b.part].forEach((target) => {
         if (!target) return;
@@ -309,14 +358,38 @@ const bandStyle = (g: ContentsGroup, i: number) => {
       });
       b.el.style.setProperty('--preview-alpha', String(b.previewAlpha));
     };
-    const values = () =>
-      bands.map((b) => `// ${b.title}\ntone: '${b.tone}',\n${b.labelColor ? `labelColor: '${b.labelColor}',\n` : ''}previewAlpha: ${b.previewAlpha},\ngradient: ${JSON.stringify(b.g)},`).join('\n\n');
+    const values = () => {
+      let out = '';
+      if (pageWashEl) {
+        out += `// Page Wash (Top Section)\n`;
+        out += `gradient: ${JSON.stringify(pageWashConfig)},\n\n`;
+      }
+      out += bands.map((b) => `// ${b.title}\ntone: '${b.tone}',\n${b.labelColor ? `labelColor: '${b.labelColor}',\n` : ''}previewAlpha: ${b.previewAlpha},\ngradient: ${JSON.stringify(b.g)},`).join('\n\n');
+      return out;
+    };
+
+    let pageWashHtml = '';
+    if (pageWashEl) {
+      pageWashHtml = `<fieldset id="page-wash-fieldset"><legend>Page Wash (Top Section)</legend>` +
+        `<label>Angle<span><input type="range" name="pw-angle" min="0" max="360" step="1" value="${pageWashConfig.angle}"><output>${pageWashConfig.angle}</output></span></label>` +
+        `<label>Stop 1 colour<span><input type="color" name="pw-c1" value="${pageWashConfig.c1}"><output>${pageWashConfig.c1}</output></span></label>` +
+        `<label>Stop 1 strength<span><input type="range" name="pw-m1" min="0" max="100" step="1" value="${pageWashConfig.m1}"><output>${pageWashConfig.m1}</output></span></label>` +
+        `<label>Stop 1 position<span><input type="range" name="pw-p1" min="0" max="100" step="1" value="${pageWashConfig.p1}"><output>${pageWashConfig.p1}</output></span></label>` +
+        `<label>Stop 2 colour<span><input type="color" name="pw-c2" value="${pageWashConfig.c2}"><output>${pageWashConfig.c2}</output></span></label>` +
+        `<label>Stop 2 strength<span><input type="range" name="pw-m2" min="0" max="100" step="1" value="${pageWashConfig.m2}"><output>${pageWashConfig.m2}</output></span></label>` +
+        `<label>Stop 2 position<span><input type="range" name="pw-p2" min="0" max="100" step="1" value="${pageWashConfig.p2}"><output>${pageWashConfig.p2}</output></span></label>` +
+        `<label>Stop 3 colour<span><input type="color" name="pw-c3" value="${pageWashConfig.c3}"><output>${pageWashConfig.c3}</output></span></label>` +
+        `<label>Stop 3 strength<span><input type="range" name="pw-m3" min="0" max="100" step="1" value="${pageWashConfig.m3}"><output>${pageWashConfig.m3}</output></span></label>` +
+        `<label>Stop 3 position<span><input type="range" name="pw-p3" min="0" max="100" step="1" value="${pageWashConfig.p3}"><output>${pageWashConfig.p3}</output></span></label>` +
+        `</fieldset>`;
+    }
 
     const panel = document.createElement('div');
     panel.className = 'contents-debug';
     panel.innerHTML =
       `<strong>On this page — band gradients</strong>` +
       `<label>Preview colour intensity only<span><input type="range" name="previewAlphaAll" min="0" max="1" step="0.01" value="1"><output>1</output></span></label>` +
+      pageWashHtml +
       bands
         .map(
           (b, i) =>
@@ -350,6 +423,17 @@ const bandStyle = (g: ContentsGroup, i: number) => {
           control.nextElementSibling!.textContent = input.value;
         });
         input.nextElementSibling!.textContent = input.value;
+        return;
+      }
+      if (input.name.startsWith('pw-')) {
+        const key = input.name.replace('pw-', '') as keyof typeof pageWashConfig;
+        if (key === 'c1' || key === 'c2' || key === 'c3') {
+          pageWashConfig[key] = input.value;
+        } else {
+          pageWashConfig[key] = Number(input.value) as never;
+        }
+        input.nextElementSibling!.textContent = input.value;
+        applyPageWash();
         return;
       }
       const b = bands[Number(input.closest('fieldset')!.dataset.band)];
