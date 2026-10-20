@@ -7,11 +7,26 @@ export interface ContentsItem {
   icon: string;
 }
 
+export interface BandGradient {
+  /** % of the tone mixed into the paper at the top and bottom of the band. */
+  top: number;
+  bottom: number;
+  /** Where the top colour starts fading (% of band height). */
+  hold: number;
+  /** White highlight strength (0–1) and position (% across, % down). */
+  glow: number;
+  glowX: number;
+  glowY: number;
+}
+
+const defaultGradient: BandGradient = { top: 10, bottom: 30, hold: 0, glow: 0.45, glowX: 85, glowY: 30 };
+
 export interface ContentsGroup {
   id: string;
   title: string;
   /** Accent colour shared with the part's band on the page. */
   tone: string;
+  gradient?: Partial<BandGradient>;
   items: ContentsItem[];
 }
 
@@ -21,6 +36,19 @@ interface Props {
 
 const { groups } = Astro.props;
 let n = 0;
+const bandStyle = (g: ContentsGroup, i: number) => {
+  const v = { ...defaultGradient, ...g.gradient };
+  return [
+    `--tone:${g.tone}`,
+    `--mix-top:${v.top}%`,
+    `--mix-bottom:${v.bottom}%`,
+    `--hold:${v.hold}%`,
+    `--glow:${v.glow}`,
+    `--glow-x:${v.glowX}%`,
+    `--glow-y:${v.glowY}%`,
+    `z-index:${groups.length - i}`,
+  ].join(';');
+};
 ---
 
 <nav class="contents" aria-label="On this page">
@@ -35,7 +63,7 @@ let n = 0;
     <div class="mini">
     {
       groups.map((g, gi) => (
-        <div class="band" style={`--tone:${g.tone};--prev:${groups[gi - 1]?.tone ?? 'var(--paper)'}`}>
+        <div class="band" style={bandStyle(g, gi)} data-title={g.title} data-tone={g.tone} data-gradient={JSON.stringify({ ...defaultGradient, ...g.gradient })}>
           <a class="group" href={`#${g.id}`}>
             <span class="part">Part {gi + 1}</span>
             <span class="group-title">{g.title}</span>
@@ -85,36 +113,39 @@ let n = 0;
     box-shadow: 0 1px 2px rgb(27 34 84 / 0.04), 0 18px 50px -24px rgb(27 34 84 / 0.25);
   }
   .contents .band {
-    --band-top: color-mix(in srgb, var(--paper) 90%, var(--tone));
-    --band-bottom: color-mix(in srgb, var(--paper) 70%, var(--tone));
+    --band-top: color-mix(in srgb, var(--tone) var(--mix-top), var(--paper));
+    --band-bottom: color-mix(in srgb, var(--tone) var(--mix-bottom), var(--paper));
+    --wave-depth: 3rem;
     position: relative;
     isolation: isolate;
-    padding: 4rem clamp(1.25rem, 3vw, 2.25rem) 3rem;
+    padding: 3rem clamp(1.25rem, 3vw, 2.25rem);
     background:
-      radial-gradient(ellipse 50% 70% at 85% 30%, rgb(255 255 255 / 0.45), transparent 70%),
-      linear-gradient(180deg, var(--band-top), var(--band-bottom));
+      radial-gradient(ellipse 50% 70% at var(--glow-x) var(--glow-y), rgb(255 255 255 / var(--glow)), transparent 70%),
+      linear-gradient(180deg, var(--band-top) var(--hold), var(--band-bottom));
   }
-  .contents .band::before,
-  .contents .band:last-child::after {
+  .contents .band + .band {
+    padding-top: calc(var(--wave-depth) + 1.5rem);
+  }
+  .contents .band::after {
     content: '';
     position: absolute;
     inset-inline: 0;
-    height: 3rem;
+    top: 100%;
+    height: var(--wave-depth);
     z-index: -1;
+    pointer-events: none;
+    background: var(--band-bottom);
     -webkit-mask: var(--wave) 0 0 / 100% 100% no-repeat;
     mask: var(--wave) 0 0 / 100% 100% no-repeat;
   }
-  .contents .band::before {
-    top: 0;
-    background: color-mix(in srgb, var(--paper) 70%, var(--prev));
+  .contents .band:last-child {
+    padding-bottom: calc(var(--wave-depth) + 1.5rem);
   }
   .contents .band:last-child::after {
+    top: auto;
     bottom: 0;
     transform: scale(-1, -1);
     background: var(--paper);
-  }
-  .contents .band:last-child {
-    padding-bottom: 4rem;
   }
   .contents .group {
     display: flex;
@@ -209,3 +240,80 @@ let n = 0;
     background: radial-gradient(circle at 35% 30%, rgb(255 255 255 / 0.2), rgb(179 164 238 / 0.14) 70%, rgb(246 169 138 / 0.2));
   }
 </style>
+
+<script>
+  type Gradient = { top: number; bottom: number; hold: number; glow: number; glowX: number; glowY: number };
+
+  const params = new URLSearchParams(location.search);
+  if (params.has('contents-debug') && !document.querySelector('.contents-debug')) {
+    const controls: [keyof Gradient, string, number, number, number][] = [
+      ['top', 'Top colour strength (% tone)', 0, 80, 1],
+      ['bottom', 'Bottom colour strength (% tone)', 0, 80, 1],
+      ['hold', 'Top colour holds until (% down)', 0, 90, 1],
+      ['glow', 'Highlight strength', 0, 1, 0.01],
+      ['glowX', 'Highlight across (%)', 0, 100, 1],
+      ['glowY', 'Highlight down (%)', 0, 100, 1],
+    ];
+    const bands = Array.from(document.querySelectorAll<HTMLElement>('.contents .band')).map((el) => ({
+      el,
+      title: el.dataset.title!,
+      tone: el.dataset.tone!,
+      g: JSON.parse(el.dataset.gradient!) as Gradient,
+    }));
+    const apply = (b: (typeof bands)[number]) => {
+      const s = b.el.style;
+      s.setProperty('--tone', b.tone);
+      s.setProperty('--mix-top', `${b.g.top}%`);
+      s.setProperty('--mix-bottom', `${b.g.bottom}%`);
+      s.setProperty('--hold', `${b.g.hold}%`);
+      s.setProperty('--glow', String(b.g.glow));
+      s.setProperty('--glow-x', `${b.g.glowX}%`);
+      s.setProperty('--glow-y', `${b.g.glowY}%`);
+    };
+    const values = () =>
+      bands.map((b) => `// ${b.title}\ntone: '${b.tone}',\ngradient: ${JSON.stringify(b.g)},`).join('\n\n');
+
+    const panel = document.createElement('div');
+    panel.className = 'contents-debug';
+    panel.innerHTML =
+      `<strong>On this page — band gradients</strong>` +
+      bands
+        .map(
+          (b, i) =>
+            `<fieldset data-band="${i}"><legend>${b.title}</legend>` +
+            `<label>Tone<span><input type="color" name="tone" value="${b.tone}"><output>${b.tone}</output></span></label>` +
+            controls
+              .map(
+                ([key, label, min, max, step]) =>
+                  `<label>${label}<span><input type="range" name="${key}" min="${min}" max="${max}" step="${step}" value="${b.g[key]}"><output>${b.g[key]}</output></span></label>`,
+              )
+              .join('') +
+            `</fieldset>`,
+        )
+        .join('') +
+      `<button type="button">Copy values</button>`;
+    panel.addEventListener('input', (e) => {
+      const input = e.target as HTMLInputElement;
+      const b = bands[Number(input.closest('fieldset')!.dataset.band)];
+      if (input.name === 'tone') b.tone = input.value;
+      else b.g[input.name as keyof Gradient] = Number(input.value);
+      input.nextElementSibling!.textContent = input.value;
+      apply(b);
+    });
+    panel.querySelector('button')!.addEventListener('click', (e) => {
+      navigator.clipboard.writeText(values());
+      (e.target as HTMLButtonElement).textContent = 'Copied';
+    });
+    Object.assign(panel.style, {
+      position: 'fixed', right: '1rem', bottom: '1rem', zIndex: '9999', width: '19rem', maxHeight: 'calc(100vh - 6rem)',
+      overflowY: 'auto', padding: '0.9rem 1rem', display: 'grid', gap: '0.55rem', font: '12px/1.3 system-ui, sans-serif',
+      color: '#111', background: 'rgba(255,255,255,0.94)', border: '1px solid #ccc', borderRadius: '8px',
+      boxShadow: '0 6px 24px rgba(0,0,0,0.15)',
+    });
+    panel.querySelectorAll('fieldset').forEach((f) => Object.assign(f.style, { display: 'grid', gap: '0.45rem', border: '1px solid #ddd', borderRadius: '6px', padding: '0.5rem 0.7rem 0.7rem', margin: '0' }));
+    panel.querySelectorAll('label').forEach((l) => Object.assign(l.style, { display: 'grid', gap: '0.2rem' }));
+    panel.querySelectorAll('label span').forEach((s) => Object.assign((s as HTMLElement).style, { display: 'flex', gap: '0.5rem', alignItems: 'center' }));
+    panel.querySelectorAll('input[type=range]').forEach((i) => ((i as HTMLElement).style.flex = '1'));
+    document.body.append(panel);
+  }
+</script>
