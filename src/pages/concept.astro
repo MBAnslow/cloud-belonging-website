@@ -124,14 +124,15 @@ const openQuestions = [
 const themes = [...new Set(references.map((r) => r.theme))];
 
 const glow = 'stroke="url(#toc-glow)"';
-const tones = { belonging: '#33bbff', design: '#ffd500', bibliography: '#c44f99' };
+const tones = { belonging: '#33bbff', design: '#00aaff', bibliography: '#c44f99' };
 
 const contents: ContentsGroup[] = [
   {
     id: 'part-belonging',
     title: 'Our slice of belonging',
     tone: tones.belonging,
-    gradient: { m1: 65, m2: 48, m3: 35, p1: 20, p2: 45, p3: 91, glow: 0.51, glowX: 64, glowY: 35, c1: '#75ddff', c2: '#57ddff', c3: '#006eff' },
+    previewAlpha: 0.39,
+    gradient: { m1: 63, m2: 57, m3: 28, p1: 22, p2: 45, p3: 87, glow: 0.47, glowX: 16, glowY: 51, c1: '#75ddff', c2: '#30dce8', c3: '#00eeff' },
     items: [
       {
         id: 'what',
@@ -156,8 +157,9 @@ const contents: ContentsGroup[] = [
   {
     id: 'part-design',
     title: 'Installation design',
-    tone: tones.design,
-    gradient: { m1: 22, m2: 31, m3: 25, p1: 0, p2: 45, p3: 100, glow: 0.45, glowX: 85, glowY: 30, c1: '#ffae00', c2: '#ff6600', c3: '#ff2600' },
+    tone: '#00e1ff',
+    previewAlpha: 0.39,
+    gradient: { m1: 24, m2: 36, m3: 33, p1: 0, p2: 27, p3: 87, glow: 0, glowX: 64, glowY: 67, c1: '#00e1ff', c2: '#ff8800', c3: '#ff2600' },
     items: [
       {
         id: 'into-a-room',
@@ -189,7 +191,8 @@ const contents: ContentsGroup[] = [
     id: 'part-bibliography',
     title: 'Bibliography',
     tone: tones.bibliography,
-    gradient: { m1: 10, m2: 18, m3: 40, p1: 0, p2: 30, p3: 77, glow: 0.45, glowX: 85, glowY: 30, c1: '#ff0000', c2: '#ff0000', c3: '#ff0000' },
+    previewAlpha: 0.39,
+    gradient: { m1: 33, m2: 27, m3: 25, p1: 3, p2: 20, p3: 70, glow: 0.62, glowX: 10, glowY: 100, c1: '#ff2500', c2: '#c800ff', c3: '#3366ff' },
     items: [
       {
         id: 'references',
@@ -212,7 +215,7 @@ const partStyle = (group: ContentsGroup, previous?: ContentsGroup) => {
   const gradient = group.gradient ?? {};
   return [
     `--tone:${group.tone}`,
-    `--prev-stop:${previous ? partStop(previous, '3') : '#fff'}`,
+    `--prev-stop:#fff`,
     `--c1:${gradient.c1 ?? group.tone}`,
     `--c2:${gradient.c2 ?? group.tone}`,
     `--c3:${gradient.c3 ?? group.tone}`,
@@ -222,6 +225,9 @@ const partStyle = (group: ContentsGroup, previous?: ContentsGroup) => {
     `--p1:${gradient.p1 ?? 0}%`,
     `--p2:${gradient.p2 ?? 45}%`,
     `--p3:${gradient.p3 ?? 100}%`,
+    `--part-p1:${((gradient.p1 ?? 0) / 100) * 34}rem`,
+    `--part-p2:${((gradient.p2 ?? 45) / 100) * 34}rem`,
+    `--part-p3:${((gradient.p3 ?? 100) / 100) * 34}rem`,
     `--glow:${gradient.glow ?? 0.45}`,
     `--glow-x:${gradient.glowX ?? 85}%`,
     `--glow-y:${gradient.glowY ?? 30}%`,
@@ -484,7 +490,7 @@ const questions = [
     </div>
   </section>
 
-  <section class="section questions dark" id="questions">
+  <section class="section questions" id="questions">
     <div class="wrap">
       <div class="section-head reveal">
         <p class="eyebrow">An open invitation</p>
@@ -570,10 +576,10 @@ const questions = [
     --part-stop-3: color-mix(in srgb, var(--c3) var(--m3), var(--page-paper));
     position: relative;
     isolation: isolate;
-    --paper: color-mix(in srgb, var(--page-paper) 86%, var(--tone));
+    --paper: #fff;
     background:
-      radial-gradient(ellipse 50% 70% at var(--glow-x) var(--glow-y), rgb(255 255 255 / var(--glow)), transparent 72%),
-      linear-gradient(180deg, var(--part-stop-1) var(--p1), var(--part-stop-2) var(--p2), var(--part-stop-3) var(--p3));
+      radial-gradient(ellipse 50% 70% at var(--glow-x) var(--glow-y), rgb(255 255 255 / var(--glow)), transparent 72%) 0 0 / 100% 38rem no-repeat,
+      linear-gradient(180deg, var(--part-stop-1) var(--part-p1), var(--part-stop-2) var(--part-p2), var(--part-stop-3) var(--part-p3), #fff 42rem, #fff 100%);
     padding-block: 6rem;
   }
   .part::before {
@@ -633,6 +639,11 @@ const questions = [
     color: color-mix(in srgb, var(--tone) 70%, var(--ink));
     background: color-mix(in srgb, var(--page-paper) 80%, var(--tone));
     box-shadow: 0 4px 14px -6px rgb(27 34 84 / 0.25);
+  }
+  #part-bibliography {
+    background:
+      radial-gradient(ellipse 50% 70% at var(--glow-x) var(--glow-y), rgb(255 255 255 / var(--glow)), transparent 72%) 0 0 / 100% 34rem no-repeat,
+      linear-gradient(180deg, var(--part-stop-1) var(--part-p1), var(--part-stop-2) var(--part-p2), var(--part-stop-3) var(--part-p3), rgb(255 244 248) 30rem, #fff 40rem, #fff 100%);
   }
   .big-quote {
     margin: 0;
@@ -705,22 +716,22 @@ const questions = [
     color: var(--ink-faint) !important;
     margin: 0;
   }
-  .interbeing {
+  .section.interbeing {
     --angle: 180;
-    --c1: #5762ff; --m1: 85; --p1: 8;
-    --c2: #2e7eff; --m2: 88; --p2: 40;
-    --c3: #38b3ff; --m3: 94; --p3: 76;
+    --c1: #b8a8ff; --m1: 70; --p1: 8;
+    --c2: #ffb8dc; --m2: 72; --p2: 42;
+    --c3: #d6ccff; --m3: 76; --p3: 78;
     --stop-1: color-mix(in srgb, var(--page-paper) calc(var(--m1) * 1%), var(--c1));
     --stop-2: color-mix(in srgb, var(--page-paper) calc(var(--m2) * 1%), var(--c2));
     --stop-3: color-mix(in srgb, var(--page-paper) calc(var(--m3) * 1%), var(--c3));
     background:
       radial-gradient(ellipse 55% 70% at 82% 40%, rgb(255 255 255 / 0.22), transparent 72%),
       linear-gradient(calc(var(--angle) * 1deg),
-        transparent 0%,
+        #fff 0%,
         var(--stop-1) calc(var(--p1) * 1%),
         var(--stop-2) calc(var(--p2) * 1%),
         var(--stop-3) calc(var(--p3) * 1%),
-        transparent 100%);
+        #fff 100%);
   }
   .interbeing p {
     color: var(--ink-soft);
@@ -766,8 +777,23 @@ const questions = [
   }
   .questions {
     background:
-      radial-gradient(ellipse 55% 75% at 75% 45%, rgb(110 122 255 / 0.32), transparent 72%),
-      linear-gradient(180deg, transparent 0%, var(--night) 18%, #3a3478 72%, transparent 100%);
+      radial-gradient(ellipse 55% 75% at 76% 42%, rgb(255 255 255 / 0.28), transparent 72%),
+      linear-gradient(180deg, transparent 0%, rgb(244 226 255 / 0.72) 24%, rgb(255 219 239 / 0.78) 68%, transparent 100%);
+  }
+  #why-a-cloud {
+    background:
+      radial-gradient(ellipse 56% 72% at 76% 45%, rgb(255 255 255 / 0.26), transparent 72%),
+      linear-gradient(180deg, transparent 0%, rgb(255 237 211 / 0.54) 28%, rgb(255 199 142 / 0.38) 66%, transparent 100%);
+  }
+  .section.why {
+    background:
+      radial-gradient(ellipse 56% 72% at 76% 45%, rgb(255 255 255 / 0.32), transparent 72%),
+      linear-gradient(180deg, transparent 0%, rgb(255 241 232 / 0.45) 28%, rgb(255 211 195 / 0.26) 66%, transparent 100%);
+  }
+  #decisions {
+    background:
+      radial-gradient(ellipse 56% 72% at 76% 45%, rgb(255 255 255 / 0.28), transparent 72%),
+      linear-gradient(180deg, transparent 0%, rgb(231 205 183 / 0.58) 28%, rgb(190 145 111 / 0.36) 66%, transparent 100%);
   }
   .q-list {
     list-style: none;
@@ -898,8 +924,11 @@ const questions = [
   }
   .theme h3 {
     font-size: 1.35rem;
-    padding-bottom: 0.8rem;
-    border-bottom: 1px solid var(--line);
+    margin: 0 0 0.65rem;
+    padding: 0.7rem 0.9rem;
+    border-radius: calc(var(--radius) * 0.45);
+    background: #8b7580;
+    color: #fff6fb;
   }
   .theme ul {
     list-style: none;
@@ -931,9 +960,13 @@ const questions = [
         var(--paper) 100%);
   }
   .page-wash-concept {
+    --paper: #fff;
     --angle: 180;
     --c1: #ff5fb8; --m1: 80; --p1: 0;
     --c2: #c73eff; --m2: 90; --p2: 35;
     --c3: #8e6fff; --m3: 86; --p3: 60;
+  }
+  .page-wash-concept :global(.page-header) {
+    border-bottom: 0;
   }
 </style>
