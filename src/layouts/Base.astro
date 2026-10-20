@@ -34,6 +34,11 @@ const pageTitle = title ? `${title} — ${site.title}` : `${site.title} — ${si
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
+    <meta property="og:image" content={new URL(url('/og-image.jpg'), Astro.site)} />
+    <meta property="og:image:alt" content="A soft pink cloud in a purple-to-peach sky beside the title Cloudfulness" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={new URL(url('/og-image.jpg'), Astro.site)} />
     <meta name="theme-color" content="#0e1328" />
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
