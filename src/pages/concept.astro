@@ -124,10 +124,13 @@ const openQuestions = [
 const themes = [...new Set(references.map((r) => r.theme))];
 
 const glow = 'stroke="url(#toc-glow)"';
+const tones = { belonging: '#e0708a', design: '#2e8fe0', bibliography: '#c49a4e' };
+
 const contents: ContentsGroup[] = [
   {
     id: 'part-belonging',
     title: 'Our slice of belonging',
+    tone: tones.belonging,
     items: [
       {
         id: 'what',
@@ -152,6 +155,7 @@ const contents: ContentsGroup[] = [
   {
     id: 'part-design',
     title: 'Installation design',
+    tone: tones.design,
     items: [
       {
         id: 'into-a-room',
@@ -182,6 +186,7 @@ const contents: ContentsGroup[] = [
   {
     id: 'part-bibliography',
     title: 'Bibliography',
+    tone: tones.bibliography,
     items: [
       {
         id: 'references',
@@ -217,7 +222,7 @@ const questions = [
 
   <PageContents groups={contents} />
 
-  <div class="part part-belonging" id="part-belonging">
+  <div class="part" id="part-belonging" style={`--tone:${tones.belonging}`}>
     <header class="part-head">
       <div class="wrap reveal">
         <p class="part-num">Part 1</p>
@@ -356,7 +361,7 @@ const questions = [
 
   </div>
 
-  <div class="part part-design" id="part-design">
+  <div class="part" id="part-design" style={`--tone:${tones.design}`}>
     <header class="part-head">
       <div class="wrap reveal">
         <p class="part-num">Part 2</p>
@@ -483,7 +488,7 @@ const questions = [
 
   </div>
 
-  <div class="part part-bibliography" id="part-bibliography">
+  <div class="part" id="part-bibliography" style={`--tone:${tones.bibliography}`}>
     <header class="part-head">
       <div class="wrap reveal">
         <p class="part-num">Part 3</p>
@@ -556,15 +561,6 @@ const questions = [
   }
   .part :global(.wash) {
     --wash-tint: var(--tone);
-  }
-  .part-belonging {
-    --tone: #e0708a;
-  }
-  .part-design {
-    --tone: #2e8fe0;
-  }
-  .part-bibliography {
-    --tone: #c49a4e;
   }
   .part-head {
     padding-block: 2.5rem 1rem;

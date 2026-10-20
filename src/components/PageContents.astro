@@ -10,6 +10,8 @@ export interface ContentsItem {
 export interface ContentsGroup {
   id: string;
   title: string;
+  /** Accent colour shared with the part's band on the page. */
+  tone: string;
   items: ContentsItem[];
 }
 
@@ -30,10 +32,14 @@ let n = 0;
       </linearGradient>
     </svg>
     <p class="eyebrow ruled">On this page</p>
+    <div class="mini">
     {
-      groups.map((g) => (
-        <>
-          <a class="group" href={`#${g.id}`}>{g.title}</a>
+      groups.map((g, gi) => (
+        <div class="band" style={`--tone:${g.tone}`}>
+          <a class="group" href={`#${g.id}`}>
+            <span class="part">Part {gi + 1}</span>
+            <span class="group-title">{g.title}</span>
+          </a>
           <ol>
             {g.items.map((c) => (
               <li>
@@ -49,9 +55,10 @@ let n = 0;
               </li>
             ))}
           </ol>
-        </>
+        </div>
       ))
     }
+    </div>
   </div>
 </nav>
 
@@ -71,16 +78,54 @@ let n = 0;
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 14rem), 1fr));
     gap: 1rem;
   }
+  .contents .mini {
+    border-radius: calc(var(--radius) * 2);
+    overflow: hidden;
+    background: var(--paper);
+    box-shadow: 0 1px 2px rgb(27 34 84 / 0.04), 0 18px 50px -24px rgb(27 34 84 / 0.25);
+  }
+  .contents .band {
+    position: relative;
+    isolation: isolate;
+    padding: 3.25rem clamp(1.25rem, 3vw, 2.25rem) 3.5rem;
+    background: color-mix(in srgb, var(--paper) 86%, var(--tone));
+  }
+  .contents .band::before,
+  .contents .band::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    height: 2.5rem;
+    z-index: -1;
+    background: var(--paper);
+    -webkit-mask: var(--wave) 0 0 / 100% 100% no-repeat;
+    mask: var(--wave) 0 0 / 100% 100% no-repeat;
+  }
+  .contents .band::before {
+    top: 0;
+  }
+  .contents .band::after {
+    bottom: 0;
+    transform: scale(-1, -1);
+  }
   .contents .group {
-    display: block;
-    margin: 2rem 0 0.9rem;
-    font-family: var(--font-display);
-    font-size: 1.35rem;
+    display: flex;
+    align-items: baseline;
+    gap: 0.75rem;
+    margin-bottom: 1.1rem;
     color: var(--ink);
     text-decoration: none;
   }
-  .contents .eyebrow + .group {
-    margin-top: 0;
+  .contents .part {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--tone) 75%, var(--ink));
+  }
+  .contents .group-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1.2rem + 0.6vw, 1.75rem);
   }
   .contents li a {
     position: relative;
