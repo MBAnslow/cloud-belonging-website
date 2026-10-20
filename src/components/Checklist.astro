@@ -10,7 +10,10 @@ import { checklist } from '../data/checklist';
           <h3>{section.title}</h3>
           <ul>
             {section.items.map((item) => (
-              <li>{item.label}</li>
+              <li>
+                <span class="label">{item.label}</span>
+                {item.detail && <span class="detail"> — {item.detail}</span>}
+              </li>
             ))}
           </ul>
         </section>
@@ -43,21 +46,27 @@ import { checklist } from '../data/checklist';
   }
   li {
     position: relative;
-    padding: 0.28rem 0 0.28rem 1rem;
+    padding: 0.35rem 0 0.35rem 1rem;
     font-size: 0.84rem;
-    line-height: 1.35;
-    color: var(--ink-soft);
+    line-height: 1.45;
   }
   li::before {
     content: '';
     position: absolute;
     left: 0;
-    top: 0.72rem;
+    top: 0.8rem;
     width: 0.35rem;
     height: 0.35rem;
     border-radius: 50%;
     background: var(--dusk);
     opacity: 0.7;
+  }
+  .label {
+    font-weight: 550;
+    color: var(--ink);
+  }
+  .detail {
+    color: var(--ink-soft);
   }
 
   @media print {

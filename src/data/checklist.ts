@@ -12,20 +12,20 @@ export const checklist: ChecklistSection[] = [
     intro: 'Belonging needs safety before anything else.',
     items: [
       {
-        label: 'Name the dimension of belonging you are after',
-        detail: 'Mutual recognition, shared vulnerability, attachment to a place, kinship with nature — pick one to lead.',
+        label: 'Define a clear intention for the installation',
+        detail: 'What specific dimension of belonging do you want to evoke? (e.g. mutual recognition, shared vulnerability, place-attachment)',
       },
       {
-        label: 'Build a symbolic world that is both personal and universal',
-        detail: 'A common ground everyone can relate to, whatever their background. A cloud is above everyone.',
+        label: 'Build a symbolic universe',
+        detail: 'Balance the particular/personal with the universal/collective to create a common ground all participants can relate to regardless of background.',
       },
       {
-        label: 'Make it non-competitive and non-evaluative',
-        detail: 'Nobody should be able to “fail” the experience.',
+        label: 'Frame the experience explicitly as non-competitive and non-evaluative',
+        detail: 'Safety is a precondition for belonging.',
       },
       {
-        label: 'Signal at the door that everyone here belongs',
-        detail: 'Answer belonging uncertainty before it arises (Walton & Cohen, 2011).',
+        label: 'Signal at entry that everyone here belongs',
+        detail: 'Counter belonging uncertainty before it arises (Walton & Cohen).',
       },
     ],
   },
@@ -36,23 +36,23 @@ export const checklist: ChecklistSection[] = [
     items: [
       {
         label: 'Design a clear sequence',
-        detail: 'Entry and threshold, then the core experience, then integration and sharing.',
+        detail: 'Entry / threshold → core experience → integration/socialisation (separation–initiation–return).',
       },
       {
-        label: 'Give it a rhythm people can settle into',
-        detail: 'Repetition and a dependable structure let attention soften.',
+        label: 'Include repetition and structure',
+        detail: 'A recognisable, dependable rhythm that participants can settle into.',
       },
       {
         label: 'Create a liminal space',
-        detail: 'Suspend ordinary rules a little: alter light, time and the sense of where you are.',
+        detail: 'Where ordinary rules feel suspended — alter time and spatial perception to open participants to transformation.',
       },
       {
-        label: 'Let it deepen over time',
-        detail: 'Layer the experience so it shifts as people move through it rather than staying flat.',
+        label: 'Build in layering over time',
+        detail: 'The experience should deepen or shift as participants move through it, not stay flat.',
       },
       {
-        label: 'End together',
-        detail: 'Close with a moment of sharing or collective processing, as traditional rituals do.',
+        label: 'End with a socialisation moment',
+        detail: 'Group sharing, conversation, or collective processing after the core experience, as traditional rituals do.',
       },
     ],
   },
@@ -62,24 +62,28 @@ export const checklist: ChecklistSection[] = [
     intro: 'Belonging is built in small acts between people.',
     items: [
       {
-        label: 'Invite one small, reciprocal disclosure',
-        detail: 'A feeling, a memory, a sensation — never a performance.',
+        label: 'Design a moment of structured reciprocal disclosure',
+        detail: 'A prompt that invites a small personal share (feeling, memory, sensation), not a performance.',
       },
       {
-        label: 'Make room for real listening',
-        detail: 'One speaks, one receives, then roles reverse (contemplative dyads; Kok & Singer, 2017).',
+        label: 'Ensure the format allows active listening',
+        detail: 'One person speaks, the other receives, then roles reverse (contemplative dyad structure).',
       },
       {
-        label: 'Share after the practice',
-        detail: 'Group sharing normalises experience: what you felt was not only yours (Fagioli et al., 2023).',
+        label: 'Normalise vulnerability through group sharing',
+        detail: 'This reduces the sense that one\'s struggles are unique (Fagioli et al., 2023).',
       },
       {
         label: 'Create conditions for co-regulation',
-        detail: 'Shared breathing, synchronised movement or collective attention.',
+        detail: 'Shared breathing, synchronised movement, or collective attention all trigger physiological bonding.',
       },
       {
-        label: 'Leave a path to meet again',
-        detail: 'One-off contact fades. Give strangers a trace; give friends a reason to deepen their ties.',
+        label: 'Design a path to re-encounter for strangers',
+        detail: 'How will they remember or find each other after? One-off contact is less effective without a trace.',
+      },
+      {
+        label: 'Deepen existing ties if they know each other',
+        detail: 'Use the installation to deepen existing ties, not just create new ones.',
       },
     ],
   },
@@ -89,20 +93,20 @@ export const checklist: ChecklistSection[] = [
     intro: 'Warmth first, then openness.',
     items: [
       {
-        label: 'Reframe: what you feel is shared',
-        detail: 'Small prompts that reduce the sense of not fitting in.',
+        label: 'Include reframing prompts',
+        detail: 'Moments that communicate "what you feel is shared, not just yours" to reduce belonging uncertainty.',
       },
       {
-        label: 'Offer a warm moment early',
-        detail: 'Early positive affect helps people read others as safe.',
+        label: 'Trigger positive affect early',
+        detail: 'Even small warm moments prime the system to perceive others as safe.',
       },
       {
-        label: 'Keep autonomy and choice',
-        detail: 'Opt-in beats opt-out. Coerced participation undermines felt belonging.',
+        label: 'Allow autonomy and choice within the structure',
+        detail: 'Coerced participation undermines felt belonging; opt-in beats opt-out.',
       },
       {
-        label: 'Leave silence and empty space',
-        detail: 'Pauses do relational work. Avoid information overload.',
+        label: 'Avoid information overload',
+        detail: 'Let silences, pauses, and empty space do relational work.',
       },
     ],
   },
@@ -112,24 +116,28 @@ export const checklist: ChecklistSection[] = [
     intro: 'Belonging is felt in the body and attached to places.',
     items: [
       {
-        label: 'Engage several senses at once',
-        detail: 'Sound, scent, texture, temperature and light are each independent anchors.',
+        label: 'Stimulate multiple senses simultaneously',
+        detail: 'Sound, scent, texture, temperature, light — each is an independent anchor for felt belonging.',
       },
       {
-        label: 'Use warmth, literal and metaphorical',
-        detail: 'Warm light, warm materials, warm tones.',
+        label: 'Use warmth (literal and metaphorical)',
+        detail: 'Warm lighting, warm materials, warm tones; physiological warmth is cognitively linked to social warmth.',
       },
       {
-        label: 'Design the floor and the posture',
-        detail: 'Shoes off, sitting or lying down: from visitor to inhabitant.',
+        label: 'Design the floor and body posture intentionally',
+        detail: 'Removing shoes, sitting on the ground, or lying down shift participants from "visitor" to "inhabitant" mode.',
       },
       {
-        label: 'Let sound carry presence',
-        detail: 'Breath, rhythm and distant voices signal safety and company.',
+        label: 'Use soundscape as a primary belonging cue',
+        detail: 'Familiar rhythms, breath sounds, or human voices (even distant) signal presence and safety.',
       },
       {
-        label: 'Offer an object to touch or carry away',
-        detail: 'Shared meaning, extended beyond the room.',
+        label: 'Consider scent as a sensory route',
+        detail: 'Scent is the most direct sensory route to memory and place-attachment.',
+      },
+      {
+        label: 'Create symbolic objects to touch or carry',
+        detail: 'Imbue objects with shared meaning to extend belonging beyond the space.',
       },
     ],
   },
@@ -139,20 +147,20 @@ export const checklist: ChecklistSection[] = [
     intro: 'A feedback loop between bodies and artwork.',
     items: [
       {
-        label: 'Close the loop with biofeedback, gently',
-        detail: 'Breath or heartbeat can make participants part of the work — without making it a test.',
+        label: 'Use biofeedback or responsive technology',
+        detail: 'If available (breath, heartbeat), create a feedback loop between participant and installation.',
       },
       {
         label: 'Balance guidance and openness',
-        detail: 'Enough structure to feel safe, enough freedom to feel personal.',
+        detail: 'Give enough structure to feel safe, enough freedom to feel personal.',
       },
       {
-        label: 'Make belonging visible in gesture',
-        detail: 'A shared posture, a collective movement, a breath taken together.',
+        label: 'Include performative elements',
+        detail: 'Gestures, postures, collective movements or chanting that make belonging visible and enacted, not just felt.',
       },
       {
-        label: 'Treat onboarding as part of the work',
-        detail: 'Removing shoes, putting on a sensor, a settling question: preparation already begins the shared experience.',
+        label: 'Curate the onboarding ritual carefully',
+        detail: 'Removing shoes, wearing a sensor, a short settling questionnaire — the preparation process itself begins the sense of shared experience.',
       },
     ],
   },
@@ -162,39 +170,39 @@ export const checklist: ChecklistSection[] = [
     intro: 'The room is a collaborator.',
     items: [
       {
-        label: 'Choose a space that feels intentional',
-        detail: 'Unconventional spaces support ritual better than generic ones.',
+        label: 'Choose or design an intentional space',
+        detail: 'Unconventional spaces better support ritual and immersive quality.',
       },
       {
-        label: 'Treat light, air, temperature and noise as belonging cues',
-        detail: 'Not only as aesthetics.',
+        label: 'Attend to ambient variables as belonging cues',
+        detail: 'Lighting, air circulation, temperature, and noise levels are cues, not just aesthetics.',
       },
       {
-        label: 'Look for existing place-attachment',
-        detail: 'Sites with history or texture extend the effect.',
+        label: 'Consider pre-existing place-attachment potential',
+        detail: 'Sites with history, texture, or cultural resonance extend the belonging effect.',
       },
       {
-        label: 'Let spatial flow mirror an inner journey',
-        detail: 'Progression, not random wandering.',
+        label: 'Design the spatial flow intentionally',
+        detail: 'Movement through the space should mirror an inner journey (progression, not random wandering).',
       },
     ],
   },
   {
     id: 'evaluation',
-    title: 'Listening afterwards',
+    title: 'Evaluation & feedback',
     intro: 'Was the connection genuine or performed?',
     items: [
       {
-        label: 'Begin with a short inward question',
-        detail: 'A pre-entry prompt about one’s current state turns attention inward.',
+        label: 'Use a brief pre-entry reflection',
+        detail: 'A short question or prompt about current state turns attention inward before the experience begins.',
       },
       {
-        label: 'Collect stories without steering them',
-        detail: 'Balance first-person accounts with other measures.',
+        label: 'Design a post-experience sharing moment',
+        detail: 'Collect narratives without over-biasing responses — balance subjective and objective.',
       },
       {
-        label: 'Ask whether connection was felt or performed',
-        detail: 'The distinction matters most.',
+        label: 'Track genuine vs performed connection',
+        detail: 'The distinction matters most for felt belonging.',
       },
     ],
   },
