@@ -131,7 +131,7 @@ const contents: ContentsGroup[] = [
     id: 'part-belonging',
     title: 'Our slice of belonging',
     tone: tones.belonging,
-    previewAlpha: 0.39,
+    previewAlpha: 0.29,
     gradient: { m1: 63, m2: 57, m3: 28, p1: 22, p2: 45, p3: 87, glow: 0.47, glowX: 16, glowY: 51, c1: '#75ddff', c2: '#30dce8', c3: '#00eeff' },
     items: [
       {
@@ -157,8 +157,9 @@ const contents: ContentsGroup[] = [
   {
     id: 'part-design',
     title: 'Installation design',
-    tone: '#00e1ff',
-    previewAlpha: 0.39,
+    tone: '#ffae00',
+    labelColor: '#9b2f16',
+    previewAlpha: 0.29,
     gradient: { m1: 24, m2: 36, m3: 33, p1: 0, p2: 27, p3: 87, glow: 0, glowX: 64, glowY: 67, c1: '#00e1ff', c2: '#ff8800', c3: '#ff2600' },
     items: [
       {
@@ -191,7 +192,7 @@ const contents: ContentsGroup[] = [
     id: 'part-bibliography',
     title: 'Bibliography',
     tone: tones.bibliography,
-    previewAlpha: 0.39,
+    previewAlpha: 0.29,
     gradient: { m1: 33, m2: 27, m3: 25, p1: 3, p2: 20, p3: 70, glow: 0.62, glowX: 10, glowY: 100, c1: '#ff2500', c2: '#c800ff', c3: '#3366ff' },
     items: [
       {
@@ -215,6 +216,7 @@ const partStyle = (group: ContentsGroup, previous?: ContentsGroup) => {
   const gradient = group.gradient ?? {};
   return [
     `--tone:${group.tone}`,
+    group.labelColor ? `--part-label-color:${group.labelColor}` : '',
     `--prev-stop:#fff`,
     `--c1:${gradient.c1 ?? group.tone}`,
     `--c2:${gradient.c2 ?? group.tone}`,
@@ -612,7 +614,7 @@ const questions = [
     letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 600;
-    color: color-mix(in srgb, var(--tone) 75%, var(--ink));
+    color: var(--part-label-color, color-mix(in srgb, var(--tone) 75%, var(--ink)));
     margin-bottom: 0.4rem;
   }
   .part-head h2 {
@@ -718,9 +720,9 @@ const questions = [
   }
   .section.interbeing {
     --angle: 180;
-    --c1: #b8a8ff; --m1: 70; --p1: 8;
-    --c2: #ffb8dc; --m2: 72; --p2: 42;
-    --c3: #d6ccff; --m3: 76; --p3: 78;
+    --c1: #b8a8ff; --m1: 84; --p1: 8;
+    --c2: #ffb8dc; --m2: 86; --p2: 42;
+    --c3: #d6ccff; --m3: 88; --p3: 78;
     --stop-1: color-mix(in srgb, var(--page-paper) calc(var(--m1) * 1%), var(--c1));
     --stop-2: color-mix(in srgb, var(--page-paper) calc(var(--m2) * 1%), var(--c2));
     --stop-3: color-mix(in srgb, var(--page-paper) calc(var(--m3) * 1%), var(--c3));

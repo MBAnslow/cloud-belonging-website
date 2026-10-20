@@ -33,6 +33,8 @@ export interface ContentsGroup {
   title: string;
   /** Accent colour shared with the part's band on the page. */
   tone: string;
+  /** Colour for the small "Part X" label in the main section header. */
+  labelColor?: string;
   /** Preview-only colour strength multiplier for the "On this page" mini map. */
   previewAlpha?: number;
   gradient?: Partial<BandGradient>;
@@ -79,7 +81,7 @@ const bandStyle = (g: ContentsGroup, i: number) => {
     <div class="mini">
     {
       groups.map((g, gi) => (
-        <div class="band" style={bandStyle(g, gi)} data-id={g.id} data-title={g.title} data-tone={g.tone} data-preview-alpha={g.previewAlpha ?? 1} data-gradient={JSON.stringify({ ...defaultGradient, ...g.gradient })}>
+        <div class="band" style={bandStyle(g, gi)} data-id={g.id} data-title={g.title} data-tone={g.tone} data-label-color={g.labelColor ?? ''} data-preview-alpha={g.previewAlpha ?? 1} data-gradient={JSON.stringify({ ...defaultGradient, ...g.gradient })}>
           <a class="group" href={`#${g.id}`}>
             <span class="part">Part {gi + 1}</span>
             <span class="group-title">{g.title}</span>
@@ -278,6 +280,7 @@ const bandStyle = (g: ContentsGroup, i: number) => {
       part: document.getElementById(el.dataset.id ?? ''),
       title: el.dataset.title!,
       tone: el.dataset.tone!,
+      labelColor: el.dataset.labelColor || '',
       previewAlpha: Number(el.dataset.previewAlpha ?? 1),
       g: JSON.parse(el.dataset.gradient!) as Gradient,
     }));
@@ -286,6 +289,8 @@ const bandStyle = (g: ContentsGroup, i: number) => {
         if (!target) return;
         const s = target.style;
         s.setProperty('--tone', b.tone);
+        if (b.labelColor) s.setProperty('--part-label-color', b.labelColor);
+        else s.removeProperty('--part-label-color');
         s.setProperty('--c1', b.g.c1 ?? b.tone);
         s.setProperty('--c2', b.g.c2 ?? b.tone);
         s.setProperty('--c3', b.g.c3 ?? b.tone);
@@ -305,7 +310,7 @@ const bandStyle = (g: ContentsGroup, i: number) => {
       b.el.style.setProperty('--preview-alpha', String(b.previewAlpha));
     };
     const values = () =>
-      bands.map((b) => `// ${b.title}\ntone: '${b.tone}',\npreviewAlpha: ${b.previewAlpha},\ngradient: ${JSON.stringify(b.g)},`).join('\n\n');
+      bands.map((b) => `// ${b.title}\ntone: '${b.tone}',\n${b.labelColor ? `labelColor: '${b.labelColor}',\n` : ''}previewAlpha: ${b.previewAlpha},\ngradient: ${JSON.stringify(b.g)},`).join('\n\n');
 
     const panel = document.createElement('div');
     panel.className = 'contents-debug';
@@ -318,6 +323,7 @@ const bandStyle = (g: ContentsGroup, i: number) => {
             `<fieldset data-band="${i}"><legend>${b.title}</legend>` +
             `<label>Preview intensity<span><input type="range" name="previewAlpha" min="0" max="1" step="0.01" value="${b.previewAlpha}"><output>${b.previewAlpha}</output></span></label>` +
             `<label>Tone<span><input type="color" name="tone" value="${b.tone}"><output>${b.tone}</output></span></label>` +
+            `<label>Main Part label colour<span><input type="color" name="labelColor" value="${b.labelColor || b.tone}"><output>${b.labelColor || 'default'}</output></span></label>` +
             `<label>Stop 1 colour<span><input type="color" name="c1" value="${b.g.c1 ?? b.tone}"><output>${b.g.c1 ?? b.tone}</output></span></label>` +
             `<label>Stop 2 colour<span><input type="color" name="c2" value="${b.g.c2 ?? b.tone}"><output>${b.g.c2 ?? b.tone}</output></span></label>` +
             `<label>Stop 3 colour<span><input type="color" name="c3" value="${b.g.c3 ?? b.tone}"><output>${b.g.c3 ?? b.tone}</output></span></label>` +
@@ -348,6 +354,7 @@ const bandStyle = (g: ContentsGroup, i: number) => {
       }
       const b = bands[Number(input.closest('fieldset')!.dataset.band)];
       if (input.name === 'tone') b.tone = input.value;
+      else if (input.name === 'labelColor') b.labelColor = input.value;
       else if (input.name === 'previewAlpha') b.previewAlpha = Number(input.value);
       else if (input.name === 'c1' || input.name === 'c2' || input.name === 'c3') b.g[input.name] = input.value;
       else b.g[input.name as keyof Gradient] = Number(input.value);
