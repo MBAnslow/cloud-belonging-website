@@ -17,4 +17,15 @@ export default defineConfig({
     '/alpha': `${BASE}/installation/#alpha`,
     '/toolkit': `${BASE}/collaborate/`,
   },
+  vite: {
+    server: {
+      watch: {
+        // Since the workspace is located inside a OneDrive folder, the standard OS-level
+        // file system events (fs.watch) are often intercepted or ignored.
+        // Polling guarantees that Vite detects every code change instantly.
+        usePolling: true,
+        interval: 100,
+      },
+    },
+  },
 });
