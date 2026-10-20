@@ -40,4 +40,4 @@ Due to hotspots from the LEDs when the diffusion material is close to them, you 
 - Diffusion gels: 40 × 50 cm polyester film for photo and video lighting, in three grades: Tough Silk (heavy to medium diffusion that keeps some direction to the beam), Tough Frost (0.05 mm, medium diffusion with a slight hot spot in the centre) and Light Frost (0.03 mm).
 - Cloud fibre: vacuum-packed synthetic fibre sold as cloud decorations, about 35 × 25 × 15 cm each when pulled out. It is soft, very white and lets the light through.
 
-To try out patterns more quickly, Michael then vibe-coded a small interface for designing them: see [Designing patterns for the LED matrix](/cloud-belonging-website/process/2026-06-23-cloud-bottom-leds/).
+To try out patterns more quickly, Michael then vibe-coded a small interface for designing them: see [Designing patterns for the LED matrix](../2026-06-23-cloud-bottom-leds/).

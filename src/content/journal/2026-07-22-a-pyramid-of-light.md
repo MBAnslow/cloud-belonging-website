@@ -56,6 +56,6 @@ The electronics had their own casualty. The first buck converter we bought overh
 
 ## Painting it white
 
-Green mesh under white fibre would tint every colour we tried to make, so next the whole pyramid was [masked and sprayed white](/cloud-belonging-website/process/2026-07-23-masking-and-spraying/).
+Green mesh under white fibre would tint every colour we tried to make, so next the whole pyramid was [masked and sprayed white](../2026-07-23-masking-and-spraying/).
 
 Next, it needs a body: something soft and cloud-like around it that the light can glow through.

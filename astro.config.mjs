@@ -1,15 +1,20 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
+// Custom domain at the root: SITE = 'https://your-domain.org', BASE = ''.
+// GitHub Pages project URL: SITE = 'https://mbanslow.github.io', BASE = '/cloud-belonging-website'.
+const SITE = 'https://mbanslow.github.io';
+const BASE = '/cloud-belonging-website';
+
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://mbanslow.github.io',
-  // GitHub Pages serves the site from /<repo>/. Links in pages use `url()` from src/lib/url.ts;
-  // links inside journal Markdown should be relative (e.g. `../../concept/`).
-  base: '/cloud-belonging-website',
+  site: SITE,
+  // Links in pages use `url()` from src/lib/url.ts; links inside journal Markdown are
+  // relative (e.g. `../../concept/`), so nothing else depends on the base.
+  base: BASE || '/',
   redirects: {
-    '/belonging': '/cloud-belonging-website/concept/',
-    '/alpha': '/cloud-belonging-website/installation/#alpha',
-    '/toolkit': '/cloud-belonging-website/collaborate/',
+    '/belonging': `${BASE}/concept/`,
+    '/alpha': `${BASE}/installation/#alpha`,
+    '/toolkit': `${BASE}/collaborate/`,
   },
 });

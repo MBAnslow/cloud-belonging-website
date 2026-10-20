@@ -12,7 +12,7 @@ gallery:
 tags: [materials, cotton, prototyping]
 ---
 
-Once the [first mesh form](/cloud-belonging-website/process/2026-05-21-mesh-and-tulle/) held its shape, we added cotton to it to make the fluffy exterior of the cloud. We tried putting our hand inside the mesh and pulling the cotton through. This was very time consuming, and as the cotton covered the outside of the mesh it became harder to see what we were doing.
+Once the [first mesh form](../2026-05-21-mesh-and-tulle/) held its shape, we added cotton to it to make the fluffy exterior of the cloud. We tried putting our hand inside the mesh and pulling the cotton through. This was very time consuming, and as the cotton covered the outside of the mesh it became harder to see what we were doing.
 
 The act of pulling the cotton through also changed the density of the cotton wherever it was pulled through the mesh, which would become more apparent later when it was lit from inside.
 

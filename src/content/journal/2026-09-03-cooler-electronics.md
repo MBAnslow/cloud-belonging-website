@@ -12,7 +12,7 @@ In the pilot, the first buck converter overheated and broke, and the second one 
 
 For the beta we updated two parts:
 
-- **A new controller:** a GLEDOPTO ESP32 WLED controller (GL-C-616WL). It runs [WLED](https://kno.wled.ge/), the same software the [pattern tool](/cloud-belonging-website/process/2026-06-23-cloud-bottom-leds/) streams frames to, and takes 5 to 24 V with up to 15 A in total. It connects over Wi-Fi or Ethernet and is fused, in a fireproof case.
+- **A new controller:** a GLEDOPTO ESP32 WLED controller (GL-C-616WL). It runs [WLED](https://kno.wled.ge/), the same software the [pattern tool](../2026-06-23-cloud-bottom-leds/) streams frames to, and takes 5 to 24 V with up to 15 A in total. It connects over Wi-Fi or Ethernet and is fused, in a fireproof case.
 - **A larger buck converter:** a HOMELYLIFE 12/24 V to 5 V, 20 A step-down converter (100 W). It sits in an aluminium shell potted in epoxy, which spreads the heat, and it shuts itself down if it does overheat.
 
 With the extra headroom, the converter no longer runs hot, so the cloud no longer needs a fan to stay cool. It also meant we could run the LEDs at a higher amperage, so the lightning could flash much brighter.

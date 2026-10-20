@@ -40,4 +40,4 @@ Under the full load of hundreds of LED pixels — especially when lightning sequ
 
 The temperature reached a point where we didn't want it sitting unventilated near cotton, wadding and mesh. We solved it for the pilot by mounting a small cooling fan right against the converter's heatsink fins. That dropped operating temperatures immediately and kept the hardware stable through all pilot runs.
 
-(After the pilot, we redesigned this setup for the [beta](/cloud-belonging-website/process/2026-09-03-cooler-electronics/) using an epoxy-potted 20 A HOMELYLIFE step-down converter and a fireproof WLED controller, removing the need for a fan entirely.)
+(After the pilot, we redesigned this setup for the [beta](../2026-09-03-cooler-electronics/) using an epoxy-potted 20 A HOMELYLIFE step-down converter and a fireproof WLED controller, removing the need for a fan entirely.)

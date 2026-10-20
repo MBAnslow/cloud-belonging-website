@@ -17,7 +17,7 @@ gallery:
 tags: [light, LEDs, diffusion, software, tools]
 ---
 
-Playing with the [LED matrix](/cloud-belonging-website/process/2026-06-22-light-from-within/) made us want a quicker way to try out patterns, so Michael vibe-coded a small tool for designing them: [Cloud Bottom LEDs](https://github.com/MBAnslow/cloud-bottom-leds).
+Playing with the [LED matrix](../2026-06-22-light-from-within/) made us want a quicker way to try out patterns, so Michael vibe-coded a small tool for designing them: [Cloud Bottom LEDs](https://github.com/MBAnslow/cloud-bottom-leds).
 
 Vibe coding, describing what you want to an AI and letting it write the code, made it very easy to try out different LED designs very quickly. A new pattern, a breathing layout or an extra control was a short conversation away, so ideas could be tried on screen and on the real LEDs within minutes instead of hours. That speed mattered more than polish: most designs were thrown away, and the few that felt right could be explored further.
 

@@ -15,4 +15,4 @@ gallery:
 tags: [mesh, outtakes]
 ---
 
-After making some progress with the [outer layer](/cloud-belonging-website/process/2026-07-24-the-first-outer-layer/), the combination of the mesh, cotton and sticks looked quite aesthetically pleasing, and at one point made for an interesting-looking fashion-walk hat.
+After making some progress with the [outer layer](../2026-07-24-the-first-outer-layer/), the combination of the mesh, cotton and sticks looked quite aesthetically pleasing, and at one point made for an interesting-looking fashion-walk hat.

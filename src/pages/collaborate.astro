@@ -12,28 +12,6 @@ import imgOurselves from '../assets/photos/belonging-ourselves.jpg';
 import imgNature from '../assets/photos/belonging-nature.jpg';
 import belongingApp from '../assets/photos/belonging-app.jpg';
 
-const movements = [
-  {
-    name: 'Arrive',
-    time: '20 min',
-    text: 'Cross a threshold. Shoes off, phones away. A short inward question: how are you arriving today? A few minutes of breathing together, with nothing to achieve.',
-  },
-  {
-    name: 'Sense',
-    time: '30 min',
-    text: 'Experience a small version of the cloud: lie under a small cloud of cotton and light, breathe with a sensor, notice what happens in you and around you. Then notice the room, the others, the weather outside.',
-  },
-  {
-    name: 'Make',
-    time: '60 min',
-    text: 'In small groups, tinker with the materials we used (cotton, wadding, mesh, LEDs, breath sensors, sound) to build a tiny space for belonging. Many entry points: some will sew, some will code, some will write a ritual.',
-  },
-  {
-    name: 'Share',
-    time: '30 min',
-    text: 'Visit each other’s spaces. Then a sharing circle: each person speaks once about what they experienced, and is listened to without reply.',
-  },
-];
 
 const belongings = [
   {
@@ -56,12 +34,6 @@ const belongings = [
   },
 ];
 
-const circleRules = [
-  'Speak from your own experience, in the first person.',
-  'Listen without replying, advising or comparing.',
-  'Silence is welcome. You can always pass.',
-  'What is shared in the circle stays in the circle.',
-];
 
 const prompts = [
   'The next time you see a cloud, take three breaths with it. Where was this water yesterday?',
@@ -114,9 +86,7 @@ const prompts = [
         </div>
         <div class="reveal">
           <p>
-            A set of prompts for anyone designing an installation, ritual, workshop or gathering. It isn’t a recipe, and
-            you don’t need to cover every point. It is shown here as an example of what could be relevant: use it to see which parts of the design space you are working in, and
-            which you might be missing. We see it as a starting point that could be refined together with collaborators.
+            A checklist for belonging installation at the intersection of art and cognitive science. It isn’t a recipe, and you don’t need to cover every point. It is an example of what could be relevant: use it to see which parts of the design and experience space you are working in. It also serves to help explore this space as a community.
           </p>
           <p class="small">
             Compiled (with AI assistance) from our literature notes on belonging, group mindfulness and ritual media
@@ -136,40 +106,16 @@ const prompts = [
       <div class="reveal">
         <p class="eyebrow">Example output · a possible workshop</p>
       </div>
-      <div class="grid-2 head">
-        <div class="reveal">
+      <div class="grid-2">
+        <div class="reveal workshop-main">
           <h2>A workshop on making spaces for belonging</h2>
+          <div class="workshop-desc">
+            <p>
+              We would be open to (co)organising a workshop for artists, designers, researchers, students and communities. Whether to formally explore the concept through an academic lens towards academic papers, or to engaging with it in a creative workshop to explore new belonging creations or just to engage with the topic more to bring belonging into our everyday lives.
+            </p>
+          </div>
         </div>
-        <div class="reveal">
-          <p>
-            This is an example of what a hands-on workshop for artists, designers, researchers, students and communities
-            could look like. It would draw on the <em>arriving, exploring, sharing</em> structure of performative scores in museums (Løppenthin
-            et al., 2022). It could also borrow from tinkering and constructionist practice: design an <em>adjacent
-            possible</em> that people can lean into, with many ways in.
-          </p>
-          <p class="small">A possible format, about 2½ hours. It is only a sketch, to be adapted to every group and place.</p>
-        </div>
-      </div>
 
-      <ol class="movements">
-        {
-          movements.map((m, i) => (
-            <li class="movement reveal">
-              <span class="m-num">{i + 1}</span>
-              <h3>{m.name}</h3>
-              <p class="m-time">{m.time}</p>
-              <p>{m.text}</p>
-            </li>
-          ))
-        }
-      </ol>
-
-      <div class="grid-2 extra">
-        <div class="circle reveal">
-          <h3>Guidelines for a sharing circle</h3>
-          <p class="small">Inspired by Dharma sharing in the Plum Village tradition.</p>
-          <ul>{circleRules.map((r) => <li>{r}</li>)}</ul>
-        </div>
         <div class="host reveal">
           <h3>Host it with us</h3>
           <p>
@@ -281,57 +227,18 @@ const prompts = [
     font-size: 0.85rem;
     color: var(--ink-faint);
   }
-  .workshop p {
+  .workshop-desc p {
+    font-size: clamp(1.15rem, 1rem + 0.4vw, 1.3rem);
+    line-height: 1.6;
     color: var(--ink-soft);
-  }
-  .movements {
-    list-style: none;
-    margin: 0 0 4rem;
-    padding: 0;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-    gap: 1.5rem;
-  }
-  .movement {
-    padding: 1.75rem;
-    border-radius: var(--radius);
-    background: rgb(255 255 255 / 0.45);
-    border: 1px solid var(--line);
-  }
-  .m-num {
-    display: grid;
-    place-items: center;
-    width: 2.2rem;
-    height: 2.2rem;
-    border-radius: 50%;
-    border: 1px solid var(--ink-faint);
-    color: var(--ink-soft);
-    font-family: var(--font-display);
     margin-bottom: 1.5rem;
   }
-  .movement h3 {
-    font-size: 1.8rem;
-    margin-bottom: 0.2rem;
+  .workshop-desc p:last-child {
+    margin-bottom: 0;
   }
-  .m-time {
-    font-size: 0.8rem;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--ink-faint) !important;
-  }
-  .circle,
-  .host {
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--line);
-  }
-  .circle ul {
-    padding-left: 1.1em;
-    color: var(--ink-soft);
-    display: grid;
-    gap: 0.5rem;
-  }
-  .circle li::marker {
-    color: var(--dawn);
+  .workshop .host {
+    border-top: none;
+    padding-top: 0;
   }
   .prompt-list {
     list-style: none;

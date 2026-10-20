@@ -41,7 +41,7 @@ Bells marked changes in period. Conceptually, we used them to capture something 
 
 The thunder was not just a sound effect dropped on top of the lightning. The software generated lightning events, then chose thunder samples that roughly matched the character of the strike. A short, quiet strike could pick a shorter and quieter thunder sound; a larger, longer strike could pick something with more weight.
 
-![The Cloud bolts panel, where thunder tracks can be uploaded and tagged by volume and length.](/cloud-belonging-website/images/journal/cloud-bolts.png)
+<img src="../../images/journal/cloud-bolts.png" alt="The Cloud bolts panel, where thunder tracks can be uploaded and tagged by volume and length." loading="lazy" />
 
 Each cloud bolt could have its own audio file, volume, and tags for loudness and duration: low, medium or high; short, medium or long. The simulator could then choose a sample that matched the lightning event instead of always playing the same thunder.
 
@@ -74,7 +74,7 @@ Finally, as dawn comes, we return to the bird song with a slightly disorienting 
 We liked the idea that the cloud could become a kind of instrument, changing with breath in a way that echoed what we explored in the IFT collaboration: web-like structures that respond to touch, proximity and gesture through sound and light. We did not take that idea too far in the pilot, but it was there as a direction.
 
 <figure>
-  <video controls playsinline preload="metadata" src="/cloud-belonging-website/video/audio-breath-modulation.mp4" poster="/cloud-belonging-website/video/audio-breath-modulation.jpg"></video>
+  <video controls playsinline preload="metadata" src="../../video/audio-breath-modulation.mp4" poster="../../video/audio-breath-modulation.jpg"></video>
   <figcaption>Breath modulating the sound, with audio. Watch the drone, pad and sample controls move as each breath passes through the cloud.</figcaption>
 </figure>
 
