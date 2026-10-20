@@ -35,7 +35,7 @@ let n = 0;
     <div class="mini">
     {
       groups.map((g, gi) => (
-        <div class="band" style={`--tone:${g.tone}`}>
+        <div class="band" style={`--tone:${g.tone};--prev:${groups[gi - 1]?.tone ?? 'var(--paper)'}`}>
           <a class="group" href={`#${g.id}`}>
             <span class="part">Part {gi + 1}</span>
             <span class="group-title">{g.title}</span>
@@ -85,28 +85,36 @@ let n = 0;
     box-shadow: 0 1px 2px rgb(27 34 84 / 0.04), 0 18px 50px -24px rgb(27 34 84 / 0.25);
   }
   .contents .band {
+    --band-top: color-mix(in srgb, var(--paper) 90%, var(--tone));
+    --band-bottom: color-mix(in srgb, var(--paper) 70%, var(--tone));
     position: relative;
     isolation: isolate;
-    padding: 3.25rem clamp(1.25rem, 3vw, 2.25rem) 3.5rem;
-    background: color-mix(in srgb, var(--paper) 86%, var(--tone));
+    padding: 4rem clamp(1.25rem, 3vw, 2.25rem) 3rem;
+    background:
+      radial-gradient(ellipse 50% 70% at 85% 30%, rgb(255 255 255 / 0.45), transparent 70%),
+      linear-gradient(180deg, var(--band-top), var(--band-bottom));
   }
   .contents .band::before,
-  .contents .band::after {
+  .contents .band:last-child::after {
     content: '';
     position: absolute;
     inset-inline: 0;
-    height: 2.5rem;
+    height: 3rem;
     z-index: -1;
-    background: var(--paper);
     -webkit-mask: var(--wave) 0 0 / 100% 100% no-repeat;
     mask: var(--wave) 0 0 / 100% 100% no-repeat;
   }
   .contents .band::before {
     top: 0;
+    background: color-mix(in srgb, var(--paper) 70%, var(--prev));
   }
-  .contents .band::after {
+  .contents .band:last-child::after {
     bottom: 0;
     transform: scale(-1, -1);
+    background: var(--paper);
+  }
+  .contents .band:last-child {
+    padding-bottom: 4rem;
   }
   .contents .group {
     display: flex;

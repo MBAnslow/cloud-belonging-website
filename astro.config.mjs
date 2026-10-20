@@ -6,6 +6,31 @@ import { defineConfig } from 'astro/config';
 const SITE = 'https://www.cloudfulness.life';
 const BASE = '';
 
+// Astro only refreshes a component's cached CSS on style-only edits; when markup and styles
+// change in the same save, `Foo.astro?astro&type=style…` keeps serving the previous compile.
+// Recompile the component straight away and drop its style modules on every edit.
+const freshAstroStyles = {
+  name: 'fresh-astro-styles',
+  /** @param {{ file: string, modules: any[] }} ctx */
+  async hotUpdate({ file, modules }) {
+    if (!file.endsWith('.astro')) return;
+    const graph = this.environment.moduleGraph;
+    const main = graph.getModuleById(file);
+    if (main) graph.invalidateModule(main);
+    try {
+      await this.environment.transformRequest(file);
+    } catch {}
+    const extra = [];
+    for (const [id, mod] of graph.idToModuleMap) {
+      if (id.startsWith(`${file}?astro&type=style`)) {
+        graph.invalidateModule(mod);
+        extra.push(mod);
+      }
+    }
+    return [...modules, ...extra];
+  },
+};
+
 // https://astro.build/config
 export default defineConfig({
   site: SITE,
@@ -18,6 +43,7 @@ export default defineConfig({
     '/toolkit': `${BASE}/collaborate/`,
   },
   vite: {
+    plugins: [freshAstroStyles],
     server: {
       watch: {
         // Since the workspace is located inside a OneDrive folder, the standard OS-level
