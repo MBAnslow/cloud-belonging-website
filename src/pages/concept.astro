@@ -124,12 +124,10 @@ const openQuestions = [
 const themes = [...new Set(references.map((r) => r.theme))];
 
 const glow = 'stroke="url(#toc-glow)"';
-const tones = { belonging: '#e0708a', design: '#2e8fe0', bibliography: '#c49a4e' };
 const contents: ContentsGroup[] = [
   {
     id: 'part-belonging',
     title: 'Our slice of belonging',
-    tone: tones.belonging,
     items: [
       {
         id: 'what',
@@ -154,7 +152,6 @@ const contents: ContentsGroup[] = [
   {
     id: 'part-design',
     title: 'Installation design',
-    tone: tones.design,
     items: [
       {
         id: 'into-a-room',
@@ -185,7 +182,6 @@ const contents: ContentsGroup[] = [
   {
     id: 'part-bibliography',
     title: 'Bibliography',
-    tone: tones.bibliography,
     items: [
       {
         id: 'references',
@@ -221,13 +217,15 @@ const questions = [
 
   <PageContents groups={contents} />
 
-  <section class="section wash blend part part-belonging" id="part-belonging">
-    <div class="wrap reveal">
-      <p class="eyebrow">Part 1</p>
-      <h2>Our slice of belonging</h2>
-      <p class="lede measure">What belonging means to us, how it reaches beyond people, and why we approached it through art.</p>
-    </div>
-  </section>
+  <div class="part part-belonging" id="part-belonging">
+    <header class="part-head">
+      <div class="wrap reveal">
+        <p class="part-num">Part 1</p>
+        <h2>Our slice of belonging</h2>
+        <p class="lede measure">What belonging means to us, how it reaches beyond people, and why we approached it through art.</p>
+      </div>
+    </header>
+    <p class="part-tag" aria-hidden="true"><span>Part 1 · Our slice of belonging</span></p>
 
   <section class="section" id="what">
     <div class="wrap grid-2">
@@ -356,13 +354,17 @@ const questions = [
     </div>
   </section>
 
-  <section class="section wash blend part part-design" id="part-design">
-    <div class="wrap reveal">
-      <p class="eyebrow">Part 2</p>
-      <h2>Installation design</h2>
-      <p class="lede measure">How those ideas became a room: the cloud, the narrative it moves through, the decisions behind it, and the questions still open.</p>
-    </div>
-  </section>
+  </div>
+
+  <div class="part part-design" id="part-design">
+    <header class="part-head">
+      <div class="wrap reveal">
+        <p class="part-num">Part 2</p>
+        <h2>Installation design</h2>
+        <p class="lede measure">How those ideas became a room: the cloud, the narrative it moves through, the decisions behind it, and the questions still open.</p>
+      </div>
+    </header>
+    <p class="part-tag" aria-hidden="true"><span>Part 2 · Installation design</span></p>
 
   <section class="section built-in" id="into-a-room">
     <div class="wrap grid-2">
@@ -479,13 +481,17 @@ const questions = [
     </div>
   </section>
 
-  <section class="section wash blend part part-bibliography" id="part-bibliography">
-    <div class="wrap reveal">
-      <p class="eyebrow">Part 3</p>
-      <h2>Bibliography</h2>
-      <p class="lede measure">The literature behind the concept.</p>
-    </div>
-  </section>
+  </div>
+
+  <div class="part part-bibliography" id="part-bibliography">
+    <header class="part-head">
+      <div class="wrap reveal">
+        <p class="part-num">Part 3</p>
+        <h2>Bibliography</h2>
+        <p class="lede measure">The literature behind the concept.</p>
+      </div>
+    </header>
+    <p class="part-tag" aria-hidden="true"><span>Part 3 · Bibliography</span></p>
 
   <section class="section references" id="references">
     <div class="wrap">
@@ -515,22 +521,41 @@ const questions = [
       </div>
     </div>
   </section>
+  </div>
 </Base>
 
 <style>
+  :global(main) {
+    --page-paper: var(--paper);
+  }
   .part {
-    padding-block: clamp(5rem, 10vw, 7.5rem);
-    --stop-1: color-mix(in srgb, var(--paper) 78%, var(--tone));
-    --stop-2: color-mix(in srgb, var(--paper) 90%, var(--tone));
-    background: linear-gradient(180deg, var(--stop-1), var(--stop-2) 60%, var(--paper));
+    position: relative;
+    isolation: isolate;
+    --paper: color-mix(in srgb, var(--page-paper) 86%, var(--tone));
+    background: var(--paper);
+    padding-block: 6rem;
   }
-  .part .eyebrow {
-    color: var(--tone);
-    font-weight: 600;
+  .part::before,
+  .part::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    height: 6.25rem;
+    z-index: 1;
+    pointer-events: none;
+    background: var(--page-paper);
+    -webkit-mask: var(--wave) 0 0 / 100% 100% no-repeat;
+    mask: var(--wave) 0 0 / 100% 100% no-repeat;
   }
-  .part h2 {
-    font-size: clamp(2.4rem, 1.8rem + 2.6vw, 4rem);
-    margin-bottom: 0.6rem;
+  .part::before {
+    top: 0;
+  }
+  .part::after {
+    bottom: 0;
+    transform: scale(-1, -1);
+  }
+  .part :global(.wash) {
+    --wash-tint: var(--tone);
   }
   .part-belonging {
     --tone: #e0708a;
@@ -540,6 +565,42 @@ const questions = [
   }
   .part-bibliography {
     --tone: #c49a4e;
+  }
+  .part-head {
+    padding-block: 2.5rem 1rem;
+  }
+  .part-num {
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--tone) 75%, var(--ink));
+    margin-bottom: 0.4rem;
+  }
+  .part-head h2 {
+    font-size: clamp(2.6rem, 1.8rem + 3vw, 4.4rem);
+    margin-bottom: 0.6rem;
+  }
+  .part-tag {
+    position: sticky;
+    top: 4.75rem;
+    z-index: 5;
+    height: 0;
+    margin: 0;
+    padding-inline: var(--gutter, 1.5rem);
+    pointer-events: none;
+  }
+  .part-tag span {
+    display: inline-block;
+    padding: 0.35rem 0.85rem;
+    border-radius: 999px;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--tone) 70%, var(--ink));
+    background: color-mix(in srgb, var(--page-paper) 80%, var(--tone));
+    box-shadow: 0 4px 14px -6px rgb(27 34 84 / 0.25);
   }
   .big-quote {
     margin: 0;
@@ -617,9 +678,9 @@ const questions = [
     --c1: #5762ff; --m1: 85; --p1: 0;
     --c2: #2e7eff; --m2: 88; --p2: 30;
     --c3: #38b3ff; --m3: 94; --p3: 70;
-    --stop-1: color-mix(in srgb, var(--paper) calc(var(--m1) * 1%), var(--c1));
-    --stop-2: color-mix(in srgb, var(--paper) calc(var(--m2) * 1%), var(--c2));
-    --stop-3: color-mix(in srgb, var(--paper) calc(var(--m3) * 1%), var(--c3));
+    --stop-1: color-mix(in srgb, var(--page-paper) calc(var(--m1) * 1%), var(--c1));
+    --stop-2: color-mix(in srgb, var(--page-paper) calc(var(--m2) * 1%), var(--c2));
+    --stop-3: color-mix(in srgb, var(--page-paper) calc(var(--m3) * 1%), var(--c3));
     background: linear-gradient(calc(var(--angle) * 1deg),
       var(--stop-1) calc(var(--p1) * 1%),
       var(--stop-2) calc(var(--p2) * 1%),
@@ -822,9 +883,9 @@ const questions = [
   }
 
   .page-wash {
-    --stop-1: color-mix(in srgb, var(--paper) calc(var(--m1) * 1%), var(--c1));
-    --stop-2: color-mix(in srgb, var(--paper) calc(var(--m2) * 1%), var(--c2));
-    --stop-3: color-mix(in srgb, var(--paper) calc(var(--m3) * 1%), var(--c3));
+    --stop-1: color-mix(in srgb, var(--page-paper) calc(var(--m1) * 1%), var(--c1));
+    --stop-2: color-mix(in srgb, var(--page-paper) calc(var(--m2) * 1%), var(--c2));
+    --stop-3: color-mix(in srgb, var(--page-paper) calc(var(--m3) * 1%), var(--c3));
     background:
       linear-gradient(calc(var(--angle) * 1deg),
         var(--stop-1) calc(var(--p1) * 1%),
