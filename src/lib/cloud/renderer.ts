@@ -84,34 +84,46 @@ float blob(vec3 p, vec3 c, float r) {
 }
 
 float shape(vec3 p) {
-  float k = 0.16;
+  float k = 0.105;
   float d = blob(p, vec3(0.0, 0.02, 0.0), 0.56);
   d = smin(d, blob(p, vec3(-0.58, -0.1, 0.05), 0.42), k);
   d = smin(d, blob(p, vec3(0.6, -0.08, -0.05), 0.45), k);
   d = smin(d, blob(p, vec3(0.24, 0.4, 0.12), 0.37), k);
   d = smin(d, blob(p, vec3(-0.3, 0.33, -0.08), 0.34), k);
   d = smin(d, blob(p, vec3(0.0, 0.64, 0.02), 0.25), k);
+  d = smin(d, blob(p, vec3(0.48, 0.5, -0.05), 0.2), k);
+  d = smin(d, blob(p, vec3(-0.5, 0.54, 0.02), 0.18), k);
   d = smin(d, blob(p, vec3(0.55, 0.3, 0.1), 0.29), k);
   d = smin(d, blob(p, vec3(-0.68, 0.17, 0.0), 0.26), k);
+  d = smin(d, blob(p, vec3(-0.92, -0.03, 0.04), 0.2), k);
   d = smin(d, blob(p, vec3(0.92, 0.06, 0.08), 0.25), k);
   d = smin(d, blob(p, vec3(1.08, -0.22, 0.0), 0.27), k);
   d = smin(d, blob(p, vec3(-1.02, -0.23, 0.02), 0.25), k);
   d = smin(d, blob(p, vec3(-0.12, -0.08, 0.34), 0.34), k);
   d = smin(d, blob(p, vec3(0.3, -0.12, 0.3), 0.3), k);
-  return max(d, -(p.y + 0.34));
+  d = smin(d, blob(p, vec3(0.08, 0.2, 0.38), 0.2), k);
+  d = smin(d, blob(p, vec3(-0.24, 0.18, -0.3), 0.18), k);
+  d = smin(d, blob(p, vec3(-0.48, -0.25, 0.24), 0.16), k);
+  d = smin(d, blob(p, vec3(0.72, -0.25, 0.2), 0.15), k);
+  d = smin(d, blob(p, vec3(0.02, 0.24, -0.34), 0.22), k);
+  d = smin(d, blob(p, vec3(-0.78, -0.32, -0.08), 0.11), k);
+  d = smin(d, blob(p, vec3(0.16, -0.32, -0.22), 0.1), k);
+  d = smin(d, blob(p, vec3(0.98, -0.33, -0.05), 0.1), k);
+  float base = -(p.y + 0.34 + 0.055 * sin(p.x * 8.5) + 0.03 * sin((p.x + p.z) * 15.0));
+  return max(d, base);
 }
 
 // Noise can push density up to 0.24 beyond the shape surface, and warp() moves it by up to ~0.13;
 // the skip thresholds in main() (0.26 on the warped shape, 0.45 on the unwarped one) depend on this.
 float densityFrom(float s, float n) {
-  return clamp((-s + (n - 0.52) * 0.5) * 11.0, 0.0, 1.0) * uDensity;
+  return clamp((-s + (n - 0.52) * 0.6) * 11.0, 0.0, 1.0) * uDensity;
 }
 
 vec3 warp(vec3 p, vec3 w) {
   // Keep the warp's wavelength well below the cloud's width, and its vertical part small,
   // so drifting noise ruffles the edges instead of bending the whole body.
   vec3 q = p * 2.8 + w * 0.4;
-  return p + vec3(noise(q) - 0.5, (noise(q + 17.3) - 0.5) * 0.3, noise(q + 31.7) - 0.5) * 0.24;
+  return p + vec3(noise(q) - 0.5, (noise(q + 17.3) - 0.5) * 0.34, noise(q + 31.7) - 0.5) * 0.3;
 }
 
 vec3 wind() {
