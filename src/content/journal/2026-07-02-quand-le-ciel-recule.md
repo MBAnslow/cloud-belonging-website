@@ -54,3 +54,7 @@ One slide traced the path from concept, through the literature, to implementatio
 - belonging as a **journey** → evolving scenarios;
 - belonging as **dynamic** → collective biofeedback;
 - the **quality of connections** → a shared experience.
+
+You can read the full presentation slide-deck from the talk:
+[Download the presentation (PDF)](/documents/carnet-recherche-2-juillet.pdf)
+
