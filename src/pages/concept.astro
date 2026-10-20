@@ -241,7 +241,7 @@ const questions = [
     </div>
   </section>
 
-  <section class="section dark blend interbeing" id="interbeing">
+  <section class="section wash interbeing" id="interbeing">
     <div class="wrap grid-2">
       <div class="reveal">
         <p class="eyebrow">Beyond people</p>
@@ -544,7 +544,18 @@ const questions = [
     margin: 0;
   }
   .interbeing {
-    background: radial-gradient(ellipse at 80% 30%, #4a5c9e, #262d5e 75%);
+    --angle: 180;
+    --c1: #5762ff; --m1: 85; --p1: 0;
+    --c2: #2e7eff; --m2: 88; --p2: 30;
+    --c3: #38b3ff; --m3: 94; --p3: 70;
+    --stop-1: color-mix(in srgb, var(--paper) calc(var(--m1) * 1%), var(--c1));
+    --stop-2: color-mix(in srgb, var(--paper) calc(var(--m2) * 1%), var(--c2));
+    --stop-3: color-mix(in srgb, var(--paper) calc(var(--m3) * 1%), var(--c3));
+    background: linear-gradient(calc(var(--angle) * 1deg),
+      var(--stop-1) calc(var(--p1) * 1%),
+      var(--stop-2) calc(var(--p2) * 1%),
+      var(--stop-3) calc(var(--p3) * 1%),
+      var(--paper) 100%);
   }
   .interbeing p {
     color: var(--ink-soft);
@@ -558,26 +569,24 @@ const questions = [
     width: min(100%, 26rem);
   }
   .circles circle {
-    fill-opacity: 0.18;
-    stroke-width: 1;
-    stroke-opacity: 0.6;
-    mix-blend-mode: screen;
+    fill-opacity: 0.14;
+    stroke-width: 1.5;
+    stroke-opacity: 0.5;
   }
   .c1 {
-    fill: #f8a98c;
-    stroke: #f8a98c;
+    fill: #e88c6e;
+    stroke: #e88c6e;
   }
   .c2 {
-    fill: #9a9dea;
-    stroke: #9a9dea;
+    fill: #5762ff;
+    stroke: #5762ff;
   }
   .c3 {
-    fill: #f9c77c;
-    stroke: #f9c77c;
-    fill-opacity: 0.28 !important;
+    fill: #2e7eff;
+    stroke: #2e7eff;
   }
   .circles text {
-    fill: #f1f2fc;
+    fill: var(--ink);
     font-family: var(--font-display);
     font-size: 15px;
     font-style: italic;
