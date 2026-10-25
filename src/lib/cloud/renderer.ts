@@ -88,29 +88,34 @@ float shape(vec3 p) {
   float d = blob(p, vec3(0.0, 0.02, 0.0), 0.56);
   d = smin(d, blob(p, vec3(-0.58, -0.1, 0.05), 0.42), k);
   d = smin(d, blob(p, vec3(0.6, -0.08, -0.05), 0.45), k);
-  d = smin(d, blob(p, vec3(0.24, 0.4, 0.12), 0.37), k);
-  d = smin(d, blob(p, vec3(-0.3, 0.33, -0.08), 0.34), k);
-  d = smin(d, blob(p, vec3(0.0, 0.64, 0.02), 0.25), k);
-  d = smin(d, blob(p, vec3(0.48, 0.5, -0.05), 0.2), k);
-  d = smin(d, blob(p, vec3(-0.5, 0.54, 0.02), 0.18), k);
-  d = smin(d, blob(p, vec3(0.55, 0.3, 0.1), 0.29), k);
-  d = smin(d, blob(p, vec3(-0.68, 0.17, 0.0), 0.26), k);
+  d = smin(d, blob(p, vec3(0.24, 0.4, 0.12), 0.44), k);
+  d = smin(d, blob(p, vec3(-0.3, 0.33, -0.08), 0.42), k);
+  d = smin(d, blob(p, vec3(0.0, 0.64, 0.02), 0.36), k);
+  d = smin(d, blob(p, vec3(0.48, 0.5, -0.05), 0.32), k);
+  d = smin(d, blob(p, vec3(-0.5, 0.54, 0.02), 0.3), k);
+  d = smin(d, blob(p, vec3(0.55, 0.3, 0.1), 0.34), k);
+  d = smin(d, blob(p, vec3(-0.68, 0.17, 0.0), 0.3), k);
   d = smin(d, blob(p, vec3(-0.92, -0.03, 0.04), 0.2), k);
   d = smin(d, blob(p, vec3(0.92, 0.06, 0.08), 0.25), k);
   d = smin(d, blob(p, vec3(1.08, -0.22, 0.0), 0.27), k);
   d = smin(d, blob(p, vec3(-1.02, -0.23, 0.02), 0.25), k);
   d = smin(d, blob(p, vec3(-0.12, -0.08, 0.34), 0.34), k);
   d = smin(d, blob(p, vec3(0.3, -0.12, 0.3), 0.3), k);
-  d = smin(d, blob(p, vec3(0.08, 0.2, 0.38), 0.2), k);
-  d = smin(d, blob(p, vec3(-0.24, 0.18, -0.3), 0.18), k);
+  d = smin(d, blob(p, vec3(0.08, 0.2, 0.38), 0.26), k);
+  d = smin(d, blob(p, vec3(-0.24, 0.18, -0.3), 0.24), k);
   d = smin(d, blob(p, vec3(-0.48, -0.25, 0.24), 0.16), k);
   d = smin(d, blob(p, vec3(0.72, -0.25, 0.2), 0.15), k);
-  d = smin(d, blob(p, vec3(0.02, 0.24, -0.34), 0.22), k);
+  d = smin(d, blob(p, vec3(0.02, 0.24, -0.34), 0.28), k);
   d = smin(d, blob(p, vec3(-0.78, -0.32, -0.08), 0.11), k);
   d = smin(d, blob(p, vec3(0.16, -0.32, -0.22), 0.1), k);
   d = smin(d, blob(p, vec3(0.98, -0.33, -0.05), 0.1), k);
-  float base = -(p.y + 0.34 + 0.055 * sin(p.x * 8.5) + 0.03 * sin((p.x + p.z) * 15.0));
-  return max(d, base);
+  // A soft, undulating base so the bottom reads voluminous instead of knife-edged.
+  float base = -(p.y + 0.34
+    + 0.055 * sin(p.x * 2.3 + 1.1)
+    + 0.035 * sin(p.x * 4.1 + p.z * 1.7)
+    + 0.025 * sin((p.x - p.z) * 3.3 + 0.7)
+    + 0.018 * sin((p.x + p.z) * 6.5));
+  return -smin(-d, -base, 0.2);
 }
 
 // Noise can push density up to 0.24 beyond the shape surface, and warp() moves it by up to ~0.13;

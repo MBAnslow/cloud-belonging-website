@@ -2,7 +2,7 @@
 export interface ContentsItem {
   id: string;
   label: string;
-  desc: string;
+  desc?: string;
   /** Inner SVG markup on a 48×48 grid; `stroke="url(#toc-glow)"` gives the accent gradient. */
   icon: string;
 }
@@ -64,7 +64,7 @@ const bandStyle = (g: ContentsGroup, i: number) => {
     `--glow-x:${v.glowX}%`,
     `--glow-y:${v.glowY}%`,
     `--preview-alpha:${g.previewAlpha ?? 1}`,
-    `z-index:${groups.length - i}`,
+    `z-index:${i + 1}`,
   ].join(';');
 };
 ---
@@ -95,7 +95,7 @@ const bandStyle = (g: ContentsGroup, i: number) => {
                   </svg>
                   <span class="num">{String(++n).padStart(2, '0')}</span>
                   <span class="label">{c.label}</span>
-                  <span class="desc">{c.desc}</span>
+                  {c.desc && <span class="desc">{c.desc}</span>}
                 </a>
               </li>
             ))}
@@ -140,26 +140,55 @@ const bandStyle = (g: ContentsGroup, i: number) => {
     --stop-3: color-mix(in srgb, var(--c3) calc(var(--m3) * var(--preview-alpha)), var(--paper));
     position: relative;
     isolation: isolate;
-    padding: 3rem clamp(1.25rem, 3vw, 2.25rem);
+    padding: 1.75rem clamp(1rem, 2.5vw, 1.75rem);
     background:
       radial-gradient(ellipse 50% 70% at var(--glow-x) var(--glow-y), rgb(255 255 255 / var(--glow)), transparent 70%),
       linear-gradient(180deg, var(--stop-1) var(--p1), var(--stop-2) var(--p2), var(--stop-3) var(--p3));
   }
   .contents .band + .band {
-    padding-top: 3rem;
+    padding-top: 1.75rem;
   }
-  .contents .band::after {
-    content: none;
+  .contents .band:not(:last-child)::after,
+  .contents .band + .band::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    height: var(--wave-height, 6.25rem);
+    pointer-events: none;
+    z-index: 2;
+    background: var(--wave-outline-active, var(--wave-outline)) 0 0 / 100% 100% no-repeat;
+    opacity: var(--mini-wave-opacity, 1.0);
+  }
+  .contents .band:not(:last-child)::after {
+    bottom: 0;
+    transform: translateY(50%);
+  }
+  .contents .band + .band::before {
+    top: 0;
+    transform: translateY(-50%);
+    background-image: var(--wave-outline-top-active, var(--wave-outline-top));
+  }
+  @media (max-width: 700px) {
+    .contents .band:not(:last-child)::after,
+    .contents .band + .band::before {
+      height: var(--mobile-wave-height, 2.75rem);
+    }
+    .contents .band:not(:last-child)::after {
+      --wave-outline-active: var(--wave-outline-mobile, var(--wave-outline));
+    }
+    .contents .band + .band::before {
+      --wave-outline-top-active: var(--wave-outline-top-mobile, var(--wave-outline-top));
+    }
   }
   .contents .band:last-child {
-    padding-bottom: 3rem;
+    padding-bottom: 1.75rem;
   }
   .contents .group {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.85rem;
-    margin-bottom: 1.35rem;
+    margin-bottom: 1.15rem;
     color: var(--ink);
     text-align: center;
     text-decoration: none;
@@ -177,11 +206,13 @@ const bandStyle = (g: ContentsGroup, i: number) => {
   }
   .contents li a {
     position: relative;
+    z-index: 3;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     height: 100%;
-    min-height: 10rem;
-    padding: 1.15rem 1.15rem 1rem;
+    min-height: 6.5rem;
+    padding: 1rem 1.15rem 1rem 4.8rem;
     border-radius: var(--radius);
     background: rgb(255 255 255 / 0.75);
     border: 1px solid rgb(255 255 255 / 0.9);
@@ -196,8 +227,8 @@ const bandStyle = (g: ContentsGroup, i: number) => {
   }
   .contents .icon {
     position: absolute;
-    right: 1rem;
-    bottom: 1rem;
+    left: 1.15rem;
+    top: 1.15rem;
     width: 2.7rem;
     height: 2.7rem;
     padding: 0.45rem;
@@ -212,8 +243,10 @@ const bandStyle = (g: ContentsGroup, i: number) => {
   }
   .contents .num {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 4.25rem;
+    left: 1.15rem;
+    width: 2.7rem;
+    text-align: center;
     font-family: var(--font-display);
     font-size: 0.95rem;
     color: var(--ink-faint);
@@ -222,8 +255,7 @@ const bandStyle = (g: ContentsGroup, i: number) => {
     font-family: var(--font-display);
     font-size: 1.2rem;
     line-height: 1.2;
-    margin-bottom: 0.35rem;
-    padding-right: 1.5rem;
+    margin-bottom: 0;
   }
   .contents .desc {
     font-size: 0.76rem;
