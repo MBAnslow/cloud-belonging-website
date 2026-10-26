@@ -13,61 +13,94 @@ import teapotWaterCycle from '../assets/photos/teapot-water-cycle.jpg';
 const facets = [
   {
     title: 'A fundamental human need',
-    text: 'Belonging is a universal, evolutionarily rooted drive to form and keep meaningful connections. Kelly-Ann Allen writes that our need to belong is like our need for water—in Maslow’s hierarchy, it comes right after food, water and safety. It is felt as being accepted, valued and understood.',
+    text: 'Belonging is a universal drive for lasting, meaningful relationships (Baumeister & Leary, 1995; Allen, 2020). As Kelly-Ann Allen writes, "our need to belong is like our need for water: we can spend some time ignoring our thirst, but sooner or later, our body will start to suffer." It sits right after food, water, and safety in Maslow’s hierarchy—felt as being accepted, valued, and understood.',
     cite: 'Baumeister & Leary, 1995; Allen, 2020',
   },
   {
     title: 'A process, not a state',
-    text: 'Belonging is never fixed. It flickers, depends on context, and is renegotiated all the time. It is shaped by autonomy, choice and commitment, so it can’t be imposed.',
+    text: 'Belonging is never fixed. It flickers, depends on context, and is renegotiated continuously. Because it is shaped by personal autonomy, choice, and commitment, belonging can never be forced or imposed.',
     cite: 'Allen, 2020',
   },
   {
     title: 'Built in small acts',
-    text: 'Sharing a thought or a memory, listening, affirming, moving in time with someone. And reframing shared struggles as normal, so that difficulty doesn’t read as proof that you don’t fit in.',
+    text: 'Shared moments—listening, affirming, moving in time, or sharing a thought—build connection step by step. Reframing shared struggles as normal helps ensure difficulty doesn’t feel like proof that you don’t fit in (Walton & Cohen, 2011).',
     cite: 'Walton & Cohen, 2011',
   },
   {
     title: 'Quality over quantity',
-    text: 'What matters is frequent, warm, stable contact within real mutual care. Going from no close relationships to two changes everything; going from twenty to twenty-two changes very little.',
+    text: 'What matters is frequent, warm, stable contact grounded in mutual care. Moving from zero close relationships to two transforms wellbeing; going from twenty to twenty-two makes very little difference.',
     cite: 'Baumeister & Leary, 1995',
   },
   {
     title: 'Embodied and placed',
-    text: 'Belonging lives in the body and attaches to places, objects, sounds, smells and textures. Think of a place where you belong and every sense comes back at once.',
+    text: 'Belonging lives in the body, attaching to places, objects, sounds, and textures. Think of a space where you truly belong, and every sensory memory returns all at once.',
     cite: 'Allen, 2020',
+  },
+  {
+    title: 'There even in absence',
+    text: 'Even when the original setting is gone, belonging leaves a deep imprint: shared cultural values, implicit norms, and subtle social bonds. Though modern life often treats us as isolated individuals, we remain deeply enmeshed with the world around us.',
+    cite: 'Reflection',
   },
 ];
 
 const belongingMap = [
   {
-    quality: 'Belonging is embodied and anchored',
-    choice: 'A multisensory space.',
-    how: ' You take off your shoes and lie down beneath the cloud, among soft fabric, warm light and a glass of tea.',
+    quality: 'Embodied belonging',
+    choice: 'A multi-sensory space',
+    how: 'Belonging is anchored in the body. Settling beneath the cloud on soft beanbags, feeling its texture, watching light warm surrounding surfaces, and sensing sudden lightning flashes grounds attention into the present moment.',
   },
   {
     quality: 'Belonging is a journey',
-    choice: 'An evolving score.',
-    how: ' Dusk, a magical twilight, then breath synchrony: the experience moves, and you move with it.',
+    choice: 'Clear transitions & shared time',
+    how: 'An audio-visual arc guides the experience: thematic musical scores mark key shifts, light dynamics evolve over time, and the familiar cycle of sky and daylight provides a shared temporal frame.',
   },
   {
     quality: 'Belonging is dynamic',
-    choice: 'Biofeedback.',
-    how: ' A sensor follows your breathing, and the cloud’s light rises and settles with it. You breathe with the cloud rather than control it.',
+    choice: 'Biofeedback',
+    how: 'A sensor follows your breathing, gently altering the cloud’s illumination. Breath flows through the light as a seamless continuation of your body, creating a tangible sense of connection.',
   },
   {
-    quality: 'Belonging depends on the quality of connections',
-    choice: 'A shared experience.',
-    how: ' One sky over everyone in the room, with nobody in a better seat.',
+    quality: 'Playing a role over control',
+    choice: 'Co-existence & mutual presence',
+    how: 'Inter-being is not one-way control. Rather than pressing buttons to command an effect, your breath illuminates the cloud with the sky’s natural light—turning an automatic bodily rhythm into a shared, atmospheric role.',
+  },
+  {
+    quality: 'Self-contained object in space',
+    choice: 'Object-based lighting',
+    how: 'Embedded internal lighting radiates outward in all directions. With no stage, screen, or audience partition, participants can gather anywhere in the room as equal inhabitants under the same sky.',
+  },
+  {
+    quality: 'Carrying the experience with you',
+    choice: 'Subtle transitions home',
+    how: 'The magical arc is framed between everyday states (dusk and daylight). Subtle audio fades and light transitions create continuity, helping the feeling of the installation linger long after returning to daily life.',
   },
 ];
 
 const whyCloud = [
-  { title: 'It is above everyone', text: 'Nobody has a better seat. A cloud offers a shared perspective without a stage.' },
-  { title: 'It gives light a body', text: 'A cloud is a volume for light to live in — glowing, flashing, catching the sun.' },
-  { title: 'It is always changing', text: 'Clouds are impermanence made visible. They form, drift, rain and form again.' },
-  { title: 'It is water, and so are we', text: 'The water cycle is continuity and unity: the same water in vapour, rain, river, tea, and us.' },
-  { title: 'It follows you home', text: 'Everyone sees clouds. We hope the next one you see brings a little of this back.' },
-  { title: 'It is forgiving', text: 'Dim, diffuse light feels primal and hides the imperfections of whatever room we are in.' },
+  {
+    title: 'It is above everyone',
+    text: 'Under a large sky, nobody has a better seat than another. A cloud offers a shared perspective without an explicit stage.',
+  },
+  {
+    title: 'It gives light a body while hiding internals',
+    text: 'Clouds are largely opaque, yet they allow light to penetrate and diffuse through their outer layers. This makes the cloud’s surface a natural diffuser for embedded lighting, while concealing the electronics and supporting structures within. By controlling how light spreads through the material, we can recreate the appearance of light passing through a cloud, without making the structure itself transparent.',
+  },
+  {
+    title: 'It is always changing',
+    text: 'Though our structure is static, the play of light on it changes and particular states like whether there is a lightning storm or not gives it dynamics. We did consider whether we could add physical dynamic aspects to the cloud to make it slowly morph shape but we decided it would be too complex. We also considered carefully modulating lighting from inside to make it appear like the cloud was changing shape. This might be possible with many more lights and a more uniform surface but it maybe have made the cloud appear like a backlit projector screen. Picture a spheroid with some mapped projectors inside it.',
+  },
+  {
+    title: 'It is water, and so are we',
+    text: 'As mentioned before clouds are a powerful symbol in the teachings of Thich Nhat Hanh related to inter-being. We only played with this idea by having tea in some of our sessions but we could have taken this further.',
+  },
+  {
+    title: 'It follows you home',
+    text: 'Everyone sees clouds. We hope that people can reflect on the purpose of installation when they next look up in the sky. We are interested in transporting this experience to other contexts and leaning in on this is one way in which that might be accomplished.',
+  },
+  {
+    title: 'Reality in a bottle',
+    text: 'The cloud is lit from inside and so we can remove the outside lighting. This gives it the surreal impression of it having been captured from a different context and implanted into our space and serving as our soul point of focus. Being able to turn off the lights also allows us to hide imperfection in the space. Having said that, the light emitted from the cloud has power, particularly with lightning flashes.',
+  },
 ];
 
 const decisions = [
@@ -154,16 +187,6 @@ const contents: ContentsGroup[] = [
         label: 'The narrative',
         icon: `<path d="M6 34h36"/><path ${glow} d="M14 34a10 10 0 0 1 20 0"/><path d="M30 12a7 7 0 1 0 6 10 6 6 0 0 1-6-10Z"/>`,
       },
-      {
-        id: 'decisions',
-        label: 'Design decisions',
-        icon: `<path d="M24 6v36"/><path ${glow} d="M24 14h12l4 4-4 4H24"/><path d="M24 26H12l-4 4 4 4h12"/>`,
-      },
-      {
-        id: 'questions',
-        label: 'Open questions',
-        icon: `<path d="M18 18a6 6 0 1 1 9 5c-2 1-3 2-3 5"/><circle ${glow} cx="24" cy="36" r="1.8"/><circle cx="24" cy="24" r="18"/>`,
-      },
     ],
   },
   {
@@ -230,8 +253,8 @@ const questions = [
       eyebrow="Concept"
       image={conceptHero}
       imageAlt="A hand reaching up inside the cloud’s white mesh shell, showing bamboo skewers holding the layers together during assembly."
-      title="Belonging, and why a cloud"
-      lede="We started by asking whether art and technology could help people find a moment of peace. We kept arriving at the same answer: peace is rarely something we find alone."
+      title="Belonging, inter-being and a cloud"
+      lede="How can art and technology create sublime moments that stay with you? In Cloudfulness, we explored the idea of emitting a moment of heightened sensory stimulation and a hallucination-like feeling of inter-being with a cloud. This was framed inside a mystical environmental narrative arc that peaks during the dawn before dissolves back into daylight."
     />
   </div>
 
@@ -242,7 +265,7 @@ const questions = [
       <div class="wrap reveal">
         <p class="part-num">Part 1</p>
         <h2>Our slice of belonging</h2>
-        <p class="lede measure">What belonging means to us, how it reaches beyond people, and why we approached it through art.</p>
+        <p class="lede measure">What belonging means to us, how it reaches beyond people, and cloudful inter-being.</p>
       </div>
     </header>
     <p class="part-tag" aria-hidden="true"><span>Part 1 · Our slice of belonging</span></p>
@@ -253,18 +276,19 @@ const questions = [
         <p class="eyebrow">Five facets</p>
         <h2>What belonging means</h2>
       </div>
-      <ol class="facets">
+      <ul class="facet-grid facet-grid-static">
         {
-          facets.map((f, i) => (
-            <li class="facet reveal">
-              <span class="num">{String(i + 1).padStart(2, '0')}</span>
-              <h3>{f.title}</h3>
-              <p>{f.text}</p>
-              <p class="cite">{f.cite}</p>
+          facets.map((f) => (
+            <li class="reveal">
+              <article class="facet-card facet-card-static">
+                <h3>{f.title}</h3>
+                <p class="facet-text">{f.text}</p>
+                <p class="facet-cite">{f.cite}</p>
+              </article>
             </li>
           ))
         }
-      </ol>
+      </ul>
     </div>
   </section>
 
@@ -282,14 +306,14 @@ const questions = [
           around us.
         </p>
         <p>
-          Belonging is not only about being accepted by others, but also about feeling at home in ourselves and in
-          the world. It provides a sense of safety and rootedness from which we can explore, engage with, and
+          To that extent it's not only about being accepted by others, but also about feeling at home in ourselves and
+          in the world. It provides a sense of safety and rootedness from which we can explore, engage with, and
           experience the world more openly. In this way, belonging is more than a social need; it is a foundation
           for curiosity, openness, exploration, and meaningful connection.
         </p>
         <p>
-          When your social sense of connection is damaged, often the only moments of solace come from our connection
-          to the world. Nature provides a neutral and available point of reconnection.
+          When your social sense of connection is damaged, your only moments of solace might come from your connection
+          to the world. Nature provides a neutral and primal point of reconnection.
         </p>
       </div>
     </div>
@@ -298,20 +322,15 @@ const questions = [
   <section class="section wash interbeing" id="interbeing">
     <div class="wrap grid-2">
       <div class="reveal">
-        <p class="eyebrow">Interbeing</p>
+        <p class="eyebrow">Inter-being</p>
         <h2>Interbeing: there is a cloud in your tea</h2>
         <p>
           <a href="https://plumvillage.org/about/thich-nhat-hanh" target="_blank" rel="noopener">Thich Nhat Hanh</a>,
           the late Vietnamese Zen master and peace activist, often pointed to a cup of tea and saw a cloud in it. The
           cloud has not died: it became rain, then a river, then this tea. Nothing is only itself. It
-          <em>inter-is</em> with everything that made it possible.
-        </p>
-        <p>
-          It was from this concept of interbeing that we drew our core inspiration for Cloudfulness, choosing a
-          breathing cloud as the physical medium of our installation. Where belonging is warm, social and fragile,
-          interbeing is quiet and continuous. It never really goes away. Our project lives between the two—using
-          the cloud to invite people to feel connected to each other, and also to something larger that was here
-          before them and will continue after: weather, water, sky.
+          <em>inter-is</em> with everything that made it possible. It was from this concept of inter-being that we drew
+          our core inspiration for Cloudfulness, choosing a breathing cloud as the physical medium of our
+          installation.
         </p>
         <p>
           <a class="button" href={url('/installation/')}>See how the installation puts this into practice</a>
@@ -334,56 +353,64 @@ const questions = [
       <div class="wrap reveal">
         <p class="part-num">Part 2</p>
         <h2>Installation design</h2>
-        <p class="lede measure">How those ideas became a room: the cloud, the narrative it moves through, the decisions behind it, and the questions still open.</p>
+        <p class="lede measure">Designing a room with a cloud and a narrative experience for interbeing.</p>
       </div>
     </header>
     <p class="part-tag" aria-hidden="true"><span>Part 2 · Installation design</span></p>
 
   <section class="section built-in" id="into-a-room">
-    <div class="wrap grid-2">
-      <div class="reveal">
-        <p class="eyebrow">An example of belonging</p>
-        <h2>Belonging to nature, built into a room</h2>
-        <p>
-          Belonging to ourselves, to each other and to nature are always connected. <em>Cloudfulness</em> leans towards
-          nature: a shared sky, weather and water, something larger that was here before us and will continue after.
-        </p>
-        <p>
-          We started from what the research says belonging is, and turned each quality into a design choice.{' '}
-          <a href={url('/installation/')}>See the installation →</a>
-        </p>
+    <div class="wrap">
+      <div class="section-head reveal">
+        <p class="eyebrow">Design features of belonging</p>
+        <h2>Building inter-being into a room</h2>
       </div>
-      <dl class="mapping reveal">
+      <ul class="facet-grid">
         {
           belongingMap.map((m) => (
-            <div>
-              <dt>{m.quality}</dt>
-              <dd>
-                <strong>{m.choice}</strong>
-                {m.how}
-              </dd>
-            </div>
+            <li class="reveal">
+              <details class="facet-card" name="design-feature">
+                <summary>
+                  <div class="facet-head">
+                    <p class="facet-eyebrow">{m.choice}</p>
+                    <h3>{m.quality}</h3>
+                  </div>
+                  <span class="chevron" aria-hidden="true"></span>
+                </summary>
+                <div class="facet-body"><p>{m.how}</p></div>
+              </details>
+            </li>
           ))
         }
-      </dl>
+      </ul>
     </div>
   </section>
+
+  <ScoreGrid />
 
   <section class="section wash" id="why-a-cloud">
     <div class="wrap why-cloud">
       <div class="why-text">
-        <p class="eyebrow reveal">Why a cloud</p>
-        <h2 class="reveal">Something we all live under</h2>
-        <div class="why-grid">
+        <div class="section-head reveal">
+          <p class="eyebrow">Some cloud-related practical and thematic considerations</p>
+          <h2>Something we all live under</h2>
+        </div>
+        <ul class="facet-grid facet-grid-two">
           {
             whyCloud.map((w) => (
-              <div class="why-item reveal">
-                <h3>{w.title}</h3>
-                <p>{w.text}</p>
-              </div>
+              <li class="reveal">
+                <details class="facet-card" name="cloud-aspect">
+                  <summary>
+                    <div class="facet-head">
+                      <h3>{w.title}</h3>
+                    </div>
+                    <span class="chevron" aria-hidden="true"></span>
+                  </summary>
+                  <div class="facet-body"><p>{w.text}</p></div>
+                </details>
+              </li>
             ))
           }
-        </div>
+        </ul>
       </div>
       <Figure
         src={alphaWarm}
@@ -394,63 +421,6 @@ const questions = [
         sizes="(min-width: 60rem) 22rem, 100vw"
         class="reveal why-video"
       />
-    </div>
-  </section>
-
-  <ScoreGrid />
-
-  <section class="section wash wash-sky decisions" id="decisions">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">How we reasoned</p>
-        <h2>Why it is the way it is</h2>
-        <p class="lede measure">
-          Every element of the installation answers a question about belonging. These are the decisions we made, and
-          our reasons for them.
-        </p>
-      </div>
-      <dl class="decision-list">
-        {
-          decisions.map((d) => (
-            <div class="decision reveal">
-              <dt>{d.choice}</dt>
-              <dd>{d.why}</dd>
-            </div>
-          ))
-        }
-      </dl>
-    </div>
-  </section>
-
-  <section class="section questions" id="questions">
-    <div class="wrap">
-      <div class="section-head reveal">
-        <p class="eyebrow">An open invitation</p>
-        <h2>Questions we are living with</h2>
-        <p class="lede measure">
-          We explored belonging to nature. Belonging to ourselves, to each other, to places and to communities are
-          waiting to be explored too. We don’t have answers to these questions. If any of them pull at you, take them
-          into your own practice, and tell us what you find.
-        </p>
-      </div>
-      <div class="q-cols">
-        <div>
-          <h3 class="q-head reveal">About belonging</h3>
-          <ul class="q-list">
-            {questions.map((q) => <li class="reveal">{q}</li>)}
-          </ul>
-        </div>
-        <div>
-          <h3 class="q-head reveal">About the cloud</h3>
-          <ul class="q-list">
-            {openQuestions.map((q) => <li class="reveal">{q}</li>)}
-          </ul>
-        </div>
-      </div>
-      <div class="actions reveal">
-        <a class="button" href={url("/collaborate/")}>Collaborate with us</a>
-        <a class="button" href={url("/process/#lessons")}>Read what we learned</a>
-      </div>
     </div>
   </section>
 
@@ -598,57 +568,149 @@ const questions = [
     margin-bottom: 3rem;
     max-width: 44rem;
   }
-  .facets {
+  .facet-grid {
     list-style: none;
     margin: 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1px;
-    background: var(--line);
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    overflow: hidden;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+    align-items: start;
   }
-  .facet {
-    background: var(--paper);
-    padding: clamp(1.5rem, 3vw, 2.25rem);
-    grid-column: span 2;
-  }
-  .facet:nth-child(n + 4) {
-    grid-column: span 3;
+  .facet-grid-static { align-items: stretch; }
+  .facet-grid-two { grid-template-columns: repeat(2, 1fr); }
+  @media (max-width: 600px) {
+    .facet-grid-two { grid-template-columns: 1fr; }
   }
   @media (max-width: 900px) {
-    .facet,
-    .facet:nth-child(n + 4) {
-      grid-column: span 3;
-    }
-    .facet:last-child {
-      grid-column: span 6;
-    }
+    .facet-grid { grid-template-columns: repeat(2, 1fr); }
   }
   @media (max-width: 600px) {
-    .facet,
-    .facet:nth-child(n + 4) {
-      grid-column: span 6;
-    }
+    .facet-grid { grid-template-columns: 1fr; }
   }
-  .num {
-    display: block;
-    font-family: var(--font-display);
-    font-size: 0.95rem;
-    color: var(--dusk);
-    margin-bottom: 1.5rem;
+  .facet-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: calc(var(--radius) * 0.9);
+    box-shadow: 0 1px 2px rgb(27 34 84 / 0.04);
+    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+    overflow: hidden;
   }
-  .facet p {
-    color: var(--ink-soft);
-    font-size: 0.97rem;
+  .facet-card:hover {
+    border-color: color-mix(in srgb, var(--tone, var(--dusk)) 40%, var(--line));
+    box-shadow: 0 2px 4px rgb(27 34 84 / 0.05), 0 18px 40px -22px rgb(27 34 84 / 0.2);
+    transform: translateY(-2px);
   }
-  .cite {
-    font-size: 0.8rem !important;
-    color: var(--ink-faint) !important;
+  .facet-card[open] {
+    border-color: color-mix(in srgb, var(--tone, var(--dusk)) 55%, var(--line));
+    box-shadow: 0 2px 4px rgb(27 34 84 / 0.05), 0 22px 50px -24px rgb(27 34 84 / 0.28);
+  }
+  .facet-card summary {
+    list-style: none;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.4rem 1.4rem 1.4rem 1.5rem;
+    user-select: none;
+  }
+  .facet-card summary::-webkit-details-marker { display: none; }
+  .facet-head { display: grid; gap: 0.4rem; }
+  .facet-eyebrow {
     margin: 0;
+    font-size: 0.72rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--tone, var(--dusk)) 70%, var(--ink-faint));
   }
+  .facet-card h3 {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+  .chevron {
+    flex-shrink: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-top: 0.15rem;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--tone, var(--dusk)) 10%, var(--paper));
+    border: 1px solid var(--line);
+    position: relative;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+  .chevron::before,
+  .chevron::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0.6rem;
+    height: 1.5px;
+    background: var(--ink);
+    transform-origin: center;
+    transition: transform 0.3s ease;
+  }
+  .chevron::before { transform: translate(-50%, -50%); }
+  .chevron::after { transform: translate(-50%, -50%) rotate(90deg); }
+  .facet-card[open] .chevron::after { transform: translate(-50%, -50%) rotate(0); }
+  .facet-card[open] .chevron {
+    background: color-mix(in srgb, var(--tone, var(--dusk)) 22%, var(--paper));
+  }
+  .facet-body {
+    padding: 0 1.5rem 1.4rem;
+    overflow: hidden;
+  }
+  .facet-body p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .facet-card-static {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    padding: 1.6rem 1.5rem 1.5rem;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: calc(var(--radius) * 0.9);
+    box-shadow: 0 1px 2px rgb(27 34 84 / 0.04);
+  }
+  .facet-card-static h3 {
+    margin: 0;
+    padding-bottom: 0.7rem;
+    border-bottom: 2px solid color-mix(in srgb, var(--tone, var(--dusk)) 45%, transparent);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.3rem;
+    line-height: 1.2;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+  }
+  .facet-card-static .facet-text {
+    margin: 0;
+    flex: 1;
+    color: var(--ink-soft);
+    font-size: 0.95rem;
+    line-height: 1.55;
+  }
+  .facet-card-static .facet-cite {
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: color-mix(in srgb, var(--tone, var(--dusk)) 70%, var(--ink-faint));
+  }
+  #what { --tone: #0d8ece; }
+  #into-a-room { --tone: #c87200; }
+  #why-a-cloud { --tone: #c87200; }
   .section.interbeing {
     --angle: 180;
     --c1: #b8a8ff; --m1: 84; --p1: 8;
@@ -909,3 +971,63 @@ const questions = [
     border-bottom: 0;
   }
 </style>
+
+<script>
+  const DURATION = 220;
+
+  const animate = (body: HTMLElement, from: number, to: number) =>
+    new Promise<void>((resolve) => {
+      body.style.height = `${from}px`;
+      body.style.transition = `height ${DURATION}ms ease`;
+      requestAnimationFrame(() => {
+        body.style.height = `${to}px`;
+      });
+      const done = () => {
+        body.style.transition = '';
+        body.style.height = '';
+        body.removeEventListener('transitionend', done);
+        resolve();
+      };
+      body.addEventListener('transitionend', done);
+      // Safety timeout in case transitionend doesn't fire.
+      window.setTimeout(done, DURATION + 80);
+    });
+
+  const closeDetails = async (d: HTMLDetailsElement) => {
+    const body = d.querySelector<HTMLElement>('.facet-body');
+    if (!body) { d.open = false; return; }
+    const start = body.offsetHeight;
+    await animate(body, start, 0);
+    d.open = false;
+  };
+
+  const openDetails = async (d: HTMLDetailsElement) => {
+    d.open = true;
+    const body = d.querySelector<HTMLElement>('.facet-body');
+    if (!body) return;
+    const target = body.offsetHeight;
+    await animate(body, 0, target);
+  };
+
+  document.querySelectorAll<HTMLElement>('details.facet-card > summary').forEach((summary) => {
+    summary.addEventListener('click', async (event) => {
+      event.preventDefault();
+      const details = summary.parentElement as HTMLDetailsElement | null;
+      if (!details) return;
+      if (details.open) {
+        await closeDetails(details);
+        return;
+      }
+      const groupName = details.getAttribute('name');
+      if (groupName) {
+        const siblings = document.querySelectorAll<HTMLDetailsElement>(`details[name="${groupName}"]`);
+        await Promise.all(
+          Array.from(siblings)
+            .filter((other) => other !== details && other.open)
+            .map((other) => closeDetails(other)),
+        );
+      }
+      await openDetails(details);
+    });
+  });
+</script>
