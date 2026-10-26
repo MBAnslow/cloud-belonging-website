@@ -231,7 +231,7 @@ const introLetters = introPhrases.map((phrase, p) => {
     const audio = new Audio(btn.dataset.src);
     audio.loop = true;
     audio.preload = 'none';
-    const target = 0.25;
+    const target = 0.12;
     let fade = 0;
     const setVolume = (to: number, done?: () => void) => {
       cancelAnimationFrame(fade);
@@ -268,16 +268,17 @@ const introLetters = introPhrases.map((phrase, p) => {
     z-index: 3;
     display: inline-flex;
     align-items: center;
-    gap: 0.45rem;
-    padding: 0.4rem 0.85rem 0.4rem 0.65rem;
-    border: 1px solid rgb(255 255 255 / 0.22);
+    gap: 0.6rem;
+    min-height: 2.75rem;
+    padding: 0.65rem 1.2rem 0.65rem 0.95rem;
+    border: 1px solid rgb(255 255 255 / 0.35);
     border-radius: 999px;
-    background: rgb(10 12 31 / 0.3);
+    background: rgb(10 12 31 / 0.45);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     color: var(--hero-fg, #fff);
     font: inherit;
-    font-size: 0.72rem;
+    font-size: 0.95rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     cursor: pointer;
@@ -290,8 +291,8 @@ const introLetters = introPhrases.map((phrase, p) => {
     border-color: rgb(210 200 255 / 0.6);
   }
   .theme-icon {
-    width: 1rem;
-    height: 1rem;
+    width: 1.35rem;
+    height: 1.35rem;
     background: currentColor;
     -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 5 6 9H2v6h4l5 4z'/%3E%3Cpath d='m22 9-6 6M16 9l6 6'/%3E%3C/svg%3E") center / contain no-repeat;
     mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 5 6 9H2v6h4l5 4z'/%3E%3Cpath d='m22 9-6 6M16 9l6 6'/%3E%3C/svg%3E") center / contain no-repeat;
