@@ -76,7 +76,7 @@ for (const entry of entries) {
       const f = btn.dataset.filter;
       buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
       items.forEach((el) => (el.hidden = f !== 'all' && el.dataset.entryStage !== f));
-      months.forEach((m) => (m.hidden = !m.querySelector('[data-entry-stage]:not([hidden])')));
+      months.forEach((m) => m.classList.toggle('is-empty', !m.querySelector('[data-entry-stage]:not([hidden])')));
     }),
   );
 </script>
@@ -161,6 +161,9 @@ for (const entry of entries) {
     position: sticky;
     top: 6rem;
     align-self: start;
+  }
+  .month.is-empty .month-label {
+    color: var(--ink-faint);
   }
   @media (max-width: 760px) {
     .month {

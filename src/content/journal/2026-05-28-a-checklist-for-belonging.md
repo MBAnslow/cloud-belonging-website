@@ -2,7 +2,7 @@
 title: 'A checklist for belonging'
 date: 2026-05-28
 stage: 'Concept formation'
-summary: 'How to share without pressure — and the idea that one output of this project could be a tool other people use.'
+summary: 'A first draft of the belonging checklist, extracted from our literature notes, and a thought about sharing without pressure.'
 tags: [sharing, toolkit, literature]
 ---
 
@@ -16,6 +16,4 @@ We also noticed that between active sharing (speaking aloud) and passive sharing
 
 That same day we decided that **a checklist for belonging** would be a worthwhile output in itself: a way of showing which parts of the design space we occupy, and something other artists and researchers could use.
 
-Zéphir compiled a first draft from our literature on belonging, mindfulness in groups, and ritual media (Malaver Turbay, 2022). It covers purpose and framing, ritual structure, relational dynamics, the cognitive and emotional layer, embodied and sensory design, interactivity, space, and how to listen afterwards.
-
-It lives on this site as the [belonging checklist](../../collaborate/#checklist).
+Zéphir extracted a first draft from our notes on belonging, mindfulness in groups, and ritual media (Malaver Turbay, 2022), with some AI help in the compiling. It is not a recipe, and you do not need to cover every point. The short list of headings lives on the [collaborate page](../../collaborate/#checklist). The notes behind each point are below.

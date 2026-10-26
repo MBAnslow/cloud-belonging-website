@@ -1,5 +1,7 @@
 ---
 import Cloud3D from './Cloud3D.astro';
+import VideoClip from './VideoClip.astro';
+import { url } from '../lib/url';
 import { phases } from '../data/phases';
 import type { CloudStateName } from '../lib/cloud/states';
 
@@ -43,6 +45,17 @@ const cells: { id: string; numeral: string; title: string; cloud: CloudStateName
         ))
       }
     </ol>
+    <div class="simulation reveal">
+      <p class="lede">
+        We explored this narrative through simulation before building it. You can read more of the process in{' '}
+        <a href={url('/process/2026-07-08-the-story-of-a-night/')}>The story of a night →</a>
+      </p>
+      <VideoClip
+        name="simulation"
+        ratio="1280 / 636"
+        caption="A 3D simulation of the room: figures lying on mats, each beneath their own cloud, as the night moves from dusk to daylight."
+      />
+    </div>
   </div>
 </section>
 
@@ -93,9 +106,23 @@ const cells: { id: string; numeral: string; title: string; cloud: CloudStateName
     font-size: 0.88rem;
     opacity: 0.85;
   }
+  .simulation {
+    max-width: 52rem;
+    margin: 4rem auto 0;
+  }
+  .simulation .lede {
+    max-width: 46rem;
+    margin-bottom: 1.5rem;
+  }
+  .simulation .lede a {
+    color: var(--ink);
+  }
   @media (max-width: 700px) {
     .score-grid {
       grid-template-columns: 1fr;
+    }
+    .cell {
+      aspect-ratio: 4 / 5;
     }
   }
 </style>

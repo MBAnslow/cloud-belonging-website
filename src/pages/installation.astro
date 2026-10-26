@@ -1311,8 +1311,15 @@ const learned = [
     grid-auto-columns: minmax(13rem, 16rem);
     gap: 1.25rem;
     overflow-x: auto;
+    overscroll-behavior-x: contain;
     scroll-snap-type: x mandatory;
+    scroll-padding-inline: 0.25rem;
     padding-bottom: 1rem;
+  }
+  @media (max-width: 700px) {
+    .build-strip {
+      grid-auto-columns: min(18rem, 78vw);
+    }
   }
   .build-strip :global(figure) {
     scroll-snap-align: start;

@@ -71,7 +71,8 @@ const introLetters = introPhrases.map((phrase, p) => {
       initial="golden"
       cycle={['golden', 'dusk', 'twilight', 'breath', 'dawn', 'day']}
       place={[0.68, 0.12, 0.56]}
-      placeNarrow={[0, 0.58, 0.3]}
+      placeNarrow={[0, 0.5, 0.55]}
+      placeShort={[0, 0.78, 0.4]}
     />
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-intro" aria-hidden="true">
@@ -139,7 +140,7 @@ const introLetters = introPhrases.map((phrase, p) => {
       <h2 class="statement">
         <em>Cloudfulness</em> is our attempt at building belonging. It is a statement of our interest, a{' '}
         <strong><a href={url("/process/")}>journal of our process</a></strong>, a
-        {' '}<strong><a href={url("/collaborate/#checklist")}>checkpoint of our understanding</a></strong> and an artifact to serve as a
+        {' '}<strong><a href={url("/process/2026-05-28-a-checklist-for-belonging/")}>checkpoint of our understanding</a></strong> and an artifact to serve as a
         {' '}
         <strong><a href={url("/collaborate/")}>point of collaboration</a></strong>.
       </h2>
@@ -261,8 +262,8 @@ const introLetters = introPhrases.map((phrase, p) => {
 <style>
   .theme-toggle {
     position: absolute;
-    right: clamp(1rem, 3vw, 2rem);
-    bottom: clamp(1.25rem, 3vw, 2rem);
+    right: max(1rem, env(safe-area-inset-right));
+    bottom: max(1.25rem, env(safe-area-inset-bottom));
     z-index: 3;
     display: inline-flex;
     align-items: center;
@@ -567,6 +568,27 @@ const introLetters = introPhrases.map((phrase, p) => {
   @media (max-width: 760px) {
     .scroll-hint {
       display: none;
+    }
+    .hero {
+      height: 100svh;
+    }
+    .hero-content {
+      padding-block: 5.5rem 5.25rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 11vw, 3.4rem);
+      margin-bottom: 0.75rem;
+    }
+    .hero-lede {
+      font-size: 1.25rem;
+    }
+    .hero-actions {
+      margin-top: 1.25rem;
+    }
+  }
+  @media (max-width: 760px) and (max-height: 700px) {
+    .hero-content {
+      padding-block: 4.75rem 4.5rem;
     }
   }
 

@@ -11,10 +11,26 @@ interface Props {
   description?: string;
   overlayHeader?: boolean;
   theme?: 'day' | 'night';
+  /** Journal entries are articles; everything else is a website page. */
+  kind?: 'website' | 'article';
+  published?: Date;
 }
 
-const { title, description = site.description, overlayHeader = false, theme = 'day' } = Astro.props;
+const { title, description = site.description, overlayHeader = false, theme = 'day', kind = 'website', published } = Astro.props;
 const pageTitle = title ? `${title} — ${site.title}` : `${site.title} — ${site.tagline}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const image = new URL(url('/og-image.jpg'), Astro.site);
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': kind === 'article' ? 'Article' : 'WebSite',
+  name: kind === 'article' ? title : site.title,
+  headline: kind === 'article' ? title : undefined,
+  description,
+  url: canonical.href,
+  image: image.href,
+  datePublished: published?.toISOString(),
+  publisher: { '@type': 'Organization', name: site.title, url: Astro.site?.href },
+};
 ---
 
 <!doctype html>
@@ -27,19 +43,27 @@ const pageTitle = title ? `${title} — ${site.title}` : `${site.title} — ${si
       rel="stylesheet"
       href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..600;1,6..72,200..600&family=Instrument+Sans:wght@400..600&display=swap"
     />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <link rel="icon" type="image/svg+xml" href={url("/favicon.svg")} />
     <title>{pageTitle}</title>
+    <link rel="canonical" href={canonical} />
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow" />
+    <meta property="og:site_name" content={site.title} />
+    <meta property="og:locale" content="en_GB" />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content={new URL(Astro.url.pathname, Astro.site)} />
-    <meta property="og:image" content={new URL(url('/og-image.jpg'), Astro.site)} />
+    <meta property="og:type" content={kind === 'article' ? 'article' : 'website'} />
+    <meta property="og:url" content={canonical} />
+    {published && <meta property="article:published_time" content={published.toISOString()} />}
+    <meta property="og:image" content={image} />
     <meta property="og:image:alt" content="A soft pink cloud in a purple-to-peach sky beside the title Cloudfulness" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:image" content={new URL(url('/og-image.jpg'), Astro.site)} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={image} />
     <meta name="theme-color" content="#0e1328" />
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
     <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>

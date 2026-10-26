@@ -1,8 +1,15 @@
 ---
 import { checklist } from '../data/checklist';
+
+interface Props {
+  /** Section titles and item labels only. The long notes live in the process article. */
+  compact?: boolean;
+}
+
+const { compact = false } = Astro.props;
 ---
 
-<div class="checklist">
+<div class:list={['checklist', { compact }]}>
   <div class="sections">
     {
       checklist.map((section) => (
@@ -12,7 +19,7 @@ import { checklist } from '../data/checklist';
             {section.items.map((item) => (
               <li>
                 <span class="label">{item.label}</span>
-                {item.detail && <span class="detail"> — {item.detail}</span>}
+                {!compact && item.detail && <span class="detail">{item.detail}</span>}
               </li>
             ))}
           </ul>
@@ -29,15 +36,25 @@ import { checklist } from '../data/checklist';
     gap: 1rem;
   }
   .block {
-    padding: 1.1rem 1.2rem 0.9rem;
+    padding: 1.35rem 1.4rem 0.85rem;
     border: 1px solid var(--line);
-    border-radius: var(--radius);
-    background: rgb(255 255 255 / 0.4);
+    border-radius: calc(var(--radius) * 0.9);
+    background: rgb(255 255 255 / 0.55);
+    box-shadow: 0 1px 2px rgb(27 34 84 / 0.04);
   }
   h3 {
-    margin: 0 0 0.6rem;
-    font-size: 1.1rem;
-    line-height: 1.2;
+    margin: 0 0 0.35rem;
+    padding-bottom: 0.7rem;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: 1.35rem;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+    background-image: linear-gradient(90deg, rgb(31 38 80 / 0.22), transparent 78%);
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 100% 1px;
   }
   ul {
     list-style: none;
@@ -45,28 +62,30 @@ import { checklist } from '../data/checklist';
     padding: 0;
   }
   li {
-    position: relative;
-    padding: 0.35rem 0 0.35rem 1rem;
-    font-size: 0.84rem;
-    line-height: 1.45;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid rgb(31 38 80 / 0.08);
   }
-  li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.8rem;
-    width: 0.35rem;
-    height: 0.35rem;
-    border-radius: 50%;
-    background: var(--dusk);
-    opacity: 0.7;
+  li:last-child {
+    border-bottom: 0;
+    padding-bottom: 0.35rem;
   }
   .label {
-    font-weight: 550;
+    display: block;
+    font-size: 0.98rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
     color: var(--ink);
   }
   .detail {
+    display: block;
+    margin-top: 0.28rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
     color: var(--ink-soft);
+  }
+  .compact .label {
+    font-weight: 450;
   }
 
   @media print {

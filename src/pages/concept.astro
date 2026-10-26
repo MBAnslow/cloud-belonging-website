@@ -227,9 +227,9 @@ const partStyle = (group: ContentsGroup, previous?: ContentsGroup) => {
     `--p1:${gradient.p1 ?? 0}%`,
     `--p2:${gradient.p2 ?? 45}%`,
     `--p3:${gradient.p3 ?? 100}%`,
-    `--part-p1:${((gradient.p1 ?? 0) / 100) * 34}rem`,
-    `--part-p2:${((gradient.p2 ?? 45) / 100) * 34}rem`,
-    `--part-p3:${((gradient.p3 ?? 100) / 100) * 34}rem`,
+    `--part-p1:${((gradient.p1 ?? 0) / 100) * 48}rem`,
+    `--part-p2:${((gradient.p2 ?? 45) / 100) * 48}rem`,
+    `--part-p3:${((gradient.p3 ?? 100) / 100) * 48}rem`,
     `--glow:${gradient.glow ?? 0.45}`,
     `--glow-x:${gradient.glowX ?? 85}%`,
     `--glow-y:${gradient.glowY ?? 30}%`,
@@ -481,7 +481,7 @@ const questions = [
     --paper: #fff;
     background:
       radial-gradient(ellipse 50% 70% at var(--glow-x) var(--glow-y), rgb(255 255 255 / var(--glow)), transparent 72%),
-      linear-gradient(180deg, var(--part-stop-1) var(--part-p1), var(--part-stop-2) var(--part-p2), var(--part-stop-3) var(--part-p3), #fff 42rem, #fff 100%);
+      linear-gradient(180deg, var(--part-stop-1) var(--part-p1), var(--part-stop-2) var(--part-p2), var(--part-stop-3) var(--part-p3), #fff 58rem, #fff 100%);
     padding-block: 6rem;
   }
   .part::before {
@@ -546,7 +546,7 @@ const questions = [
     padding-bottom: 0;
     background:
       radial-gradient(ellipse 50% 70% at var(--glow-x) var(--glow-y), rgb(255 255 255 / var(--glow)), transparent 72%),
-      linear-gradient(180deg, var(--part-stop-1) var(--part-p1), var(--part-stop-2) var(--part-p2), var(--part-stop-3) var(--part-p3), rgb(255 244 248) 30rem, #fff 40rem, #fff 100%);
+      linear-gradient(180deg, var(--part-stop-1) var(--part-p1), var(--part-stop-2) var(--part-p2), var(--part-stop-3) var(--part-p3), rgb(255 244 248) 42rem, #fff 56rem, #fff 100%);
   }
   .big-quote {
     margin: 0;
@@ -578,6 +578,7 @@ const questions = [
     align-items: start;
   }
   .facet-grid-static { align-items: stretch; }
+  .facet-grid:not(.facet-grid-static) { gap: 2.25rem 1.75rem; }
   .facet-grid-two { grid-template-columns: repeat(2, 1fr); }
   @media (max-width: 600px) {
     .facet-grid-two { grid-template-columns: 1fr; }
@@ -628,6 +629,7 @@ const questions = [
   .facet-card h3 {
     margin: 0;
     font-family: var(--font-display);
+    font-weight: 600;
     font-size: 1.25rem;
     line-height: 1.25;
     color: var(--ink);
@@ -685,7 +687,11 @@ const questions = [
   .facet-card-static h3 {
     margin: 0;
     padding-bottom: 0.7rem;
-    border-bottom: 2px solid color-mix(in srgb, var(--tone, var(--dusk)) 45%, transparent);
+    border-bottom: none;
+    background-image: linear-gradient(90deg, transparent, #d8d8d8 18%, #d8d8d8 82%, transparent);
+    background-repeat: no-repeat;
+    background-position: left bottom;
+    background-size: 100% 1.5px;
     font-family: var(--font-display);
     font-weight: 600;
     font-size: 1.3rem;

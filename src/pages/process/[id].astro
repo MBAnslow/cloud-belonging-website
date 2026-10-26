@@ -4,6 +4,7 @@ import { render } from 'astro:content';
 import { Image } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Cloud3D from '../../components/Cloud3D.astro';
+import Checklist from '../../components/Checklist.astro';
 import VideoClip from '../../components/VideoClip.astro';
 import MediaGallery, { type GalleryItem } from '../../components/MediaGallery.astro';
 import { getJournal, formatDate } from '../../lib/journal';
@@ -79,9 +80,10 @@ const extraScoreClouds = [
   },
 ];
 const showTwilightClouds = entry.id === '2026-09-24-the-final-score';
+const showChecklist = entry.id === '2026-05-28-a-checklist-for-belonging';
 ---
 
-<Base title={title} description={summary}>
+<Base title={title} description={summary} kind="article" published={date}>
   <article>
     <header class="entry-header">
       <div class="wrap narrow">
@@ -119,6 +121,7 @@ const showTwilightClouds = entry.id === '2026-09-24-the-final-score';
       <div class="prose">
         <Content />
       </div>
+      {showChecklist && <Checklist />}
     </div>
 
     {
@@ -290,6 +293,9 @@ const showTwilightClouds = entry.id === '2026-09-24-the-final-score';
   }
   .body {
     padding-block: 3rem 4rem;
+  }
+  .body :global(.checklist) {
+    margin-top: 2.5rem;
   }
   .entry-video {
     margin-top: 2.5rem;
