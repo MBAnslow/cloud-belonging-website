@@ -11,6 +11,8 @@ interface Props {
   placeNarrow?: [number, number, number];
   /** Used on a tall, short screen, such as a small phone in portrait. */
   placeShort?: [number, number, number];
+  /** Use the narrow placement when width/height is below this. */
+  narrowBelow?: number;
   class?: string;
 }
 
@@ -21,6 +23,7 @@ const {
   place = [0.6, 0.2, 0.7],
   placeNarrow = [0, 0.4, 0.42],
   placeShort,
+  narrowBelow = 0.9,
   class: className,
 } = Astro.props;
 ---
@@ -34,6 +37,7 @@ const {
   data-place={place.join(',')}
   data-place-narrow={placeNarrow.join(',')}
   data-place-short={placeShort?.join(',')}
+  data-narrow-below={narrowBelow}
   aria-hidden="true">
   <canvas></canvas>
 </div>
@@ -76,13 +80,21 @@ const {
         animate: !reduce,
         placement: () => {
           const r = el.getBoundingClientRect();
-          const narrowFrame = r.width / Math.max(r.height, 1) < 0.9;
-          const [x, y, scale] =
+          const narrowBelow = Number(el.dataset.narrowBelow ?? 0.9);
+          const narrowFrame = r.width / Math.max(r.height, 1) < narrowBelow;
+          let [x, y, scale] =
             narrowFrame && r.height < 700 && short.length === 3 && !Number.isNaN(short[0])
               ? short
               : narrowFrame
                 ? narrow
                 : wide;
+          // Rays are scaled by the frame height, so a very tall screen magnifies the cloud.
+          if (el.dataset.narrowBelow && narrowFrame && r.height > r.width) {
+            const fit = Math.min(1, r.width / r.height / 0.72);
+            scale *= fit;
+            y *= 0.55 + 0.45 * fit;
+            y -= (1 - fit) * 0.22;
+          }
           return { x, y, scale };
         },
         onFrame: (s) => {

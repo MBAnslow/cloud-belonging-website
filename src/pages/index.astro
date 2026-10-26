@@ -73,6 +73,7 @@ const introLetters = introPhrases.map((phrase, p) => {
       place={[0.68, 0.12, 0.56]}
       placeNarrow={[0, 0.5, 0.55]}
       placeShort={[0, 0.78, 0.4]}
+      narrowBelow={1.2}
     />
     <div class="hero-shade" aria-hidden="true"></div>
     <div class="hero-intro" aria-hidden="true">
@@ -350,8 +351,9 @@ const introLetters = introPhrases.map((phrase, p) => {
     inset: 0;
     z-index: 2;
     display: grid;
-    place-items: center;
-    padding: 0 var(--gutter);
+    align-items: end;
+    justify-items: center;
+    padding: 0 var(--gutter) clamp(11rem, 40vh, 22rem);
     pointer-events: none;
   }
   .hero-intro p {
