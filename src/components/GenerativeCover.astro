@@ -74,16 +74,23 @@ const colours = shuffle(palette.colours);
 const makeShape = (index: number, size: [number, number], opacity: [number, number]) => {
   const cx = between(W * 0.12, W * 0.88);
   const cy = between(H * 0.15, H * 0.75);
+  const stroke = random() > 0.5;
   return {
     d: shapePath(pick(shapeKinds), cx, cy, round(between(...size)), between(0, Math.PI * 2)),
     fill: colours[index % colours.length],
     opacity: round(between(...opacity)),
+    stroke,
+    strokeColor: stroke ? (random() > 0.5 ? '#fff' : '#1a1a1a') : 'none',
+    strokeWidth: stroke ? round(between(1.4, 2.6)) : 0,
+    dx: round(between(-34, 34)),
+    dy: round(between(-26, 26)),
+    rot: round(between(-18, 18)),
   };
 };
 
-const backShapes = Array.from({ length: Math.floor(between(2, 4)) }, (_, i) => makeShape(i, [46, 86], [0.38, 0.74]));
+const backShapes = Array.from({ length: Math.floor(between(2, 4)) }, (_, i) => makeShape(i, [46, 86], [0.16, 0.95]));
 const frontShapes = Array.from({ length: Math.floor(between(2, 4)) }, (_, i) =>
-  makeShape(i + backShapes.length, [18, 44], [0.44, 0.86]),
+  makeShape(i + backShapes.length, [18, 44], [0.2, 1]),
 );
 
 const center = { x: round(between(W * 0.25, W * 0.7)), y: round(between(H * 0.3, H * 0.6)) };
@@ -96,8 +103,13 @@ const pointOn = (r: number) => {
   const angle = between(0, Math.PI * 2);
   return { x: round(center.x + Math.cos(angle) * r), y: round(center.y + Math.sin(angle) * r) };
 };
+const greys = ['#4a4a4a', '#6a6a6a', '#848484', '#9e9e9e', '#b5b5b5', '#cbcbcb', '#585858', '#787878'];
 const nodes = rings.flatMap((ring) =>
-  Array.from({ length: Math.floor(between(1, 4)) }, () => ({ ...pointOn(ring.r), size: round(between(1.8, 4.2)) })),
+  Array.from({ length: Math.floor(between(1, 4)) }, () => ({
+    ...pointOn(ring.r),
+    size: round(between(1.8, 4.2)),
+    fill: pick(greys),
+  })),
 );
 const links = nodes.filter(() => random() > 0.45);
 const arcRadius = round(between(H * 0.9, H * 1.4));
@@ -144,19 +156,26 @@ const noiseSeed = seedValue % 997;
       <line x1={center.x} y1={center.y} x2={n.x} y2={n.y} />
     ))}
   </g>
-  <g fill={palette.ink} opacity="0.6">
-    <circle cx={center.x} cy={center.y} r="3.6" />
-    {nodes.map((n) => (
-      <circle cx={n.x} cy={n.y} r={n.size} />
-    ))}
-  </g>
-
-  {backShapes.map((s) => <path d={s.d} fill={s.fill} opacity={s.opacity} />)}
+  <circle cx={center.x} cy={center.y} r="3.6" fill={palette.ink} opacity="0.6" />
 
   <rect width={W} height={H} filter={`url(#${id}-cloud-shade)`} transform="translate(0 7)" opacity="0.18" />
   <rect width={W} height={H} filter={`url(#${id}-clouds)`} opacity="0.36" />
 
-  {frontShapes.map((s) => <path d={s.d} fill={s.fill} opacity={s.opacity} />)}
+  {nodes.map((n) => (
+    <circle cx={n.x} cy={n.y} r={n.size} fill={n.fill} />
+  ))}
+  {[...backShapes, ...frontShapes].map((s, i) => (
+    <g class="shape" style={`--dx:${s.dx}px; --dy:${s.dy}px; --rot:${s.rot}deg; --delay:${i * 45}ms`}>
+      <path
+        d={s.d}
+        fill={s.fill}
+        fill-opacity={s.opacity}
+        stroke={s.strokeColor}
+        stroke-width={s.strokeWidth}
+        stroke-opacity={s.stroke ? 0.55 : undefined}
+      />
+    </g>
+  ))}
 
   <rect width={W} height={H} filter={`url(#${id}-grain)`} />
 </svg>
@@ -166,5 +185,23 @@ const noiseSeed = seedValue % 997;
     display: block;
     width: 100%;
     height: 100%;
+  }
+  .shape {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: translate(var(--dx), var(--dy)) rotate(var(--rot));
+    transition: transform 0.7s cubic-bezier(0.22, 0.8, 0.28, 1);
+    transition-delay: var(--delay);
+  }
+  .generative-cover:hover .shape,
+  :global(a:hover) .shape,
+  :global(a:focus-visible) .shape {
+    transform: translate(0, 0) rotate(0deg);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .shape {
+      transform: none;
+      transition: none;
+    }
   }
 </style>
