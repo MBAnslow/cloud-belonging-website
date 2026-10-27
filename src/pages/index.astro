@@ -103,9 +103,9 @@ const introLetters = introPhrases.map((phrase, p) => {
         <a class="button" href={url("/concept/")}>Why belonging?</a>
       </div>
     </div>
-    <button type="button" class="theme-toggle" aria-pressed="false" data-src={url('/audio/cloud-main-theme.mp3')} data-theme-toggle>
+    <button type="button" class="theme-toggle" aria-pressed="false" aria-label="Play sound" data-src={url('/audio/cloud-main-theme.mp3')} data-theme-toggle>
       <span class="theme-icon" aria-hidden="true"></span>
-      <span class="theme-label">Sound off</span>
+      <span class="theme-bars" aria-hidden="true"><span></span><span></span><span></span></span>
     </button>
     <a class="scroll-hint" href="#invitation" aria-label="Scroll to introduction">
       <span></span>
@@ -248,7 +248,7 @@ const introLetters = introPhrases.map((phrase, p) => {
     btn.addEventListener('click', () => {
       const on = btn.getAttribute('aria-pressed') !== 'true';
       btn.setAttribute('aria-pressed', String(on));
-      btn.querySelector('.theme-label')!.textContent = on ? 'Sound on' : 'Sound off';
+      btn.setAttribute('aria-label', on ? 'Stop sound' : 'Play sound');
       if (on) {
         audio.volume = 0;
         audio.play().catch(() => {});
@@ -257,6 +257,29 @@ const introLetters = introPhrases.map((phrase, p) => {
         setVolume(0, () => audio.pause());
       }
     });
+
+    const actions = document.querySelector<HTMLElement>('.hero-actions');
+    const hero = btn.closest<HTMLElement>('.hero');
+    const stacked = window.matchMedia('(max-width: 960px)');
+    const placeSound = () => {
+      if (!actions || !hero || !stacked.matches) {
+        btn.style.top = '';
+        btn.classList.remove('is-beside');
+        return;
+      }
+      let top = 0;
+      let el: HTMLElement | null = actions;
+      while (el && el !== hero) {
+        top += el.offsetTop;
+        el = el.offsetParent as HTMLElement | null;
+      }
+      btn.style.top = `${top + actions.offsetHeight}px`;
+      btn.classList.add('is-beside');
+    };
+    placeSound();
+    stacked.addEventListener('change', placeSound);
+    window.addEventListener('resize', placeSound);
+    if (actions) new ResizeObserver(placeSound).observe(actions);
   }
 </script>
 
@@ -268,9 +291,11 @@ const introLetters = introPhrases.map((phrase, p) => {
     z-index: 3;
     display: inline-flex;
     align-items: center;
-    gap: 0.6rem;
-    min-height: 2.75rem;
-    padding: 0.65rem 1.2rem 0.65rem 0.95rem;
+    gap: 0.55rem;
+    min-width: 3.4rem;
+    min-height: 3.4rem;
+    justify-content: center;
+    padding: 0.7rem 0.9rem;
     border: 1px solid rgb(255 255 255 / 0.35);
     border-radius: 999px;
     background: rgb(10 12 31 / 0.45);
@@ -300,6 +325,38 @@ const introLetters = introPhrases.map((phrase, p) => {
   .theme-toggle[aria-pressed='true'] .theme-icon {
     -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 5 6 9H2v6h4l5 4z'/%3E%3Cpath d='M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14'/%3E%3C/svg%3E");
     mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M11 5 6 9H2v6h4l5 4z'/%3E%3Cpath d='M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14'/%3E%3C/svg%3E");
+  }
+  .theme-bars {
+    display: none;
+    align-items: flex-end;
+    gap: 0.18rem;
+    height: 1rem;
+  }
+  .theme-toggle[aria-pressed='true'] .theme-bars {
+    display: flex;
+  }
+  .theme-bars span {
+    width: 0.18rem;
+    height: 100%;
+    border-radius: 99px;
+    background: currentColor;
+    transform-origin: bottom;
+    animation: theme-bar 0.9s ease-in-out infinite;
+  }
+  .theme-bars span:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .theme-bars span:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  @keyframes theme-bar {
+    0%,
+    100% {
+      transform: scaleY(0.35);
+    }
+    50% {
+      transform: scaleY(1);
+    }
   }
   .hero {
     --hero-fg: #fbfaff;
@@ -506,6 +563,16 @@ const introLetters = introPhrases.map((phrase, p) => {
     flex-wrap: wrap;
     gap: 0.8rem;
     margin-top: 2rem;
+  }
+  @media (max-width: 960px) {
+    .hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .theme-toggle.is-beside {
+      bottom: auto;
+      transform: translateY(-100%);
+    }
   }
   .hero .button {
     transition: background 0.25s, color 2s, border-color 2s;

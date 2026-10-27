@@ -95,6 +95,8 @@ const {
             y *= 0.55 + 0.45 * fit;
             y -= (1 - fit) * 0.22;
           }
+          // y is up. On the hero, the overlay header covers the top of the sky, so drop the cloud below it.
+          if (Number(el.dataset.narrowBelow) > 1 && narrowFrame) y -= 0.18;
           return { x, y, scale };
         },
         onFrame: (s) => {
