@@ -118,6 +118,7 @@ const introLetters = introPhrases.map((phrase, p) => {
         hero.classList.add('intro-playing');
         var timer;
         var finish = function (e) {
+          if (e && e.target && e.target.closest && e.target.closest('[data-theme-toggle]')) return;
           clearTimeout(timer);
           if (!hero.classList.contains('intro-playing')) return;
           hero.classList.remove('intro-playing');
