@@ -25,13 +25,15 @@ gallery:
   - src: ../../assets/journal/2026-07-10-a-bigger-cloud-to-map/moonlight.jpg
     alt: 'Moonlight.'
     caption: 'Moonlight.'
-  - src: ../../assets/journal/2026-07-10-a-bigger-cloud-to-map/led-controller.jpg
-    alt: 'The controller.'
-    caption: 'The controller.'
-  - src: ../../assets/journal/2026-07-10-a-bigger-cloud-to-map/power-block.jpg
-    alt: 'The power block.'
-    caption: 'The power block.'
 tags: [LED mapping, lightning, prototype]
 ---
 
-A bigger spheroid cloud with LEDs mapped through its volume, so we could try the sky states at scale.
+A bigger spheroid cloud with LEDs mapped through its volume. This was to explore how lightning would look over longer distances, and how those flashes would combine with the time-of-day effects.
+
+The controller and power supply were borrowed from the music team in the lab. They had used that gear for live lighting at [Delaurentis’s *Pionnières*](https://delaurentismusic.com/en/pionnieres/). We had not added a battery yet. We later changed our own gear.
+
+The controller is a QuinLED Dig-Quad with a QuinLED-ESP32-ABE module, running the LED data out to the cloud. The supply is a Mean Well LRS-75-5, 5 V at 14 A, feeding that controller.
+
+![QuinLED Dig-Quad with a QuinLED-ESP32-ABE module, fuses, and LED wires, lit red](../../assets/journal/2026-07-10-a-bigger-cloud-to-map/led-controller.jpg)
+
+![Mean Well LRS-75-5 5 V 14 A power supply with output wires attached](../../assets/journal/2026-07-10-a-bigger-cloud-to-map/power-block.jpg)

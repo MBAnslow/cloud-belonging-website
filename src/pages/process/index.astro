@@ -7,7 +7,7 @@ import { url } from '../../lib/url';
 import buildStuffing from '../../assets/photos/build-stuffing.jpg';
 
 const entries = await getJournal();
-const stages = ['Concept formation', 'Conversation', 'Making', 'Article'] as const;
+const stages = ['Concept formation', 'Conversation', 'Making', 'Exploration', 'Article'] as const;
 
 const byMonth = new Map<string, typeof entries>();
 for (const entry of entries) {

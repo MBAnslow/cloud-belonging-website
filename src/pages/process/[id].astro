@@ -98,7 +98,7 @@ const showChecklist = entry.id === '2026-05-28-a-checklist-for-belonging';
     </header>
 
     {
-      coverVideo ? (
+      coverVideo && entry.id !== '2026-07-08-the-story-of-a-night' ? (
         <div class="wrap narrow cover">
           <video
             src={url(`/video/${coverVideo}.mp4`)}

@@ -1,7 +1,7 @@
 ---
 title: 'Designing patterns for the LED matrix'
 date: 2026-06-23
-stage: Making
+stage: Exploration
 summary: 'A small tool for designing light patterns for the LED matrix and seeing them on screen and on the real LEDs at the same time.'
 cover: ../../assets/journal/2026-06-23-cloud-bottom-leds/cloud-bottom-leds-full-interface.png
 coverAlt: 'The Cloud Bottom LEDs interface: a simulated LED cloud with four breathing points, a colour histogram, breathing waveforms, a tint timeline across the day, and panels of pattern, breathing and hardware controls.'

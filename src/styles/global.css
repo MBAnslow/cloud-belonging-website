@@ -352,6 +352,10 @@ main > section.blend:last-of-type::after,
   background: rgb(248 169 140 / 0.35);
   color: #9a4527;
 }
+.tag[data-stage='Exploration'] {
+  background: rgb(176 196 230 / 0.45);
+  color: #2f4578;
+}
 .tag[data-stage='Article'] {
   background: rgb(249 199 124 / 0.42);
   color: #85561a;

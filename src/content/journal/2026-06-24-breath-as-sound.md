@@ -1,7 +1,7 @@
 ---
 title: 'Breath as sound, and the sun below'
 date: 2026-06-24
-stage: Making
+stage: Exploration
 summary: 'Breaths become sound objects that play the cloud like an instrument — and a projector on the floor turns us into the sun.'
 cover: ../../assets/photos/tulle-light-3.jpg
 coverAlt: 'A tulle cloud hanging from a ceiling grid, lit in pale blue and green by a projector below.'

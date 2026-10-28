@@ -1,7 +1,7 @@
 ---
 title: 'Exploring an LED matrix'
 date: 2026-06-22
-stage: Making
+stage: Exploration
 summary: 'Trying out an LED matrix behind different diffuser materials, to see whether a grid of lights could make a cloud feel like it is moving.'
 coverVideo: journal/diffusion-led-matrix-movie-great-cotton
 coverAlt: 'Patterns from an LED matrix glowing softly through a layer of cotton.'
