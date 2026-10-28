@@ -79,7 +79,7 @@ const belongingMap = [
 const whyCloud = [
   {
     title: 'It is above everyone',
-    text: 'Under a large sky, nobody has a better seat than another. A cloud offers a shared perspective without an explicit stage.',
+    text: "Under a large sky, nobody has a better seat than another. A conventional stage establishes a direction: an audience faces a performance, separated from it and from one another by their shared role as spectators. A cloud, suspended overhead, has no front or back and no privileged viewpoint. People can gather beneath it, look up from different positions, and remain aware of each other's presence. Rather than watching something happening elsewhere, everyone occupies the same space as the experience.",
   },
   {
     title: 'It gives light a body while hiding internals',
@@ -87,7 +87,7 @@ const whyCloud = [
   },
   {
     title: 'It is always changing',
-    text: 'Though our structure is static, the play of light on it changes and particular states like whether there is a lightning storm or not gives it dynamics. We did consider whether we could add physical dynamic aspects to the cloud to make it slowly morph shape but we decided it would be too complex. We also considered carefully modulating lighting from inside to make it appear like the cloud was changing shape. This might be possible with many more lights and a more uniform surface but it maybe have made the cloud appear like a backlit projector screen. Picture a spheroid with some mapped projectors inside it.',
+    text: "Although the cloud's structure is static, changing light gives it a sense of movement, particularly during lightning storms. We considered making the cloud physically change shape, but the mechanical complexity was too great. We also explored whether carefully controlled internal lighting could create the illusion of a morphing surface. This would likely require more LEDs and more uniform diffusion, with the risk of making the cloud resemble a backlit projection screen rather than a three-dimensional object.",
   },
   {
     title: 'It is water, and so are we',
@@ -300,20 +300,10 @@ const questions = [
       </div>
       <div class="reveal">
         <p>
-          Socially speaking, belonging is the felt sense of being accepted, included, understood, welcomed, liked,
-          and appreciated. But belonging extends beyond our relationships with others. It is also about how we
-          relate to ourselves, how comfortable we feel in our own skin, and how connected we feel to the world
-          around us.
+          Social belonging is the feeling of being accepted, understood and valued by others. But belonging also extends to how we relate to ourselves and the world around us. It is a sense of being at home, providing the security and rootedness from which we can explore, engage and form new connections.
         </p>
         <p>
-          To that extent it's not only about being accepted by others, but also about feeling at home in ourselves and
-          in the world. It provides a sense of safety and rootedness from which we can explore, engage with, and
-          experience the world more openly. In this way, belonging is more than a social need; it is a foundation
-          for curiosity, openness, exploration, and meaningful connection.
-        </p>
-        <p>
-          When your social sense of connection is damaged, your only moments of solace might come from your connection
-          to the world. Nature provides a neutral and primal point of reconnection.
+          When our sense of social belonging is damaged, nature can offer another source of connection. Unlike human relationships, it asks nothing of us. It can provide a place of solace and a way to reconnect with the world.
         </p>
       </div>
     </div>
@@ -364,20 +354,15 @@ const questions = [
         <p class="eyebrow">Design features of belonging</p>
         <h2>Building inter-being into a room</h2>
       </div>
-      <ul class="facet-grid">
+      <ul class="facet-grid facet-grid-static">
         {
           belongingMap.map((m) => (
             <li class="reveal">
-              <details class="facet-card" name="design-feature">
-                <summary>
-                  <div class="facet-head">
-                    <p class="facet-eyebrow">{m.choice}</p>
-                    <h3>{m.quality}</h3>
-                  </div>
-                  <span class="chevron" aria-hidden="true"></span>
-                </summary>
-                <div class="facet-body"><p>{m.how}</p></div>
-              </details>
+              <article class="facet-card facet-card-static">
+                <p class="facet-eyebrow">{m.choice}</p>
+                <h3>{m.quality}</h3>
+                <p class="facet-text">{m.how}</p>
+              </article>
             </li>
           ))
         }
@@ -394,19 +379,14 @@ const questions = [
           <p class="eyebrow">Some cloud-related practical and thematic considerations</p>
           <h2>Something we all live under</h2>
         </div>
-        <ul class="facet-grid facet-grid-two">
+        <ul class="facet-grid facet-grid-static facet-grid-two">
           {
             whyCloud.map((w) => (
               <li class="reveal">
-                <details class="facet-card" name="cloud-aspect">
-                  <summary>
-                    <div class="facet-head">
-                      <h3>{w.title}</h3>
-                    </div>
-                    <span class="chevron" aria-hidden="true"></span>
-                  </summary>
-                  <div class="facet-body"><p>{w.text}</p></div>
-                </details>
+                <article class="facet-card facet-card-static">
+                  <h3>{w.title}</h3>
+                  <p class="facet-text">{w.text}</p>
+                </article>
               </li>
             ))
           }
@@ -578,7 +558,6 @@ const questions = [
     align-items: start;
   }
   .facet-grid-static { align-items: stretch; }
-  .facet-grid:not(.facet-grid-static) { gap: 2.25rem 1.75rem; }
   .facet-grid-two { grid-template-columns: repeat(2, 1fr); }
   @media (max-width: 600px) {
     .facet-grid-two { grid-template-columns: 1fr; }
@@ -594,30 +573,7 @@ const questions = [
     border: 1px solid var(--line);
     border-radius: calc(var(--radius) * 0.9);
     box-shadow: 0 1px 2px rgb(27 34 84 / 0.04);
-    transition: box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
-    overflow: hidden;
   }
-  .facet-card:hover {
-    border-color: color-mix(in srgb, var(--tone, var(--dusk)) 40%, var(--line));
-    box-shadow: 0 2px 4px rgb(27 34 84 / 0.05), 0 18px 40px -22px rgb(27 34 84 / 0.2);
-    transform: translateY(-2px);
-  }
-  .facet-card[open] {
-    border-color: color-mix(in srgb, var(--tone, var(--dusk)) 55%, var(--line));
-    box-shadow: 0 2px 4px rgb(27 34 84 / 0.05), 0 22px 50px -24px rgb(27 34 84 / 0.28);
-  }
-  .facet-card summary {
-    list-style: none;
-    cursor: pointer;
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 1.4rem 1.4rem 1.4rem 1.5rem;
-    user-select: none;
-  }
-  .facet-card summary::-webkit-details-marker { display: none; }
-  .facet-head { display: grid; gap: 0.4rem; }
   .facet-eyebrow {
     margin: 0;
     font-size: 0.72rem;
@@ -625,53 +581,6 @@ const questions = [
     text-transform: uppercase;
     font-weight: 600;
     color: color-mix(in srgb, var(--tone, var(--dusk)) 70%, var(--ink-faint));
-  }
-  .facet-card h3 {
-    margin: 0;
-    font-family: var(--font-display);
-    font-weight: 600;
-    font-size: 1.25rem;
-    line-height: 1.25;
-    color: var(--ink);
-  }
-  .chevron {
-    flex-shrink: 0;
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-top: 0.15rem;
-    border-radius: 50%;
-    background: color-mix(in srgb, var(--tone, var(--dusk)) 10%, var(--paper));
-    border: 1px solid var(--line);
-    position: relative;
-    transition: transform 0.3s ease, background 0.3s ease;
-  }
-  .chevron::before,
-  .chevron::after {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 0.6rem;
-    height: 1.5px;
-    background: var(--ink);
-    transform-origin: center;
-    transition: transform 0.3s ease;
-  }
-  .chevron::before { transform: translate(-50%, -50%); }
-  .chevron::after { transform: translate(-50%, -50%) rotate(90deg); }
-  .facet-card[open] .chevron::after { transform: translate(-50%, -50%) rotate(0); }
-  .facet-card[open] .chevron {
-    background: color-mix(in srgb, var(--tone, var(--dusk)) 22%, var(--paper));
-  }
-  .facet-body {
-    padding: 0 1.5rem 1.4rem;
-    overflow: hidden;
-  }
-  .facet-body p {
-    margin: 0;
-    color: var(--ink-soft);
-    font-size: 0.95rem;
-    line-height: 1.55;
   }
   .facet-card-static {
     height: 100%;
@@ -851,7 +760,7 @@ const questions = [
     display: grid;
     grid-template-columns: 1fr minmax(14rem, 22rem);
     gap: clamp(2rem, 6vw, 6rem);
-    align-items: start;
+    align-items: center;
   }
   .why-grid {
     display: grid;
@@ -869,8 +778,7 @@ const questions = [
     margin: 0;
   }
   :global(.why-video) {
-    position: sticky;
-    top: 6rem;
+    position: static;
   }
   @media (max-width: 860px) {
     .why-cloud {
@@ -977,63 +885,3 @@ const questions = [
     border-bottom: 0;
   }
 </style>
-
-<script>
-  const DURATION = 220;
-
-  const animate = (body: HTMLElement, from: number, to: number) =>
-    new Promise<void>((resolve) => {
-      body.style.height = `${from}px`;
-      body.style.transition = `height ${DURATION}ms ease`;
-      requestAnimationFrame(() => {
-        body.style.height = `${to}px`;
-      });
-      const done = () => {
-        body.style.transition = '';
-        body.style.height = '';
-        body.removeEventListener('transitionend', done);
-        resolve();
-      };
-      body.addEventListener('transitionend', done);
-      // Safety timeout in case transitionend doesn't fire.
-      window.setTimeout(done, DURATION + 80);
-    });
-
-  const closeDetails = async (d: HTMLDetailsElement) => {
-    const body = d.querySelector<HTMLElement>('.facet-body');
-    if (!body) { d.open = false; return; }
-    const start = body.offsetHeight;
-    await animate(body, start, 0);
-    d.open = false;
-  };
-
-  const openDetails = async (d: HTMLDetailsElement) => {
-    d.open = true;
-    const body = d.querySelector<HTMLElement>('.facet-body');
-    if (!body) return;
-    const target = body.offsetHeight;
-    await animate(body, 0, target);
-  };
-
-  document.querySelectorAll<HTMLElement>('details.facet-card > summary').forEach((summary) => {
-    summary.addEventListener('click', async (event) => {
-      event.preventDefault();
-      const details = summary.parentElement as HTMLDetailsElement | null;
-      if (!details) return;
-      if (details.open) {
-        await closeDetails(details);
-        return;
-      }
-      const groupName = details.getAttribute('name');
-      if (groupName) {
-        const siblings = document.querySelectorAll<HTMLDetailsElement>(`details[name="${groupName}"]`);
-        await Promise.all(
-          Array.from(siblings)
-            .filter((other) => other !== details && other.open)
-            .map((other) => closeDetails(other)),
-        );
-      }
-      await openDetails(details);
-    });
-  });
-</script>

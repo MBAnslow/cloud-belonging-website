@@ -231,32 +231,92 @@ const introLetters = introPhrases.map((phrase, p) => {
   if (btn) {
     const audio = new Audio(btn.dataset.src);
     audio.loop = true;
-    audio.preload = 'none';
+    audio.preload = 'auto';
     const target = 0.12;
+    let want = false;
+    let generation = 0;
     let fade = 0;
-    const setVolume = (to: number, done?: () => void) => {
+    const setVolume = (value: number) => {
+      try {
+        audio.volume = value;
+      } catch {
+        // iOS keeps the hardware volume and can throw if script sets it.
+      }
+    };
+    const fadeTo = (to: number, gen: number, done?: () => void) => {
       cancelAnimationFrame(fade);
-      const from = audio.volume;
+      let from = to;
+      try {
+        from = audio.volume;
+      } catch {
+        from = to;
+      }
       const start = performance.now();
       const step = (now: number) => {
+        if (gen !== generation) return;
         const t = Math.min(1, (now - start) / 1200);
-        audio.volume = from + (to - from) * t;
+        setVolume(from + (to - from) * t);
         if (t < 1) fade = requestAnimationFrame(step);
         else done?.();
       };
       fade = requestAnimationFrame(step);
     };
-    btn.addEventListener('click', () => {
-      const on = btn.getAttribute('aria-pressed') !== 'true';
+    const show = (on: boolean) => {
       btn.setAttribute('aria-pressed', String(on));
       btn.setAttribute('aria-label', on ? 'Stop sound' : 'Play sound');
-      if (on) {
-        audio.volume = 0;
-        audio.play().catch(() => {});
+    };
+    const start = () => {
+      want = true;
+      const gen = ++generation;
+      show(true);
+      // Play at the audible level immediately. Starting from silence and fading up
+      // never connects the output on some browsers, so the button looks on and stays mute.
+      setVolume(target);
+      const pending = audio.play();
+      pending
+        .then(() => {
+          if (gen !== generation) audio.pause();
+        })
+        .catch((err: unknown) => {
+          if (gen !== generation) return;
+          // A blocked start will not succeed later without another tap.
+          if (err instanceof DOMException && err.name === 'NotAllowedError') {
+            want = false;
+            show(false);
+            return;
+          }
+          // The file may still have been loading. One more attempt once it can play.
+          const retry = () => {
+            if (gen !== generation || !want || !audio.paused) return;
+            audio.play().catch(() => {
+              if (gen !== generation) return;
+              want = false;
+              show(false);
+            });
+          };
+          if (audio.readyState >= 2) retry();
+          else audio.addEventListener('canplay', retry, { once: true });
+        });
+    };
+    audio.addEventListener('error', () => {
+      if (!want) return;
+      want = false;
+      generation += 1;
+      show(false);
+    });
+    const stop = () => {
+      want = false;
+      const gen = ++generation;
+      show(false);
+      fadeTo(0, gen, () => {
+        if (gen !== generation) return;
+        audio.pause();
         setVolume(target);
-      } else {
-        setVolume(0, () => audio.pause());
-      }
+      });
+    };
+    btn.addEventListener('click', () => {
+      if (want) stop();
+      else start();
     });
 
     const actions = document.querySelector<HTMLElement>('.hero-actions');

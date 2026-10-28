@@ -66,22 +66,22 @@ const outerLayers = [
   {
     name: 'Cotton',
     phase: 'α' as const,
-    text: 'The outermost layer and the one you see. Pulled into tufts, it gives the cloud its billowing, cumulus surface.',
+    text: "The outermost layer, pulled into tufts to create the cloud's billowing surface.",
   },
   {
     name: 'Polyester fleece wadding',
     phase: 'β' as const,
-    text: 'A thicker layer of wadding under the cotton. It gives the cloud its body and softens the light again on its way out.',
+    text: 'Adds volume and softens the light beneath the cotton.',
   },
   {
     name: 'White mesh',
     phase: 'β' as const,
-    text: 'A white plastic mesh with hexagonal cells, shaped into the cloud’s outline. It is the shell that holds the soft layers in place.',
+    text: 'A shaped hexagonal mesh supports the outer layers.',
   },
   {
     name: 'Nylon diffuser fabric',
     phase: 'β' as const,
-    text: 'The first thing the light meets. It spreads each point of light out before it reaches the wadding, so no single LED shows through as a hot spot.',
+    text: 'Diffuses individual LEDs to prevent visible hotspots.',
   },
 ];
 
@@ -89,27 +89,27 @@ const innerLayers = [
   {
     name: 'Inner mesh frame',
     phase: 'α' as const,
-    text: 'A square-grid mesh that forms the core of the cloud and carries the lights.',
+    text: "Supports the LEDs and the cloud's inner structure.",
   },
   {
     name: 'Addressable LEDs',
     phase: 'α' as const,
-    text: 'Individually controllable LED pixels (for example WS2811), fixed across the frame. Each can take its own colour and brightness, which makes gradients, lightning, colour blooms and breathing light possible.',
+    text: 'Individually controlled pixels create gradients, lightning and breathing effects.',
   },
   {
     name: 'Directionality cylinders',
     phase: 'β' as const,
-    text: 'A short card tube around each LED aims its light outwards, so each pixel lights its own patch of the cloud instead of washing into its neighbours.',
+    text: 'Card tubes direct each LED outwards, reducing light spill between neighbouring areas.',
   },
   {
     name: 'Support struts',
     phase: 'α' as const,
-    text: 'Tubes of rolled mesh, rising from the frame, hold the outer layers at a distance from the lights.',
+    text: 'Rolled mesh tubes maintain the distance between the LEDs and outer layers.',
   },
   {
     name: 'Black fabric layer',
     phase: 'α' as const,
-    text: 'Underneath the frame, a black fabric stops light escaping backwards, so it only leaves through the diffusing layers.',
+    text: 'Prevents light escaping through the back of the frame.',
   },
 ];
 
@@ -121,8 +121,7 @@ const tour = [
     alt: 'The LED mapping page: a wireframe model of the pyramid-shaped cloud on a grid, with numbered blue dots for each LED and control panels on both sides.',
     caption: 'The mapping page. Each numbered dot is a physical LED, placed in strand order.',
     body: [
-      'We modelled the cloud’s shape in Blender and loaded it into the mapping page. Then we placed the LEDs on it one by one, in the order they run along the physical strand, lighting each real LED to check it was in the right spot.',
-      'A smooth model is not a cloud, so we added 48 soft “domes” over the surface where the real cloud billows. They lift nearby LEDs and change how light reaches them, so a pixel tucked in a fold sits in shadow and one on a crest catches the light. A movable test light, which can stream straight to the cloud, let us check the mapping by eye.',
+      "We modelled the cloud in Blender and mapped its 344 LEDs individually, checking each against the physical installation. We added 48 adjustable domes to approximate the cloud's billowing surface, allowing light to behave differently on crests and in folds. A movable test light let us verify the mapping directly on the cloud.",
     ],
   },
   {
@@ -133,8 +132,7 @@ const tour = [
     alt: 'The sky timeline: a row of day periods (magical night, dawn, day, dusk, night) above tracks for lightning, breath, and gradient tracks of colour stops for the sun, moon and ambient light.',
     caption: 'The sky timeline. Periods across the top, then colour stops for sun, moon and ambient light.',
     body: [
-      'The day is split into periods: magical night, dawn, day, dusk and night. Below them sit three colour tracks, for the sun, the moon and the ambient sky, each with its own draggable colour stops. The sun and moon move on physically plausible arcs, and their colours blend smoothly between stops.',
-      'We chose the colours by eye, not by formula. We dragged a stop, watched the real cloud change, and kept what felt like a sky: the violets and ambers of our palette, deep blues at night, and hue-preserving brightness so sunset oranges don’t bleach to white.',
+      'A 24-hour timeline controls the colours of the sun, moon and ambient sky. Their colours are interpolated between editable stops as the sun and moon follow simulated arcs. We tuned the palette by eye, testing each change directly on the cloud, from deep night blues to the violets and ambers of dusk and dawn.',
     ],
   },
   {
@@ -144,8 +142,7 @@ const tour = [
     alt: 'The lightning panel: a storm intensity curve keyframed across dusk, night, magical night and dawn, three colour gradient tracks for the bolts, rate and shape sliders, and a library of thunder and sprite sounds and images.',
     caption: 'The lightning panel. Storm intensity across the night, bolt colours, shape, and a library of thunder sounds.',
     body: [
-      'Lightning is simulated as branching bolts that crawl through the cloud’s 3D volume, lighting the LEDs they pass. There are in-cloud flashes, ground strikes, and image “sprites”: pictures projected through the cloud in a short strobe, which became the strange flashes of the magical twilight.',
-      'Storm intensity is keyframed across the night, building from dusk into the magical twilight. Each bolt takes its colours from three gradient tracks, so a flash can move from pale gold to magenta to green. Every flash also picks a thunder recording that matches its length and intensity, arriving a moment later like real thunder.',
+      'Branching lightning bolts travel through the simulated cloud, illuminating nearby LEDs. Storm intensity changes throughout the night, with adjustable flash colours, projected sprites and thunder sounds matched to each strike.',
     ],
   },
   {
@@ -155,8 +152,7 @@ const tour = [
     alt: 'Screen recording of the drones page: a playhead moves across a 24-hour piano roll of long blue notes, above per-note controls for layer mix, a pink tremolo curve, a blue filter curve, and octave layers with tremolo and drift.',
     caption: 'The drones page, with audio. Long notes on a 24-hour piano roll, shaped by tremolo, filter and drift.',
     body: [
-      'The soundscape is composed on the same 24-hour clock as the light. A drone synth and a warm pad synth each have a piano roll that spans the whole day, so a note might hold for hours of sky time, from dusk into night.',
-      'Drones are built from slow, layered sine tones, with a tiny drift that dissolves beating between close intervals into a soft chorus.',
+      'Slow, layered sine tones form drones across the 24-hour timeline. Subtle pitch drift softens beating between nearby frequencies, creating a gentle chorus. Notes can extend across hours of simulated time.',
     ],
   },
   {
@@ -166,8 +162,7 @@ const tour = [
     alt: 'The pads page: a piano roll across the 24-hour day with chord notes, and synth controls with keyframe curves for each parameter.',
     caption: 'The pad synth, with its own piano roll and parameters keyframed across the day.',
     body: [
-      'Above the drones sits a warm pad synth: several detuned voices per note, spread across the stereo field, then through saturation, chorus, reverb and delay.',
-      'Its chords are written on the same day clock, clustered through the night and early morning. Any parameter can be keyframed across the day. Here the filter cutoff rises and falls, so the pads open up and soften again as the light on the cloud changes.',
+      'A polyphonic pad synthesiser adds warm, detuned chords. Notes and effects are automated across the day, allowing the sound to change alongside the light.',
     ],
   },
   {
@@ -177,8 +172,7 @@ const tour = [
     alt: 'The samples page: a library of sound files with waveforms on the left, arranged as orange clips on lanes across a 24-hour timeline, with automation curves for volume and effects.',
     caption: 'Samples arranged on lanes across the day, with automation for volume, pan, filter, reverb and delay.',
     body: [
-      'Recorded sounds are dragged from a library onto lanes on the day timeline: morning birdsong, dusk ambience, gentle and reversed bells, chimes. Each lane has its own curves for volume, pan, filter, reverb and delay.',
-      'Breath plays its part too. Each out-breath can trigger a soft sound, and how much of the cloud is lit by breath feeds back into the mix. The room hears itself breathing with the cloud.',
+      "Birdsong, bells, chimes and ambient recordings are arranged along the day timeline, with individual controls for volume, filtering and effects. Exhalations can also trigger sounds, connecting the soundscape to participants' breathing.",
     ],
   },
   {
@@ -188,8 +182,7 @@ const tour = [
     alt: 'Screen recording: breath waves sweep through the digital cloud as green spheres, lighting its LEDs, while the drone, pad and sample sliders in the master volume panel rise and fall with them.',
     caption: 'Breath modulating the sound, with audio. Watch the drone, pad and sample controls move as each breath passes through the cloud.',
     body: [
-      'As each out-breath travels up into the cloud, the software measures how much of the cloud it lights. That single value then drives the mix. Each slider in the master panel sets where a parameter lands when the cloud is fully lit by breath, plus an offset for where it rests between breaths. The live value glides between the two.',
-      'It moves the volume, saturation, tremolo and filters of the drones, the volume, saturation, spread and filters of the pads, and the volume and filters of the samples. The soundscape swells and opens as a breath washes through the cloud, then settles as it fades. Turn the sound on to hear it.',
+      'As a breath illuminates the cloud, its brightness controls parameters across the soundscape, including volume, filtering, saturation and tremolo. The sound opens and swells with each breath, then gradually settles.',
     ],
   },
 ];
@@ -281,12 +274,11 @@ const learned = [
     image={teaFront}
     imageAlt="The pilot cloud glowing warm white above white sheets, with a small tea table beneath it."
     title="Cloud Interbeing"
-    lede="A cloud hangs above you. As daylight fades, a mysterious storm approaches. Something ethereal shifts, and your passive observation becomes a causal connection, as your very breath illuminates the cloud. The boundary between you, the unfolding light of dawn and the cloud it illuminates begins to blur. You breathe together, holding this connection until dawn rises.">
+    lede="A cloud hangs above you. As daylight fades, a storm gathers. Lightning gives way to an unfamiliar twilight, until your breath begins to illuminate the cloud. With each breath, the light changes, gradually revealing the dawn.">
     <p class="status">
       <span class="dot" aria-hidden="true"></span>
       <span>
-        Footage comes from the first pilot installation, built and tested in July 2026. We are working on a new
-        iteration planned for November.
+        Footage from our first pilot in July 2026. A new iteration is planned for November.
       </span>
     </p>
   </PageHeader>
@@ -301,8 +293,7 @@ const learned = [
         <span class="pd-line" aria-hidden="true"></span>
       </div>
       <p class="wrap pd-intro">
-        We built and piloted our installation at Sony CSL Paris. This served as an alpha (α) iteration and our first
-        research-creation output.
+        We built and tested the first version at Sony CSL Paris in July 2026. This was our alpha (α) iteration.
       </p>
     </div>
 
@@ -311,19 +302,17 @@ const learned = [
         <p class="eyebrow"><span class="phase-mark">α</span> The evening</p>
         <h2>From dusk to breath</h2>
         <p>
-          We closed off a section of the atelier with a black backdrop, and we blacked out the street-level windows to
-          the right and the glass door to the garden at the back left. We decided to lay out a white sheet on the
-          ground both to cover the wooden texture of the floor and to reflect more light from the cloud. For seating,
-          we placed beanbags on the floor and kept a pot of tea warm under the cloud. Over two days, people took turns
-          reclining in front of the cloud as it moved from dusk, through the magical twilight, to breath
-          synchronisation and finally to daylight.
+          We transformed a corner of the atelier with black backdrops, covered the floor with white sheets to reflect the light, and arranged beanbags and tea beneath the cloud.
+        </p>
+        <p>
+          Over two days, visitors experienced the cloud's transition from dusk through magical twilight and breath synchronisation to dawn.
         </p>
       </div>
 
       <p class="small gallery-note">All clips are silent. Click any of them to see it larger.</p>
       <MediaGallery items={dusk} audio="dusk-audio.mp3" numeral="I" title="Dusk and lightning" description="The sun sets on the room and the first strikes flicker through the cloud." class="reveal" />
       <MediaGallery items={twilight} audio="magical-twilight.mp3" numeral="II" title="Magical twilight" description="The lightning intensifies. Multi-coloured 'sprites' appear with eerie sounds." columns={2} class="reveal" />
-      <MediaGallery items={breath} audio="breath-effect.mp3" numeral="III" title="Breath" description="Participant breath travels through the cloud on exhale. Uncovering the dawn light and bringing clarity to the dawn music." columns={2} class="reveal" />
+      <MediaGallery items={breath} audio="breath-effect.mp3" numeral="III" title="Breath" description="Each exhalation travels through the cloud as a wave of light, gradually revealing the dawn and bringing clarity to the music." columns={2} class="reveal" />
     </div>
   </section>
 
@@ -333,7 +322,7 @@ const learned = [
         <p class="eyebrow"><span class="phase-mark">α</span> Moments</p>
         <h2>The people beneath it</h2>
         <p class="lede measure">
-          We invited many people to sit infront of the cloud or stand in larger groups. Many said it had a presence. They just wanted to stay in the room with it.
+          Visitors sat or reclined beneath the cloud, sometimes gathering in groups. Many described it as having a presence and wanted to stay with it.
         </p>
       </div>
       <MediaGallery items={moments} title="Under the cloud" description="Two days of visitors, tea and beanbags." class="reveal" />
@@ -349,7 +338,7 @@ const learned = [
         </div>
         <div class="reveal">
           <p>
-            At the righthand side of the room, TouchDesigner read the breathing belts and sent OSC trigger commands to the main control software. Our own control app drove the time of day simulation, LED mapping, lightning, breath controls, audio and reactive elements such as audio modulation. Watching the screens and the cloud side by side was how we tuned the evening as it happened.
+            TouchDesigner processed signals from the breathing belts and sent them to our control software, which handled lighting, sound and breath responses. We adjusted the experience live while watching the screens and cloud together.
           </p>
           <p><a href={url('/installation/#software')}>More about the software →</a></p>
         </div>
@@ -365,7 +354,7 @@ const learned = [
         <p class="eyebrow"><span class="phase-mark">α</span> Getting ready</p>
         <h2>Ten days, and the last few hours</h2>
         <p class="lede measure">
-          The pilot was built in ten days in the atelier of Sony CSL Paris following a long period of prototyping and conceptualisation. The last of it happened lying on the floor, pushing fibre up into the cloud one skewer at a time.
+          After months of prototyping, we built the pilot in ten days at Sony CSL Paris. The final hours were spent beneath the cloud, shaping its fibre one skewer at a time.
         </p>
         <p>
           <a class="button" href={url('/process/')}>Follow the full build in the process journal <span aria-hidden="true">→</span></a>
@@ -379,10 +368,7 @@ const learned = [
           <p class="eyebrow">Electronics</p>
           <h3>What was that popping sound?</h3>
           <p>
-            The LEDs run from a battery through a buck converter, which steps the voltage down to what the lights need. The first buck converter couldn't take the amperage and a component overheated and was damaged.
-          </p>
-          <p>
-            Luckily we bought two just incase. Under the full load of the cloud it ran hot, so we measured it with a thermal camera and added a small fan which was very effective. After the pilot we replaced it with a better converter and controller.
+            Our first buck converter overheated under the LEDs' power demand. A replacement also ran hot, so we monitored it with a thermal camera and added a cooling fan. Both converter and controller were upgraded after the pilot.
           </p>
         </div>
         <MediaGallery items={electronics.map((e) => ({ image: e.src, alt: e.alt, caption: e.caption }))} columns={3} class="reveal" />
@@ -435,13 +421,7 @@ const learned = [
       <article class="make">
         <div class="make-text reveal">
           <p>
-            The cloud hangs on a pyramid frame of wooden dowel rods held together by 3D-printed joints. The frame is wrapped with a plastic mesh, secured in place by zipties. There are plastic support struts made from rolled-up mesh to both support the outer layer and ensure it is far enough away from the LEDs to diffuse correctly.
-          </p>
-          <p>
-            This inner and outer seperation allows LEDs to shine outwards into the cloud material, independent of the complex surface of the cloud, leaving a reasonable LED-to-diffuser spacing to prevent hotspots and provide proper coverage across the outer material.
-          </p>
-          <p>
-            The pyramid shape simplified the geometry of the inner structure of the cloud but compromised the expressivity of the light fields we can create. We tried to account for this with our LED mapping approach described later.
+            A pyramid of wooden dowels and 3D-printed joints forms the inner frame. Plastic mesh and support struts hold the cloud's outer surface away from the LEDs, allowing light to diffuse without visible hotspots. The pyramid simplified construction but limited the lighting geometry, a constraint we addressed through software.
           </p>
           <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>Building the pyramid →</a></p>
         </div>
@@ -464,13 +444,7 @@ const learned = [
       <article class="make">
         <div class="make-text reveal">
           <p>
-            Rows of addressable LED pixels — BTF-LIGHTING WS2811 IC RGB 50 LEDs 12 mm DC5V IP68 Green LED String Lights — are woven into the mesh of the pyramid and numbered to make LED mapping easier. Each pixel can take its own colour and brightness, and each has a position in the digital twin, which is how the software knows what colour to give it.
-          </p>
-          <p>
-            We could have used LED strips for this pyramid design but string LEDs are more versatile for trying out different distances between LEDs and also for placing them on complex mesh shapes which we had originally experimented with. We already had enough string LEDs so we went ahead and used them.
-          </p>
-          <p>
-            We needed to inject power to the string LEDs every 100 LEDs which wasn't the case with similar length LED strips but wasn't a problem for our design.
+            Individually addressable WS2811 LEDs are woven into the frame's mesh. Each has its own position in the digital twin, allowing the software to control its colour and brightness. We chose flexible LED strings over strips to experiment with spacing and irregular shapes, adding power injection every 100 pixels to compensate for voltage drop.
           </p>
           <p><a href={url("/process/2026-07-22-a-pyramid-of-light/")}>A pyramid of light →</a></p>
         </div>
@@ -492,10 +466,7 @@ const learned = [
       <article class="make">
         <div class="make-text reveal">
           <p>
-            The outer layer is loose cotton fibre, layered over a white hexagonal mesh. We tried to pull the cotton through the mesh to keep it in place rather than using glue. This worked but proved difficult as we closed up the cloud as we couldn't reach into the cloud surface anymore. To get around this we finished it off by pushing the cotton through the mesh with a skewer.
-          </p>
-          <p>
-            This approach looked great and created a texture you just wanted to touch. However the variable density of the cotton at points where the cotton was pulled or pushed through were very obvious when the LEDs were on. Moreoever, the cotton could fall out when handled or when the cloud fell (which absolutely didn't happen).
+            Loose cotton fibre is pulled through a hexagonal mesh to create the cloud's surface without glue. As the shell closed, we used skewers to push fibre through from below. The result was tactile but uneven: variations in fibre density became visible under illumination, and some fibre could come loose.
           </p>
           <p><a href={url("/process/2026-07-30-the-alpha-cloud/")}>The pilot cloud →</a></p>
         </div>
@@ -517,9 +488,7 @@ const learned = [
       <article class="make">
         <div class="make-text reveal">
           <p>
-            To keep mains cables away from participants lying on the floor, the installation runs off a 12 V 5600 mAh
-            lithium-ion battery. A DollaTek XL4016E1 buck converter steps the 12 V down to 5 V for the LEDs, powering a
-            QuinLED Dig-Quad controller running WLED firmware, fitted with an ESP32-ABE module, controlled over Wi-Fi from our custom control software.
+            A 12 V lithium-ion battery powers the installation, keeping mains cables away from visitors. A buck converter supplies 5 V to the LEDs, controlled by a WLED-equipped ESP32 controller over Wi-Fi.
           </p>
           <p><a href={url("/process/2026-07-28-the-pilot-electronics/")}>The electronics in the pilot →</a></p>
         </div>
@@ -539,10 +508,7 @@ const learned = [
       <article class="make">
         <div class="make-text reveal">
           <p>
-            Each participant wears a light belt with a conductive rubber stretch sensor. A tiny ESP32-C3 board reads
-            the analogue sensor output and sends it wirelessly to TouchDesigner, which smooths the signal, detects the
-            start of each in- and out-breath, and broadcasts OSC trigger messages to the main control app. Below are
-            real recordings from our tests with different band widths and amounts of stretch, all on the same scale.
+            A conductive rubber stretch sensor measures each participant's breathing. An ESP32-C3 sends the readings wirelessly to TouchDesigner, which smooths the signal, detects inhalation and exhalation, and sends triggers to the control software. The measurements below compare different band widths and amounts of stretch.
           </p>
           <p><a href={url("/process/2026-06-12-a-belt-that-listens/")}>Read about the belt →</a></p>
         </div>
@@ -569,15 +535,7 @@ const learned = [
       <article class="make software">
         <div class="make-text reveal">
           <p>
-            There was no off-the-shelf tool for lighting a cloud, so we made one. The software was
-            <em>vibe coded</em>: written in conversation with AI coding assistants, one idea at a time. We described
-            what we wanted to see or hear, tried it on the real cloud, and asked for the next change. What grew out of
-            that is less an app than an instrument, built in TypeScript with React and three.js.
-          </p>
-          <p>
-            At its centre is a <strong>digital twin</strong>: a 3D model of the cloud with every one of its 344 LEDs
-            placed where it really sits. Five pages share one 24-hour sky clock, so light, lightning, breath and sound
-            all follow the same day. Whatever the twin shows is streamed live to the physical LEDs.
+            We built a custom instrument in TypeScript, React and three.js, developing it iteratively with AI coding assistants. At its centre is a digital twin containing the positions of all 344 LEDs. A shared 24-hour timeline synchronises lighting, lightning, breathing and sound, streaming the results to the physical cloud.
           </p>
           <p class="pipeline">
             TouchDesigner (breath) → relay → browser (simulation and audio) → relay → WLED controller (LEDs)
@@ -641,7 +599,7 @@ const learned = [
             <div class="twin">
               <div class="twin-text">
                 <p>
-                  In the digital twin, a smooth 3D mesh is placed over the pyramid frame to approximate the cloud’s shape for lighting calculations. Rather than lighting a flat panel, light probes across this virtual surface sample the environment, calculate self-occlusion in crevices and on ridges, and transfer the resulting light values directly onto the physical LEDs inside the cloud.
+                  Virtual light probes sample the simulated environment across the cloud's surface, accounting for direction and self-shadowing. The resulting colours are transferred to the corresponding LEDs inside the physical cloud.
                 </p>
               </div>
               <Figure
@@ -676,8 +634,7 @@ const learned = [
         <p class="eyebrow"><span class="phase-mark">β</span> Updates in beta</p>
         <h2>Rebuilding the cloud</h2>
         <p class="lede measure">
-          After the pilot, we took the cloud apart and rebuilt it. The single skin of fibre became four soft layers, each
-          LED was aimed outwards, the electronics stopped running hot, and the software learned new kinds of light.
+          After the pilot, we rebuilt the cloud with four layers of diffusion, individually directed LEDs, cooler electronics and improved lighting simulation.
         </p>
       </div>
 
@@ -727,19 +684,19 @@ const learned = [
         <article class="reveal">
           <Figure src={insideStruts} alt="Inside the pyramid: LEDs in card tubes on a square mesh, with rolled-mesh struts between them, lit blue." ratio="4 / 3" />
           <h3>Aimed light</h3>
-          <p>A card tube around each LED points it outwards, and rolled-mesh struts hold the layers away from the lights.</p>
+          <p>Card tubes direct the LEDs outwards, while mesh struts maintain their distance from the diffuser.</p>
           <a href={url("/process/2026-09-02-inside-the-pyramid/")}>Aiming the light →</a>
         </article>
         <article class="reveal">
           <Figure src={betterBuck} alt="A larger buck converter wired to a new LED controller." ratio="4 / 3" />
           <h3>Cooler electronics</h3>
-          <p>A larger buck converter and a new controller, so the cloud no longer needs a fan to stay cool.</p>
+          <p>An upgraded converter and controller eliminated the need for active cooling.</p>
           <a href={url("/process/2026-09-03-cooler-electronics/")}>New electronics →</a>
         </article>
         <article class="reveal">
           <Figure src={layersShowing} alt="The rebuilt cloud glowing pink, with its layers visible at the edge." ratio="4 / 3" />
           <h3>New light in the software</h3>
-          <p>Bumps in the digital twin for depth, highlights where the sun catches the top, and sprites that arrive with their own sound.</p>
+          <p>Improved surface modelling, directional highlights and synchronised audiovisual sprites.</p>
           <a href={url("/process/2026-09-16-better-sprites/")}>Sprites with sound →</a>
         </article>
       </div>
@@ -752,12 +709,7 @@ const learned = [
         <p class="eyebrow">What the pilot taught us</p>
         <h2>Packed away, for now</h2>
         <p class="lede">
-          The pilot showed us what worked and what to change, and the beta grew out of it. The cloud is packed up now,
-          waiting for the next room.
-        </p>
-        <p>
-          A <a href={url('/#upcoming')}>new iteration is planned for November</a>, which will give more people the chance to see the cloud in person.
-          We’ll share viewing opportunities here as soon as they’re confirmed.
+          The pilot revealed what worked and what needed changing. Its successor is now in development, with a <a href={url('/#upcoming')}>new iteration planned for November 2026</a>. Viewing opportunities will be announced here.
         </p>
         <p class="links" style="margin-top: 2rem;">
           <a class="button" href={url('/process/')}>Follow the full build in the process journal <span aria-hidden="true">→</span></a>
