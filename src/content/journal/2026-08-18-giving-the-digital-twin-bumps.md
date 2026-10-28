@@ -16,7 +16,7 @@ clips:
 tags: [light, digital twin, after the pilot]
 ---
 
-The pyramid planes all have the same normal, so the light illuminates each plane all at once, evenly. That isn’t like the nice fluffy bumpy clouds we are used to. So, in the digital twin, we added “bumps” as Gaussians, aggregated together to roughly correspond to the bumps on the physical cloud.
+The pyramid planes all have the same normal, so the light illuminates each plane all at once, evenly. A normal is the direction a surface faces. How bright a point looks depends on how directly the light meets that direction: face-on is bright, edge-on falls into shadow. When a whole plane shares one normal, the whole plane brightens and darkens together. That isn’t like the nice fluffy bumpy clouds we are used to. So, in the digital twin, we added “bumps” as Gaussians, aggregated together to roughly correspond to the bumps on the physical cloud.
 
 So, when light sweeps over the model, rather than washing across it all at once on the flat pyramid planes, it lights it up according to the geometry of the model.
 

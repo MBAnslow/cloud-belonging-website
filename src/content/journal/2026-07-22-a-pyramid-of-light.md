@@ -40,22 +40,14 @@ The printed parts from last week turned out to be joints. Wooden dowels slot int
 
 ![Wooden dowels and 3D-printed joints laid out on the workshop floor between strips of red and white tape](../../assets/photos/build-dowels.jpg)
 
-## The mesh comes back
+## Mesh over the frame
 
-In May, green plastic garden mesh was our first attempt at a cloud body. It was too heavy-looking and too opaque, and we moved on to tulle. Now it came back as a skin for the skeleton. Stretched over the dowels and tied at every edge, it gives the lights something to hold on to.
+We kept using the same green plastic garden mesh as the first cloud. It was fine. Stretched over the dowels and tied at every edge, it is the skin of the skeleton, and it gives the lights something to hold on to.
 
-Strings of addressable LED pixels are zip-tied across each face in rows, every bulb pointing outwards. Each pixel can take its own colour, which is what makes gradients, travelling light and lightning possible. A pyramid places those pixels at different depths inside the cloud, so light can seem to move *through* it rather than across a flat panel.
+Strings of addressable LED pixels are zip-tied across each face in rows, every bulb pointing outwards. I used the LED mapping to lay them: each pixel was placed on the pyramid in the software first, then tied onto the mesh in that same position, so the digital twin and the frame matched. Each pixel can take its own colour, which is what makes gradients, travelling light and lightning possible. A pyramid places those pixels at different depths inside the cloud, so light can seem to move *through* it rather than across a flat panel.
 
 Without injecting power periodically along the line, 5 V string lights suffer voltage drop: setting all pixels to full white causes the furthest LEDs along the strand to fade into amber and yellow. Injecting power every 100 pixels keeps the voltage steady and colours true across the whole cloud.
 
 ![White LEDs on the workbench without power injection, shifting from bright white to yellow along the strand](../../assets/photos/led-power-drop-yellowing.jpg)
-
-## Keeping the power cool
-
-The electronics had their own casualty. The first buck converter we bought overheated and broke, so we attached a small fan to the second one to keep it cool.
-
-## Painting it white
-
-Green mesh under white fibre would tint every colour we tried to make, so next the whole pyramid was [masked and sprayed white](../2026-07-23-masking-and-spraying/).
 
 Next, it needs a body: something soft and cloud-like around it that the light can glow through.

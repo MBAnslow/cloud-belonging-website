@@ -40,7 +40,7 @@ const artworkMat = matChoices[hash(title) % matChoices.length];
       {
         coverVideo ? (
           <video
-            class="cover-video"
+            class:list={['cover-video', { 'cover-bottom': entry.id === '2026-07-28-outtakes' }]}
             src={url(`/video/${coverVideo}.mp4`)}
             poster={url(`/video/${coverVideo}.jpg`)}
             muted
@@ -131,6 +131,9 @@ const artworkMat = matChoices[hash(title) % matChoices.length];
     height: 100%;
     object-fit: cover;
     transition: transform 1.2s ease;
+  }
+  .media video.cover-bottom {
+    object-position: center bottom;
   }
   .media.artwork img,
   .media.artwork :global(.generative-cover) {

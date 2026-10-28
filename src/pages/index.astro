@@ -16,7 +16,6 @@ const featuredCandidateIds = [
   '2026-07-02-quand-le-ciel-recule',
   '2026-09-24-the-final-score',
   '2026-07-improvising-to-a-script',
-  '2026-07-30-the-alpha-cloud',
   '2026-02-10-a-space-for-you',
 ];
 const featured = featuredCandidateIds
@@ -128,7 +127,7 @@ const introLetters = introPhrases.map((phrase, p) => {
             window.removeEventListener(t, finish);
           });
         };
-        timer = setTimeout(finish, 20200);
+        timer = setTimeout(finish, 24800);
         ['pointerdown', 'keydown', 'wheel', 'touchstart'].forEach(function (t) {
           window.addEventListener(t, finish, { passive: true });
         });
@@ -472,8 +471,18 @@ const introLetters = introPhrases.map((phrase, p) => {
     display: grid;
     align-items: end;
     justify-items: center;
-    padding: 0 var(--gutter) clamp(11rem, 40vh, 22rem);
+    padding: 0 var(--gutter) max(11rem, 40vh);
     pointer-events: none;
+  }
+  @media (orientation: landscape) and (max-height: 840px) {
+    .hero {
+      height: 100svh;
+    }
+    .intro-playing .hero-intro,
+    .intro-done .hero-intro {
+      align-items: center;
+      padding: 10vh var(--gutter) 0;
+    }
   }
   .hero-intro p {
     grid-area: 1 / 1;
@@ -487,7 +496,7 @@ const introLetters = introPhrases.map((phrase, p) => {
     font-style: italic;
     line-height: 1.15;
     color: var(--hero-fg);
-    --at: calc(3s + var(--i) * 4.2s);
+    --at: calc(3s + var(--i) * 5.2s);
     animation: intro-drift 7s linear calc(var(--at) - 3.5s) both;
   }
   /* Each phrase is one continuous flow: letters roll in from the left, slow almost to a stop at the
@@ -516,8 +525,8 @@ const introLetters = introPhrases.map((phrase, p) => {
   }
   .intro-letter > span {
     animation:
-      intro-depart var(--dout) cubic-bezier(0.55, 0.12, 0.8, 0.5) calc(var(--at) + 0.65s) both,
-      intro-vanish var(--dout) linear calc(var(--at) + 0.65s) both;
+      intro-depart var(--dout) cubic-bezier(0.55, 0.12, 0.8, 0.5) calc(var(--at) + 1.65s) both,
+      intro-vanish var(--dout) linear calc(var(--at) + 1.65s) both;
   }
   @keyframes intro-approach {
     from {

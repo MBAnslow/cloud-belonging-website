@@ -97,6 +97,8 @@ const {
           }
           // y is up. On the hero, the overlay header covers the top of the sky, so drop the cloud below it.
           if (Number(el.dataset.narrowBelow) > 1 && narrowFrame) y -= 0.18;
+          // A phone or tablet turned sideways is short, and the wide placement sits too low.
+          if (Number(el.dataset.narrowBelow) > 1 && r.width > r.height && r.height < 840) y += 0.18;
           return { x, y, scale };
         },
         onFrame: (s) => {

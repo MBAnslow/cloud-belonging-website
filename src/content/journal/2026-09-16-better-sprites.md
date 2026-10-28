@@ -15,4 +15,13 @@ clips:
 tags: [sprites, sound, twilight, after the pilot]
 ---
 
-A sprite is an image projected through the cloud in a quick strobe. Each one now triggers a matching sound, which makes the twilight feel like it is happening, not just playing.
+A sprite is an image projected through the cloud in a quick strobe. Imagine a 2D image stacked many times to make a 3D space. Each one is triggered by a matching sound which controls the intensity of it so that it responds to the sounds.
+
+Sprites are inspired by a real <a href="https://en.wikipedia.org/wiki/Sprite_(lightning)">phenomenon of the same name</a>, which looks a little like strange jellyfish in the sky.
+
+<figure>
+  <a href="https://en.wikipedia.org/wiki/Sprite_(lightning)#/media/File:Upperatmoslight1.jpg">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Upperatmoslight1.jpg" alt="A red lightning sprite above a thunderstorm." loading="lazy" />
+  </a>
+  <figcaption>A <a href="https://en.wikipedia.org/wiki/Sprite_(lightning)#/media/File:Upperatmoslight1.jpg">lightning sprite</a>, the atmospheric flash these installation sprites are named after. Image via Wikimedia Commons.</figcaption>
+</figure>
