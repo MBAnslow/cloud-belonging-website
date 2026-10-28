@@ -131,10 +131,11 @@ const tiles = await Promise.all(
     dialog.addEventListener('close', () => {
       stage.innerHTML = '';
       document.documentElement.classList.remove('lightbox-open');
-      if (currentFrame && sounds.has(currentFrame)) update(currentFrame);
+      if (currentFrame && sounds.has(currentFrame)) toggleSound(currentFrame, false);
       document.querySelectorAll<HTMLVideoElement>('[data-tile-video]').forEach((v) => {
-        if (v.dataset.wasPlaying) v.play().catch(() => {});
-        delete v.dataset.wasPlaying;
+        const tile = v.closest('.tile');
+        if (tile?.matches(':hover')) v.play().catch(() => {});
+        else v.pause();
       });
     });
     return dialog;
@@ -217,10 +218,7 @@ const tiles = await Promise.all(
       tile.addEventListener('click', () => {
         current = tiles;
         currentFrame = gallery.closest<HTMLElement>('[data-audio-src]');
-        document.querySelectorAll<HTMLVideoElement>('[data-tile-video]').forEach((v) => {
-          if (!v.paused) v.dataset.wasPlaying = 'true';
-          v.pause();
-        });
+        document.querySelectorAll<HTMLVideoElement>('[data-tile-video]').forEach((v) => v.pause());
         document.documentElement.classList.add('lightbox-open');
         ensureDialog().showModal();
         dialog!.classList.toggle('has-sound', !!currentFrame);
@@ -230,14 +228,14 @@ const tiles = await Promise.all(
       }),
     );
     if (reduce) return;
-    const io = new IntersectionObserver((entries) => {
-      for (const { target, isIntersecting } of entries) {
-        const v = target as HTMLVideoElement;
-        if (isIntersecting && !document.documentElement.classList.contains('lightbox-open')) v.play().catch(() => {});
-        else v.pause();
-      }
+    gallery.querySelectorAll<HTMLVideoElement>('[data-tile-video]').forEach((v) => {
+      const tile = v.closest('.tile');
+      if (!tile) return;
+      tile.addEventListener('pointerenter', () => {
+        if (!document.documentElement.classList.contains('lightbox-open')) v.play().catch(() => {});
+      });
+      tile.addEventListener('pointerleave', () => v.pause());
     });
-    gallery.querySelectorAll<HTMLVideoElement>('[data-tile-video]').forEach((v) => io.observe(v));
   });
 </script>
 

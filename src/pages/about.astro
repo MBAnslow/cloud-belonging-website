@@ -47,7 +47,7 @@ const team = [...site.team].sort((a, b) => order.indexOf(a.name) - order.indexOf
                 <p class="bio">{person.bio}</p>
                 <div class="profile-links" aria-label={`${person.name} links`}>
                   <a href={person.linkedin} target="_blank" rel="noreferrer">LinkedIn</a>
-                  <a href={person.website} target="_blank" rel="noreferrer">Website</a>
+                  {person.website && <a href={person.website} target="_blank" rel="noreferrer">Website</a>}
                   <a href={`mailto:${person.email}`}>Email</a>
                 </div>
               </article>
