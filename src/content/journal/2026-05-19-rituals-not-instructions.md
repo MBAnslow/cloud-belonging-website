@@ -29,19 +29,15 @@ That week we went to see how others hold an audience: [Le Grand Hôtel des Rêve
 
 ## Le Grand Hôtel des Rêves
 
-![Outside the Grand Hôtel des Rêves.](../../assets/photos/visit-grand-hotel.jpg)
-
 [Le Grand Hôtel des Rêves](https://www.legrandhoteldesreves.fr/spectaclejulesverne) is an immersive show in a historic house in the 5th arrondissement. In small groups you move from room to room, led by the inhabitants of the hotel, through the worlds of Jules Verne: the Nautilus, the rocket, and the other sets.
 
 We were impresed by the location of Le Grand Hôtel des Rêves but noted the conventional stage light design and division between performers and audience in many of the setpieces. There was one room that had clouds on the ceiling. 
 
 ## TOI
 
-![The two of us at TOI.](../../assets/journal/2026-05-19-rituals-not-instructions/toi-us-two.jpg)
+[TOI](https://toi.wearemoir.com/paris/en/) is Moir’s immersive personality test, in their space on boulevard Saint-Jacques. For about ninety minutes you move, play and choose across a series of rooms, guided by a virtual avatar. Those choices shape an Aura, revealed in a holographic show at the end. You log your choices via a user tag that you carry with you. 
 
-[TOI](https://toi.wearemoir.com/paris/en/) is Moir’s immersive personality test, in their space on boulevard Saint-Jacques. For about ninety minutes you move, play and choose across a series of rooms, guided by a virtual avatar. Those choices shape an Aura, revealed in a holographic show at the end.
-
-This was a slighty tacky pop-culturish take on cognitive science concepts but the actual production values were pretty impressive. Probably a great place to take a date or to go with family. 
+This was a slighty tacky pop-psychology take on cognitive science concepts mixed with the alternative lifestyle concept of aura but the actual production values were pretty high end. Probably a great place to take a date or to go with family. There was an interesting social dynamic where we could publicly see what other people were choosing directly in a context where these choices were somehow indicating something fundamental about us. 
 
 ## Other Notes
 
