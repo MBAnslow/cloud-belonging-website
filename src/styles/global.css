@@ -440,6 +440,19 @@ main > section.blend:last-of-type::after,
   margin-top: 0.6em;
 }
 
+.prose .video-embed {
+  margin: 2.2em 0;
+}
+
+.prose .video-embed iframe {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 0;
+  border-radius: var(--radius);
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
