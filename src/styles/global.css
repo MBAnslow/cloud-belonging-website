@@ -453,6 +453,35 @@ main > section.blend:last-of-type::after,
   border-radius: var(--radius);
 }
 
+.prose .shots {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.75rem;
+  margin: 2em 0;
+}
+
+.prose .shots:has(> :nth-child(2):last-child) {
+  grid-template-columns: 1fr 1fr;
+}
+
+.prose .shots figure,
+.prose .shots img {
+  margin: 0;
+}
+
+.prose .shots img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  aspect-ratio: 4 / 3;
+}
+
+@media (max-width: 700px) {
+  .prose .shots {
+    grid-template-columns: 1fr;
+  }
+}
+
 .visually-hidden {
   position: absolute;
   width: 1px;
