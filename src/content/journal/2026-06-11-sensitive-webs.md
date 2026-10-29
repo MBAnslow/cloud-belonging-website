@@ -37,7 +37,7 @@ The second prototype is a spider-web you play like an instrument, built for a ph
 
 - **Touch a strand** and a ripple of light runs across the web while a chime rings out.
 - **Press harder** and the ripple grows into a wave that spreads through the whole structure.
-- **Beads** along the strands bend the light: some speed it up, some funnel it one way, and some bounce it back.
+- **Beads** along the strands bend the light: some speed it up, some funnel it one way, and some bounce it back. This provides more complex internal structure.
 
 Underneath, an ambient glow shimmers, breathes or twinkles across the web, and a drone chord follows what you do: the more you play, the richer it gets.
 
@@ -47,6 +47,6 @@ You can [play it in your browser](https://mbanslow.github.io/ift-x-csl-web-light
 
 ## What we took from it
 
-The two prototypes are halves of one idea. Sensitive Webs listens closely and answers with sound and voice; the light web answers with light moving through a structure. The next step is to bring them together, so the physical web lights up as you approach it and its sound changes with the light. A second workshop is planned for autumn 2026 to do that.
+The speed at which we could create these interfaces was astounding. It’s really a blessing for creatives to be able to spawn custom interfaces for unusual configurations very quickly. Just a year ago there would be no way of actually constructing working multi-modal prototypes within such a short period of time. You wouldn't even bother trying. 
 
-For *Cloudfulness*, it was a chance to test ideas we care about in a lighter form: a material that responds before you touch it, guidance that invites rather than instructs, and light and sound that feel like one gesture.
+For **Cloudfulness**, it inspired us to think about the cloud as an instrument and responsive partner. That, like the sensitive web, it could have parts to it that alter or emit sound and light depending on how it is interacted with.
