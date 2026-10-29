@@ -29,14 +29,3 @@ What would the roles of nature look like? How would you play that role?
 Perhaps the natural patterns in nature such as the day and night cycle act with rhythms that align with your breath? Perhaps for a moment your breath plays the role? Breath itself is interesting, because it is a largely involuntary and automatic act. Your breath connects something fundamental in you to the role you are performing.
 
 What if, like in many mythological stories, an aspect of your physiology ensures the seasons are in harmony, the sun rises, the rain comes and waters the crops?
-
-## Interbeing or belonging?
-
-We held the two words side by side. **Interbeing**, Thich Nhat Hanh's term, never really goes away: a cloud doesn't die, it continues as rain, as river, as tea. It is a continued sense of being through time, and a connection through that. **Belonging** is warmer and more social, and more fragile. The project lives between the two.
-
-## Water, night and day
-
-- Could we play with the forms of water: vapour, liquid, ice?
-- **Impermanence** cuts both ways. Hard things pass, and so do good ones, which is a reason for gratitude.
-- A night that ends in daylight gives the experience its arc. *Daylight is the end of the experience.*
-- Stars? We weren't sure yet.
