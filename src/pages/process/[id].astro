@@ -8,6 +8,7 @@ import Checklist from '../../components/Checklist.astro';
 import VideoClip from '../../components/VideoClip.astro';
 import MediaGallery, { type GalleryItem } from '../../components/MediaGallery.astro';
 import { getJournal, formatDate } from '../../lib/journal';
+import designingJoints from '../../assets/journal/2026-07-17-printing-a-frame/zephir-3d-printing-design.jpg';
 
 export async function getStaticPaths() {
   const entries = await getJournal();
@@ -98,7 +99,20 @@ const showChecklist = entry.id === '2026-05-28-a-checklist-for-belonging';
     </header>
 
     {
-      coverVideo && entry.id !== '2026-07-08-the-story-of-a-night' ? (
+      entry.id === '2026-07-10-a-bigger-cloud-to-map' && cover ? (
+        <div class="wrap narrow cover cover-pair">
+          <Image src={cover} alt={coverAlt ?? ''} widths={[800, 1200]} sizes="(min-width: 72rem) 36rem, 50vw" loading="eager" />
+          <video
+            src={url('/video/journal/lightning-and-day-change.mp4')}
+            poster={url('/video/journal/lightning-and-day-change.jpg')}
+            autoplay
+            muted
+            loop
+            playsinline
+            aria-label="Lightning and a change of day."
+          />
+        </div>
+      ) : coverVideo && entry.id !== '2026-07-08-the-story-of-a-night' ? (
         <div class="wrap narrow cover">
           <video
             src={url(`/video/${coverVideo}.mp4`)}
@@ -109,6 +123,11 @@ const showChecklist = entry.id === '2026-05-28-a-checklist-for-belonging';
             playsinline
             aria-label={coverAlt}
           />
+        </div>
+      ) : entry.id === '2026-07-17-printing-a-frame' && cover ? (
+        <div class="wrap narrow cover cover-pair">
+          <Image src={cover} alt={coverAlt ?? ''} widths={[800, 1200]} sizes="(min-width: 72rem) 36rem, 50vw" loading="eager" />
+          <Image src={designingJoints} alt="Designing the joints." widths={[800, 1200]} sizes="(min-width: 72rem) 36rem, 50vw" loading="eager" />
         </div>
       ) : cover && (
         <div class="wrap narrow cover">
@@ -165,14 +184,16 @@ const showChecklist = entry.id === '2026-05-28-a-checklist-for-belonging';
     }
 
     {
-      sectionMedia.length > 0 ? (
+      sectionMedia.length > 0 && (
         <div class="media-sections">
           {sectionMedia.map((section) => (
             <section class:list={['journal-part', { continuation: !section.title }]}>
-              <div class="wrap narrow journal-part-copy">
-                {section.title && <h2>{section.title}</h2>}
-                <p set:html={section.description} />
-              </div>
+              {(section.title || section.description) && (
+                <div class="wrap narrow journal-part-copy">
+                  {section.title && <h2>{section.title}</h2>}
+                  {section.description && <p set:html={section.description} />}
+                </div>
+              )}
               {section.media.length > 0 && (
                 <div class="wrap narrow media">
                   <MediaGallery
@@ -184,7 +205,10 @@ const showChecklist = entry.id === '2026-05-28-a-checklist-for-belonging';
             </section>
           ))}
         </div>
-      ) : media.length > 0 && (
+      )
+    }
+    {
+      media.length > 0 && (
         <div class="wrap narrow media">
           <MediaGallery items={media} columns={media.length < 3 ? media.length : 3} title={clips.length && gallery.length ? "Photos and video" : clips.length ? "Video" : "Photos"} />
         </div>
@@ -290,6 +314,26 @@ const showChecklist = entry.id === '2026-05-28-a-checklist-for-belonging';
     max-height: 78vh;
     margin-inline: auto;
     border-radius: calc(var(--radius) * 1.2);
+  }
+  .cover-pair {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    align-items: stretch;
+  }
+  .cover-pair img,
+  .cover-pair video {
+    width: 100%;
+    height: 100%;
+    max-height: none;
+    margin: 0;
+    object-fit: cover;
+    aspect-ratio: 4 / 3;
+  }
+  @media (max-width: 700px) {
+    .cover-pair {
+      grid-template-columns: 1fr;
+    }
   }
   .body {
     padding-block: 3rem 4rem;

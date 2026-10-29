@@ -6,9 +6,6 @@ summary: 'A cloud that has to hang, hold lights and survive being moved between 
 cover: ../../assets/journal/2026-07-17-printing-a-frame/pyramid-3d-joints-printed.jpg
 coverAlt: 'The 3D-printed joints for the pyramid frame.'
 gallery:
-  - src: ../../assets/journal/2026-07-17-printing-a-frame/zephir-3d-printing-design.jpg
-    alt: 'Designing the joints.'
-    caption: 'Designing the joints.'
   - src: ../../assets/journal/2026-07-17-printing-a-frame/lots-of-failure-broken-3d-printer-bad-wood-connection.jpg
     alt: 'A lot of failure.'
     caption: 'A lot of failure.'
@@ -18,11 +15,9 @@ gallery:
 tags: [structure, 3D printing, fabrication]
 ---
 
-Tulle is light and beautiful, but it doesn't hold a shape on its own. Hung from a single point, the cloud collapses into a drape. To keep its volume, carry LEDs inside it, and survive being packed up and rebuilt in another venue, it needs an internal structure.
+We chose an off-centre pyramid for the internal structure of our cloud. It was a simple shape to build and approximated the cloud structure we had in mind. Zéphir created a 3D model of the pyramid structure from which we create 3D printable joints. 
 
-We modelled a **pyramid-like frame** and split it into printable parts, labelled A to E. After the first test prints, we revised them into a second set ("bis" versions), adjusting how the pieces fit together.
-
-This is the model we printed from. Later, for the LED mapping, I added the green planes in Blender: they stand in for the mesh walls that would be stretched across the frame, so I could place each LED where it would actually sit on the mesh. Drag to turn it around.
+Below is the model we printed from with additional planes added in Blender to support placement of LEDs during LED mapping. They they stand in for the mesh walls that would be stretched across the frame. Drag to turn it around.
 
 <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
 
@@ -41,7 +36,9 @@ This is the model we printed from. Later, for the LED mapping, I added the green
 
 ## When the print went wrong
 
-Not everything went to plan. On the printer at Sony CSL Paris, one print failed badly: instead of building up a part, the filament set into a solid blob around the hot end, swallowing the nozzle, the heater wires and part of the print head.
+Not everything went to plan. On the printer at Sony CSL Paris, one print failed badly: instead of building up a part, the filament set into a solid blob around the hot end, swallowing the nozzle, the heater wires and part of the print head. 
+
+We were also trying out combining smaller pieces of wood together with dowels and wood glue but this was far too brittle.
 
 ![A failed print at Sony CSL Paris: a large blob of melted white filament has engulfed the 3D printer’s nozzle and print head](../../assets/photos/print-frame-1.jpg)
 
