@@ -472,8 +472,17 @@ const questions = [
     z-index: 2;
     pointer-events: none;
     background: var(--prev-stop);
-    -webkit-mask: var(--wave) 0 0 / 100% 100% no-repeat;
-    mask: var(--wave) 0 0 / 100% 100% no-repeat;
+    -webkit-mask: var(--wave-top, var(--wave)) 0 0 / 100% 100% no-repeat;
+    mask: var(--wave-top, var(--wave)) 0 0 / 100% 100% no-repeat;
+  }
+  @media (max-width: 700px) {
+    .part {
+      --part-wave-depth: var(--mobile-wave-height, 2.75rem);
+    }
+    .part::before {
+      -webkit-mask-image: var(--wave-top-mobile, var(--wave-top, var(--wave)));
+      mask-image: var(--wave-top-mobile, var(--wave-top, var(--wave)));
+    }
   }
   .part::before {
     top: 0;

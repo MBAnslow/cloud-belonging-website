@@ -23,12 +23,12 @@
   const mobileWave: Wave = {
     height: 2.75,
     baseline: 56,
-    amplitude: 20,
-    waves: 2.15,
+    amplitude: 32,
+    waves: 1.9,
     phase: 0.01,
-    ripple: 0.43,
+    ripple: 0.36,
     rippleFreq: 2.15,
-    blur: 2.5,
+    blur: 3.5,
   };
   const miniWave = {
     strokeWidth: 0.67,
@@ -71,11 +71,11 @@
         `<path filter='url(#f)' d='M-40 -40H1480V${pts[pts.length - 1].split(' ')[1]}L${pts.reverse().join('L')}Z'/></svg>`;
       return `url("data:image/svg+xml,${encodeURIComponent(markup)}")`;
     };
-    const outlineSvg = (w: Wave, phaseOffset = 0) => {
+    const outlineSvg = (w: Wave, phaseOffset = 0, blur = miniWave.blur) => {
       const pts = points(w, phaseOffset);
       const markup =
         `<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 120' preserveAspectRatio='none'>` +
-        `<filter id='b' x='-10%' y='-100%' width='120%' height='300%'><feGaussianBlur stdDeviation='${miniWave.blur}'/></filter>` +
+        `<filter id='b' x='-10%' y='-100%' width='120%' height='300%'><feGaussianBlur stdDeviation='${blur}'/></filter>` +
         `<path filter='url(#b)' fill='none' stroke='${miniWave.color}' stroke-width='${miniWave.strokeWidth}' stroke-linecap='round' stroke-linejoin='round' vector-effect='non-scaling-stroke' d='M${pts.join('L')}'/></svg>`;
       return `url("data:image/svg+xml,${encodeURIComponent(markup)}")`;
     };
@@ -84,6 +84,10 @@
       element,
       topPhase: Math.random(),
       bottomPhase: Math.random(),
+    }));
+    const parts = Array.from(document.querySelectorAll<HTMLElement>('.part')).map((element) => ({
+      element,
+      phase: Math.random(),
     }));
     const miniBands = Array.from(document.querySelectorAll<HTMLElement>('.contents .band'));
     const miniSeams = miniBands.slice(0, -1).map((element, i) => ({
@@ -103,9 +107,13 @@
         element.style.setProperty('--wave-top-mobile', svg(mobileWave, topPhase));
         element.style.setProperty('--wave-bottom-mobile', svg(mobileWave, bottomPhase));
       });
+      parts.forEach(({ element, phase }) => {
+        element.style.setProperty('--wave-top', svg(wave, phase));
+        element.style.setProperty('--wave-top-mobile', svg(mobileWave, phase));
+      });
       miniSeams.forEach(({ element, next, phase }) => {
         const outline = outlineSvg(wave, phase);
-        const outlineMobile = outlineSvg(mobileWave, phase);
+        const outlineMobile = outlineSvg(mobileWave, phase, 0.8);
         element.style.setProperty('--wave-outline', outline);
         element.style.setProperty('--wave-outline-mobile', outlineMobile);
         next.style.setProperty('--wave-outline-top', outline);
